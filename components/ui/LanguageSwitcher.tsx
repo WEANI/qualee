@@ -10,10 +10,8 @@ interface Language {
   flag: string;
 }
 
-// Languages for landing page and dashboard (EN, TH, FR)
+// Languages for landing page and dashboard (FR only)
 export const MAIN_LANGUAGES: Language[] = [
-  { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'th', name: 'ไทย', flag: '🇹🇭' },
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
 ];
 
@@ -61,6 +59,11 @@ export function LanguageSwitcher({
   }, []);
 
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+
+  // Don't show switcher if only one language is available
+  if (languages.length <= 1) {
+    return null;
+  }
 
   // Return a placeholder during SSR to prevent hydration mismatch
   if (!mounted) {
