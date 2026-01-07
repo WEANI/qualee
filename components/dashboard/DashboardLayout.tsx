@@ -109,7 +109,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
           {merchant && (
             <div className="px-6 py-6 border-b border-slate-800/50 bg-[#0F172A]/50">
               <div className="flex items-center gap-4 p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
-                <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-lg shadow-teal-900/20">
+                <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg flex items-center justify-center shadow-lg shadow-pink-900/20">
                   <Store className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -117,7 +117,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                     {merchant.business_name || merchant.name}
                   </p>
                   <p className="text-xs text-slate-400 capitalize flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse"></span>
                     {merchant.subscription_tier || 'Free'} Plan
                   </p>
                 </div>
@@ -140,7 +140,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                   className={`
                     group flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
                     ${isActive
-                      ? 'bg-gradient-to-r from-teal-600 to-teal-700 text-white shadow-lg shadow-teal-900/20 border border-teal-500/20'
+                      ? 'bg-gradient-to-r from-pink-600 to-pink-700 text-white shadow-lg shadow-pink-900/20 border border-pink-500/20'
                       : 'text-white hover:bg-slate-800/50'
                     }
                   `}
@@ -159,7 +159,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
 
             {/* Marketing Section */}
             <div className="flex items-center gap-2 px-4 mb-4">
-              <Megaphone className="w-4 h-4 text-teal-500" />
+              <Megaphone className="w-4 h-4 text-pink-500" />
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{t('dashboard.nav.marketing')}</p>
             </div>
             {marketingNavigation.map((item) => {
@@ -174,7 +174,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                   className={`
                     group flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
                     ${isActive
-                      ? 'bg-gradient-to-r from-teal-600 to-teal-700 text-white shadow-lg shadow-teal-900/20 border border-teal-500/20'
+                      ? 'bg-gradient-to-r from-pink-600 to-pink-700 text-white shadow-lg shadow-pink-900/20 border border-pink-500/20'
                       : 'text-white hover:bg-slate-800/50'
                     }
                   `}
@@ -226,10 +226,10 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
 
             <div className="flex items-center gap-3">
               <LanguageSwitcher variant="dark" />
-              <div className="h-9 px-4 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 flex items-center gap-2 text-sm font-medium hidden sm:flex">
+              <div className="h-9 px-4 rounded-full bg-pink-50 text-pink-700 border border-pink-100 flex items-center gap-2 text-sm font-medium hidden sm:flex">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
                 </span>
                 {t('dashboard.common.online')}
               </div>

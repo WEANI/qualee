@@ -268,7 +268,7 @@ export default function AdminDashboard() {
       width: 400,
       margin: 2,
       color: {
-        dark: '#2D6A4F',
+        dark: '#dda8ba',
         light: '#FFFFFF',
       },
     });
@@ -286,7 +286,7 @@ export default function AdminDashboard() {
         width: 400,
         margin: 2,
         color: {
-          dark: '#2D6A4F',
+          dark: '#dda8ba',
           light: '#FFFFFF',
         },
       });
@@ -513,11 +513,11 @@ export default function AdminDashboard() {
           </div>
 
           <div className="relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700/50">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-full blur-3xl"></div>
             <div className="relative">
               <div className="flex items-center justify-between mb-4">
-                <div className="p-2.5 bg-emerald-500/20 rounded-xl">
-                  <DollarSign className="w-6 h-6 text-emerald-400" />
+                <div className="p-2.5 bg-pink-500/20 rounded-xl">
+                  <DollarSign className="w-6 h-6 text-pink-400" />
                 </div>
                 <div className="flex items-center gap-1 text-green-400 text-sm">
                   <TrendingUp className="w-4 h-4" />
@@ -798,7 +798,7 @@ export default function AdminDashboard() {
                           <h3 className="text-lg font-semibold text-white">{merchant.business_name}</h3>
                           <Badge className="capitalize bg-slate-700 text-white border-slate-600">{merchant.subscription_tier}</Badge>
                           {merchant.is_active !== false ? (
-                            <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+                            <Badge className="bg-pink-500/20 text-pink-400 border-pink-500/30">
                               <CheckCircle2 className="w-3 h-3 mr-1" />
                               Active
                             </Badge>
@@ -819,7 +819,7 @@ export default function AdminDashboard() {
                           </div>
                           <div className="bg-slate-900/50 rounded-xl p-3 border border-slate-700/50">
                             <p className="text-xs text-white/70">Positive</p>
-                            <p className="text-lg font-bold text-emerald-400">{stats.positiveReviews}</p>
+                            <p className="text-lg font-bold text-pink-400">{stats.positiveReviews}</p>
                           </div>
                           <div className="bg-slate-900/50 rounded-xl p-3 border border-slate-700/50">
                             <p className="text-xs text-white/70">Avg Rating</p>
@@ -852,7 +852,7 @@ export default function AdminDashboard() {
                           <Button
                             size="sm"
                             onClick={() => generateAndSaveQRCode(merchant.id, merchant.business_name)}
-                            className="gap-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border-emerald-500/30"
+                            className="gap-2 bg-pink-500/20 hover:bg-pink-500/30 text-pink-400 border-pink-500/30"
                           >
                             <QrCode className="w-4 h-4" />
                             Générer QR

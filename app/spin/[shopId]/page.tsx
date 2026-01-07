@@ -366,7 +366,7 @@ export default function SpinPage() {
 
   if (!isClient || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-600 to-teal-700">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-600 to-pink-700">
         <div className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-8">
           <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
         </div>
@@ -386,7 +386,7 @@ export default function SpinPage() {
             <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
           </>
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-teal-600 to-teal-700"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-pink-600 to-pink-700"></div>
         )}
         <div className="relative z-10 bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">

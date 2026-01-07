@@ -289,11 +289,11 @@ export default function DashboardPage() {
           {/* Prizes Redeemed */}
           <Card className="p-6 border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
             <div className="flex justify-between items-start mb-4">
-              <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+              <div className="p-3 bg-pink-50 text-pink-600 rounded-xl group-hover:bg-pink-600 group-hover:text-white transition-colors">
                 <Gift className="w-6 h-6" />
               </div>
               {stats.positiveRatio > 0 && (
-                <Badge className="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border-emerald-100">
+                <Badge className="bg-pink-50 text-pink-700 hover:bg-pink-100 border-pink-100">
                   {stats.positiveRatio}% positifs
                 </Badge>
               )}
@@ -405,7 +405,7 @@ export default function DashboardPage() {
                 onClick={() => router.push('/dashboard/analytics')}
                 className="p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all text-left group"
               >
-                <div className="w-10 h-10 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-teal-600 group-hover:text-white transition-colors">
+                <div className="w-10 h-10 bg-pink-50 text-pink-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-pink-600 group-hover:text-white transition-colors">
                   <BarChart3 className="w-5 h-5" />
                 </div>
                 <h4 className="font-semibold text-slate-900">{t('dashboard.quickActions.analytics')}</h4>
@@ -429,7 +429,7 @@ export default function DashboardPage() {
               </div>
 
               <div className="bg-black/30 rounded-lg p-4 mb-6 border border-white/10">
-                <code className="text-sm font-mono text-emerald-400 break-all">
+                <code className="text-sm font-mono text-pink-400 break-all">
                   {process.env.NEXT_PUBLIC_APP_URL}/rate/{user.id}
                 </code>
               </div>

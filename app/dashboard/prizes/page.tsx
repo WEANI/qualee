@@ -286,7 +286,7 @@ export default function PrizesPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#2D6A4F] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-[#dda8ba] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-lg text-gray-600">Loading...</p>
         </div>
       </div>
@@ -322,7 +322,7 @@ export default function PrizesPage() {
           </div>
           <Button 
             onClick={() => showForm ? handleCancel() : setShowForm(true)} 
-            className={`gap-2 ${showForm ? 'bg-red-100 text-red-600 hover:bg-red-200' : 'bg-teal-600 hover:bg-teal-700 text-white'}`}
+            className={`gap-2 ${showForm ? 'bg-red-100 text-red-600 hover:bg-red-200' : 'bg-pink-600 hover:bg-pink-700 text-white'}`}
             variant={showForm ? 'outline' : 'default'}
           >
             {showForm ? (
@@ -340,17 +340,17 @@ export default function PrizesPage() {
         </div>
 
         {/* Segment Counter Card */}
-        <Card className="p-6 bg-gradient-to-r from-teal-50 to-blue-50 border-teal-200">
+        <Card className="p-6 bg-gradient-to-r from-pink-50 to-blue-50 border-pink-200">
           <div className="flex items-start gap-4">
-            <div className="w-16 h-16 bg-teal-600 rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="w-16 h-16 bg-pink-600 rounded-full flex items-center justify-center flex-shrink-0">
               <span className="text-2xl">🎡</span>
             </div>
             <div className="flex-1">
               <h3 className="text-xl font-bold text-gray-900 mb-2">Composition de la Roue</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <div className="bg-white rounded-lg p-4 border-2 border-teal-200">
+                <div className="bg-white rounded-lg p-4 border-2 border-pink-200">
                   <p className="text-sm text-gray-600 mb-1">Segments utilisés</p>
-                  <p className="text-3xl font-bold text-teal-600">{totalSegments}/{MAX_SEGMENTS}</p>
+                  <p className="text-3xl font-bold text-pink-600">{totalSegments}/{MAX_SEGMENTS}</p>
                 </div>
                 <div className={`rounded-lg p-4 border-2 ${
                   remainingSegments === 0 ? 'bg-green-50 border-green-200' : 
@@ -371,9 +371,9 @@ export default function PrizesPage() {
               </div>
               
               {/* Segment Info */}
-              <div className="bg-white rounded-lg p-4 border border-teal-200">
+              <div className="bg-white rounded-lg p-4 border border-pink-200">
                 <div className="flex items-center gap-2 mb-3">
-                  <Info className="w-5 h-5 text-teal-600" />
+                  <Info className="w-5 h-5 text-pink-600" />
                   <h4 className="font-semibold text-gray-900">💡 Comment ça marche</h4>
                 </div>
                 <div className="text-sm text-gray-600 space-y-2">
@@ -397,17 +397,17 @@ export default function PrizesPage() {
         </Card>
 
         {showForm && (
-          <Card className="p-6 border-2 border-teal-100 shadow-xl bg-white/80 backdrop-blur-sm relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-400 to-blue-500"></div>
+          <Card className="p-6 border-2 border-pink-100 shadow-xl bg-white/80 backdrop-blur-sm relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-400 to-blue-500"></div>
             <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
               {editingId ? (
                 <>
-                  <Pencil className="w-5 h-5 text-teal-600" />
+                  <Pencil className="w-5 h-5 text-pink-600" />
                   Modifier le Prix
                 </>
               ) : (
                 <>
-                  <Plus className="w-5 h-5 text-teal-600" />
+                  <Plus className="w-5 h-5 text-pink-600" />
                   Ajouter un Nouveau Prix
                 </>
               )}
@@ -419,7 +419,7 @@ export default function PrizesPage() {
                   Photo du Prix
                 </label>
                 {imagePreview ? (
-                  <div className="relative w-full h-48 bg-gray-100 rounded-lg overflow-hidden border-2 border-teal-200">
+                  <div className="relative w-full h-48 bg-gray-100 rounded-lg overflow-hidden border-2 border-pink-200">
                     <img src={imagePreview} alt="Prize preview" className="w-full h-full object-cover" />
                     <button
                       type="button"
@@ -433,7 +433,7 @@ export default function PrizesPage() {
                     </button>
                   </div>
                 ) : (
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-teal-500 transition-colors">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-pink-500 transition-colors">
                     <input
                       type="file"
                       id="prize-image"
@@ -444,7 +444,7 @@ export default function PrizesPage() {
                     <label htmlFor="prize-image" className="cursor-pointer">
                       <ImageIcon className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                       <p className="text-sm text-gray-600 mb-1">
-                        <span className="text-teal-600 font-semibold">Cliquez pour uploader</span> ou glissez-déposez
+                        <span className="text-pink-600 font-semibold">Cliquez pour uploader</span> ou glissez-déposez
                       </p>
                       <p className="text-xs text-gray-500">PNG, JPG jusqu'à 5MB</p>
                     </label>
@@ -468,7 +468,7 @@ export default function PrizesPage() {
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Obtenez 10% de réduction sur votre prochain achat"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                   rows={3}
                 />
               </div>
@@ -480,7 +480,7 @@ export default function PrizesPage() {
                     Probabilité de Gain
                   </label>
                   <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold text-teal-600">{formData.probability}%</span>
+                    <span className="text-2xl font-bold text-pink-600">{formData.probability}%</span>
                     <span className={`text-xs px-2 py-1 rounded-full ${getChanceDescription(formData.probability).bg} ${getChanceDescription(formData.probability).color} font-medium`}>
                       {getChanceDescription(formData.probability).text}
                     </span>
@@ -494,7 +494,7 @@ export default function PrizesPage() {
                   step="1"
                   value={formData.probability}
                   onChange={(e) => setFormData({ ...formData, probability: parseFloat(e.target.value) })}
-                  className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-teal-600"
+                  className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-pink-600"
                 />
                 
                 <div className="flex justify-between text-xs text-gray-500 mt-2">
@@ -514,7 +514,7 @@ export default function PrizesPage() {
               <Button 
                 type="submit" 
                 disabled={loading || uploading} 
-                className="w-full bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white font-bold py-6 rounded-xl shadow-lg transform transition-transform active:scale-95"
+                className="w-full bg-gradient-to-r from-pink-600 to-blue-600 hover:from-pink-700 hover:to-blue-700 text-white font-bold py-6 rounded-xl shadow-lg transform transition-transform active:scale-95"
               >
                 {uploading ? 'Upload en cours...' : loading ? 'Sauvegarde...' : (editingId ? 'Mettre à jour le Prix' : 'Créer le Prix')}
               </Button>
@@ -650,7 +650,7 @@ export default function PrizesPage() {
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div className="bg-white rounded-lg p-3 border">
                   <p className="text-gray-500">Segments totaux</p>
-                  <p className="text-2xl font-bold text-teal-600">{totalSegments}/{MAX_SEGMENTS}</p>
+                  <p className="text-2xl font-bold text-pink-600">{totalSegments}/{MAX_SEGMENTS}</p>
                 </div>
                 <div className="bg-white rounded-lg p-3 border">
                   <p className="text-gray-500">Prix sur la roue</p>
@@ -683,26 +683,26 @@ export default function PrizesPage() {
           {prizes.map((prize) => {
             const quantity = prizeQuantities[prize.id] || 0;
             return (
-              <Card key={prize.id} className={`overflow-hidden hover:shadow-xl transition-all border-2 ${quantity > 0 ? 'border-teal-400 bg-teal-50/30' : 'hover:border-teal-300'}`}>
+              <Card key={prize.id} className={`overflow-hidden hover:shadow-xl transition-all border-2 ${quantity > 0 ? 'border-pink-400 bg-pink-50/30' : 'hover:border-pink-300'}`}>
                 {/* Prize Image */}
                 {prize.image_url ? (
-                  <div className="relative h-40 bg-gradient-to-br from-teal-100 to-blue-100">
+                  <div className="relative h-40 bg-gradient-to-br from-pink-100 to-blue-100">
                     <img 
                       src={prize.image_url} 
                       alt={prize.name} 
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute top-3 right-3">
-                      <div className={`px-3 py-1.5 ${quantity > 0 ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-600'} rounded-full font-bold text-sm shadow-lg`}>
+                      <div className={`px-3 py-1.5 ${quantity > 0 ? 'bg-pink-600 text-white' : 'bg-gray-200 text-gray-600'} rounded-full font-bold text-sm shadow-lg`}>
                         × {quantity}
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="h-40 bg-gradient-to-br from-teal-100 to-blue-100 flex items-center justify-center relative">
+                  <div className="h-40 bg-gradient-to-br from-pink-100 to-blue-100 flex items-center justify-center relative">
                     <span className="text-5xl">🎁</span>
                     <div className="absolute top-3 right-3">
-                      <div className={`px-3 py-1.5 ${quantity > 0 ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-600'} rounded-full font-bold text-sm shadow-lg`}>
+                      <div className={`px-3 py-1.5 ${quantity > 0 ? 'bg-pink-600 text-white' : 'bg-gray-200 text-gray-600'} rounded-full font-bold text-sm shadow-lg`}>
                         × {quantity}
                       </div>
                     </div>
@@ -726,17 +726,17 @@ export default function PrizesPage() {
                         disabled={quantity <= 0}
                         variant="outline"
                         size="sm"
-                        className="w-9 h-9 rounded-full border-teal-400 text-teal-600 hover:bg-teal-50 disabled:opacity-50"
+                        className="w-9 h-9 rounded-full border-pink-400 text-pink-600 hover:bg-pink-50 disabled:opacity-50"
                       >
                         -
                       </Button>
-                      <span className="text-2xl font-bold text-teal-600 w-10 text-center">{quantity}</span>
+                      <span className="text-2xl font-bold text-pink-600 w-10 text-center">{quantity}</span>
                       <Button
                         onClick={() => updatePrizeQuantity(prize.id, 1)}
                         disabled={totalSegments >= MAX_SEGMENTS}
                         variant="outline"
                         size="sm"
-                        className="w-9 h-9 rounded-full border-teal-400 text-teal-600 hover:bg-teal-50 disabled:opacity-50"
+                        className="w-9 h-9 rounded-full border-pink-400 text-pink-600 hover:bg-pink-50 disabled:opacity-50"
                       >
                         +
                       </Button>
@@ -769,16 +769,16 @@ export default function PrizesPage() {
         </div>
 
         {prizes.length === 0 && !showForm && (
-          <Card className="p-12 bg-gradient-to-br from-gray-50 to-teal-50">
+          <Card className="p-12 bg-gradient-to-br from-gray-50 to-pink-50">
             <div className="text-center">
-              <div className="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-20 h-20 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-5xl">🎁</span>
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Aucun prix configuré</h3>
               <p className="text-gray-600 mb-6 max-w-md mx-auto">
                 Ajoutez votre premier prix pour commencer à configurer votre roue de la chance !
               </p>
-              <Button onClick={() => setShowForm(true)} className="gap-2 bg-teal-600 hover:bg-teal-700">
+              <Button onClick={() => setShowForm(true)} className="gap-2 bg-pink-600 hover:bg-pink-700">
                 <Plus className="w-4 h-4" />
                 Ajouter mon Premier Prix
               </Button>

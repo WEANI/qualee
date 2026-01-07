@@ -316,7 +316,7 @@ export default function SendCampaignPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-pink-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-lg text-slate-600">{t('dashboard.common.loading')}</p>
         </div>
       </div>
@@ -345,7 +345,7 @@ export default function SendCampaignPage() {
 
         {/* Campaign Summary */}
         {campaignData && (
-          <Card className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+          <Card className="p-4 bg-gradient-to-r from-green-50 to-pink-50 border-green-200">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-green-100 rounded-lg">
                 <MessageCircle className="w-5 h-5 text-green-600" />
@@ -488,8 +488,8 @@ export default function SendCampaignPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-teal-50 rounded-lg">
-                <Users className="w-5 h-5 text-teal-600" />
+              <div className="p-2 bg-pink-50 rounded-lg">
+                <Users className="w-5 h-5 text-pink-600" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-slate-900">{customers.length}</p>
@@ -612,7 +612,7 @@ export default function SendCampaignPage() {
                 placeholder={t('marketing.whatsappCampaign.searchByPhone')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
               />
             </div>
             <div className="flex gap-2">
@@ -641,7 +641,7 @@ export default function SendCampaignPage() {
                       type="checkbox"
                       checked={selectedCustomers.size === filteredCustomers.length && filteredCustomers.length > 0}
                       onChange={toggleSelectAll}
-                      className="w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
+                      className="w-4 h-4 rounded border-slate-300 text-pink-600 focus:ring-pink-500"
                     />
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">{t('marketing.whatsappCampaign.phoneNumber')}</th>
@@ -656,7 +656,7 @@ export default function SendCampaignPage() {
                     <tr
                       key={customer.phone}
                       className={`hover:bg-slate-50 cursor-pointer transition-colors ${
-                        selectedCustomers.has(customer.phone) ? 'bg-teal-50' : ''
+                        selectedCustomers.has(customer.phone) ? 'bg-pink-50' : ''
                       }`}
                       onClick={() => toggleCustomer(customer.phone)}
                     >
@@ -666,7 +666,7 @@ export default function SendCampaignPage() {
                           checked={selectedCustomers.has(customer.phone)}
                           onChange={() => toggleCustomer(customer.phone)}
                           onClick={(e) => e.stopPropagation()}
-                          className="w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
+                          className="w-4 h-4 rounded border-slate-300 text-pink-600 focus:ring-pink-500"
                         />
                       </td>
                       <td className="px-4 py-3">

@@ -45,7 +45,7 @@ export default function QRCodePage() {
           width: 400,
           margin: 2,
           color: {
-            dark: '#2D6A4F',
+            dark: '#dda8ba',
             light: '#FFFFFF',
           },
         });
@@ -77,7 +77,7 @@ export default function QRCodePage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#2D6A4F] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-[#dda8ba] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-lg text-gray-600">Loading...</p>
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function QRCodePage() {
           <div className="flex flex-col items-center mb-8">
             {merchant?.qr_code_url && (
               <div className="mb-4 text-center">
-                <span className="inline-flex items-center gap-2 px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm font-medium">
+                <span className="inline-flex items-center gap-2 px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-sm font-medium">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
@@ -104,7 +104,7 @@ export default function QRCodePage() {
                 </span>
               </div>
             )}
-            <div className="bg-white p-8 rounded-lg border-4 border-[#2D6A4F] shadow-lg">
+            <div className="bg-white p-8 rounded-lg border-4 border-[#dda8ba] shadow-lg">
               {qrCodeUrl && (
                 <img src={qrCodeUrl} alt="QR Code" className="w-80 h-80" />
               )}
@@ -119,7 +119,7 @@ export default function QRCodePage() {
                 href={`${process.env.NEXT_PUBLIC_APP_URL}/rate/${user.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm break-all text-teal-600 hover:text-teal-700 font-mono bg-white px-4 py-3 rounded border border-gray-300 block hover:border-teal-500 transition-colors underline"
+                className="text-sm break-all text-pink-600 hover:text-pink-700 font-mono bg-white px-4 py-3 rounded border border-gray-300 block hover:border-pink-500 transition-colors underline"
               >
                 {`${process.env.NEXT_PUBLIC_APP_URL}/rate/${user.id}`}
               </a>
@@ -130,7 +130,7 @@ export default function QRCodePage() {
                 <Copy className="w-4 h-4" />
                 Copy Link
               </Button>
-              <Button onClick={() => downloadQR('png')} className="w-full gap-2 bg-[#2D6A4F] hover:bg-[#1B4332]">
+              <Button onClick={() => downloadQR('png')} className="w-full gap-2 bg-[#dda8ba] hover:bg-[#8b6b75]">
                 <Download className="w-4 h-4" />
                 Download PNG
               </Button>

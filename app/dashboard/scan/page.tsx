@@ -194,7 +194,7 @@ export default function ScanPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#2D6A4F] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-[#dda8ba] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-lg text-gray-600">Loading...</p>
         </div>
       </div>
@@ -212,14 +212,14 @@ export default function ScanPage() {
         <Card className="p-6">
           {scanStatus === 'idle' && (
             <div className="text-center py-12">
-              <div className="w-20 h-20 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-20 h-20 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
                 </svg>
               </div>
               <h3 className="text-lg font-medium text-gray-900 mb-2">Prêt à scanner</h3>
               <p className="text-gray-500 mb-8">Assurez-vous d'avoir autorisé l'accès à la caméra.</p>
-              <Button onClick={startScanning} size="lg" className="bg-teal-600 hover:bg-teal-700">
+              <Button onClick={startScanning} size="lg" className="bg-pink-600 hover:bg-pink-700">
                 Lancer le scan
               </Button>
             </div>
@@ -236,7 +236,7 @@ export default function ScanPage() {
 
           {scanStatus === 'verifying' && (
             <div className="text-center py-12">
-              <div className="w-16 h-16 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <div className="w-16 h-16 border-4 border-pink-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
               <p className="text-lg font-medium">Vérification du code...</p>
             </div>
           )}
@@ -287,7 +287,7 @@ export default function ScanPage() {
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Prix Validé !</h2>
               <p className="text-gray-600 mb-8">Le coupon a été marqué comme utilisé avec succès.</p>
-              <Button onClick={startScanning} size="lg" className="bg-teal-600 hover:bg-teal-700">
+              <Button onClick={startScanning} size="lg" className="bg-pink-600 hover:bg-pink-700">
                 Scanner un autre client
               </Button>
             </div>

@@ -48,7 +48,7 @@ export default function SelectLanguagePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-600 to-teal-700">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-600 to-pink-700">
         <div className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-8">
           <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
         </div>
@@ -70,7 +70,7 @@ export default function SelectLanguagePage() {
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
         </>
       ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-600 to-teal-700"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-600 to-pink-700"></div>
       )}
 
       {/* Content */}
@@ -89,7 +89,7 @@ export default function SelectLanguagePage() {
         {/* Language Selection Card */}
         <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/20">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <Globe className="w-8 h-8 text-teal-600" />
+            <Globe className="w-8 h-8 text-pink-600" />
             <h1 className="text-2xl font-bold text-gray-900">
               Select Your Language
             </h1>
@@ -105,11 +105,11 @@ export default function SelectLanguagePage() {
               <button
                 key={lang.code}
                 onClick={() => handleLanguageSelect(lang.code)}
-                className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-200 hover:border-teal-500 hover:bg-teal-50 transition-all duration-200 group"
+                className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-200 hover:border-pink-500 hover:bg-pink-50 transition-all duration-200 group"
               >
                 <span className="text-3xl">{lang.flag}</span>
                 <div className="text-left">
-                  <p className="font-semibold text-gray-900 group-hover:text-teal-700">
+                  <p className="font-semibold text-gray-900 group-hover:text-pink-700">
                     {lang.nativeName}
                   </p>
                   <p className="text-xs text-gray-500">

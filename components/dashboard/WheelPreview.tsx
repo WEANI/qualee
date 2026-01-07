@@ -26,11 +26,11 @@ interface WheelPreviewProps {
 
 // Color palette for prize segments
 const PRIZE_COLORS = [
-  '#2D6A4F', // Teal
-  '#40916C', // Green
-  '#52B788', // Light Green
-  '#74C69D', // Mint
-  '#95D5B2', // Pale Green
+  '#dda8ba', // Teal
+  '#c99aab', // Green
+  '#e8c4cf', // Light Green
+  '#f0d4dc', // Mint
+  '#f5e0e6', // Pale Green
   '#1E88E5', // Blue
   '#42A5F5', // Light Blue
   '#64B5F6', // Sky Blue

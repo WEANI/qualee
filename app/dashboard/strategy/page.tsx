@@ -156,7 +156,7 @@ export default function StrategyPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-pink-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-lg text-gray-600">Chargement...</p>
         </div>
       </div>
@@ -172,14 +172,14 @@ export default function StrategyPage() {
         </div>
 
         {message && (
-          <Card className={`p-4 ${message.type === 'success' ? 'bg-teal-50 border-teal-200' : 'bg-red-50 border-red-200'}`}>
+          <Card className={`p-4 ${message.type === 'success' ? 'bg-pink-50 border-pink-200' : 'bg-red-50 border-red-200'}`}>
             <div className="flex items-center gap-2">
               {message.type === 'success' ? (
-                <Check className="w-5 h-5 text-teal-600" />
+                <Check className="w-5 h-5 text-pink-600" />
               ) : (
                 <X className="w-5 h-5 text-red-600" />
               )}
-              <p className={message.type === 'success' ? 'text-teal-700' : 'text-red-700'}>
+              <p className={message.type === 'success' ? 'text-pink-700' : 'text-red-700'}>
                 {message.text}
               </p>
             </div>
@@ -187,7 +187,7 @@ export default function StrategyPage() {
         )}
 
         {/* Workflow Mode Selection */}
-        <Card className="p-6 border-2 border-teal-200">
+        <Card className="p-6 border-2 border-pink-200">
           <div className="mb-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Mode de Workflow</h3>
             <p className="text-sm text-gray-600">
@@ -202,13 +202,13 @@ export default function StrategyPage() {
               onClick={() => setWorkflowMode('web')}
               className={`p-4 rounded-lg border-2 text-left transition-all ${
                 workflowMode === 'web'
-                  ? 'border-teal-500 bg-teal-50'
+                  ? 'border-pink-500 bg-pink-50'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
               <div className="flex items-center gap-3 mb-2">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                  workflowMode === 'web' ? 'bg-teal-500' : 'bg-gray-200'
+                  workflowMode === 'web' ? 'bg-pink-500' : 'bg-gray-200'
                 }`}>
                   <Globe className={`w-5 h-5 ${workflowMode === 'web' ? 'text-white' : 'text-gray-500'}`} />
                 </div>
@@ -217,7 +217,7 @@ export default function StrategyPage() {
                   <p className="text-xs text-gray-500">Workflow actuel</p>
                 </div>
                 {workflowMode === 'web' && (
-                  <Check className="w-5 h-5 text-teal-500 ml-auto" />
+                  <Check className="w-5 h-5 text-pink-500 ml-auto" />
                 )}
               </div>
               <p className="text-sm text-gray-600">
@@ -295,7 +295,7 @@ export default function StrategyPage() {
         <Card className="p-6">
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
-              <Palette className="w-5 h-5 text-teal-600" />
+              <Palette className="w-5 h-5 text-pink-600" />
               <h3 className="text-lg font-semibold text-gray-900">Couleur de Fond du Logo</h3>
             </div>
             <p className="text-sm text-gray-600">
@@ -311,14 +311,14 @@ export default function StrategyPage() {
                   type="color"
                   value={logoBackgroundColor}
                   onChange={(e) => setLogoBackgroundColor(e.target.value)}
-                  className="w-12 h-12 rounded-lg cursor-pointer border-2 border-gray-300 hover:border-teal-500 transition-colors"
+                  className="w-12 h-12 rounded-lg cursor-pointer border-2 border-gray-300 hover:border-pink-500 transition-colors"
                 />
                 <input
                   type="text"
                   value={logoBackgroundColor}
                   onChange={(e) => setLogoBackgroundColor(e.target.value)}
                   placeholder="#FFFFFF"
-                  className="w-28 px-3 py-2 border border-gray-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                  className="w-28 px-3 py-2 border border-gray-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
                 />
               </div>
             </div>
@@ -394,7 +394,7 @@ export default function StrategyPage() {
                 value={googleMapsUrl}
                 onChange={(e) => setGoogleMapsUrl(e.target.value)}
                 placeholder="https://g.page/your-business"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
               />
             </div>
 
@@ -409,7 +409,7 @@ export default function StrategyPage() {
                 value={tripadvisorUrl}
                 onChange={(e) => setTripadvisorUrl(e.target.value)}
                 placeholder="https://www.tripadvisor.com/..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
               />
             </div>
 
@@ -424,7 +424,7 @@ export default function StrategyPage() {
                 value={tiktokUrl}
                 onChange={(e) => setTiktokUrl(e.target.value)}
                 placeholder="https://www.tiktok.com/@your-account"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
               />
             </div>
 
@@ -439,7 +439,7 @@ export default function StrategyPage() {
                 value={instagramUrl}
                 onChange={(e) => setInstagramUrl(e.target.value)}
                 placeholder="https://www.instagram.com/your-account"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
               />
             </div>
           </div>
@@ -449,7 +449,7 @@ export default function StrategyPage() {
         <Card className="p-6">
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
-              <Calendar className="w-5 h-5 text-teal-600" />
+              <Calendar className="w-5 h-5 text-pink-600" />
               <h3 className="text-lg font-semibold text-gray-900">Planification Automatique (7 jours)</h3>
             </div>
             <p className="text-sm text-gray-600">
@@ -464,7 +464,7 @@ export default function StrategyPage() {
               const Icon = selectedPlatform.icon;
               
               return (
-                <div key={index} className="border-2 border-gray-200 rounded-lg p-4 hover:border-teal-500 transition-colors">
+                <div key={index} className="border-2 border-gray-200 rounded-lg p-4 hover:border-pink-500 transition-colors">
                   <div className="flex items-center justify-between mb-3">
                     <span className="font-semibold text-gray-900">{day}</span>
                     <div className={`w-8 h-8 ${selectedPlatform.color} rounded-full flex items-center justify-center`}>
@@ -475,7 +475,7 @@ export default function StrategyPage() {
                   <select
                     value={weeklySchedule[index]}
                     onChange={(e) => handleDayChange(index, e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
                   >
                     {PLATFORMS.map((platform) => (
                       <option key={platform.value} value={platform.value}>
@@ -499,13 +499,13 @@ export default function StrategyPage() {
 
         {/* Current Day Preview */}
         {currentDayIndex !== null && (
-          <Card className="p-6 bg-gradient-to-r from-teal-50 to-blue-50 border-teal-200">
+          <Card className="p-6 bg-gradient-to-r from-pink-50 to-blue-50 border-pink-200">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-1">Aujourd'hui ({DAYS[currentDayIndex]})</h3>
                 <p className="text-sm text-gray-600">
                   Les clients seront redirigés vers :
-                  <span className="font-bold text-teal-700 ml-1">
+                  <span className="font-bold text-pink-700 ml-1">
                     {getPlatformInfo(weeklySchedule[currentDayIndex]).label}
                   </span>
                 </p>
@@ -546,7 +546,7 @@ export default function StrategyPage() {
           <Button
             onClick={handleSave}
             disabled={loading}
-            className="bg-teal-600 hover:bg-teal-700"
+            className="bg-pink-600 hover:bg-pink-700"
           >
             {loading ? (
               <>

@@ -31,7 +31,7 @@ const notificationIcons: Record<string, React.ElementType> = {
 const notificationColors: Record<string, string> = {
   feedback: 'bg-amber-100 text-amber-600',
   spin: 'bg-purple-100 text-purple-600',
-  coupon_used: 'bg-emerald-100 text-emerald-600',
+  coupon_used: 'bg-pink-100 text-pink-600',
   new_customer: 'bg-blue-100 text-blue-600',
 };
 
@@ -207,7 +207,7 @@ export function NotificationDropdown({ merchantId }: NotificationDropdownProps) 
           <div className="overflow-y-auto max-h-[380px]">
             {loading ? (
               <div className="flex items-center justify-center py-12">
-                <div className="w-8 h-8 border-3 border-slate-200 border-t-teal-600 rounded-full animate-spin" />
+                <div className="w-8 h-8 border-3 border-slate-200 border-t-pink-600 rounded-full animate-spin" />
               </div>
             ) : notifications.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 text-slate-500">
