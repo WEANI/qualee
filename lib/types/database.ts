@@ -43,8 +43,8 @@ export interface Prize {
   image_url: string | null;
   probability: number;
   quantity: number;
-  color: string;
-  text_color: string;
+  color?: string;
+  text_color?: string;
   created_at: string;
   updated_at: string;
 }
