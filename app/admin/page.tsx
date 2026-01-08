@@ -39,6 +39,8 @@ import {
   ResponsiveContainer,
   Legend
 } from 'recharts';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 interface Merchant {
   id: string;
@@ -335,6 +337,52 @@ export default function AdminDashboard() {
     const url = `${process.env.NEXT_PUBLIC_APP_URL}/rate/${merchantId}`;
     navigator.clipboard.writeText(url);
     alert('Link copied to clipboard!');
+  };
+
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const downloadAllQRs = async () => {
+    try {
+      setIsDownloading(true);
+      const zip = new JSZip();
+      const qrFolder = zip.folder("qr-codes");
+      
+      if (!qrFolder) throw new Error("Failed to create zip folder");
+
+      // Process merchants in batches to avoid freezing UI
+      const batchSize = 10;
+      for (let i = 0; i < filteredMerchants.length; i += batchSize) {
+        const batch = filteredMerchants.slice(i, i + batchSize);
+        
+        await Promise.all(batch.map(async (merchant) => {
+          const url = `${process.env.NEXT_PUBLIC_APP_URL}/rate/${merchant.id}`;
+          const qrDataUrl = await QRCode.toDataURL(url, {
+            width: 400,
+            margin: 2,
+            color: {
+              dark: '#dda8ba',
+              light: '#FFFFFF',
+              correctLevel: 'H'
+            },
+          });
+          
+          // Remove data:image/png;base64, prefix
+          const base64Data = qrDataUrl.split(',')[1];
+          const fileName = `${merchant.business_name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_${merchant.id.substring(0, 8)}.png`;
+          
+          qrFolder.file(fileName, base64Data, { base64: true });
+        }));
+      }
+
+      const content = await zip.generateAsync({ type: "blob" });
+      saveAs(content, `qualee-merchants-qr-${new Date().toISOString().split('T')[0]}.zip`);
+      
+    } catch (error) {
+      console.error('Error generating bulk QRs:', error);
+      alert('Une erreur est survenue lors de la génération du ZIP.');
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const updateMerchantStatus = async (merchantId: string, isActive: boolean) => {
