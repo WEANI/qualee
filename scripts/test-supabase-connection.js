@@ -1,12 +1,19 @@
 #!/usr/bin/env node
 
 const { createClient } = require('@supabase/supabase-js');
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env.local') });
 
 console.log('🧪 Test de connexion Supabase MCP\n');
 console.log('='.repeat(50));
 
-const supabaseUrl = 'https://egemjezgejptazoucwci.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnZW1qZXpnZWpwdGF6b3Vjd2NpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3ODYwNTksImV4cCI6MjA4MjM2MjA1OX0.3n7ZUhCAIC7DESmheRPUZCG7uTvd7HLRUMK0HTchj9M';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error('❌ Les variables d\'environnement NEXT_PUBLIC_SUPABASE_URL et NEXT_PUBLIC_SUPABASE_ANON_KEY sont requises.');
+  process.exit(1);
+}
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 

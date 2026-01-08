@@ -3,11 +3,17 @@
 const { createClient } = require('@supabase/supabase-js');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env.local') });
 
 console.log('🔒 Application des corrections RLS pour Qualee\n');
 
-const supabaseUrl = 'https://egemjezgejptazoucwci.supabase.co';
-const supabaseServiceKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnZW1qZXpnZWpwdGF6b3Vjd2NpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2Njc4NjA1OSwiZXhwIjoyMDgyMzYyMDU5fQ.HJJStxiUl5BoGF6VFqWsDC6uFHKemB27A4fTVKCfgcI';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl || !supabaseServiceKey) {
+  console.error('❌ Les variables d\'environnement NEXT_PUBLIC_SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY sont requises.');
+  process.exit(1);
+}
 
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
@@ -16,7 +22,12 @@ async function testAccess() {
 
   try {
     // Test avec la clé anon (comme un client)
-    const anonClient = createClient(supabaseUrl, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnZW1qZXpnZWpwdGF6b3Vjd2NpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3ODYwNTksImV4cCI6MjA4MjM2MjA1OX0.3n7ZUhCAIC7DESmheRPUZCG7uTvd7HLRUMK0HTchj9M');
+    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!anonKey) {
+        console.warn('⚠️  NEXT_PUBLIC_SUPABASE_ANON_KEY manquant, impossible de tester l\'accès anon.');
+        return false;
+    }
+    const anonClient = createClient(supabaseUrl, anonKey);
 
     console.log('📊 Test 1: Accès public aux marchands');
     const { data: merchants, error: merchantError } = await anonClient

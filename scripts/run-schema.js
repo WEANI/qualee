@@ -26,7 +26,7 @@ async function executeStatement(sql, index, total) {
     const data = JSON.stringify({ query: sql });
     
     const options = {
-      hostname: 'egemjezgejptazoucwci.supabase.co',
+      hostname: hostname,
       port: 443,
       path: '/rest/v1/rpc/exec_sql',
       method: 'POST',
