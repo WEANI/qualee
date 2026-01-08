@@ -85,7 +85,7 @@ export default function SpinPage() {
         .from('merchants')
         .select('*')
         .eq('id', shopId)
-        .single();
+        .maybeSingle();
 
       if (merchantData) {
         setMerchant(merchantData);

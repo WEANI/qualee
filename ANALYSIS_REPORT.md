@@ -166,7 +166,7 @@ export function useMerchant(shopId: string) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.from('merchants').select('*').eq('id', shopId).single()
+    supabase.from('merchants').select('*').eq('id', shopId).maybeSingle()
       .then(({ data }) => setMerchant(data))
       .finally(() => setLoading(false));
   }, [shopId]);

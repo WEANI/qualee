@@ -71,7 +71,7 @@ function CouponContent() {
           .from('merchants')
           .select('*')
           .eq('id', shopId)
-          .single();
+          .maybeSingle();
 
         if (merchantError || !merchantData) {
           setError('Commerçant introuvable');

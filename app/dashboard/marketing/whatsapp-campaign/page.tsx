@@ -95,7 +95,7 @@ export default function WhatsAppCampaignPage() {
           .from('merchants')
           .select('*')
           .eq('id', user.id)
-          .single();
+          .maybeSingle();
         setMerchant(data);
 
         // Fetch saved campaigns

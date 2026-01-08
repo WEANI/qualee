@@ -40,7 +40,7 @@ export const merchants = {
       .from('merchants')
       .select('*')
       .eq('id', id)
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as Merchant;
@@ -54,7 +54,7 @@ export const merchants = {
       .from('merchants')
       .insert(merchant)
       .select()
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as Merchant;
@@ -69,7 +69,7 @@ export const merchants = {
       .update(updates)
       .eq('id', id)
       .select()
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as Merchant;

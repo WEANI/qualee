@@ -38,7 +38,7 @@ export default function ScanPage() {
         .from('merchants')
         .select('*')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
       setMerchant(merchantData);
     };

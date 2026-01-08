@@ -34,7 +34,7 @@ export function useMerchant() {
         .from('merchants')
         .select('*')
         .eq('id', userId)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
 
@@ -70,7 +70,7 @@ export function useMerchant() {
         })
         .eq('id', user.id)
         .select()
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
 
@@ -138,7 +138,7 @@ export function useMerchantById(merchantId: string | null) {
           .from('merchants')
           .select('*')
           .eq('id', merchantId)
-          .single();
+          .maybeSingle();
 
         if (error) throw error;
 

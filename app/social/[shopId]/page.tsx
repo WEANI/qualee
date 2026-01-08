@@ -26,7 +26,7 @@ export default function SocialPage() {
         .from('merchants')
         .select('*')
         .eq('id', shopId)
-        .single();
+        .maybeSingle();
 
       if (data) {
         setMerchant(data);
