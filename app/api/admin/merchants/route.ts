@@ -74,13 +74,14 @@ export async function GET(request: NextRequest) {
     // Verify admin authorization
     const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || [];
     const userEmail = user.email?.toLowerCase();
+    const isRoleAdmin = user.app_metadata?.role === 'admin';
 
-    if (adminEmails.length === 0) {
-      console.warn('No admin emails configured');
+    if (adminEmails.length === 0 && !isRoleAdmin) {
+      console.warn('No admin emails configured and user is not admin role');
       return NextResponse.json({ error: 'Admin access not configured' }, { status: 403 });
     }
 
-    if (!userEmail || !adminEmails.includes(userEmail)) {
+    if ((!userEmail || !adminEmails.includes(userEmail)) && !isRoleAdmin) {
       console.warn(`Unauthorized admin API access attempt by: ${userEmail}`);
       return NextResponse.json({ error: 'Forbidden: Admin access required' }, { status: 403 });
     }

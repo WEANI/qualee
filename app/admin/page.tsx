@@ -185,12 +185,16 @@ export default function AdminDashboard() {
     }
 
     // Admin authorization check
-    // The middleware already validates admin access, but we double-check here
-    const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || [];
-    const userEmail = user.email?.toLowerCase();
-
-    if (adminEmails.length > 0 && (!userEmail || !adminEmails.includes(userEmail))) {
-      console.warn('Unauthorized admin access attempt');
+    // We check via API to support both email list and role-based admin
+    try {
+      const response = await fetch('/api/admin/check');
+      if (!response.ok) {
+        console.warn('Unauthorized admin access attempt');
+        router.push('/dashboard');
+        return;
+      }
+    } catch (e) {
+      console.error('Error checking admin status', e);
       router.push('/dashboard');
       return;
     }

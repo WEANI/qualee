@@ -39,8 +39,9 @@ export async function GET() {
 
   const adminEmails = getAdminEmails();
   const userEmail = user.email?.toLowerCase();
+  const isRoleAdmin = user.app_metadata?.role === 'admin';
 
-  if (!userEmail || !adminEmails.includes(userEmail)) {
+  if ((!userEmail || !adminEmails.includes(userEmail)) && !isRoleAdmin) {
     return NextResponse.json(
       { error: 'Accès non autorisé' },
       { status: 403 }
