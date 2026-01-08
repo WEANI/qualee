@@ -31,6 +31,8 @@ export interface Merchant {
   // WhatsApp workflow fields
   workflow_mode?: 'web' | 'whatsapp';
   whatsapp_message_template?: string | null;
+  is_admin?: boolean;
+  is_active?: boolean;
   created_at: string;
   updated_at: string;
 }

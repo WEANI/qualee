@@ -93,13 +93,14 @@ export async function middleware(request: NextRequest) {
     // Check admin authorization
     const adminEmails = getAdminEmails();
     const userEmail = user.email?.toLowerCase();
+    const isRoleAdmin = user.app_metadata?.role === 'admin';
 
-    if (adminEmails.length === 0) {
-      console.warn('No admin emails configured. Admin access denied.');
+    if (adminEmails.length === 0 && !isRoleAdmin) {
+      console.warn('No admin emails configured and user is not admin role. Admin access denied.');
       return NextResponse.redirect(new URL('/admin/login', request.url));
     }
 
-    if (!userEmail || !adminEmails.includes(userEmail)) {
+    if ((!userEmail || !adminEmails.includes(userEmail)) && !isRoleAdmin) {
       console.warn(`Unauthorized admin access attempt by: ${userEmail}`);
       return NextResponse.redirect(new URL('/admin/login', request.url));
     }
@@ -116,8 +117,9 @@ export async function middleware(request: NextRequest) {
 
     const adminEmails = getAdminEmails();
     const userEmail = user.email?.toLowerCase();
+    const isRoleAdmin = user.app_metadata?.role === 'admin';
 
-    if (adminEmails.length === 0 || !userEmail || !adminEmails.includes(userEmail)) {
+    if ((adminEmails.length === 0 || !userEmail || !adminEmails.includes(userEmail)) && !isRoleAdmin) {
       return NextResponse.json(
         { error: 'Forbidden: Admin access required' },
         { status: 403 }
