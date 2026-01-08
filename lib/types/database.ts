@@ -23,6 +23,11 @@ export interface Merchant {
   unlucky_quantity?: number;
   retry_quantity?: number;
   prize_quantities?: Record<string, number>;
+  // Wheel segment colors
+  unlucky_color?: string;
+  unlucky_text_color?: string;
+  retry_color?: string;
+  retry_text_color?: string;
   // WhatsApp workflow fields
   workflow_mode?: 'web' | 'whatsapp';
   whatsapp_message_template?: string | null;
@@ -38,6 +43,8 @@ export interface Prize {
   image_url: string | null;
   probability: number;
   quantity: number;
+  color: string;
+  text_color: string;
   created_at: string;
   updated_at: string;
 }
