@@ -525,19 +525,19 @@ export default function LandingPage() {
             </Card>
           </div>
 
-          {/* Thailand specific features */}
+          {/* Beauty sector specific features */}
           <div className="mt-16 max-w-5xl mx-auto">
             <Card className="bg-gradient-to-br from-[#dda8ba] to-[#8b6b75] border-0 rounded-2xl p-10">
               <div className="grid md:grid-cols-3 gap-8 text-center">
                 <div>
-                  <div className="text-4xl font-black text-white mb-2">🇹🇭</div>
-                  <h4 className="text-lg font-bold text-white mb-2">{t('landing.benefits.thailand')}</h4>
-                  <p className="text-white/80 text-sm">{t('landing.benefits.thailandDesc')}</p>
+                  <div className="text-4xl font-black text-white mb-2">💇‍♀️</div>
+                  <h4 className="text-lg font-bold text-white mb-2">{t('landing.benefits.beauty')}</h4>
+                  <p className="text-white/80 text-sm">{t('landing.benefits.beautyDesc')}</p>
                 </div>
                 <div>
-                  <div className="text-4xl font-black text-white mb-2">🏖️</div>
-                  <h4 className="text-lg font-bold text-white mb-2">{t('landing.benefits.touristZones')}</h4>
-                  <p className="text-white/80 text-sm">{t('landing.benefits.touristZonesDesc')}</p>
+                  <div className="text-4xl font-black text-white mb-2">🇫🇷🇨🇭🇧🇪</div>
+                  <h4 className="text-lg font-bold text-white mb-2">{t('landing.benefits.zones')}</h4>
+                  <p className="text-white/80 text-sm">{t('landing.benefits.zonesDesc')}</p>
                 </div>
                 <div>
                   <div className="text-4xl font-black text-white mb-2">⭐</div>
@@ -566,15 +566,15 @@ export default function LandingPage() {
 
           {/* Testimonials grid */}
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Testimonial 1 */}
+            {/* Testimonial 1 - Salon de coiffure France */}
             <Card className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:shadow-xl transition-shadow">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 bg-[#dda8ba] rounded-full flex items-center justify-center text-2xl text-white font-bold">
-                  MA
+                  SL
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900">Marc Alonso</h4>
-                  <p className="text-sm text-gray-600">Restaurant Le Gourmet, Paris</p>
+                  <h4 className="font-bold text-gray-900">Sophie Laurent</h4>
+                  <p className="text-sm text-gray-600">Salon L'Élégance, Lyon</p>
                 </div>
               </div>
               <div className="flex gap-1 mb-4">
@@ -585,19 +585,19 @@ export default function LandingPage() {
                 ))}
               </div>
               <p className="text-gray-700 leading-relaxed italic">
-                "En 3 mois, on est passé de 3.8 à 4.6 sur Google. Nos clients adorent la roue et reviennent plus vite !"
+                "En 2 mois, on est passé de 4.1 à 4.8 sur Google. Mes clientes adorent la roue et reviennent plus vite pour leur prochain rendez-vous !"
               </p>
             </Card>
 
-            {/* Testimonial 2 */}
+            {/* Testimonial 2 - Spa Suisse */}
             <Card className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:shadow-xl transition-shadow">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 bg-[#dda8ba] rounded-full flex items-center justify-center text-2xl text-white font-bold">
-                  SP
+                  MB
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900">Somchai Patel</h4>
-                  <p className="text-sm text-gray-600">Spa Thai Paradise, Phuket</p>
+                  <h4 className="font-bold text-gray-900">Marie Blanc</h4>
+                  <p className="text-sm text-gray-600">Spa Sérénité, Genève</p>
                 </div>
               </div>
               <div className="flex gap-1 mb-4">
@@ -608,19 +608,19 @@ export default function LandingPage() {
                 ))}
               </div>
               <p className="text-gray-700 leading-relaxed italic">
-                "Les touristes adorent ! Notre note TripAdvisor a augmenté de 0.8 point en 2 mois."
+                "L'interface multilingue est parfaite pour notre clientèle internationale. Notre note Google a augmenté de 0.7 point !"
               </p>
             </Card>
 
-            {/* Testimonial 3 */}
+            {/* Testimonial 3 - Institut Belgique */}
             <Card className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:shadow-xl transition-shadow">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 bg-[#dda8ba] rounded-full flex items-center justify-center text-2xl text-white font-bold">
-                  CL
+                  CV
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900">Niran Chai</h4>
-                  <p className="text-sm text-gray-600">Sunrise Hotel, Koh Samui</p>
+                  <h4 className="font-bold text-gray-900">Claire Vermeer</h4>
+                  <p className="text-sm text-gray-600">Institut Beauté Pure, Bruxelles</p>
                 </div>
               </div>
               <div className="flex gap-1 mb-4">
@@ -631,7 +631,7 @@ export default function LandingPage() {
                 ))}
               </div>
               <p className="text-gray-700 leading-relaxed italic">
-                "Parfait pour notre hôtel. Les clients internationaux adorent la roue !"
+                "Simple et efficace ! Mes clientes laissent enfin des avis et les récompenses les fidélisent. Je recommande !"
               </p>
             </Card>
           </div>
@@ -997,7 +997,7 @@ export default function LandingPage() {
                 <span className="text-2xl font-bold text-white">qualee</span>
               </div>
               <p className="text-white/70 mb-6 leading-relaxed">
-                La solution gamifiée qui transforme vos clients satisfaits en ambassadeurs et booste votre réputation en ligne.
+                La solution gamifiée qui transforme vos clientes satisfaites en ambassadrices et booste la réputation de votre salon.
               </p>
               <div className="flex gap-4">
                 <a href="#" className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition">
@@ -1058,11 +1058,11 @@ export default function LandingPage() {
               © 2025 Qualee. Tous droits réservés.
             </p>
             <div className="flex items-center gap-6 text-white/60 text-sm">
-              <span>Made with ❤️ for Thai businesses</span>
+              <span>Made with ❤️ for beauty professionals</span>
               <div className="flex items-center gap-2">
-                <span>🇹🇭</span>
                 <span>🇫🇷</span>
-                <span>🇬🇧</span>
+                <span>🇨🇭</span>
+                <span>🇧🇪</span>
               </div>
             </div>
           </div>
