@@ -135,23 +135,24 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Right column - DESIGNSPIN Image (2/3) */}
+            {/* Right column - Qualee Design Image (2/3) */}
             <div className="md:col-span-2 flex items-center justify-center">
-              <div className="relative w-full max-w-3xl">
+              <div className="relative w-full max-w-3xl group">
                 <img
-                  src="/DESIGNSPIN.png"
-                  alt="Qualee Wheel"
-                  className="w-full h-auto drop-shadow-2xl animate-pulse"
+                  src="/qualee-design.png"
+                  alt="Qualee Design"
+                  className="w-full h-auto drop-shadow-2xl animate-float"
                   style={{
-                    filter: 'drop-shadow(0 0 80px rgba(82, 183, 136, 0.5))'
+                    filter: 'drop-shadow(0 0 60px rgba(221, 168, 186, 0.6))'
                   }}
                 />
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#dda8ba]/20 to-transparent rounded-full blur-3xl"></div>
-                
-                {/* Decorative elements */}
-                <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-[#dda8ba]/20 rounded-full blur-3xl"></div>
-                <div className="absolute -top-12 -right-12 w-40 h-40 bg-[#dda8ba]/10 rounded-full blur-3xl"></div>
+                {/* Animated pink glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#dda8ba]/30 via-[#c99aab]/20 to-transparent rounded-3xl blur-3xl animate-pulse"></div>
+
+                {/* Decorative pink elements with animation */}
+                <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-[#dda8ba]/30 rounded-full blur-3xl animate-ping-slow"></div>
+                <div className="absolute -top-12 -right-12 w-40 h-40 bg-[#e8c4cf]/20 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute top-1/2 -left-8 w-24 h-24 bg-[#f0d4dc]/25 rounded-full blur-2xl animate-bounce-slow"></div>
               </div>
             </div>
           </div>
