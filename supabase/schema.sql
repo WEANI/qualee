@@ -32,7 +32,9 @@ CREATE TABLE merchants (
   retry_quantity INTEGER DEFAULT 1,
   prize_quantities JSONB DEFAULT '{}'::jsonb,
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  is_admin BOOLEAN DEFAULT FALSE,
+  is_active BOOLEAN DEFAULT TRUE
 );
 
 -- 2. Prizes table
