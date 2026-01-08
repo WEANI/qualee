@@ -337,6 +337,76 @@ export default function AdminDashboard() {
     alert('Link copied to clipboard!');
   };
 
+  const updateMerchantStatus = async (merchantId: string, isActive: boolean) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      const response = await fetch('/api/admin/merchants', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          merchantId,
+          is_active: isActive
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to update status');
+
+      // Optimistic update
+      setMerchants(merchants.map(m => 
+        m.id === merchantId ? { ...m, is_active: isActive } : m
+      ));
+      setFilteredMerchants(filteredMerchants.map(m => 
+        m.id === merchantId ? { ...m, is_active: isActive } : m
+      ));
+      
+      // Refresh stats
+      loadMerchants();
+    } catch (error) {
+      console.error('Error updating status:', error);
+      alert('Erreur lors de la mise à jour du statut');
+    }
+  };
+
+  const updateMerchantTier = async (merchantId: string, tier: string) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      const response = await fetch('/api/admin/merchants', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          merchantId,
+          subscription_tier: tier
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to update tier');
+
+      // Optimistic update
+      setMerchants(merchants.map(m => 
+        m.id === merchantId ? { ...m, subscription_tier: tier } : m
+      ));
+      setFilteredMerchants(filteredMerchants.map(m => 
+        m.id === merchantId ? { ...m, subscription_tier: tier } : m
+      ));
+      
+      // Refresh stats
+      loadMerchants();
+    } catch (error) {
+      console.error('Error updating tier:', error);
+      alert('Erreur lors de la mise à jour du plan');
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
@@ -919,6 +989,41 @@ export default function AdminDashboard() {
                               </div>
                             )}
                             
+                            {/* Account Management */}
+                            <div className="border-t border-slate-700/50 pt-3 mt-3">
+                              <p className="text-xs font-semibold text-white mb-2">Gestion du Compte</p>
+                              <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                  <label className="text-xs text-white/70 block mb-1">Plan</label>
+                                  <select
+                                    value={merchant.subscription_tier || 'free'}
+                                    onChange={(e) => updateMerchantTier(merchant.id, e.target.value)}
+                                    className="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-purple-500"
+                                  >
+                                    <option value="free">Gratuit</option>
+                                    <option value="starter">Starter</option>
+                                    <option value="premium">Premium</option>
+                                  </select>
+                                </div>
+                                <div>
+                                  <label className="text-xs text-white/70 block mb-1">Statut</label>
+                                  <div className="flex gap-2">
+                                    <Button
+                                      size="sm"
+                                      onClick={() => updateMerchantStatus(merchant.id, merchant.is_active === false)}
+                                      className={`w-full text-xs h-7 ${
+                                        merchant.is_active !== false
+                                          ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30 border-red-500/30'
+                                          : 'bg-green-500/20 text-green-400 hover:bg-green-500/30 border-green-500/30'
+                                      }`}
+                                    >
+                                      {merchant.is_active !== false ? 'Désactiver' : 'Activer'}
+                                    </Button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
                             {/* Social Media Links */}
                             <div className="border-t border-slate-700/50 pt-3 mt-3">
                               <p className="text-xs font-semibold text-white mb-2">Liens de Redirection</p>

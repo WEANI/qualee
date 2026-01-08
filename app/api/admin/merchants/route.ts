@@ -176,3 +176,82 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function PATCH(request: NextRequest) {
+  try {
+    // Rate limiting
+    const clientIP = getClientIP(request.headers);
+    const rateLimit = checkRateLimit(
+      `admin_write:${clientIP}`,
+      RATE_LIMITS.API_DEFAULT.limit,
+      RATE_LIMITS.API_DEFAULT.windowMs
+    );
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
+    // Get admin client
+    const adminClient = getSupabaseAdmin();
+    if (!adminClient) {
+      return NextResponse.json({ error: 'Service not configured' }, { status: 500 });
+    }
+
+    // Verify auth
+    const authHeader = request.headers.get('authorization');
+    if (!authHeader) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    const { data: { user }, error: authError } = await adminClient.auth.getUser(token);
+
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+    }
+
+    // Verify admin authorization
+    const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim().toLowerCase()) || [];
+    const userEmail = user.email?.toLowerCase();
+    const isRoleAdmin = user.app_metadata?.role === 'admin';
+
+    if ((!userEmail || !adminEmails.includes(userEmail)) && !isRoleAdmin) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
+    // Parse body
+    const body = await request.json();
+    const { merchantId, is_active, subscription_tier } = body;
+
+    if (!merchantId) {
+      return NextResponse.json({ error: 'Merchant ID required' }, { status: 400 });
+    }
+
+    const updates: any = {};
+    if (typeof is_active !== 'undefined') updates.is_active = is_active;
+    if (subscription_tier) updates.subscription_tier = subscription_tier;
+
+    if (Object.keys(updates).length === 0) {
+      return NextResponse.json({ error: 'No updates provided' }, { status: 400 });
+    }
+
+    // Perform update
+    const { data, error } = await adminClient
+      .from('merchants')
+      .update(updates)
+      .eq('id', merchantId)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    return NextResponse.json({ success: true, merchant: data });
+
+  } catch (error: any) {
+    console.error('Admin API error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
