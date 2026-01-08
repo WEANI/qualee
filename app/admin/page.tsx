@@ -362,8 +362,8 @@ export default function AdminDashboard() {
             color: {
               dark: '#dda8ba',
               light: '#FFFFFF',
-              correctLevel: 'H'
             },
+            errorCorrectionLevel: 'H'
           });
           
           // Remove data:image/png;base64, prefix
