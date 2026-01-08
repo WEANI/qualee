@@ -25,13 +25,14 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
+    lng: 'fr', // Langue par défaut
     fallbackLng: 'fr',
-    supportedLngs: ['en', 'fr', 'es', 'ar', 'th', 'zh', 'ru'],
+    supportedLngs: ['fr', 'en', 'es', 'ar', 'th', 'zh', 'ru'],
     interpolation: {
       escapeValue: false,
     },
     detection: {
-      order: ['querystring', 'navigator', 'htmlTag'],
+      order: ['querystring', 'localStorage', 'navigator', 'htmlTag'],
       caches: ['localStorage'],
     },
     react: {
