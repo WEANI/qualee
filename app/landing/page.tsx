@@ -54,26 +54,26 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#f5eaed]">
       {/* Header */}
-      <header className="fixed top-0 w-full bg-[#8b6b75]/95 backdrop-blur-sm z-50">
+      <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm">
         <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img
-              src="/LOGO-QUALEE-WHITE_web.png"
+              src="/LOGO-QUALEE-DARK_web.png"
               alt="Qualee Logo"
               className="h-12 sm:h-16 md:h-20 w-auto"
             />
           </div>
-          
+
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#demo" className="text-white/90 hover:text-white transition text-sm no-underline">{t('landing.nav.howItWorks')}</a>
-            <a href="#pricing" className="text-white/90 hover:text-white transition text-sm no-underline">{t('landing.nav.pricing')}</a>
-            <a href="#testimonials" className="text-white/90 hover:text-white transition text-sm no-underline">{t('landing.nav.testimonials')}</a>
+            <a href="#demo" className="text-gray-900 hover:text-[#dda8ba] transition text-sm no-underline font-medium">{t('landing.nav.howItWorks')}</a>
+            <a href="#pricing" className="text-gray-900 hover:text-[#dda8ba] transition text-sm no-underline font-medium">{t('landing.nav.pricing')}</a>
+            <a href="#testimonials" className="text-gray-900 hover:text-[#dda8ba] transition text-sm no-underline font-medium">{t('landing.nav.testimonials')}</a>
           </nav>
 
           <div className="flex items-center gap-4">
-            <LanguageSwitcher variant="light" />
+            <LanguageSwitcher variant="dark" />
             <Link href="/auth/signup">
-              <Button className="bg-[#FFD700] text-black font-bold rounded-full hover:bg-[#FFC700] hover:shadow-lg transition-all">
+              <Button className="bg-[#dda8ba] text-white font-bold rounded-full hover:bg-[#c99aab] hover:shadow-lg transition-all">
                 {t('landing.nav.getStarted')}
               </Button>
             </Link>
@@ -84,10 +84,10 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="relative min-h-screen overflow-hidden">
         {/* Parallax Background */}
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-fixed"
           style={{
-            backgroundImage: 'url(/imgi_48_background.jpg)',
+            backgroundImage: 'url(/back-qualee.jpg)',
             backgroundAttachment: 'fixed'
           }}
         >
@@ -708,8 +708,8 @@ export default function LandingPage() {
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold text-white mb-4">{t('landing.pricing.pro')}</h3>
                 <div className="mb-2">
-                  <span className="text-2xl font-medium text-white/60 line-through mr-2">2,000 ฿</span>
-                  <span className="text-5xl font-black text-white">1,000 ฿</span>
+                  <span className="text-2xl font-medium text-white/60 line-through mr-2">99€</span>
+                  <span className="text-5xl font-black text-white">49€</span>
                 </div>
                 <div className="inline-flex items-center gap-2 bg-[#FFB703]/20 rounded-full px-3 py-1 mb-2">
                   <span className="text-[#FFB703] font-bold text-sm">-50% PROMO</span>
@@ -761,14 +761,14 @@ export default function LandingPage() {
               </Link>
             </Card>
 
-            {/* Enterprise Plan */}
+            {/* Multi Shop Plan */}
             <Card className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:shadow-xl transition-all">
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('landing.pricing.enterprise')}</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('landing.pricing.multiShop')}</h3>
                 <div className="mb-2">
-                  <span className="text-5xl font-black text-gray-900">{t('landing.pricing.enterprisePrice')}</span>
+                  <span className="text-5xl font-black text-gray-900">{t('landing.pricing.multiShopPrice')}</span>
                 </div>
-                <p className="text-gray-600">{t('landing.pricing.enterprisePeriod')}</p>
+                <p className="text-gray-600">{t('landing.pricing.multiShopPeriod')}</p>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
