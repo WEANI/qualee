@@ -55,9 +55,24 @@ export function FortuneWheel3D({
     setWinner(null);
 
     const winnerIndex = selectWinner();
-    const segmentMiddle = winnerIndex * segmentAngle + segmentAngle / 2;
+    // Calculate the angle to the center of the winning segment
+    // Segments start at -90deg (top), so segment 0 is from -90 to -90+segmentAngle
+    // The pointer is at top (0 rotation = segment 0 center under pointer)
+    // To land on segment N, we need to rotate so that segment N's center is at top
+    const segmentCenterAngle = winnerIndex * segmentAngle + segmentAngle / 2;
+
+    // Add extra spins for effect (5-8 full rotations)
     const extraSpins = 5 + Math.random() * 3;
-    const targetRotation = rotation + (extraSpins * 360) + (360 - segmentMiddle) - (rotation % 360);
+
+    // Calculate target: we need the wheel to rotate so segmentCenterAngle ends up at top (0)
+    // Current rotation modulo 360 gives us where we are
+    const currentAngle = rotation % 360;
+
+    // The target is to rotate to align segment center with pointer
+    // Since wheel rotates clockwise with positive values, we need:
+    // targetRotation = currentRotation + extraSpins*360 + (360 - segmentCenterAngle - currentAngle) % 360
+    const angleToRotate = (360 - segmentCenterAngle - currentAngle + 360) % 360;
+    const targetRotation = rotation + (extraSpins * 360) + angleToRotate;
 
     setRotation(targetRotation);
 
