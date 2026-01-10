@@ -339,31 +339,39 @@ export function FortuneWheel3D({
             <ellipse cx="185" cy="185" rx="18" ry="14" fill="rgba(255,255,255,0.25)" />
           </svg>
 
-          {/* SPIN Button */}
-          <button
-            onClick={spinWheel}
-            disabled={isSpinning || disabled}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full font-black text-lg tracking-wider transition-all z-20 flex items-center justify-center"
+          {/* SPIN Button - positioned in center of wheel */}
+          <div
+            className="absolute z-20"
             style={{
-              background: isSpinning || disabled
-                ? 'radial-gradient(circle at 35% 35%, #666 0%, #444 50%, #333 100%)'
-                : 'radial-gradient(circle at 35% 35%, #F5E6A3 0%, #D4AF37 30%, #B8860B 70%, #8B6914 100%)',
-              color: isSpinning || disabled ? '#888' : '#4a2c00',
-              boxShadow: isSpinning || disabled
-                ? 'inset 0 2px 5px rgba(0,0,0,0.5)'
-                : '0 4px 15px rgba(139,105,20,0.5), inset 0 2px 0 rgba(255,255,255,0.4), inset 0 -2px 0 rgba(0,0,0,0.2)',
-              cursor: isSpinning || disabled ? 'not-allowed' : 'pointer',
-              textShadow: isSpinning || disabled ? 'none' : '0 1px 0 rgba(255,255,255,0.3)',
-              border: '3px solid #8B6914',
-              transform: 'translate(-50%, -50%) rotateX(-5deg)'
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
             }}
           >
-            {isSpinning ? (
-              <span className="animate-pulse">...</span>
-            ) : (
-              'SPIN'
-            )}
-          </button>
+            <button
+              onClick={spinWheel}
+              disabled={isSpinning || disabled}
+              className="w-24 h-24 rounded-full font-black text-lg tracking-wider transition-all flex items-center justify-center"
+              style={{
+                background: isSpinning || disabled
+                  ? 'radial-gradient(circle at 35% 35%, #666 0%, #444 50%, #333 100%)'
+                  : 'radial-gradient(circle at 35% 35%, #F5E6A3 0%, #D4AF37 30%, #B8860B 70%, #8B6914 100%)',
+                color: isSpinning || disabled ? '#888' : '#4a2c00',
+                boxShadow: isSpinning || disabled
+                  ? 'inset 0 2px 5px rgba(0,0,0,0.5)'
+                  : '0 4px 15px rgba(139,105,20,0.5), inset 0 2px 0 rgba(255,255,255,0.4), inset 0 -2px 0 rgba(0,0,0,0.2)',
+                cursor: isSpinning || disabled ? 'not-allowed' : 'pointer',
+                textShadow: isSpinning || disabled ? 'none' : '0 1px 0 rgba(255,255,255,0.3)',
+                border: '3px solid #8B6914',
+              }}
+            >
+              {isSpinning ? (
+                <span className="animate-pulse">...</span>
+              ) : (
+                'SPIN'
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Gold Pedestal */}
