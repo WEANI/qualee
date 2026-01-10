@@ -3,11 +3,21 @@
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env.local') });
 
-const SUPABASE_URL = 'https://egemjezgejptazoucwci.supabase.co';
-const SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnZW1qZXpnZWpwdGF6b3Vjd2NpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2Njc4NjA1OSwiZXhwIjoyMDgyMzYyMDU5fQ.HJJStxiUl5BoGF6VFqWsDC6uFHKemB27A4fTVKCfgcI';
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!SUPABASE_URL || !SERVICE_KEY) {
+  console.error('❌ Les variables d\'environnement NEXT_PUBLIC_SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY sont requises.');
+  process.exit(1);
+}
 
 console.log('🚀 Qualee - Exécution automatique du schéma SQL\n');
+
+// Extract hostname from URL
+const urlObj = new URL(SUPABASE_URL);
+const hostname = urlObj.hostname;
 
 // Lire le schéma SQL
 const schemaPath = path.join(__dirname, '../supabase/schema.sql');
@@ -26,7 +36,7 @@ async function executeStatement(sql, index, total) {
     const data = JSON.stringify({ query: sql });
     
     const options = {
-      hostname: hostname,
+      hostname: 'egemjezgejptazoucwci.supabase.co',
       port: 443,
       path: '/rest/v1/rpc/exec_sql',
       method: 'POST',

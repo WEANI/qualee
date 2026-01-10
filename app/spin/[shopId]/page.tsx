@@ -384,19 +384,6 @@ export default function SpinPage() {
         <div className="absolute inset-0 bg-[#4a4a52]"></div>
       )}
 
-      {/* Title */}
-      <h1
-        className="relative z-10 text-3xl md:text-4xl font-black mb-4 tracking-wide"
-        style={{
-          background: 'linear-gradient(180deg, #ffd700 0%, #b8860b 50%, #8b6914 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))'
-        }}
-      >
-        FORTUNE WHEEL
-      </h1>
-
       {/* Wheel */}
       <div className="relative z-10">
         <FortuneWheel3D
