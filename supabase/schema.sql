@@ -140,6 +140,9 @@ CREATE POLICY "Merchants can view own data" ON merchants
 CREATE POLICY "Public can view merchants" ON merchants
   FOR SELECT USING (true);
 
+CREATE POLICY "Merchants can create own profile" ON merchants
+  FOR INSERT WITH CHECK (auth.uid()::text = id::text);
+
 CREATE POLICY "Merchants can update own data" ON merchants
   FOR UPDATE USING (auth.uid()::text = id::text);
 
