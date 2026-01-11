@@ -100,7 +100,7 @@ export default function SignUpPage() {
   // Afficher l'écran de confirmation d'email
   if (confirmationSent) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#4CAF50] to-[#2196F3] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-[#2EC4B6] to-[#FF9F1C] flex items-center justify-center p-4">
         <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full text-center">
           {/* Animation de succès */}
           <div className="relative mb-6">
@@ -183,9 +183,9 @@ export default function SignUpPage() {
             >
               Modifier l'email
             </Button>
-            <Button 
-              onClick={() => router.push('/auth/login')} 
-              className="flex-1 bg-gradient-to-r from-[#4CAF50] to-[#45a049]"
+            <Button
+              onClick={() => router.push('/auth/login')}
+              className="flex-1 bg-gradient-to-r from-[#2EC4B6] to-[#FF9F1C]"
             >
               Aller à la connexion
             </Button>
@@ -196,7 +196,7 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#4CAF50] to-[#2196F3] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#2EC4B6] to-[#FF9F1C] flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full">
         <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">Join Qualee</h1>
         <p className="text-center text-gray-600 mb-8">Create your merchant account</p>
@@ -207,7 +207,7 @@ export default function SignUpPage() {
             {error.includes('existe déjà') && (
               <a
                 href="/auth/login"
-                className="inline-block mt-2 text-sm font-semibold text-[#4CAF50] hover:underline"
+                className="inline-block mt-2 text-sm font-semibold text-[#2EC4B6] hover:underline"
               >
                 → Se connecter maintenant
               </a>
@@ -250,7 +250,7 @@ export default function SignUpPage() {
 
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{' '}
-          <a href="/auth/login" className="text-[#4CAF50] font-semibold hover:underline">
+          <a href="/auth/login" className="text-[#2EC4B6] font-semibold hover:underline">
             Sign In
           </a>
         </p>

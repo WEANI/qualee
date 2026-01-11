@@ -35,8 +35,8 @@ const DEFAULT_PRIZE_COLORS = [
   '#F5C6C6', // Light pink
   '#D4548A', // Magenta
   '#D4A574', // Gold/Bronze
-  '#dda8ba', // Pink
-  '#c99aab', // Rose
+  '#FF9F1C', // Pink
+  '#FFBF69', // Rose
 ];
 
 // Distribute segments evenly so same-type segments are not adjacent

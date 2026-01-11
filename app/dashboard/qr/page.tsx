@@ -45,7 +45,7 @@ export default function QRCodePage() {
           width: 400,
           margin: 2,
           color: {
-            dark: '#dda8ba',
+            dark: '#FF9F1C',
             light: '#FFFFFF',
           },
         });
@@ -77,7 +77,7 @@ export default function QRCodePage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#dda8ba] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-[#FF9F1C] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-lg text-gray-600">Loading...</p>
         </div>
       </div>
@@ -104,7 +104,7 @@ export default function QRCodePage() {
                 </span>
               </div>
             )}
-            <div className="bg-white p-8 rounded-lg border-4 border-[#dda8ba] shadow-lg">
+            <div className="bg-white p-8 rounded-lg border-4 border-[#FF9F1C] shadow-lg">
               {qrCodeUrl && (
                 <img src={qrCodeUrl} alt="QR Code" className="w-80 h-80" />
               )}
@@ -130,7 +130,7 @@ export default function QRCodePage() {
                 <Copy className="w-4 h-4" />
                 Copy Link
               </Button>
-              <Button onClick={() => downloadQR('png')} className="w-full gap-2 bg-[#dda8ba] hover:bg-[#8b6b75]">
+              <Button onClick={() => downloadQR('png')} className="w-full gap-2 bg-[#FF9F1C] hover:bg-[#2EC4B6]">
                 <Download className="w-4 h-4" />
                 Download PNG
               </Button>

@@ -274,7 +274,7 @@ export default function AdminDashboard() {
       width: 400,
       margin: 2,
       color: {
-        dark: '#dda8ba',
+        dark: '#FF9F1C',
         light: '#FFFFFF',
       },
     });

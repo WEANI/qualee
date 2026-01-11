@@ -10,12 +10,12 @@ import '@/lib/i18n/config';
 
 // Default color palette for prize segments
 const DEFAULT_PRIZE_COLORS = [
+  '#FF9F1C', // Orange primary
+  '#FFBF69', // Orange light
+  '#2EC4B6', // Turquoise primary
+  '#CBF3F0', // Turquoise light
   '#E85A5A', // Red
-  '#F5C6C6', // Light pink
-  '#D4548A', // Magenta
   '#D4A574', // Gold/Bronze
-  '#dda8ba', // Pink
-  '#c99aab', // Rose
 ];
 
 export default function SpinPage() {
@@ -337,7 +337,7 @@ export default function SpinPage() {
 
   if (!isClient || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-600 to-pink-700">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#FF9F1C] to-[#2EC4B6]">
         <div className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-8">
           <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
         </div>

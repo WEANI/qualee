@@ -64,37 +64,44 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --background: #FFFFFF;
+  --foreground: #1a1a1a;
+  --card: #FFFFFF;
+  --card-foreground: #1a1a1a;
+  --popover: #FFFFFF;
+  --popover-foreground: #1a1a1a;
+  /* New palette: Orange #FF9F1C as primary, Turquoise #2EC4B6 as secondary */
+  --primary: #FF9F1C;
+  --primary-foreground: #FFFFFF;
+  --secondary: #2EC4B6;
+  --secondary-foreground: #FFFFFF;
+  --muted: #CBF3F0;
+  --muted-foreground: #1a1a1a;
+  --accent: #FFBF69;
+  --accent-foreground: #1a1a1a;
+  --destructive: #ef4444;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #FF9F1C;
+  --chart-1: #FF9F1C;
+  --chart-2: #2EC4B6;
+  --chart-3: #FFBF69;
+  --chart-4: #CBF3F0;
+  --chart-5: #1a1a1a;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #1a1a1a;
+  --sidebar-primary: #FF9F1C;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #CBF3F0;
+  --sidebar-accent-foreground: #1a1a1a;
+  --sidebar-border: #e5e5e5;
+  --sidebar-ring: #FF9F1C;
+
+  /* Custom color variables for easy access */
+  --orange-primary: #FF9F1C;
+  --orange-light: #FFBF69;
+  --turquoise-primary: #2EC4B6;
+  --turquoise-light: #CBF3F0;
 }
 
 .dark {
@@ -186,10 +193,10 @@
 
 @keyframes glow-pulse {
   0%, 100% {
-    box-shadow: 0 0 40px rgba(221, 168, 186, 0.4);
+    box-shadow: 0 0 40px rgba(255, 159, 28, 0.4);
   }
   50% {
-    box-shadow: 0 0 80px rgba(221, 168, 186, 0.7);
+    box-shadow: 0 0 80px rgba(255, 159, 28, 0.7);
   }
 }
 

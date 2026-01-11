@@ -122,7 +122,7 @@ function LoginForm() {
 
   if (magicLinkSent) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#FF6F61] to-[#FFC107] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-[#FF9F1C] to-[#2EC4B6] flex items-center justify-center p-4">
         <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full text-center">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Check Your Email</h1>
           <p className="text-gray-600 mb-6">
@@ -137,7 +137,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FF6F61] to-[#FFC107] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#FF9F1C] to-[#2EC4B6] flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full">
         <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">Qualee</h1>
         <p className="text-center text-gray-600 mb-8">Merchant Login</p>
@@ -192,7 +192,7 @@ function LoginForm() {
 
         <p className="text-center text-sm text-gray-600 mt-6">
           Don't have an account?{' '}
-          <a href="/auth/signup" className="text-[#FF6F61] font-semibold hover:underline">
+          <a href="/auth/signup" className="text-[#FF9F1C] font-semibold hover:underline">
             Sign Up
           </a>
         </p>
@@ -203,9 +203,9 @@ function LoginForm() {
 
 function LoginLoading() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FF6F61] to-[#FFC107] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#FF9F1C] to-[#2EC4B6] flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full text-center">
-        <div className="w-12 h-12 border-4 border-gray-300 border-t-[#FF6F61] rounded-full animate-spin mx-auto mb-4"></div>
+        <div className="w-12 h-12 border-4 border-gray-300 border-t-[#FF9F1C] rounded-full animate-spin mx-auto mb-4"></div>
         <p className="text-gray-600">Loading...</p>
       </div>
     </div>

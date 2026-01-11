@@ -42,7 +42,7 @@ export default function SocialPage() {
 
   if (!isClient || !merchant) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#4CAF50] to-[#2196F3]">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2EC4B6] to-[#FF9F1C]">
         <div className="bg-white rounded-3xl shadow-2xl p-8">
           <p className="text-lg text-gray-900">Loading...</p>
         </div>
@@ -51,7 +51,7 @@ export default function SocialPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#4CAF50] to-[#2196F3] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#2EC4B6] to-[#FF9F1C] flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full">
         {merchant.logo_url && (
           <div className="flex justify-center mb-6">

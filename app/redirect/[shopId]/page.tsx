@@ -324,7 +324,7 @@ export default function RedirectPage() {
 
   if (!isClient || !merchant) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-600 to-pink-700">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#FF9F1C] to-[#2EC4B6]">
         <div className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-8">
           <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
         </div>
@@ -347,7 +347,7 @@ export default function RedirectPage() {
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
         </>
       ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-pink-600 to-pink-700"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FF9F1C] to-[#2EC4B6]"></div>
       )}
 
       {/* Content */}
@@ -393,7 +393,7 @@ export default function RedirectPage() {
             <p className={`text-sm ${strategyInfo.text_color} text-center leading-relaxed`}>
               {strategyInfo.message.split('**').map((part, index) =>
                 index % 2 === 1 ? (
-                  <span key={index} className="font-bold text-pink-600 underline decoration-2 underline-offset-2">
+                  <span key={index} className="font-bold text-[#FF9F1C] underline decoration-2 underline-offset-2">
                     {part}
                   </span>
                 ) : (
@@ -515,8 +515,8 @@ export default function RedirectPage() {
                       {t('redirect.iDone')}
                     </Button>
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div className="bg-white/90 rounded-full w-14 h-14 flex items-center justify-center shadow-lg border-2 border-pink-200">
-                        <span className="text-2xl font-bold text-pink-600">{countdown}</span>
+                      <div className="bg-white/90 rounded-full w-14 h-14 flex items-center justify-center shadow-lg border-2 border-[#FFBF69]">
+                        <span className="text-2xl font-bold text-[#FF9F1C]">{countdown}</span>
                       </div>
                     </div>
                   </div>
@@ -528,7 +528,7 @@ export default function RedirectPage() {
                 <div className="space-y-3">
                   <Button
                     onClick={handleLaunchWheel}
-                    className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-4 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-lg"
+                    className="w-full bg-gradient-to-r from-[#FF9F1C] to-[#2EC4B6] hover:from-[#FFBF69] hover:to-[#2EC4B6] text-white py-4 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-lg"
                   >
                     <Star className="w-5 h-5" />
                     {t('redirect.iDoneLaunchWheel')}

@@ -217,7 +217,7 @@ export default function RatingPage() {
 
   if (!isClient || fetching) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-600 to-pink-700">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#FF9F1C] to-[#2EC4B6]">
         <div className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-8">
           <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
         </div>
@@ -227,7 +227,7 @@ export default function RatingPage() {
 
   if (!merchant) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-600 to-pink-700 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#FF9F1C] to-[#2EC4B6] p-4">
         <div className="bg-white rounded-3xl shadow-2xl p-8 text-center max-w-md w-full">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Commerce introuvable</h1>
           <p className="text-gray-600 mb-6">Désolé, nous n'avons pas pu trouver ce commerce. Veuillez vérifier le lien.</p>
@@ -253,7 +253,7 @@ export default function RatingPage() {
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
         </>
       ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-pink-600 to-pink-700"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FF9F1C] to-[#2EC4B6]"></div>
       )}
 
       {/* Content */}
@@ -284,7 +284,7 @@ export default function RatingPage() {
         {/* Rating Card */}
         <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/20">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Star className="w-6 h-6 text-pink-600 fill-pink-600" />
+            <Star className="w-6 h-6 text-[#FF9F1C] fill-[#FF9F1C]" />
             <h1 className="text-2xl font-bold text-gray-900">
               {merchant.business_name || merchant.name}
             </h1>
@@ -368,7 +368,7 @@ export default function RatingPage() {
               <Button
                 onClick={handleFeedbackSubmit}
                 disabled={loading}
-                className="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
+                className="w-full bg-[#FF9F1C] hover:bg-[#FFBF69] text-white py-3 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
               >
                 {loading ? t('common.loading') : t('common.submit')}
               </Button>
@@ -414,7 +414,7 @@ export default function RatingPage() {
                 // Web Mode - Email Input
                 <div className="space-y-2">
                   <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                    <Mail className="w-4 h-4 text-pink-600" />
+                    <Mail className="w-4 h-4 text-[#FF9F1C]" />
                     {t('form.yourEmail')} <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
@@ -427,7 +427,7 @@ export default function RatingPage() {
                       }}
                       placeholder={t('form.emailPlaceholder')}
                       className={`w-full p-4 pl-11 border-2 ${
-                        emailError ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-pink-500'
+                        emailError ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-[#FF9F1C]'
                       } rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-all`}
                       required
                     />
@@ -445,7 +445,7 @@ export default function RatingPage() {
               <Button
                 onClick={handleFeedbackSubmit}
                 disabled={loading}
-                className="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
+                className="w-full bg-[#FF9F1C] hover:bg-[#FFBF69] text-white py-3 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
               >
                 {loading ? t('common.loading') : t('common.submit')}
               </Button>
