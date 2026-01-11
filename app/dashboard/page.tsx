@@ -66,6 +66,7 @@ export default function DashboardPage() {
     reviewsTrend: 0, // Percentage change from last period
     positiveRatio: 0, // Percentage of positive reviews
   });
+  const [authError, setAuthError] = useState<string | null>(null);
 
   // Set current date on client-side only to avoid hydration mismatch
   useEffect(() => {
@@ -80,7 +81,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) {
         router.push('/auth/login');
         return;
@@ -88,11 +89,41 @@ export default function DashboardPage() {
 
       setUser(user);
 
-      const { data: merchantData } = await supabase
+      // Vérifier si le profil marchand existe
+      let { data: merchantData, error: merchantError } = await supabase
         .from('merchants')
         .select('*')
         .eq('id', user.id)
         .maybeSingle();
+
+      // Si le marchand n'existe pas, essayer de le créer
+      if (!merchantData && !merchantError) {
+        console.log('[DASHBOARD] Merchant not found, attempting to create...');
+
+        const { data: newMerchant, error: createError } = await supabase
+          .from('merchants')
+          .insert({
+            id: user.id,
+            email: user.email,
+            business_name: user.user_metadata?.business_name || 'Mon Commerce',
+            subscription_tier: 'starter',
+          })
+          .select()
+          .single();
+
+        if (createError) {
+          console.error('[DASHBOARD] Failed to create merchant:', createError);
+          setAuthError('Impossible de créer votre profil. Veuillez réessayer ou contacter le support.');
+          return;
+        } else {
+          console.log('[DASHBOARD] Merchant created successfully');
+          merchantData = newMerchant;
+        }
+      }
+
+      if (merchantError) {
+        console.error('[DASHBOARD] Error fetching merchant:', merchantError);
+      }
 
       setMerchant(merchantData);
 
@@ -192,6 +223,37 @@ export default function DashboardPage() {
 
     checkAuth();
   }, [router]);
+
+  if (authError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+        <div className="text-center max-w-md">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-3xl">⚠️</span>
+          </div>
+          <h2 className="text-xl font-bold text-slate-900 mb-2">Erreur de configuration</h2>
+          <p className="text-slate-600 mb-6">{authError}</p>
+          <div className="space-y-3">
+            <button
+              onClick={() => window.location.reload()}
+              className="w-full px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
+            >
+              Réessayer
+            </button>
+            <button
+              onClick={async () => {
+                await supabase.auth.signOut();
+                router.push('/auth/login');
+              }}
+              className="w-full px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors"
+            >
+              Se déconnecter
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!user || !merchant) {
     return (
