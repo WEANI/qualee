@@ -21,8 +21,20 @@ export async function GET(request: NextRequest) {
     }
 
     if (session?.user) {
+      // Utiliser le client admin pour bypasser RLS lors de la création
+      const supabaseAdmin = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!,
+        {
+          auth: {
+            autoRefreshToken: false,
+            persistSession: false
+          }
+        }
+      );
+
       // Vérifier si le profil marchand existe déjà
-      const { data: existingMerchant } = await supabase
+      const { data: existingMerchant } = await supabaseAdmin
         .from('merchants')
         .select('id')
         .eq('id', session.user.id)
@@ -32,16 +44,16 @@ export async function GET(request: NextRequest) {
         // Créer le profil marchand avec les métadonnées de l'utilisateur
         const businessName = session.user.user_metadata?.business_name || 'Mon Commerce';
         
-        const { error: merchantError } = await supabase.from('merchants').insert({
+        const { error: merchantError } = await supabaseAdmin.from('merchants').insert({
           id: session.user.id,
           email: session.user.email,
           business_name: businessName,
           subscription_tier: 'starter',
+          is_active: true
         });
 
         if (merchantError) {
           console.error('Merchant creation error:', merchantError);
-          // Continuer quand même vers le dashboard, l'utilisateur pourra compléter son profil
         }
       }
 

@@ -34,6 +34,14 @@ CREATE POLICY "Merchants can view own profile" ON merchants
   FOR SELECT
   USING (auth.uid() = id);
 
+CREATE POLICY "Users can create their own merchant profile" ON merchants
+  FOR INSERT
+  WITH CHECK (auth.uid() = id);
+
+CREATE POLICY "Users can update their own merchant profile" ON merchants
+  FOR UPDATE
+  USING (auth.uid() = id);
+
 -- 6. Vérifier que RLS est activé
 ALTER TABLE merchants ENABLE ROW LEVEL SECURITY;
 

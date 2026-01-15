@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
         .select('*')
         .eq('id', clientId)
         .eq('merchant_id', merchantId)
-        .maybeSingle();
+        .single();
 
       if (error) {
         return NextResponse.json({ error: error.message }, { status: 404 });
@@ -87,7 +87,7 @@ export async function GET(request: NextRequest) {
         .from('loyalty_clients')
         .select('*')
         .eq('qr_code_data', qrCode)
-        .maybeSingle();
+        .single();
 
       if (error) {
         return NextResponse.json({ error: 'Client not found', found: false }, { status: 404 });
@@ -114,7 +114,7 @@ export async function GET(request: NextRequest) {
         .select('*')
         .eq('merchant_id', merchantId)
         .eq('phone', phone)
-        .maybeSingle();
+        .single();
 
       if (error) {
         return NextResponse.json({ client: null, found: false });
@@ -130,7 +130,7 @@ export async function GET(request: NextRequest) {
         .select('*')
         .eq('merchant_id', merchantId)
         .eq('email', email.toLowerCase())
-        .maybeSingle();
+        .single();
 
       if (error) {
         return NextResponse.json({ client: null, found: false });
@@ -209,7 +209,7 @@ export async function POST(request: NextRequest) {
       .from('merchants')
       .select('id, business_name, loyalty_enabled, welcome_points')
       .eq('id', merchantId)
-      .maybeSingle();
+      .single();
 
     if (merchantError || !merchant) {
       return NextResponse.json(
@@ -234,7 +234,7 @@ export async function POST(request: NextRequest) {
         .select('*')
         .eq('merchant_id', merchantId)
         .eq('phone', phone)
-        .maybeSingle();
+        .single();
       existingClient = data;
     }
 
@@ -244,7 +244,7 @@ export async function POST(request: NextRequest) {
         .select('*')
         .eq('merchant_id', merchantId)
         .eq('email', email.toLowerCase())
-        .maybeSingle();
+        .single();
       existingClient = data;
     }
 
@@ -259,7 +259,7 @@ export async function POST(request: NextRequest) {
         })
         .eq('id', existingClient.id)
         .select()
-        .maybeSingle();
+        .single();
 
       if (updateError) {
         console.error('[LOYALTY CLIENT] Update error:', updateError);
@@ -322,7 +322,7 @@ export async function POST(request: NextRequest) {
         last_visit: new Date().toISOString()
       })
       .select()
-      .maybeSingle();
+      .single();
 
     if (createError) {
       console.error('[LOYALTY CLIENT] Create error:', JSON.stringify(createError, null, 2));
@@ -432,7 +432,7 @@ export async function PATCH(request: NextRequest) {
       query = query.eq('id', clientId).eq('merchant_id', merchantId);
     }
 
-    const { data, error } = await query.select().maybeSingle();
+    const { data, error } = await query.select().single();
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

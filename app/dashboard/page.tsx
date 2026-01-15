@@ -88,11 +88,33 @@ export default function DashboardPage() {
 
       setUser(user);
 
-      const { data: merchantData } = await supabase
+      let { data: merchantData } = await supabase
         .from('merchants')
         .select('*')
         .eq('id', user.id)
         .maybeSingle();
+
+      // If merchant profile doesn't exist, create it (fallback)
+      if (!merchantData) {
+        console.log('Merchant profile not found, creating...');
+        const { data: newMerchant, error: createError } = await supabase
+          .from('merchants')
+          .insert({
+            id: user.id,
+            email: user.email,
+            business_name: user.user_metadata?.business_name || 'Mon Commerce',
+            subscription_tier: 'starter',
+            is_active: true
+          })
+          .select()
+          .maybeSingle();
+        
+        if (createError) {
+          console.error('Failed to create merchant:', createError);
+        } else {
+          merchantData = newMerchant;
+        }
+      }
 
       setMerchant(merchantData);
 
@@ -197,8 +219,27 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-slate-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg text-slate-600">{t('dashboard.common.loading')}</p>
+          {merchant === null && user !== null ? (
+            <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-sm border border-slate-200">
+              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-medium text-slate-900 mb-2">Erreur de chargement du profil</h3>
+              <p className="text-slate-600 mb-6">
+                Impossible de charger ou créer votre profil marchand. Veuillez contacter le support ou essayer de vous reconnecter.
+              </p>
+              <Button onClick={() => supabase.auth.signOut().then(() => router.push('/auth/login'))}>
+                Se déconnecter
+              </Button>
+            </div>
+          ) : (
+            <>
+              <div className="w-16 h-16 border-4 border-slate-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-lg text-slate-600">{t('dashboard.common.loading')}</p>
+            </>
+          )}
         </div>
       </div>
     );
