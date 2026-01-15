@@ -77,15 +77,15 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50/20 relative">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-violet-50/20 relative">
       {/* Subtle background pattern */}
       <div className="fixed inset-0 opacity-[0.015] pointer-events-none" style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
       }} />
 
       {/* Decorative gradient orbs */}
-      <div className="fixed top-20 right-20 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="fixed bottom-20 left-20 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="fixed top-20 right-20 w-96 h-96 bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="fixed bottom-20 left-20 w-80 h-80 bg-pink-500/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
@@ -123,7 +123,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
           {merchant && (
             <div className="px-6 py-6 border-b border-slate-800/50 bg-[#0F172A]/50">
               <div className="flex items-center gap-4 p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
-                <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-lg shadow-teal-900/20">
+                <div className="w-10 h-10 bg-gradient-to-br from-[#7209B7] to-[#3A0CA3] rounded-lg flex items-center justify-center shadow-lg shadow-violet-900/20">
                   <Store className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -131,7 +131,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                     {merchant.business_name || merchant.name}
                   </p>
                   <p className="text-xs text-slate-400 capitalize flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#EB1E99] animate-pulse"></span>
                     {merchant.subscription_tier || 'Free'} Plan
                   </p>
                 </div>
@@ -154,7 +154,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                   className={`
                     group flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
                     ${isActive
-                      ? 'bg-gradient-to-r from-teal-600 to-teal-700 text-white shadow-lg shadow-teal-900/20 border border-teal-500/20'
+                      ? 'bg-gradient-to-r from-[#7209B7] to-[#3A0CA3] text-white shadow-lg shadow-violet-900/20 border border-violet-500/20'
                       : 'text-white hover:bg-slate-800/50'
                     }
                   `}
@@ -173,7 +173,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
 
             {/* Loyalty Section */}
             <div className="flex items-center gap-2 px-4 mb-4">
-              <Award className="w-4 h-4 text-amber-500" />
+              <Award className="w-4 h-4 text-[#00A7E1]" />
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{t('dashboard.nav.loyaltySection')}</p>
             </div>
             {loyaltyNavigation.map((item) => {
@@ -188,7 +188,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                   className={`
                     group flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
                     ${isActive
-                      ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-lg shadow-amber-900/20 border border-amber-500/20'
+                      ? 'bg-gradient-to-r from-[#00A7E1] to-[#0090C1] text-white shadow-lg shadow-sky-900/20 border border-sky-500/20'
                       : 'text-white hover:bg-slate-800/50'
                     }
                   `}
@@ -207,7 +207,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
 
             {/* Marketing Section */}
             <div className="flex items-center gap-2 px-4 mb-4">
-              <Megaphone className="w-4 h-4 text-purple-500" />
+              <Megaphone className="w-4 h-4 text-[#EB1E99]" />
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{t('dashboard.nav.marketing')}</p>
             </div>
             {marketingNavigation.map((item) => {
@@ -222,7 +222,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                   className={`
                     group flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
                     ${isActive
-                      ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg shadow-purple-900/20 border border-purple-500/20'
+                      ? 'bg-gradient-to-r from-[#EB1E99] to-[#C01682] text-white shadow-lg shadow-pink-900/20 border border-pink-500/20'
                       : 'text-white hover:bg-slate-800/50'
                     }
                   `}
@@ -274,10 +274,10 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
 
             <div className="flex items-center gap-3">
               <LanguageSwitcher variant="dark" />
-              <div className="h-9 px-4 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 flex items-center gap-2 text-sm font-medium hidden sm:flex">
+              <div className="h-9 px-4 rounded-full bg-violet-50 text-violet-700 border border-violet-100 flex items-center gap-2 text-sm font-medium hidden sm:flex">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#EB1E99] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#EB1E99]"></span>
                 </span>
                 {t('dashboard.common.online')}
               </div>

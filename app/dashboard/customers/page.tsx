@@ -34,13 +34,13 @@ function CustomerDetailsModal({ customer, onClose }: CustomerDetailsModalProps) 
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-teal-600 to-teal-700 text-white p-6">
+        <div className="bg-gradient-to-r from-violet-600 to-teal-700 text-white p-6">
           <div className="flex justify-between items-start">
             <div className="flex items-center gap-4">
               <div className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg ${
                 customer.email || customer.phone
-                  ? 'bg-white text-teal-600'
-                  : 'bg-teal-500 text-white'
+                  ? 'bg-white text-violet-600'
+                  : 'bg-violet-500 text-white'
               }`}>
                 {customer.email ? customer.email[0].toUpperCase() : customer.phone ? '📱' : '?'}
               </div>
@@ -312,7 +312,7 @@ export default function CustomersPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card className="p-6 border-slate-100 shadow-sm">
             <div className="flex items-center gap-4 mb-2">
-              <div className="p-3 bg-teal-50 rounded-xl text-teal-600">
+              <div className="p-3 bg-teal-50 rounded-xl text-violet-600">
                 <Users className="w-6 h-6" />
               </div>
               <div>
@@ -324,7 +324,7 @@ export default function CustomersPage() {
 
           <Card className="p-6 border-slate-100 shadow-sm">
             <div className="flex items-center gap-4 mb-2">
-              <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600">
+              <div className="p-3 bg-violet-50 rounded-xl text-violet-600">
                 <Mail className="w-6 h-6" />
               </div>
               <div>
@@ -370,7 +370,7 @@ export default function CustomersPage() {
             onClick={() => { setActiveTab('web'); setSearchQuery(''); }}
             className={`flex items-center gap-2 px-6 py-3 font-medium text-sm transition-all border-b-2 -mb-px ${
               activeTab === 'web'
-                ? 'text-teal-600 border-teal-600 bg-teal-50/50'
+                ? 'text-violet-600 border-violet-600 bg-teal-50/50'
                 : 'text-slate-500 border-transparent hover:text-slate-700 hover:bg-slate-50'
             }`}
           >
@@ -402,7 +402,7 @@ export default function CustomersPage() {
                 placeholder={activeTab === 'web' ? 'Rechercher par email...' : 'Rechercher par numéro WhatsApp...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
               />
             </div>
             <Button variant="outline" className="gap-2 text-slate-600">
@@ -441,7 +441,7 @@ export default function CustomersPage() {
                                 ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white'
                                 : 'bg-slate-100 text-slate-500'
                               : customer.phone
-                                ? 'bg-gradient-to-br from-green-500 to-emerald-600 text-white'
+                                ? 'bg-gradient-to-br from-green-500 to-violet-600 text-white'
                                 : 'bg-slate-100 text-slate-500'
                           }`}>
                             {activeTab === 'web'
@@ -517,7 +517,7 @@ export default function CustomersPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-teal-600 hover:text-teal-700 hover:bg-teal-50"
+                          className="text-violet-600 hover:text-teal-700 hover:bg-teal-50"
                           onClick={() => setSelectedCustomer(customer)}
                         >
                           Détails

@@ -347,7 +347,7 @@ export const PhoneCarousel: React.FC<PhoneCarouselProps> = ({
               variant="outline"
               size="icon"
               onClick={handlePrevious}
-              className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-[#2D6A4F] hover:bg-[#1B4332] border-0 shadow-lg"
+              className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-[#7209B7] hover:bg-[#3A0CA3] border-0 shadow-lg"
               aria-label="Previous image"
             >
               <ChevronLeft className="h-5 w-5 text-white" />
@@ -356,7 +356,7 @@ export const PhoneCarousel: React.FC<PhoneCarouselProps> = ({
               variant="outline"
               size="icon"
               onClick={togglePause}
-              className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-[#2D6A4F] hover:bg-[#1B4332] border-0 shadow-lg"
+              className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-[#7209B7] hover:bg-[#3A0CA3] border-0 shadow-lg"
               aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
             >
               {isPaused ? (
@@ -369,7 +369,7 @@ export const PhoneCarousel: React.FC<PhoneCarouselProps> = ({
               variant="outline"
               size="icon"
               onClick={handleNext}
-              className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-[#2D6A4F] hover:bg-[#1B4332] border-0 shadow-lg"
+              className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-[#7209B7] hover:bg-[#3A0CA3] border-0 shadow-lg"
               aria-label="Next image"
             >
               <ChevronRight className="h-5 w-5 text-white" />
@@ -385,7 +385,7 @@ export const PhoneCarousel: React.FC<PhoneCarouselProps> = ({
                 className={cn(
                   "w-2 h-2 rounded-full transition-all duration-300",
                   index === currentIndex
-                    ? "bg-[#2D6A4F] w-6"
+                    ? "bg-[#7209B7] w-6"
                     : "bg-gray-300 hover:bg-gray-400"
                 )}
                 aria-label={`Go to slide ${index + 1}`}

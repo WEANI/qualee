@@ -41,7 +41,7 @@ export default function BillingPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-violet-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-lg text-gray-600">Loading...</p>
         </div>
       </div>
@@ -57,16 +57,16 @@ export default function BillingPage() {
         </div>
 
         {/* Current Plan */}
-        <Card className="p-6 bg-gradient-to-br from-teal-50 to-emerald-50 border-teal-200">
+        <Card className="p-6 bg-gradient-to-br from-teal-50 to-violet-50 border-teal-200">
           <div className="flex items-start justify-between mb-4">
             <div>
-              <Badge className="mb-2 bg-teal-600">Current Plan</Badge>
+              <Badge className="mb-2 bg-violet-600">Current Plan</Badge>
               <h2 className="text-2xl font-bold text-gray-900 capitalize">
                 {merchant.subscription_tier || 'Free'} Plan
               </h2>
               <p className="text-gray-600 mt-1">Perfect for getting started</p>
             </div>
-            <Button className="bg-teal-600 hover:bg-teal-700">
+            <Button className="bg-violet-600 hover:bg-teal-700">
               Upgrade Plan
             </Button>
           </div>
@@ -91,7 +91,7 @@ export default function BillingPage() {
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Payment Method</h3>
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-700 rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-violet-600 to-teal-700 rounded-lg flex items-center justify-center">
                 <CreditCard className="w-6 h-6 text-white" />
               </div>
               <div>

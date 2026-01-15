@@ -167,10 +167,10 @@
 /* Hero Wheel Glow Animation */
 @keyframes hero-glow {
   0%, 100% {
-    filter: drop-shadow(0 0 60px rgba(82, 183, 136, 0.4)) drop-shadow(0 0 120px rgba(82, 183, 136, 0.2));
+    filter: drop-shadow(0 0 60px rgba(114, 9, 183, 0.4)) drop-shadow(0 0 120px rgba(235, 30, 153, 0.2));
   }
   50% {
-    filter: drop-shadow(0 0 100px rgba(82, 183, 136, 0.6)) drop-shadow(0 0 180px rgba(82, 183, 136, 0.3));
+    filter: drop-shadow(0 0 100px rgba(114, 9, 183, 0.6)) drop-shadow(0 0 180px rgba(235, 30, 153, 0.3));
   }
 }
 
@@ -227,10 +227,10 @@
 /* Pulse Glow */
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(82, 183, 136, 0.3);
+    box-shadow: 0 0 20px rgba(114, 9, 183, 0.3);
   }
   50% {
-    box-shadow: 0 0 40px rgba(82, 183, 136, 0.6);
+    box-shadow: 0 0 40px rgba(114, 9, 183, 0.6);
   }
 }
 
@@ -306,7 +306,7 @@
   inset: 0;
   padding: 2px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #52B788, #2D6A4F, #FFD700);
+  background: linear-gradient(135deg, #EB1E99, #7209B7, #3A0CA3, #00A7E1);
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);

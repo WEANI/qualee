@@ -47,16 +47,16 @@ export default function LandingPage() {
   // Show loading state during initial render to prevent hydration mismatch
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-[#E8EDE8] flex items-center justify-center">
-        <div className="w-16 h-16 border-4 border-[#2D6A4F] border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-[#F8F4FF] flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-[#7209B7] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#E8EDE8]">
+    <div className="min-h-screen bg-[#F8F4FF]">
       {/* Header */}
-      <header className="fixed top-0 w-full bg-[#1B4332]/95 backdrop-blur-sm z-50">
+      <header className="fixed top-0 w-full bg-[#3A0CA3]/95 backdrop-blur-sm z-50">
         <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img
@@ -67,15 +67,15 @@ export default function LandingPage() {
           </div>
           
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#demo" className="!text-white hover:!text-[#FFD700] transition-colors duration-200 text-sm font-medium px-2 py-1">{t('landing.nav.howItWorks')}</a>
-            <a href="#pricing" className="!text-white hover:!text-[#FFD700] transition-colors duration-200 text-sm font-medium px-2 py-1">{t('landing.nav.pricing')}</a>
-            <a href="#testimonials" className="!text-white hover:!text-[#FFD700] transition-colors duration-200 text-sm font-medium px-2 py-1">{t('landing.nav.testimonials')}</a>
+            <a href="#demo" className="!text-white hover:!text-[#00A7E1] transition-colors duration-200 text-sm font-medium px-2 py-1">{t('landing.nav.howItWorks')}</a>
+            <a href="#pricing" className="!text-white hover:!text-[#00A7E1] transition-colors duration-200 text-sm font-medium px-2 py-1">{t('landing.nav.pricing')}</a>
+            <a href="#testimonials" className="!text-white hover:!text-[#00A7E1] transition-colors duration-200 text-sm font-medium px-2 py-1">{t('landing.nav.testimonials')}</a>
           </nav>
 
           <div className="flex items-center gap-4">
             <LanguageSwitcher variant="light" />
             <Link href="/auth/signup">
-              <Button className="bg-[#FFD700] text-black font-bold rounded-full hover:bg-[#FFC700] hover:shadow-lg transition-all">
+              <Button className="bg-[#00A7E1] text-black font-bold rounded-full hover:bg-[#0090C1] hover:shadow-lg transition-all">
                 {t('landing.nav.getStarted')}
               </Button>
             </Link>
@@ -94,7 +94,7 @@ export default function LandingPage() {
           }}
         >
           {/* Dark overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0A2F23]/95 via-[#1B4332]/90 to-[#2D6A4F]/85"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#240046]/95 via-[#3A0CA3]/90 to-[#7209B7]/85"></div>
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-8 sm:pb-12 relative z-10">
@@ -104,7 +104,7 @@ export default function LandingPage() {
               {/* Main Title */}
               <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white leading-tight" style={{ fontFamily: 'ARCO, sans-serif' }}>
                 {t('landing.hero.title')}
-                <span className="block mt-3 text-[#FFD700]">
+                <span className="block mt-3 text-[#00A7E1]">
                   {t('landing.hero.titleHighlight')}
                 </span>
               </h1>
@@ -117,7 +117,7 @@ export default function LandingPage() {
               {/* CTA Button */}
               <div className="pt-4">
                 <Link href="/auth/signup">
-                  <Button size="lg" className="bg-[#52B788] hover:bg-[#40916C] text-white px-10 py-6 text-lg font-bold rounded-full shadow-2xl">
+                  <Button size="lg" className="bg-[#EB1E99] hover:bg-[#C01682] text-white px-10 py-6 text-lg font-bold rounded-full shadow-2xl">
                     {t('landing.hero.cta')}
                   </Button>
                 </Link>
@@ -142,10 +142,10 @@ export default function LandingPage() {
               <div className="relative w-full max-w-3xl">
                 {/* Animated glow rings */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-[80%] h-[80%] rounded-full bg-gradient-to-r from-[#52B788]/30 via-[#FFD700]/20 to-[#52B788]/30 blur-3xl animate-pulse"></div>
+                  <div className="w-[80%] h-[80%] rounded-full bg-gradient-to-r from-[#EB1E99]/30 via-[#00A7E1]/20 to-[#EB1E99]/30 blur-3xl animate-pulse"></div>
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-[60%] h-[60%] rounded-full bg-[#52B788]/40 blur-2xl animate-ping" style={{ animationDuration: '3s' }}></div>
+                  <div className="w-[60%] h-[60%] rounded-full bg-[#EB1E99]/40 blur-2xl animate-ping" style={{ animationDuration: '3s' }}></div>
                 </div>
 
                 {/* Main wheel image with float + glow animation */}
@@ -156,14 +156,14 @@ export default function LandingPage() {
                 />
 
                 {/* Sparkle particles */}
-                <div className="absolute top-[10%] left-[15%] w-2 h-2 bg-[#FFD700] rounded-full animate-ping" style={{ animationDuration: '2s', animationDelay: '0.5s' }}></div>
+                <div className="absolute top-[10%] left-[15%] w-2 h-2 bg-[#00A7E1] rounded-full animate-ping" style={{ animationDuration: '2s', animationDelay: '0.5s' }}></div>
                 <div className="absolute top-[20%] right-[20%] w-3 h-3 bg-white rounded-full animate-ping" style={{ animationDuration: '2.5s', animationDelay: '1s' }}></div>
-                <div className="absolute bottom-[25%] left-[10%] w-2 h-2 bg-[#52B788] rounded-full animate-ping" style={{ animationDuration: '3s', animationDelay: '0.3s' }}></div>
-                <div className="absolute bottom-[15%] right-[15%] w-2 h-2 bg-[#FFD700] rounded-full animate-ping" style={{ animationDuration: '2s', animationDelay: '1.5s' }}></div>
+                <div className="absolute bottom-[25%] left-[10%] w-2 h-2 bg-[#EB1E99] rounded-full animate-ping" style={{ animationDuration: '3s', animationDelay: '0.3s' }}></div>
+                <div className="absolute bottom-[15%] right-[15%] w-2 h-2 bg-[#00A7E1] rounded-full animate-ping" style={{ animationDuration: '2s', animationDelay: '1.5s' }}></div>
 
                 {/* Decorative elements */}
-                <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-gradient-to-br from-[#52B788]/30 to-[#FFD700]/20 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute -top-12 -right-12 w-48 h-48 bg-gradient-to-bl from-[#52B788]/20 to-[#2D6A4F]/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-gradient-to-br from-[#EB1E99]/30 to-[#00A7E1]/20 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute -top-12 -right-12 w-48 h-48 bg-gradient-to-bl from-[#EB1E99]/20 to-[#7209B7]/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
               </div>
             </div>
           </div>
@@ -193,14 +193,14 @@ export default function LandingPage() {
       {/* Demo Video Section */}
       <section id="demo" className="py-24 px-4 bg-gradient-to-br from-slate-50 to-white scroll-mt-20 relative overflow-hidden">
         {/* Background decoration */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#52B788]/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#FFD700]/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#EB1E99]/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#00A7E1]/5 rounded-full blur-3xl"></div>
 
         <div className="container mx-auto max-w-7xl relative z-10">
           <ScrollReveal className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#2D6A4F]/10 rounded-full mb-6">
-              <div className="w-2 h-2 bg-[#2D6A4F] rounded-full animate-pulse"></div>
-              <span className="text-sm font-semibold text-[#2D6A4F] uppercase tracking-wide">{t('landing.demo.tag')}</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#7209B7]/10 rounded-full mb-6">
+              <div className="w-2 h-2 bg-[#7209B7] rounded-full animate-pulse"></div>
+              <span className="text-sm font-semibold text-[#7209B7] uppercase tracking-wide">{t('landing.demo.tag')}</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 max-w-3xl mx-auto leading-tight">
               {t('landing.demo.title')}
@@ -220,27 +220,27 @@ export default function LandingPage() {
             className="grid md:grid-cols-3 gap-6 mt-12 max-w-4xl mx-auto"
             staggerDelay={150}
           >
-            <div className="text-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-[#52B788]/30 transition-all duration-300 group">
-              <div className="w-12 h-12 bg-[#2D6A4F]/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#2D6A4F] group-hover:scale-110 transition-all duration-300">
-                <svg className="w-6 h-6 text-[#2D6A4F] group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="text-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-[#EB1E99]/30 transition-all duration-300 group">
+              <div className="w-12 h-12 bg-[#7209B7]/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#7209B7] group-hover:scale-110 transition-all duration-300">
+                <svg className="w-6 h-6 text-[#7209B7] group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                 </svg>
               </div>
               <h3 className="font-bold text-gray-900 mb-2">{t('landing.demo.feature1')}</h3>
               <p className="text-sm text-gray-600">{t('landing.demo.feature1Desc')}</p>
             </div>
-            <div className="text-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-[#52B788]/30 transition-all duration-300 group">
-              <div className="w-12 h-12 bg-[#2D6A4F]/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#2D6A4F] group-hover:scale-110 transition-all duration-300">
-                <svg className="w-6 h-6 text-[#2D6A4F] group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="text-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-[#EB1E99]/30 transition-all duration-300 group">
+              <div className="w-12 h-12 bg-[#7209B7]/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#7209B7] group-hover:scale-110 transition-all duration-300">
+                <svg className="w-6 h-6 text-[#7209B7] group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <h3 className="font-bold text-gray-900 mb-2">{t('landing.demo.feature2')}</h3>
               <p className="text-sm text-gray-600">{t('landing.demo.feature2Desc')}</p>
             </div>
-            <div className="text-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-[#52B788]/30 transition-all duration-300 group">
-              <div className="w-12 h-12 bg-[#2D6A4F]/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#2D6A4F] group-hover:scale-110 transition-all duration-300">
-                <svg className="w-6 h-6 text-[#2D6A4F] group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="text-center p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-[#EB1E99]/30 transition-all duration-300 group">
+              <div className="w-12 h-12 bg-[#7209B7]/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#7209B7] group-hover:scale-110 transition-all duration-300">
+                <svg className="w-6 h-6 text-[#7209B7] group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
@@ -256,9 +256,9 @@ export default function LandingPage() {
         <div className="container mx-auto max-w-7xl">
           {/* Section header */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#2D6A4F]/10 rounded-full mb-6">
-              <div className="w-2 h-2 bg-[#2D6A4F] rounded-full"></div>
-              <span className="text-sm font-semibold text-[#2D6A4F] uppercase tracking-wide">{t('landing.challenge.tag')}</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#7209B7]/10 rounded-full mb-6">
+              <div className="w-2 h-2 bg-[#7209B7] rounded-full"></div>
+              <span className="text-sm font-semibold text-[#7209B7] uppercase tracking-wide">{t('landing.challenge.tag')}</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 max-w-3xl mx-auto leading-tight" style={{ fontFamily: 'ARCO, sans-serif' }}>
               {t('landing.challenge.title')}
@@ -308,7 +308,7 @@ export default function LandingPage() {
               </Card>
 
               {/* Impact card - Compact */}
-              <Card className="bg-[#2D6A4F] border-0 shadow-lg p-6 rounded-2xl text-white relative overflow-hidden">
+              <Card className="bg-[#7209B7] border-0 shadow-lg p-6 rounded-2xl text-white relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
                 <div className="relative z-10">
                   <div className="flex items-center gap-4 mb-4">
@@ -319,7 +319,7 @@ export default function LandingPage() {
                     </div>
                     <div>
                       <h3 className="font-bold text-white text-lg">{t('landing.challenge.opportunity')}</h3>
-                      <p className="text-[#52B788] text-sm font-semibold text-white/90">{t('landing.challenge.opportunityPercent')}</p>
+                      <p className="text-[#EB1E99] text-sm font-semibold text-white/90">{t('landing.challenge.opportunityPercent')}</p>
                     </div>
                   </div>
                   <p className="text-white/80 text-sm leading-relaxed">
@@ -337,9 +337,9 @@ export default function LandingPage() {
         <div className="container mx-auto max-w-7xl">
           {/* Section header */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#2D6A4F]/10 rounded-full mb-6">
-              <div className="w-2 h-2 bg-[#2D6A4F] rounded-full"></div>
-              <span className="text-sm font-semibold text-[#2D6A4F] uppercase tracking-wide">{t('landing.workflow.tag')}</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#7209B7]/10 rounded-full mb-6">
+              <div className="w-2 h-2 bg-[#7209B7] rounded-full"></div>
+              <span className="text-sm font-semibold text-[#7209B7] uppercase tracking-wide">{t('landing.workflow.tag')}</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 max-w-3xl mx-auto leading-tight" style={{ fontFamily: 'ARCO, sans-serif' }}>
               {t('landing.workflow.title')}
@@ -365,15 +365,15 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {/* Step 1 */}
             <Card 
-              className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#2D6A4F] hover:shadow-xl transition-all duration-300"
+              className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#7209B7] hover:shadow-xl transition-all duration-300"
             >
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-[#2D6A4F] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-16 h-16 bg-[#7209B7] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
                   </svg>
                 </div>
-                <Badge className="bg-[#2D6A4F]/10 text-[#2D6A4F] border-0 mb-4 font-bold">Étape 1</Badge>
+                <Badge className="bg-[#7209B7]/10 text-[#7209B7] border-0 mb-4 font-bold">Étape 1</Badge>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">{t('landing.workflow.step1')}</h3>
                 <p className="text-gray-600 leading-relaxed">
                   {t('landing.workflow.step1Desc')}
@@ -383,15 +383,15 @@ export default function LandingPage() {
 
             {/* Step 2 */}
             <Card 
-              className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#2D6A4F] hover:shadow-xl transition-all duration-300"
+              className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#7209B7] hover:shadow-xl transition-all duration-300"
             >
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-[#2D6A4F] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-16 h-16 bg-[#7209B7] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                   </svg>
                 </div>
-                <Badge className="bg-[#2D6A4F]/10 text-[#2D6A4F] border-0 mb-4 font-bold">Étape 2</Badge>
+                <Badge className="bg-[#7209B7]/10 text-[#7209B7] border-0 mb-4 font-bold">Étape 2</Badge>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">{t('landing.workflow.step2')}</h3>
                 <p className="text-gray-600 leading-relaxed">
                   {t('landing.workflow.step2Desc')}
@@ -401,15 +401,15 @@ export default function LandingPage() {
 
             {/* Step 3 */}
             <Card 
-              className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#2D6A4F] hover:shadow-xl transition-all duration-300"
+              className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#7209B7] hover:shadow-xl transition-all duration-300"
             >
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-[#2D6A4F] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-12 transition-all">
+                <div className="w-16 h-16 bg-[#7209B7] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-12 transition-all">
                   <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <Badge className="bg-[#2D6A4F]/10 text-[#2D6A4F] border-0 mb-4 font-bold">Étape 3</Badge>
+                <Badge className="bg-[#7209B7]/10 text-[#7209B7] border-0 mb-4 font-bold">Étape 3</Badge>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">{t('landing.workflow.step3')}</h3>
                 <p className="text-gray-600 leading-relaxed">
                   {t('landing.workflow.step3Desc')}
@@ -419,15 +419,15 @@ export default function LandingPage() {
 
             {/* Step 4 */}
             <Card 
-              className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#2D6A4F] hover:shadow-xl transition-all duration-300"
+              className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#7209B7] hover:shadow-xl transition-all duration-300"
             >
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-[#2D6A4F] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-16 h-16 bg-[#7209B7] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <Badge className="bg-[#2D6A4F]/10 text-[#2D6A4F] border-0 mb-4 font-bold">Étape 4</Badge>
+                <Badge className="bg-[#7209B7]/10 text-[#7209B7] border-0 mb-4 font-bold">Étape 4</Badge>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">{t('landing.workflow.step4')}</h3>
                 <p className="text-gray-600 leading-relaxed">
                   {t('landing.workflow.step4Desc')}
@@ -438,7 +438,7 @@ export default function LandingPage() {
 
           {/* Bottom CTA */}
           <div className="mt-16 text-center">
-            <Card className="max-w-3xl mx-auto bg-gradient-to-br from-[#2D6A4F] to-[#1B4332] border-0 rounded-2xl p-10">
+            <Card className="max-w-3xl mx-auto bg-gradient-to-br from-[#7209B7] to-[#3A0CA3] border-0 rounded-2xl p-10">
               <h3 className="text-3xl font-bold text-white mb-4">
                 {t('landing.workflow.ctaTitle')}
               </h3>
@@ -446,7 +446,7 @@ export default function LandingPage() {
                 {t('landing.workflow.ctaSubtitle')}
               </p>
               <Link href="/auth/signup">
-                <Button size="lg" className="bg-white text-[#2D6A4F] hover:bg-gray-100 px-12 py-6 text-lg font-bold">
+                <Button size="lg" className="bg-white text-[#7209B7] hover:bg-gray-100 px-12 py-6 text-lg font-bold">
                   {t('landing.workflow.ctaButton')}
                 </Button>
               </Link>
@@ -604,9 +604,9 @@ export default function LandingPage() {
         <div className="container mx-auto max-w-7xl">
           {/* Section header */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#2D6A4F]/10 rounded-full mb-6">
-              <div className="w-2 h-2 bg-[#2D6A4F] rounded-full"></div>
-              <span className="text-sm font-semibold text-[#2D6A4F] uppercase tracking-wide">{t('landing.benefits.tag')}</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#7209B7]/10 rounded-full mb-6">
+              <div className="w-2 h-2 bg-[#7209B7] rounded-full"></div>
+              <span className="text-sm font-semibold text-[#7209B7] uppercase tracking-wide">{t('landing.benefits.tag')}</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 max-w-3xl mx-auto leading-tight" style={{ fontFamily: 'ARCO, sans-serif' }}>
               {t('landing.benefits.title')}
@@ -619,9 +619,9 @@ export default function LandingPage() {
           {/* Benefits grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {/* Benefit 1 - Multilingual */}
-            <Card className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#2D6A4F] hover:shadow-xl transition-all duration-300">
+            <Card className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#7209B7] hover:shadow-xl transition-all duration-300">
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-[#2D6A4F] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-16 h-16 bg-[#7209B7] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                   </svg>
@@ -642,9 +642,9 @@ export default function LandingPage() {
             </Card>
 
             {/* Benefit 2 - Control */}
-            <Card className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#2D6A4F] hover:shadow-xl transition-all duration-300">
+            <Card className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#7209B7] hover:shadow-xl transition-all duration-300">
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-[#2D6A4F] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-16 h-16 bg-[#7209B7] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                   </svg>
@@ -657,9 +657,9 @@ export default function LandingPage() {
             </Card>
 
             {/* Benefit 3 - Analytics */}
-            <Card className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#2D6A4F] hover:shadow-xl transition-all duration-300">
+            <Card className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#7209B7] hover:shadow-xl transition-all duration-300">
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-[#2D6A4F] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-16 h-16 bg-[#7209B7] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
@@ -672,9 +672,9 @@ export default function LandingPage() {
             </Card>
 
             {/* Benefit 4 - Protection */}
-            <Card className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#2D6A4F] hover:shadow-xl transition-all duration-300">
+            <Card className="group bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#7209B7] hover:shadow-xl transition-all duration-300">
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-[#2D6A4F] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-16 h-16 bg-[#7209B7] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
@@ -689,7 +689,7 @@ export default function LandingPage() {
 
           {/* Thailand specific features */}
           <div className="mt-16 max-w-5xl mx-auto">
-            <Card className="bg-gradient-to-br from-[#2D6A4F] to-[#1B4332] border-0 rounded-2xl p-10">
+            <Card className="bg-gradient-to-br from-[#7209B7] to-[#3A0CA3] border-0 rounded-2xl p-10">
               <div className="grid md:grid-cols-3 gap-8 text-center">
                 <div>
                   <div className="text-4xl font-black text-white mb-2">🇹🇭</div>
@@ -717,9 +717,9 @@ export default function LandingPage() {
         <div className="container mx-auto max-w-7xl">
           {/* Section header */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#2D6A4F]/10 rounded-full mb-6">
-              <div className="w-2 h-2 bg-[#2D6A4F] rounded-full"></div>
-              <span className="text-sm font-semibold text-[#2D6A4F] uppercase tracking-wide">{t('landing.testimonials.tag')}</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#7209B7]/10 rounded-full mb-6">
+              <div className="w-2 h-2 bg-[#7209B7] rounded-full"></div>
+              <span className="text-sm font-semibold text-[#7209B7] uppercase tracking-wide">{t('landing.testimonials.tag')}</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 max-w-3xl mx-auto leading-tight" style={{ fontFamily: 'ARCO, sans-serif' }}>
               {t('landing.testimonials.title')}
@@ -731,7 +731,7 @@ export default function LandingPage() {
             {/* Testimonial 1 */}
             <Card className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:shadow-xl transition-shadow">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 bg-[#2D6A4F] rounded-full flex items-center justify-center text-2xl text-white font-bold">
+                <div className="w-16 h-16 bg-[#7209B7] rounded-full flex items-center justify-center text-2xl text-white font-bold">
                   MA
                 </div>
                 <div>
@@ -754,7 +754,7 @@ export default function LandingPage() {
             {/* Testimonial 2 */}
             <Card className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:shadow-xl transition-shadow">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 bg-[#2D6A4F] rounded-full flex items-center justify-center text-2xl text-white font-bold">
+                <div className="w-16 h-16 bg-[#7209B7] rounded-full flex items-center justify-center text-2xl text-white font-bold">
                   SP
                 </div>
                 <div>
@@ -777,7 +777,7 @@ export default function LandingPage() {
             {/* Testimonial 3 */}
             <Card className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:shadow-xl transition-shadow">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 bg-[#2D6A4F] rounded-full flex items-center justify-center text-2xl text-white font-bold">
+                <div className="w-16 h-16 bg-[#7209B7] rounded-full flex items-center justify-center text-2xl text-white font-bold">
                   CL
                 </div>
                 <div>
@@ -805,9 +805,9 @@ export default function LandingPage() {
         <div className="container mx-auto max-w-7xl">
           {/* Section header */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#2D6A4F]/10 rounded-full mb-6">
-              <div className="w-2 h-2 bg-[#2D6A4F] rounded-full"></div>
-              <span className="text-sm font-semibold text-[#2D6A4F] uppercase tracking-wide">{t('landing.pricing.tag')}</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#7209B7]/10 rounded-full mb-6">
+              <div className="w-2 h-2 bg-[#7209B7] rounded-full"></div>
+              <span className="text-sm font-semibold text-[#7209B7] uppercase tracking-wide">{t('landing.pricing.tag')}</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 max-w-3xl mx-auto leading-tight" style={{ fontFamily: 'ARCO, sans-serif' }}>
               {t('landing.pricing.title')}
@@ -830,31 +830,31 @@ export default function LandingPage() {
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#2D6A4F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#7209B7] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-gray-700">50 {t('landing.pricing.scansMonth')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#2D6A4F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#7209B7] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-gray-700">1 {t('landing.pricing.establishment')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#2D6A4F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#7209B7] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-gray-700">{t('landing.pricing.basicWheel')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#2D6A4F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#7209B7] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-gray-700">{t('landing.pricing.essentialStats')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#2D6A4F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#7209B7] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-gray-700">{t('landing.pricing.digitalLoyaltyCard')}</span>
@@ -868,7 +868,7 @@ export default function LandingPage() {
             </Card>
 
             {/* Pro Plan - Featured */}
-            <Card className="bg-gradient-to-br from-[#2D6A4F] to-[#1B4332] border-0 rounded-2xl p-8 shadow-2xl relative transform md:scale-105">
+            <Card className="bg-gradient-to-br from-[#7209B7] to-[#3A0CA3] border-0 rounded-2xl p-8 shadow-2xl relative transform md:scale-105">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                 <Badge className="bg-[#FFB703] text-gray-900 border-0 px-4 py-1 font-bold shadow-lg">
                   {t('landing.pricing.popular')}
@@ -887,50 +887,50 @@ export default function LandingPage() {
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#52B788] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#EB1E99] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-white font-semibold">{t('landing.pricing.unlimited')} scans</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#52B788] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#EB1E99] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-white font-semibold">1 {t('landing.pricing.establishment')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#52B788] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#EB1E99] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-white font-semibold">{t('landing.pricing.customWheel')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#52B788] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#EB1E99] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-white font-semibold">{t('landing.pricing.digitalLoyaltyCardPro')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#52B788] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#EB1E99] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-white font-semibold">{t('landing.pricing.autoWhatsappEmail')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#52B788] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#EB1E99] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-white font-semibold">{t('landing.pricing.fullDashboard')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#52B788] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#EB1E99] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-white font-semibold">{t('landing.pricing.multilingualSupport')}</span>
                 </li>
               </ul>
               <Link href="/auth/signup?plan=pro" className="w-full">
-                <Button className="w-full bg-white text-[#2D6A4F] hover:bg-gray-100 font-bold">
+                <Button className="w-full bg-white text-[#7209B7] hover:bg-gray-100 font-bold">
                   {t('landing.pricing.try14Days')}
                 </Button>
               </Link>
@@ -947,25 +947,25 @@ export default function LandingPage() {
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#2D6A4F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#7209B7] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-gray-700">{t('landing.pricing.allProFeatures')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#2D6A4F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#7209B7] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-gray-700">{t('landing.pricing.establishments')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#2D6A4F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#7209B7] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-gray-700">{t('landing.pricing.centralizedDashboard')}</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#2D6A4F] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-6 h-6 text-[#7209B7] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   <span className="text-gray-700">{t('landing.pricing.dedicatedManager')}</span>
@@ -983,7 +983,7 @@ export default function LandingPage() {
           <div className="mt-16 text-center">
             <Card className="max-w-3xl mx-auto bg-gray-50 border-2 border-gray-200 rounded-2xl p-8">
               <div className="flex items-center justify-center gap-4">
-                <svg className="w-12 h-12 text-[#2D6A4F]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-12 h-12 text-[#7209B7]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
                 <div className="text-left">
@@ -1001,9 +1001,9 @@ export default function LandingPage() {
         <div className="container mx-auto max-w-7xl">
           {/* Section header */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#2D6A4F]/10 rounded-full mb-6">
-              <div className="w-2 h-2 bg-[#2D6A4F] rounded-full"></div>
-              <span className="text-sm font-semibold text-[#2D6A4F] uppercase tracking-wide">FAQ</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#7209B7]/10 rounded-full mb-6">
+              <div className="w-2 h-2 bg-[#7209B7] rounded-full"></div>
+              <span className="text-sm font-semibold text-[#7209B7] uppercase tracking-wide">FAQ</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 max-w-3xl mx-auto leading-tight" style={{ fontFamily: 'ARCO, sans-serif' }}>
               {t('landing.faq.title')}
@@ -1040,8 +1040,8 @@ export default function LandingPage() {
                     className="w-full p-6 text-left flex items-center justify-between hover:bg-gray-50 transition"
                   >
                     <span className="text-gray-900 font-bold text-lg pr-4">{faq.q}</span>
-                    <div className={`w-8 h-8 rounded-full bg-[#2D6A4F]/10 flex items-center justify-center flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}>
-                      <svg className="w-5 h-5 text-[#2D6A4F]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className={`w-8 h-8 rounded-full bg-[#7209B7]/10 flex items-center justify-center flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}>
+                      <svg className="w-5 h-5 text-[#7209B7]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </div>
@@ -1058,7 +1058,7 @@ export default function LandingPage() {
             {/* Contact Card */}
             <Card className="bg-white border-2 border-gray-200 rounded-2xl p-8 h-fit">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-[#2D6A4F] rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-[#7209B7] rounded-xl flex items-center justify-center">
                   <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
@@ -1073,24 +1073,24 @@ export default function LandingPage() {
                   <input
                     type="text"
                     placeholder={t('landing.faq.yourName')}
-                    className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-[#2D6A4F] focus:outline-none transition"
+                    className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-[#7209B7] focus:outline-none transition"
                   />
                 </div>
                 <div>
                   <input
                     type="email"
                     placeholder={t('landing.faq.yourEmail')}
-                    className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-[#2D6A4F] focus:outline-none transition"
+                    className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-[#7209B7] focus:outline-none transition"
                   />
                 </div>
                 <div>
                   <textarea
                     placeholder={t('landing.faq.yourMessage')}
                     rows={4}
-                    className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-[#2D6A4F] focus:outline-none transition resize-none"
+                    className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-[#7209B7] focus:outline-none transition resize-none"
                   />
                 </div>
-                <Button className="w-full bg-[#2D6A4F] hover:bg-[#1B4332] text-white py-6 text-lg font-bold">
+                <Button className="w-full bg-[#7209B7] hover:bg-[#3A0CA3] text-white py-6 text-lg font-bold">
                   {t('landing.faq.sendMessage')}
                 </Button>
               </form>
@@ -1111,12 +1111,12 @@ export default function LandingPage() {
             priority
           />
           {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#2D6A4F]/80 to-[#1B4332]/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#7209B7]/80 to-[#3A0CA3]/90"></div>
         </div>
         {/* Decorative elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#52B788] rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#EB1E99] rounded-full blur-3xl"></div>
         </div>
         
         <div className="container mx-auto max-w-5xl relative z-10">
@@ -1136,7 +1136,7 @@ export default function LandingPage() {
             
             <div className="flex justify-center items-center">
               <Link href="/auth/signup">
-                <Button size="lg" className="bg-white text-[#2D6A4F] hover:bg-gray-100 px-12 py-7 text-xl font-bold rounded-full shadow-2xl">
+                <Button size="lg" className="bg-white text-[#7209B7] hover:bg-gray-100 px-12 py-7 text-xl font-bold rounded-full shadow-2xl">
                   {t('landing.cta.tryFree')}
                 </Button>
               </Link>
@@ -1167,13 +1167,13 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#1B4332] py-16 px-4">
+      <footer className="bg-[#3A0CA3] py-16 px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="grid md:grid-cols-5 gap-12 mb-12">
             {/* Brand column */}
             <div className="md:col-span-2">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-2 h-2 bg-[#52B788] rounded-full"></div>
+                <div className="w-2 h-2 bg-[#EB1E99] rounded-full"></div>
                 <span className="text-2xl font-bold text-white">qualee</span>
               </div>
               <p className="text-white/70 mb-6 leading-relaxed">

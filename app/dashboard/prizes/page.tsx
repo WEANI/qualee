@@ -286,7 +286,7 @@ export default function PrizesPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#2D6A4F] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-[#7209B7] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-lg text-gray-600">Loading...</p>
         </div>
       </div>
@@ -322,7 +322,7 @@ export default function PrizesPage() {
           </div>
           <Button 
             onClick={() => showForm ? handleCancel() : setShowForm(true)} 
-            className={`gap-2 ${showForm ? 'bg-red-100 text-red-600 hover:bg-red-200' : 'bg-teal-600 hover:bg-teal-700 text-white'}`}
+            className={`gap-2 ${showForm ? 'bg-red-100 text-red-600 hover:bg-red-200' : 'bg-violet-600 hover:bg-teal-700 text-white'}`}
             variant={showForm ? 'outline' : 'default'}
           >
             {showForm ? (
@@ -342,7 +342,7 @@ export default function PrizesPage() {
         {/* Segment Counter Card */}
         <Card className="p-6 bg-gradient-to-r from-teal-50 to-blue-50 border-teal-200">
           <div className="flex items-start gap-4">
-            <div className="w-16 h-16 bg-teal-600 rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="w-16 h-16 bg-violet-600 rounded-full flex items-center justify-center flex-shrink-0">
               <span className="text-2xl">🎡</span>
             </div>
             <div className="flex-1">
@@ -350,7 +350,7 @@ export default function PrizesPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div className="bg-white rounded-lg p-4 border-2 border-teal-200">
                   <p className="text-sm text-gray-600 mb-1">Segments utilisés</p>
-                  <p className="text-3xl font-bold text-teal-600">{totalSegments}/{MAX_SEGMENTS}</p>
+                  <p className="text-3xl font-bold text-violet-600">{totalSegments}/{MAX_SEGMENTS}</p>
                 </div>
                 <div className={`rounded-lg p-4 border-2 ${
                   remainingSegments === 0 ? 'bg-green-50 border-green-200' : 
@@ -373,7 +373,7 @@ export default function PrizesPage() {
               {/* Segment Info */}
               <div className="bg-white rounded-lg p-4 border border-teal-200">
                 <div className="flex items-center gap-2 mb-3">
-                  <Info className="w-5 h-5 text-teal-600" />
+                  <Info className="w-5 h-5 text-violet-600" />
                   <h4 className="font-semibold text-gray-900">💡 Comment ça marche</h4>
                 </div>
                 <div className="text-sm text-gray-600 space-y-2">
@@ -402,12 +402,12 @@ export default function PrizesPage() {
             <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
               {editingId ? (
                 <>
-                  <Pencil className="w-5 h-5 text-teal-600" />
+                  <Pencil className="w-5 h-5 text-violet-600" />
                   Modifier le Prix
                 </>
               ) : (
                 <>
-                  <Plus className="w-5 h-5 text-teal-600" />
+                  <Plus className="w-5 h-5 text-violet-600" />
                   Ajouter un Nouveau Prix
                 </>
               )}
@@ -433,7 +433,7 @@ export default function PrizesPage() {
                     </button>
                   </div>
                 ) : (
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-teal-500 transition-colors">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-violet-500 transition-colors">
                     <input
                       type="file"
                       id="prize-image"
@@ -444,7 +444,7 @@ export default function PrizesPage() {
                     <label htmlFor="prize-image" className="cursor-pointer">
                       <ImageIcon className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                       <p className="text-sm text-gray-600 mb-1">
-                        <span className="text-teal-600 font-semibold">Cliquez pour uploader</span> ou glissez-déposez
+                        <span className="text-violet-600 font-semibold">Cliquez pour uploader</span> ou glissez-déposez
                       </p>
                       <p className="text-xs text-gray-500">PNG, JPG jusqu'à 5MB</p>
                     </label>
@@ -468,7 +468,7 @@ export default function PrizesPage() {
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Obtenez 10% de réduction sur votre prochain achat"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500"
                   rows={3}
                 />
               </div>
@@ -480,7 +480,7 @@ export default function PrizesPage() {
                     Probabilité de Gain
                   </label>
                   <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold text-teal-600">{formData.probability}%</span>
+                    <span className="text-2xl font-bold text-violet-600">{formData.probability}%</span>
                     <span className={`text-xs px-2 py-1 rounded-full ${getChanceDescription(formData.probability).bg} ${getChanceDescription(formData.probability).color} font-medium`}>
                       {getChanceDescription(formData.probability).text}
                     </span>
@@ -494,7 +494,7 @@ export default function PrizesPage() {
                   step="1"
                   value={formData.probability}
                   onChange={(e) => setFormData({ ...formData, probability: parseFloat(e.target.value) })}
-                  className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-teal-600"
+                  className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-violet-600"
                 />
                 
                 <div className="flex justify-between text-xs text-gray-500 mt-2">
@@ -514,7 +514,7 @@ export default function PrizesPage() {
               <Button 
                 type="submit" 
                 disabled={loading || uploading} 
-                className="w-full bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white font-bold py-6 rounded-xl shadow-lg transform transition-transform active:scale-95"
+                className="w-full bg-gradient-to-r from-violet-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white font-bold py-6 rounded-xl shadow-lg transform transition-transform active:scale-95"
               >
                 {uploading ? 'Upload en cours...' : loading ? 'Sauvegarde...' : (editingId ? 'Mettre à jour le Prix' : 'Créer le Prix')}
               </Button>
@@ -650,7 +650,7 @@ export default function PrizesPage() {
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div className="bg-white rounded-lg p-3 border">
                   <p className="text-gray-500">Segments totaux</p>
-                  <p className="text-2xl font-bold text-teal-600">{totalSegments}/{MAX_SEGMENTS}</p>
+                  <p className="text-2xl font-bold text-violet-600">{totalSegments}/{MAX_SEGMENTS}</p>
                 </div>
                 <div className="bg-white rounded-lg p-3 border">
                   <p className="text-gray-500">Prix sur la roue</p>
@@ -693,7 +693,7 @@ export default function PrizesPage() {
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute top-3 right-3">
-                      <div className={`px-3 py-1.5 ${quantity > 0 ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-600'} rounded-full font-bold text-sm shadow-lg`}>
+                      <div className={`px-3 py-1.5 ${quantity > 0 ? 'bg-violet-600 text-white' : 'bg-gray-200 text-gray-600'} rounded-full font-bold text-sm shadow-lg`}>
                         × {quantity}
                       </div>
                     </div>
@@ -702,7 +702,7 @@ export default function PrizesPage() {
                   <div className="h-40 bg-gradient-to-br from-teal-100 to-blue-100 flex items-center justify-center relative">
                     <span className="text-5xl">🎁</span>
                     <div className="absolute top-3 right-3">
-                      <div className={`px-3 py-1.5 ${quantity > 0 ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-600'} rounded-full font-bold text-sm shadow-lg`}>
+                      <div className={`px-3 py-1.5 ${quantity > 0 ? 'bg-violet-600 text-white' : 'bg-gray-200 text-gray-600'} rounded-full font-bold text-sm shadow-lg`}>
                         × {quantity}
                       </div>
                     </div>
@@ -726,17 +726,17 @@ export default function PrizesPage() {
                         disabled={quantity <= 0}
                         variant="outline"
                         size="sm"
-                        className="w-9 h-9 rounded-full border-teal-400 text-teal-600 hover:bg-teal-50 disabled:opacity-50"
+                        className="w-9 h-9 rounded-full border-teal-400 text-violet-600 hover:bg-teal-50 disabled:opacity-50"
                       >
                         -
                       </Button>
-                      <span className="text-2xl font-bold text-teal-600 w-10 text-center">{quantity}</span>
+                      <span className="text-2xl font-bold text-violet-600 w-10 text-center">{quantity}</span>
                       <Button
                         onClick={() => updatePrizeQuantity(prize.id, 1)}
                         disabled={totalSegments >= MAX_SEGMENTS}
                         variant="outline"
                         size="sm"
-                        className="w-9 h-9 rounded-full border-teal-400 text-teal-600 hover:bg-teal-50 disabled:opacity-50"
+                        className="w-9 h-9 rounded-full border-teal-400 text-violet-600 hover:bg-teal-50 disabled:opacity-50"
                       >
                         +
                       </Button>
@@ -778,7 +778,7 @@ export default function PrizesPage() {
               <p className="text-gray-600 mb-6 max-w-md mx-auto">
                 Ajoutez votre premier prix pour commencer à configurer votre roue de la chance !
               </p>
-              <Button onClick={() => setShowForm(true)} className="gap-2 bg-teal-600 hover:bg-teal-700">
+              <Button onClick={() => setShowForm(true)} className="gap-2 bg-violet-600 hover:bg-teal-700">
                 <Plus className="w-4 h-4" />
                 Ajouter mon Premier Prix
               </Button>

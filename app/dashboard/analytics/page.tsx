@@ -165,7 +165,7 @@ export default function AnalyticsPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-violet-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-lg text-gray-600">Chargement des analytics...</p>
         </div>
       </div>
@@ -182,38 +182,38 @@ export default function AnalyticsPage() {
 
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="p-6 border-l-4 border-l-teal-500">
+          <Card className="p-6 border-l-4 border-l-violet-500">
             <div className="flex items-center justify-between mb-3">
               <div className="p-2 bg-teal-50 rounded-lg">
-                <BarChart3 className="w-5 h-5 text-teal-600" />
+                <BarChart3 className="w-5 h-5 text-violet-600" />
               </div>
               {reviewsTrend.isPositive ? (
-                <TrendingUp className="w-4 h-4 text-teal-600" />
+                <TrendingUp className="w-4 h-4 text-violet-600" />
               ) : (
                 <TrendingDown className="w-4 h-4 text-red-600" />
               )}
             </div>
             <p className="text-sm text-gray-600 mb-1">Total Avis</p>
             <p className="text-3xl font-bold text-gray-900">{stats.totalReviews}</p>
-            <p className={`text-xs mt-2 ${reviewsTrend.isPositive ? 'text-teal-600' : 'text-red-600'}`}>
+            <p className={`text-xs mt-2 ${reviewsTrend.isPositive ? 'text-violet-600' : 'text-red-600'}`}>
               {reviewsTrend.isPositive ? '+' : '-'}{reviewsTrend.value}% ce mois
             </p>
           </Card>
 
-          <Card className="p-6 border-l-4 border-l-emerald-500">
+          <Card className="p-6 border-l-4 border-l-violet-500">
             <div className="flex items-center justify-between mb-3">
-              <div className="p-2 bg-emerald-50 rounded-lg">
-                <ThumbsUp className="w-5 h-5 text-emerald-600" />
+              <div className="p-2 bg-violet-50 rounded-lg">
+                <ThumbsUp className="w-5 h-5 text-violet-600" />
               </div>
               {positiveTrend.isPositive ? (
-                <TrendingUp className="w-4 h-4 text-emerald-600" />
+                <TrendingUp className="w-4 h-4 text-violet-600" />
               ) : (
                 <TrendingDown className="w-4 h-4 text-red-600" />
               )}
             </div>
             <p className="text-sm text-gray-600 mb-1">Avis Positifs (4-5⭐)</p>
             <p className="text-3xl font-bold text-gray-900">{stats.positiveReviews}</p>
-            <p className={`text-xs mt-2 ${positiveTrend.isPositive ? 'text-emerald-600' : 'text-red-600'}`}>
+            <p className={`text-xs mt-2 ${positiveTrend.isPositive ? 'text-violet-600' : 'text-red-600'}`}>
               {positiveTrend.isPositive ? '+' : '-'}{positiveTrend.value}% ce mois
             </p>
           </Card>
@@ -259,7 +259,7 @@ export default function AnalyticsPage() {
               {[5, 4, 3, 2, 1].map((rating) => {
                 const count = ratingDistribution[rating] || 0;
                 const percentage = stats.totalReviews > 0 ? (count / stats.totalReviews) * 100 : 0;
-                const barColor = rating >= 4 ? 'bg-emerald-500' : rating === 3 ? 'bg-amber-500' : 'bg-red-500';
+                const barColor = rating >= 4 ? 'bg-violet-500' : rating === 3 ? 'bg-amber-500' : 'bg-red-500';
                 return (
                   <div key={rating} className="flex items-center gap-3">
                     <span className="text-sm font-medium text-gray-700 w-12">{rating} ⭐</span>
@@ -284,7 +284,7 @@ export default function AnalyticsPage() {
 
           <Card className="p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <BarChart3 className="w-5 h-5 text-teal-600" />
+              <BarChart3 className="w-5 h-5 text-violet-600" />
               Métriques de Conversion
             </h3>
             <div className="space-y-4">
@@ -294,7 +294,7 @@ export default function AnalyticsPage() {
                   <p className="text-2xl font-bold text-gray-900">{stats.conversionRate}%</p>
                 </div>
                 <div className="p-3 bg-teal-100 rounded-lg">
-                  <TrendingUp className="w-6 h-6 text-teal-600" />
+                  <TrendingUp className="w-6 h-6 text-violet-600" />
                 </div>
               </div>
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
@@ -371,7 +371,7 @@ export default function AnalyticsPage() {
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
                         {feedback.is_positive ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-medium">
+                          <span className="inline-flex items-center gap-1 px-2 py-1 bg-violet-50 text-emerald-700 rounded-full text-xs font-medium">
                             <ThumbsUp className="w-3 h-3" />
                             Positif
                           </span>

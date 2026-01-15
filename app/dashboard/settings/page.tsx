@@ -258,7 +258,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-violet-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-lg text-gray-600">Loading...</p>
         </div>
       </div>
@@ -281,7 +281,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
           }`}>
             <div className="flex items-start gap-2">
               {message.type === 'success' ? (
-                <Check className="w-5 h-5 text-teal-600 mt-0.5" />
+                <Check className="w-5 h-5 text-violet-600 mt-0.5" />
               ) : message.type === 'warning' ? (
                 <div className="w-5 h-5 text-amber-600 mt-0.5">⚠️</div>
               ) : (
@@ -323,7 +323,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                 </div>
               )}
 
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-teal-500 transition-colors">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-violet-500 transition-colors">
                 <input
                   type="file"
                   id="logo-upload"
@@ -334,7 +334,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                 <label htmlFor="logo-upload" className="cursor-pointer">
                   <ImageIcon className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                   <p className="text-sm text-gray-600 mb-1">
-                    <span className="text-teal-600 font-semibold">Click to upload</span> or drag and drop
+                    <span className="text-violet-600 font-semibold">Click to upload</span> or drag and drop
                   </p>
                   <p className="text-xs text-gray-500">PNG, JPG up to 5MB</p>
                 </label>
@@ -362,7 +362,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                 </div>
               )}
 
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-teal-500 transition-colors">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-violet-500 transition-colors">
                 <input
                   type="file"
                   id="background-upload"
@@ -373,7 +373,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                 <label htmlFor="background-upload" className="cursor-pointer">
                   <Upload className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                   <p className="text-sm text-gray-600 mb-1">
-                    <span className="text-teal-600 font-semibold">Click to upload</span> or drag and drop
+                    <span className="text-violet-600 font-semibold">Click to upload</span> or drag and drop
                   </p>
                   <p className="text-xs text-gray-500">PNG, JPG (9:16 format) up to 10MB</p>
                 </label>
@@ -422,7 +422,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
           <Button
             onClick={handleSave}
             disabled={uploading || (!logoFile && !backgroundFile)}
-            className="bg-teal-600 hover:bg-teal-700"
+            className="bg-violet-600 hover:bg-teal-700"
           >
             {uploading ? (
               <>

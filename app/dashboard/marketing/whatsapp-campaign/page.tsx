@@ -304,7 +304,7 @@ export default function WhatsAppCampaignPage() {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-violet-600" />
         </div>
       </DashboardLayout>
     );
@@ -370,7 +370,7 @@ export default function WhatsAppCampaignPage() {
           <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
-                <FolderOpen className="w-5 h-5 text-teal-600" />
+                <FolderOpen className="w-5 h-5 text-violet-600" />
                 {t('marketing.whatsappCampaign.savedCampaigns')}
               </h2>
               <Button
@@ -399,8 +399,8 @@ export default function WhatsAppCampaignPage() {
                   .map((campaign) => (
                   <div
                     key={campaign.id}
-                    className={`border rounded-xl p-4 hover:border-teal-500 transition-colors cursor-pointer ${
-                      currentCampaignId === campaign.id ? 'border-teal-500 bg-teal-50' : 'border-slate-200'
+                    className={`border rounded-xl p-4 hover:border-violet-500 transition-colors cursor-pointer ${
+                      currentCampaignId === campaign.id ? 'border-violet-500 bg-teal-50' : 'border-slate-200'
                     }`}
                     onClick={() => loadCampaign(campaign)}
                   >
@@ -441,7 +441,7 @@ export default function WhatsAppCampaignPage() {
                       </span>
                     </div>
                     {campaign.send_count > 0 && (
-                      <div className="mt-2 text-xs text-teal-600 flex items-center gap-1">
+                      <div className="mt-2 text-xs text-violet-600 flex items-center gap-1">
                         <Send className="w-3 h-3" />
                         {t('marketing.whatsappCampaign.sentTimes', { count: campaign.send_count })}
                       </div>
@@ -459,7 +459,7 @@ export default function WhatsAppCampaignPage() {
             {/* Campaign Name */}
             <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
               <h2 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-                <MessageSquare className="w-5 h-5 text-teal-600" />
+                <MessageSquare className="w-5 h-5 text-violet-600" />
                 {t('marketing.whatsappCampaign.campaignDetails')}
               </h2>
 
@@ -473,7 +473,7 @@ export default function WhatsAppCampaignPage() {
                     value={campaignName}
                     onChange={(e) => setCampaignName(e.target.value)}
                     placeholder={t('marketing.whatsappCampaign.campaignNamePlaceholder')}
-                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-violet-500 focus:border-transparent"
                   />
                 </div>
 
@@ -486,7 +486,7 @@ export default function WhatsAppCampaignPage() {
                     onChange={(e) => setMainMessage(e.target.value)}
                     placeholder={t('marketing.whatsappCampaign.mainMessagePlaceholder')}
                     rows={3}
-                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-violet-500 focus:border-transparent resize-none"
                   />
                 </div>
               </div>
@@ -496,7 +496,7 @@ export default function WhatsAppCampaignPage() {
             <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
-                  <ImageIcon className="w-5 h-5 text-teal-600" />
+                  <ImageIcon className="w-5 h-5 text-violet-600" />
                   {t('marketing.whatsappCampaign.carouselCards')} ({cards.length}/10)
                 </h2>
                 <Button
@@ -577,10 +577,10 @@ export default function WhatsAppCampaignPage() {
                       ) : (
                         <div
                           onClick={() => fileInputRefs.current[card.id]?.click()}
-                          className="w-full h-48 border-2 border-dashed border-slate-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-teal-500 hover:bg-teal-50/50 transition-colors"
+                          className="w-full h-48 border-2 border-dashed border-slate-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-violet-500 hover:bg-teal-50/50 transition-colors"
                         >
                           {uploadingCard === card.id ? (
-                            <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
+                            <Loader2 className="w-8 h-8 animate-spin text-violet-600" />
                           ) : (
                             <>
                               <Upload className="w-8 h-8 text-slate-400 mb-2" />
@@ -616,7 +616,7 @@ export default function WhatsAppCampaignPage() {
                         onChange={(e) => updateCard(card.id, { text: e.target.value })}
                         placeholder={t('marketing.whatsappCampaign.cardTextPlaceholder')}
                         rows={2}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none text-sm"
+                        className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent resize-none text-sm"
                       />
                     </div>
 
@@ -630,7 +630,7 @@ export default function WhatsAppCampaignPage() {
                           onClick={() => updateCard(card.id, { buttonType: 'url' })}
                           className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-colors ${
                             card.buttonType === 'url'
-                              ? 'bg-teal-600 text-white'
+                              ? 'bg-violet-600 text-white'
                               : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                           }`}
                         >
@@ -641,7 +641,7 @@ export default function WhatsAppCampaignPage() {
                           onClick={() => updateCard(card.id, { buttonType: 'quick_reply' })}
                           className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-colors ${
                             card.buttonType === 'quick_reply'
-                              ? 'bg-teal-600 text-white'
+                              ? 'bg-violet-600 text-white'
                               : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                           }`}
                         >
@@ -661,7 +661,7 @@ export default function WhatsAppCampaignPage() {
                         value={card.buttonTitle}
                         onChange={(e) => updateCard(card.id, { buttonTitle: e.target.value })}
                         placeholder={t('marketing.whatsappCampaign.buttonTitlePlaceholder')}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm"
+                        className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm"
                       />
                     </div>
 
@@ -676,7 +676,7 @@ export default function WhatsAppCampaignPage() {
                           value={card.buttonUrl}
                           onChange={(e) => updateCard(card.id, { buttonUrl: e.target.value })}
                           placeholder="https://example.com"
-                          className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm"
+                          className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm"
                         />
                       </div>
                     )}
@@ -692,7 +692,7 @@ export default function WhatsAppCampaignPage() {
             {showPreview && (
               <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
                 <h2 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-                  <Eye className="w-5 h-5 text-teal-600" />
+                  <Eye className="w-5 h-5 text-violet-600" />
                   {t('marketing.whatsappCampaign.preview')}
                 </h2>
 
@@ -739,7 +739,7 @@ export default function WhatsAppCampaignPage() {
                           <p className="text-xs text-slate-700 line-clamp-3 mb-2">
                             {card.text || t('marketing.whatsappCampaign.cardTextPlaceholder')}
                           </p>
-                          <button className="w-full py-1.5 bg-slate-100 rounded text-xs font-medium text-teal-600 flex items-center justify-center gap-1">
+                          <button className="w-full py-1.5 bg-slate-100 rounded text-xs font-medium text-violet-600 flex items-center justify-center gap-1">
                             {card.buttonType === 'url' ? <LinkIcon className="w-3 h-3" /> : <MessageSquare className="w-3 h-3" />}
                             {card.buttonTitle || t('marketing.whatsappCampaign.buttonTitlePlaceholder')}
                           </button>
@@ -752,11 +752,11 @@ export default function WhatsAppCampaignPage() {
             )}
 
             {/* Next Step Info */}
-            <div className="bg-gradient-to-br from-teal-50 to-emerald-50 rounded-2xl border border-teal-200 p-6">
+            <div className="bg-gradient-to-br from-teal-50 to-violet-50 rounded-2xl border border-teal-200 p-6">
               <h3 className="text-lg font-semibold text-teal-900 mb-2">{t('marketing.whatsappCampaign.nextStep')}</h3>
               <p className="text-sm text-teal-700 mb-4">{t('marketing.whatsappCampaign.nextStepDescription')}</p>
               <Button
-                className="bg-teal-600 hover:bg-teal-700 gap-2"
+                className="bg-violet-600 hover:bg-teal-700 gap-2"
                 disabled={!isCampaignValid()}
                 onClick={() => {
                   // Save campaign to localStorage

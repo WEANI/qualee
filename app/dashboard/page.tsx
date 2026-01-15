@@ -324,24 +324,24 @@ export default function DashboardPage() {
           </Card>
 
           {/* Prizes Redeemed - Enhanced */}
-          <Card className="relative p-6 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden bg-gradient-to-br from-white to-emerald-50/30">
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute inset-[2px] bg-gradient-to-br from-white to-emerald-50/30 rounded-[inherit]" />
+          <Card className="relative p-6 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden bg-gradient-to-br from-white to-violet-50/30">
+            <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-violet-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-[2px] bg-gradient-to-br from-white to-violet-50/30 rounded-[inherit]" />
 
             <div className="relative z-10">
               <div className="flex justify-between items-start mb-4">
-                <div className="p-3 bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-xl shadow-lg shadow-emerald-500/30 group-hover:scale-110 transition-transform duration-300">
+                <div className="p-3 bg-gradient-to-br from-violet-500 to-violet-600 text-white rounded-xl shadow-lg shadow-violet-500/30 group-hover:scale-110 transition-transform duration-300">
                   <Gift className="w-6 h-6" />
                 </div>
                 {stats.positiveRatio > 0 && (
-                  <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 shadow-sm">
+                  <Badge className="bg-violet-100 text-emerald-700 border-emerald-200 shadow-sm">
                     {stats.positiveRatio}% positifs
                   </Badge>
                 )}
               </div>
               <div>
                 <p className="text-sm font-medium text-slate-500">{t('dashboard.rewards')}</p>
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mt-1">{stats.rewardsRedeemed}</h3>
+                <h3 className="text-3xl font-bold bg-gradient-to-r from-violet-600 to-violet-600 bg-clip-text text-transparent mt-1">{stats.rewardsRedeemed}</h3>
               </div>
             </div>
           </Card>
@@ -447,7 +447,7 @@ export default function DashboardPage() {
                 onClick={() => router.push('/dashboard/analytics')}
                 className="p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all text-left group"
               >
-                <div className="w-10 h-10 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-teal-600 group-hover:text-white transition-colors">
+                <div className="w-10 h-10 bg-teal-50 text-violet-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-violet-600 group-hover:text-white transition-colors">
                   <BarChart3 className="w-5 h-5" />
                 </div>
                 <h4 className="font-semibold text-slate-900">{t('dashboard.quickActions.analytics')}</h4>

@@ -87,7 +87,7 @@ export function SpinningWheel({
 
       {/* Pointer */}
       <div className="absolute -top-8 left-1/2 -translate-x-1/2 z-20">
-        <div className="w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[40px] border-t-[#FFD700]" 
+        <div className="w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[40px] border-t-[#00A7E1]" 
           style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))' }}
         />
       </div>

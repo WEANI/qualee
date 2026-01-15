@@ -124,13 +124,13 @@ export function LanguageSwitcher({
               key={lang.code}
               onClick={() => handleLanguageChange(lang.code)}
               className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${itemStyles} ${
-                lang.code === i18n.language ? 'bg-[#2D6A4F]/10' : ''
+                lang.code === i18n.language ? 'bg-[#7209B7]/10' : ''
               }`}
             >
               <span className="text-xl">{lang.flag}</span>
               <span className="font-medium">{lang.name}</span>
               {lang.code === i18n.language && (
-                <svg className="w-4 h-4 ml-auto text-[#2D6A4F]" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 ml-auto text-[#7209B7]" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
               )}

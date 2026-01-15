@@ -95,9 +95,9 @@ export function DemoVideoPlayer({ className = '' }: DemoVideoPlayerProps) {
             aria-label={isPlaying ? 'Pause' : 'Play'}
           >
             {isPlaying ? (
-              <Pause className="w-5 h-5 md:w-6 md:h-6 text-[#2D6A4F]" />
+              <Pause className="w-5 h-5 md:w-6 md:h-6 text-[#7209B7]" />
             ) : (
-              <Play className="w-5 h-5 md:w-6 md:h-6 text-[#2D6A4F] ml-0.5" />
+              <Play className="w-5 h-5 md:w-6 md:h-6 text-[#7209B7] ml-0.5" />
             )}
           </button>
 
@@ -136,7 +136,7 @@ export function DemoVideoPlayer({ className = '' }: DemoVideoPlayerProps) {
             className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/90 hover:bg-white flex items-center justify-center transition-all transform hover:scale-110 shadow-2xl pointer-events-auto"
             aria-label="Play video"
           >
-            <Play className="w-8 h-8 md:w-10 md:h-10 text-[#2D6A4F] ml-1 md:ml-2" />
+            <Play className="w-8 h-8 md:w-10 md:h-10 text-[#7209B7] ml-1 md:ml-2" />
           </button>
         </div>
       )}
