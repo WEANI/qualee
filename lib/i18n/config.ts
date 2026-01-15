@@ -20,23 +20,50 @@ const resources = {
   ru: { translation: ru },
 };
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    resources,
-    fallbackLng: 'en',
-    supportedLngs: ['en', 'fr', 'es', 'ar', 'th', 'zh', 'ru'],
-    interpolation: {
-      escapeValue: false,
-    },
-    detection: {
-      order: ['querystring', 'navigator', 'htmlTag'],
-      caches: ['localStorage'],
-    },
-    react: {
-      useSuspense: false,
-    },
-  });
+// Check if we're in the browser
+const isBrowser = typeof window !== 'undefined';
 
-export default i18n;
+// Initialize i18n
+const i18nInstance = i18n.createInstance();
+
+if (isBrowser) {
+  // Client-side: use language detector
+  i18nInstance
+    .use(LanguageDetector)
+    .use(initReactI18next)
+    .init({
+      resources,
+      fallbackLng: 'en',
+      lng: 'en', // Default language for initial render (prevents hydration mismatch)
+      supportedLngs: ['en', 'fr', 'es', 'ar', 'th', 'zh', 'ru'],
+      interpolation: {
+        escapeValue: false,
+      },
+      detection: {
+        order: ['localStorage', 'querystring', 'navigator', 'htmlTag'],
+        caches: ['localStorage'],
+        lookupLocalStorage: 'i18nextLng',
+      },
+      react: {
+        useSuspense: false,
+      },
+    });
+} else {
+  // Server-side: no language detector, use default language
+  i18nInstance
+    .use(initReactI18next)
+    .init({
+      resources,
+      fallbackLng: 'en',
+      lng: 'en', // Fixed language for SSR
+      supportedLngs: ['en', 'fr', 'es', 'ar', 'th', 'zh', 'ru'],
+      interpolation: {
+        escapeValue: false,
+      },
+      react: {
+        useSuspense: false,
+      },
+    });
+}
+
+export default i18nInstance;
