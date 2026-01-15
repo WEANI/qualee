@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
       .from('merchants')
       .select('id, loyalty_enabled')
       .eq('id', merchantId)
-      .single();
+      .maybeSingle();
 
     if (merchantError || !merchant) {
       return NextResponse.json(
@@ -180,7 +180,7 @@ export async function POST(request: NextRequest) {
       .eq('merchant_id', merchantId)
       .order('sort_order', { ascending: false })
       .limit(1)
-      .single();
+      .maybeSingle();
 
     const sortOrder = (lastReward?.sort_order || 0) + 1;
 
@@ -200,7 +200,7 @@ export async function POST(request: NextRequest) {
         sort_order: sortOrder
       })
       .select()
-      .single();
+      .maybeSingle();
 
     if (createError) {
       console.error('[LOYALTY REWARDS] Create error:', createError);
@@ -283,8 +283,7 @@ export async function PATCH(request: NextRequest) {
       })
       .eq('id', rewardId)
       .eq('merchant_id', merchantId)
-      .select()
-      .single();
+      .maybeSingle();
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

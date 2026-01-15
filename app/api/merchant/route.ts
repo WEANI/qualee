@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
       query = query.eq('shop_id', shopId);
     }
 
-    const { data: merchant, error } = await query.single();
+    const { data: merchant, error } = await query.maybeSingle();
 
     if (error || !merchant) {
       return NextResponse.json(

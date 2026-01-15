@@ -82,7 +82,7 @@ export default function SendCampaignPage() {
         .from('merchants')
         .select('*')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
       setMerchant(merchantData);
 
       // Fetch WhatsApp customers

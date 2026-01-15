@@ -43,7 +43,7 @@ export const merchantRepository = {
       .from('merchants')
       .select('*')
       .eq('id', id)
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error fetching merchant:', error);
@@ -76,7 +76,7 @@ export const merchantRepository = {
       })
       .eq('id', id)
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error updating merchant:', error);
@@ -129,7 +129,8 @@ export const merchantRepository = {
     const { count, error } = await supabase
       .from('merchants')
       .select('*', { count: 'exact', head: true })
-      .eq('id', id);
+      .eq('id', id)
+      .maybeSingle();
 
     if (error) return false;
     return (count ?? 0) > 0;

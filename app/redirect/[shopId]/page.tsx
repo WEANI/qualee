@@ -111,7 +111,7 @@ export default function RedirectPage() {
         .from('merchants')
         .select('*')
         .eq('id', shopId)
-        .single();
+        .maybeSingle();
 
       if (error) {
         return;

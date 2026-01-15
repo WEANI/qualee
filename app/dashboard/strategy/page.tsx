@@ -65,7 +65,7 @@ export default function StrategyPage() {
         .from('merchants')
         .select('*')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
       setMerchant(merchantData);
       
@@ -134,7 +134,7 @@ export default function StrategyPage() {
         .from('merchants')
         .select('*')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
       setMerchant(merchantData);
     } catch (error: any) {
       setMessage({ type: 'error', text: error.message || 'Échec de la sauvegarde' });

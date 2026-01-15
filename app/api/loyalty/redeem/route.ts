@@ -31,7 +31,7 @@ async function generateRedemptionCode(): Promise<string> {
       .from('redeemed_rewards')
       .select('id')
       .eq('redemption_code', code)
-      .single();
+      .maybeSingle();
 
     exists = !!data;
   }
@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
           )
         `)
         .eq('redemption_code', code.toUpperCase())
-        .single();
+        .maybeSingle();
 
       if (error || !redeemedReward) {
         return NextResponse.json(
@@ -173,13 +173,13 @@ export async function POST(request: NextRequest) {
         .select('id, points, name')
         .eq('id', clientId)
         .eq('merchant_id', merchantId)
-        .single(),
+        .maybeSingle(),
       supabaseAdmin
         .from('loyalty_rewards')
         .select('*')
         .eq('id', rewardId)
         .eq('merchant_id', merchantId)
-        .single()
+        .maybeSingle()
     ]);
 
     if (clientResult.error || !clientResult.data) {
@@ -254,7 +254,7 @@ export async function POST(request: NextRequest) {
         expires_at: expiresAt.toISOString()
       })
       .select()
-      .single();
+      .maybeSingle();
 
     if (redeemError) {
       console.error('[LOYALTY REDEEM] Create error:', redeemError);
@@ -351,7 +351,7 @@ export async function PATCH(request: NextRequest) {
       .select('*')
       .eq('redemption_code', redemptionCode.toUpperCase())
       .eq('merchant_id', merchantId)
-      .single();
+      .maybeSingle();
 
     if (fetchError || !redeemedReward) {
       return NextResponse.json(
@@ -412,7 +412,7 @@ export async function PATCH(request: NextRequest) {
         .from('loyalty_clients')
         .select('points')
         .eq('id', redeemedReward.client_id)
-        .single();
+        .maybeSingle();
 
       if (client) {
         const newBalance = client.points + redeemedReward.points_spent;
@@ -448,7 +448,7 @@ export async function PATCH(request: NextRequest) {
       .update(updateData)
       .eq('id', redeemedReward.id)
       .select()
-      .single();
+      .maybeSingle();
 
     if (updateError) {
       return NextResponse.json({ error: updateError.message }, { status: 500 });

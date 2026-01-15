@@ -53,7 +53,7 @@ export default function RatingPage() {
           .from('merchants')
           .select('*')
           .eq('id', shopId)
-          .single();
+          .maybeSingle();
 
         if (error) {
           return;

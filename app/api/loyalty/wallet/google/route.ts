@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
       .from('loyalty_clients')
       .select('*')
       .eq('qr_code_data', clientId)
-      .single();
+      .maybeSingle();
 
     if (clientError || !client) {
       return NextResponse.json(
@@ -62,7 +62,7 @@ export async function GET(request: NextRequest) {
       .from('merchants')
       .select('id, business_name, logo_url, loyalty_card_image_url, background_url')
       .eq('id', client.merchant_id)
-      .single();
+      .maybeSingle();
 
     if (merchantError || !merchant) {
       return NextResponse.json(

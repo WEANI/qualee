@@ -40,7 +40,7 @@ export const merchants = {
       .from('merchants')
       .select('*')
       .eq('id', id)
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as Merchant;
@@ -54,7 +54,7 @@ export const merchants = {
       .from('merchants')
       .insert(merchant)
       .select()
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as Merchant;
@@ -69,7 +69,7 @@ export const merchants = {
       .update(updates)
       .eq('id', id)
       .select()
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as Merchant;
@@ -103,7 +103,7 @@ export const prizes = {
       .from('prizes')
       .insert(prize)
       .select()
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as Prize;
@@ -118,7 +118,7 @@ export const prizes = {
       .update(updates)
       .eq('id', id)
       .select()
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as Prize;
@@ -158,14 +158,13 @@ export const feedback = {
     let query = supabase
       .from('feedback')
       .select('*')
-      .eq('merchant_id', merchantId)
-      .order('created_at', { ascending: false });
+      .eq('merchant_id', merchantId);
     
     if (filters?.isPositive !== undefined) {
       query = query.eq('is_positive', filters.isPositive);
     }
     
-    const { data, error } = await query;
+    const { data, error } = await query.order('created_at', { ascending: false });
     if (error) throw error;
     return data as Feedback[];
   },
@@ -178,7 +177,7 @@ export const feedback = {
       .from('feedback')
       .insert(feedback)
       .select()
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as Feedback;
@@ -253,7 +252,7 @@ export const spins = {
       .from('spins')
       .insert(spin)
       .select()
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as Spin;
@@ -273,7 +272,7 @@ export const coupons = {
       .from('coupons')
       .select('*')
       .eq('code', code)
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as Coupon;
@@ -287,7 +286,7 @@ export const coupons = {
       .from('coupons')
       .insert(coupon)
       .select()
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as Coupon;
@@ -302,7 +301,7 @@ export const coupons = {
       .update({ used: true, used_at: new Date().toISOString() })
       .eq('code', code)
       .select()
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as Coupon;
@@ -350,7 +349,7 @@ export const subscriptionTiers = {
       .from('subscription_tiers')
       .select('*')
       .eq('tier_name', tierName)
-      .single();
+      .maybeSingle();
     
     if (error) throw error;
     return data as SubscriptionTier;

@@ -29,7 +29,7 @@ export default function SelectLanguagePage() {
         .from('merchants')
         .select('business_name, logo_url, background_url')
         .eq('id', shopId)
-        .single();
+        .maybeSingle();
 
       if (!error && data) {
         setMerchant(data);

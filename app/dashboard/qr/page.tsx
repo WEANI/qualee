@@ -31,7 +31,7 @@ export default function QRCodePage() {
         .from('merchants')
         .select('*')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
       setMerchant(merchantData);
 

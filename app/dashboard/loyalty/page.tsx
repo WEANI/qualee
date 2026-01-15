@@ -49,7 +49,7 @@ export default function LoyaltyPage() {
         .from('merchants')
         .select('*')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
       if (!merchantData) {
         router.push('/auth');

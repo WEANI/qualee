@@ -235,7 +235,7 @@ export async function POST(request: NextRequest) {
       .from('merchants')
       .select('id, business_name, whatsapp_message_template, workflow_mode')
       .eq('id', merchantId)
-      .single();
+      .maybeSingle();
 
     if (merchantError || !merchant) {
       console.error('Merchant fetch error:', merchantError);

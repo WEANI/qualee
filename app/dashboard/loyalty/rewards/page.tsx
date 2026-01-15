@@ -82,7 +82,7 @@ export default function RewardsPage() {
         .from('merchants')
         .select('*')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
       if (!merchantData) {
         router.push('/auth');

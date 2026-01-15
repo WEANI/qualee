@@ -49,7 +49,7 @@ export default function SettingsPage() {
         .from('merchants')
         .select('*')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
       setMerchant(merchantData);
       if (merchantData?.logo_url) setLogoPreview(merchantData.logo_url);
@@ -157,7 +157,7 @@ export default function SettingsPage() {
         .from('merchants')
         .select('*')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
       setMerchant(merchantData);
     } catch (error: any) {
       setMessage({ type: 'error', text: error.message || 'Failed to save loyalty settings' });
@@ -225,7 +225,7 @@ export default function SettingsPage() {
           .from('merchants')
           .select('*')
           .eq('id', user.id)
-          .single();
+          .maybeSingle();
         setMerchant(merchantData);
       }
     } catch (error: any) {

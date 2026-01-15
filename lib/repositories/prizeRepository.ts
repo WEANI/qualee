@@ -53,7 +53,7 @@ export const prizeRepository = {
       .from('prizes')
       .select('*')
       .eq('id', id)
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error fetching prize:', error);
@@ -74,7 +74,7 @@ export const prizeRepository = {
         quantity: prize.quantity ?? 0,
       })
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error creating prize:', error);
@@ -96,7 +96,7 @@ export const prizeRepository = {
       })
       .eq('id', id)
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error updating prize:', error);

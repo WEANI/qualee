@@ -36,7 +36,7 @@ export const spinRepository = {
       .from('spins')
       .insert(spin)
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error creating spin:', error);

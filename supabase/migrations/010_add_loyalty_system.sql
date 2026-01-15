@@ -307,7 +307,7 @@ WITH CHECK (
     EXISTS (
         SELECT 1 FROM merchants
         WHERE merchants.id = redeemed_rewards.merchant_id
-        AND merchants.is_active = true
+        AND (merchants.is_active = true OR merchants.is_active IS NULL)
         AND merchants.loyalty_enabled = true
     )
 );

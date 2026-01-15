@@ -47,7 +47,7 @@ export default function ScanPage() {
         .from('merchants')
         .select('*')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
       setMerchant(merchantData);
     };
@@ -230,7 +230,7 @@ export default function ScanPage() {
         .select('*')
         .eq('code', codeToVerify)
         .eq('merchant_id', merchant.id)
-        .single();
+        .maybeSingle();
 
       if (error || !coupon) {
         setScanStatus('invalid');

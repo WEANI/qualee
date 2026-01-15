@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
       .from('loyalty_clients')
       .select('points')
       .eq('id', clientId)
-      .single();
+      .maybeSingle();
 
     return NextResponse.json({
       transactions,
@@ -137,13 +137,13 @@ export async function POST(request: NextRequest) {
         .from('merchants')
         .select('points_per_purchase, purchase_amount_threshold, loyalty_currency')
         .eq('id', merchantId)
-        .single(),
+        .maybeSingle(),
       supabaseAdmin
         .from('loyalty_clients')
         .select('id, points, total_purchases, total_spent')
         .eq('id', clientId)
         .eq('merchant_id', merchantId)
-        .single()
+        .maybeSingle()
     ]);
 
     if (merchantResult.error || !merchantResult.data) {
@@ -260,7 +260,7 @@ export async function POST(request: NextRequest) {
         reference_id: referenceId || null
       })
       .select()
-      .single();
+      .maybeSingle();
 
     if (transactionError) {
       console.error('[LOYALTY POINTS] Transaction error:', transactionError);

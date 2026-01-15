@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
         .from('merchants')
         .select('id')
         .eq('id', session.user.id)
-        .single();
+        .maybeSingle();
 
       if (!existingMerchant) {
         // Créer le profil marchand avec les métadonnées de l'utilisateur

@@ -40,7 +40,7 @@ export const feedbackRepository = {
       .from('feedback')
       .insert(feedback)
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error creating feedback:', error);

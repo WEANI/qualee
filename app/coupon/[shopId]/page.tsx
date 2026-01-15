@@ -53,7 +53,7 @@ function CouponContent() {
           .from('coupons')
           .select('*')
           .eq('code', code)
-          .single();
+          .maybeSingle();
 
         if (couponError) {
           setError('Erreur lors de la récupération du coupon');
@@ -71,7 +71,7 @@ function CouponContent() {
           .from('merchants')
           .select('*')
           .eq('id', shopId)
-          .single();
+          .maybeSingle();
 
         if (merchantError || !merchantData) {
           setError('Commerçant introuvable');
@@ -87,14 +87,14 @@ function CouponContent() {
             .from('spins')
             .select('prize_id')
             .eq('id', couponData.spin_id)
-            .single();
+            .maybeSingle();
           
           if (spinData?.prize_id) {
             const { data: prizeData } = await supabase
               .from('prizes')
               .select('image_url')
               .eq('id', spinData.prize_id)
-              .single();
+              .maybeSingle();
               
             if (prizeData?.image_url) {
               setPrizeImage(prizeData.image_url);

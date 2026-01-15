@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
         cards,
       })
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error creating campaign:', error);
@@ -132,7 +132,7 @@ export async function PUT(request: NextRequest) {
         .select('send_count')
         .eq('id', id)
         .eq('merchant_id', merchantId)
-        .single();
+        .maybeSingle();
 
       updates.send_count = (current?.send_count || 0) + 1;
       updates.last_sent_at = new Date().toISOString();
@@ -144,7 +144,7 @@ export async function PUT(request: NextRequest) {
       .eq('id', id)
       .eq('merchant_id', merchantId)
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error updating campaign:', error);

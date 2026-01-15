@@ -206,7 +206,7 @@ export async function POST(request: NextRequest) {
       .from('merchants')
       .select('id, business_name, workflow_mode')
       .eq('id', merchantId)
-      .single();
+      .maybeSingle();
 
     if (merchantError || !merchant) {
       return NextResponse.json(

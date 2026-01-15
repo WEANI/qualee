@@ -34,7 +34,7 @@ export async function POST(request: Request) {
         data: data || {},
       })
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error creating notification:', error);

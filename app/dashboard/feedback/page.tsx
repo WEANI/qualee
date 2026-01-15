@@ -36,7 +36,7 @@ export default function FeedbackPage() {
         .from('merchants')
         .select('*')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
       setMerchant(merchantData);
       fetchFeedback(user.id);

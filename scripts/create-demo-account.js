@@ -46,7 +46,7 @@ async function createDemoAccount() {
           .from('merchants')
           .select('*')
           .eq('id', demoUser.id)
-          .single();
+          .maybeSingle();
 
         if (existingMerchant) {
           console.log('✅ Compte démo déjà configuré!\n');
@@ -89,7 +89,7 @@ async function createMerchant(userId) {
       tiktok_handle: 'qualee_demo'
     })
     .select()
-    .single();
+    .maybeSingle();
 
   if (merchantError) throw merchantError;
   

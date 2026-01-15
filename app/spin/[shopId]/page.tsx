@@ -66,7 +66,7 @@ export default function SpinPage() {
           .eq('merchant_id', shopId)
           .eq('user_token', userToken)
           .gte('created_at', today.toISOString())
-          .single();
+          .maybeSingle();
 
         if (data) {
           setHasSpun(true);
@@ -77,7 +77,7 @@ export default function SpinPage() {
         .from('merchants')
         .select('*')
         .eq('id', shopId)
-        .single();
+        .maybeSingle();
 
       if (merchantData) {
         setMerchant(merchantData);
@@ -299,7 +299,7 @@ export default function SpinPage() {
             user_token: userToken,
           })
           .select()
-          .single();
+          .maybeSingle();
 
         if (spinError) throw spinError;
 

@@ -34,17 +34,17 @@ export function useMerchant() {
         .from('merchants')
         .select('*')
         .eq('id', userId)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
 
       setState({
-        merchant: data as Merchant,
+        merchant: data as Merchant | null,
         isLoading: false,
         error: null,
       });
 
-      return data as Merchant;
+      return data as Merchant | null;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Error fetching merchant';
       setState({
@@ -69,18 +69,17 @@ export function useMerchant() {
           updated_at: new Date().toISOString(),
         })
         .eq('id', user.id)
-        .select()
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
 
       setState({
-        merchant: data as Merchant,
+        merchant: data as Merchant | null,
         isLoading: false,
         error: null,
       });
 
-      return data as Merchant;
+      return data as Merchant | null;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Error updating merchant';
       setState((prev) => ({
@@ -138,7 +137,7 @@ export function useMerchantById(merchantId: string | null) {
           .from('merchants')
           .select('*')
           .eq('id', merchantId)
-          .single();
+          .maybeSingle();
 
         if (error) throw error;
 

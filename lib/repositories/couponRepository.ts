@@ -35,7 +35,7 @@ export const couponRepository = {
         used: false,
       })
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error creating coupon:', error);
@@ -53,7 +53,7 @@ export const couponRepository = {
       .from('coupons')
       .select('*')
       .eq('code', code)
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error fetching coupon:', error);
@@ -71,7 +71,7 @@ export const couponRepository = {
       .from('coupons')
       .select('*')
       .eq('id', id)
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error fetching coupon:', error);
