@@ -1,0 +1,16 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NEXT_PUBLIC_SUPABASE_URL = "https://btoqrsckxwvmvoipbyma.supabase.co"
+  NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0b3Fyc2NreHd2bXZvaXBieW1hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1MDEwNTQsImV4cCI6MjA4NDA3NzA1NH0.ahbvEat7blAAiauey4Y4grNFVGWhDoyevdfMmbs-WAg"
+  NEXT_PUBLIC_APP_URL = "https://qualee.netlify.app"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
