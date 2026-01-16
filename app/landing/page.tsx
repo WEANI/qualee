@@ -69,7 +69,7 @@ export default function LandingPage() {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
               <img
-                src="/Logo Qualee wht.png"
+                src="/Logo Qualee pink violet.png"
                 alt="Qualee"
                 className="h-8 md:h-10 w-auto"
               />
@@ -961,7 +961,7 @@ export default function LandingPage() {
             {/* Brand */}
             <div className="md:col-span-1">
               <img
-                src="/Logo Qualee wht.png"
+                src="/Logo Qualee pink violet.png"
                 alt="Qualee"
                 className="h-10 w-auto mb-4"
               />

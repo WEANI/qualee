@@ -62,7 +62,7 @@ export default function ContactPage() {
         <div className="container mx-auto px-4 sm:px-6 py-2 sm:py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <img
-              src="/Logo Qualee wht.png"
+              src="/Logo Qualee pink violet.png"
               alt="Qualee Logo"
               className="h-12 sm:h-16 md:h-20 w-auto"
             />
