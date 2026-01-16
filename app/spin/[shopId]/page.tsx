@@ -22,7 +22,7 @@ export default function SpinPage() {
   const [prizes, setPrizes] = useState<Prize[]>([]);
   const [merchant, setMerchant] = useState<any>(null);
   const [hasSpun, setHasSpun] = useState(false);
-  const [spinsRemaining, setSpinsRemaining] = useState(1); // Start with 1 spin, can increase with RETRY
+  const [spinsRemaining, setSpinsRemaining] = useState(1);
   const [loading, setLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
   const [isSpinning, setIsSpinning] = useState(false);
@@ -33,8 +33,20 @@ export default function SpinPage() {
   const [saveError, setSaveError] = useState(false);
   const [unluckyProbability, setUnluckyProbability] = useState(20);
   const [retryProbability, setRetryProbability] = useState(10);
-  const wheelRef = useRef<HTMLDivElement>(null);
-  const currentRotationRef = useRef(0);
+  const [rotation, setRotation] = useState(0);
+  const [winner, setWinner] = useState<any>(null);
+
+  // Segment colors from merchant config or defaults
+  const [segmentColors, setSegmentColors] = useState<{ color: string; textColor: string }[]>([
+    { color: '#E85A5A', textColor: '#ffffff' },
+    { color: '#F5C6C6', textColor: '#8B4513' },
+    { color: '#D4548A', textColor: '#ffffff' },
+    { color: '#D4A574', textColor: '#ffffff' },
+    { color: '#1a1a1a', textColor: '#ff4444' },
+    { color: '#E85A5A', textColor: '#ffffff' },
+    { color: '#F5C6C6', textColor: '#8B4513' },
+    { color: '#D4548A', textColor: '#ffffff' },
+  ]);
 
   // Segment types
   type SegmentType = 'prize' | 'unlucky' | 'retry';
@@ -42,11 +54,12 @@ export default function SpinPage() {
     type: SegmentType;
     prize?: Prize;
     label: string;
+    color: string;
+    textColor: string;
   }
 
   useEffect(() => {
     setIsClient(true);
-    // Apply language from URL if provided
     if (langFromUrl && i18n.language !== langFromUrl) {
       i18n.changeLanguage(langFromUrl);
     }
@@ -55,7 +68,7 @@ export default function SpinPage() {
   useEffect(() => {
     const checkSpinEligibility = async () => {
       const userToken = localStorage.getItem('user_token');
-      
+
       if (userToken) {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -81,12 +94,15 @@ export default function SpinPage() {
 
       if (merchantData) {
         setMerchant(merchantData);
-        // Load special segment probabilities
         if (merchantData.unlucky_probability !== undefined) {
           setUnluckyProbability(merchantData.unlucky_probability);
         }
         if (merchantData.retry_probability !== undefined) {
           setRetryProbability(merchantData.retry_probability);
+        }
+        // Load segment colors if configured
+        if (merchantData.segment_colors) {
+          setSegmentColors(merchantData.segment_colors);
         }
       }
 
@@ -105,35 +121,40 @@ export default function SpinPage() {
     checkSpinEligibility();
   }, [shopId]);
 
-  // Generate wheel segments with 6-8 segments total
-  // Rules:
-  // 1. Always include #UNLUCKY# and #REESSAYER# segments
-  // 2. If merchant has <3 prizes, duplicate them to fill
-  // 3. Total segments should be between 6-8
+  // Generate wheel segments
   const generateWheelSegments = (): WheelSegment[] => {
     const segments: WheelSegment[] = [];
-    
+
     // Always add UNLUCKY and RETRY segments
-    segments.push({ type: 'unlucky', label: '#UNLUCKY#' });
-    segments.push({ type: 'retry', label: '#REESSAYER#' });
-    
+    segments.push({
+      type: 'unlucky',
+      label: '#UNLUCKY#',
+      color: '#1a1a1a',
+      textColor: '#ff4444'
+    });
+    segments.push({
+      type: 'retry',
+      label: '#REESSAYER#',
+      color: '#D4A574',
+      textColor: '#ffffff'
+    });
+
     if (prizes.length === 0) {
-      // No prizes - fill with more unlucky/retry
-      segments.push({ type: 'unlucky', label: '#UNLUCKY#' });
-      segments.push({ type: 'retry', label: '#REESSAYER#' });
-      segments.push({ type: 'unlucky', label: '#UNLUCKY#' });
-      segments.push({ type: 'retry', label: '#REESSAYER#' });
+      segments.push({ type: 'unlucky', label: '#UNLUCKY#', color: '#1a1a1a', textColor: '#ff4444' });
+      segments.push({ type: 'retry', label: '#REESSAYER#', color: '#D4A574', textColor: '#ffffff' });
+      segments.push({ type: 'unlucky', label: '#UNLUCKY#', color: '#1a1a1a', textColor: '#ff4444' });
+      segments.push({ type: 'retry', label: '#REESSAYER#', color: '#D4A574', textColor: '#ffffff' });
       return segments;
     }
-    
-    // Add prize segments
-    let prizeSegments: WheelSegment[] = prizes.map(prize => ({
+
+    let prizeSegments: WheelSegment[] = prizes.map((prize, index) => ({
       type: 'prize' as const,
       prize,
-      label: prize.name
+      label: prize.name,
+      color: segmentColors[index % segmentColors.length]?.color || '#E85A5A',
+      textColor: segmentColors[index % segmentColors.length]?.textColor || '#ffffff'
     }));
-    
-    // If less than 3 prizes, duplicate them
+
     if (prizes.length < 3) {
       const duplicated = [...prizeSegments];
       while (duplicated.length < 4) {
@@ -141,129 +162,112 @@ export default function SpinPage() {
       }
       prizeSegments = duplicated;
     }
-    
-    // Add prize segments
+
     segments.push(...prizeSegments);
-    
-    // Ensure we have between 6-8 segments
-    // If we have more than 8, trim prizes (keep special segments)
+
     if (segments.length > 8) {
       const specialSegments = segments.filter(s => s.type !== 'prize');
       const prizeSegs = segments.filter(s => s.type === 'prize').slice(0, 8 - specialSegments.length);
       return [...specialSegments, ...prizeSegs];
     }
-    
-    // If we have less than 6, add more unlucky segments
+
     while (segments.length < 6) {
-      segments.push({ type: 'unlucky', label: '#UNLUCKY#' });
+      segments.push({ type: 'unlucky', label: '#UNLUCKY#', color: '#1a1a1a', textColor: '#ff4444' });
     }
-    
-    // Shuffle segments to distribute them evenly (but keep some structure)
-    // Interleave: prize, special, prize, special...
+
     const prizeSegs = segments.filter(s => s.type === 'prize');
     const specialSegs = segments.filter(s => s.type !== 'prize');
     const interleaved: WheelSegment[] = [];
-    
+
     const maxLen = Math.max(prizeSegs.length, specialSegs.length);
     for (let i = 0; i < maxLen; i++) {
       if (i < prizeSegs.length) interleaved.push(prizeSegs[i]);
       if (i < specialSegs.length) interleaved.push(specialSegs[i]);
     }
-    
+
     return interleaved;
   };
 
   const allSegments = generateWheelSegments();
   const totalSegments = allSegments.length;
   const segmentAngle = totalSegments > 0 ? 360 / totalSegments : 0;
-  
+
   const selectWinningSegment = () => {
-    // Calculate total probability
     const totalPrizeProbability = prizes.reduce((sum, prize) => sum + (prize.probability || 0), 0);
     const totalProbability = totalPrizeProbability + unluckyProbability + retryProbability;
-    
-    // Random number between 0 and total probability
+
     const random = Math.random() * totalProbability;
-    
-    // Check if landed on a prize
+
     let currentProb = 0;
     for (let i = 0; i < allSegments.length; i++) {
       const segment = allSegments[i];
-      
+
       if (segment.type === 'prize' && segment.prize) {
         currentProb += (segment.prize.probability || 0);
         if (random <= currentProb) return i;
       } else if (segment.type === 'unlucky') {
-        // Distribute unlucky probability among unlucky segments
         const unluckyCount = allSegments.filter(s => s.type === 'unlucky').length;
         currentProb += unluckyProbability / unluckyCount;
         if (random <= currentProb) return i;
       } else if (segment.type === 'retry') {
-        // Distribute retry probability among retry segments
         const retryCount = allSegments.filter(s => s.type === 'retry').length;
         currentProb += retryProbability / retryCount;
         if (random <= currentProb) return i;
       }
     }
-    
-    // Fallback to first segment
+
     return 0;
   };
 
   const spinWheel = async () => {
     if (isSpinning || spinsRemaining <= 0) return;
-    
+
     setIsSpinning(true);
-    setSpinsRemaining(prev => prev - 1); // Consume one spin
+    setSpinsRemaining(prev => prev - 1);
     setResult('');
     setResultType(null);
     setCouponCode('');
+    setWinner(null);
 
-    const winningSegmentIndex = selectWinningSegment();
-    const winningSegment = allSegments[winningSegmentIndex];
-    
-    // Determine result type based on segment
-    let type: 'win' | 'retry' | 'lost' = 'lost';
-    let selectedPrize: Prize | undefined = undefined;
-    
-    if (winningSegment.type === 'prize' && winningSegment.prize) {
-      type = 'win';
-      selectedPrize = winningSegment.prize;
-    } else if (winningSegment.type === 'retry') {
-      type = 'retry';
-    } else {
-      type = 'lost';
-    }
+    const winnerIndex = selectWinningSegment();
+    const winningSegment = allSegments[winnerIndex];
 
-    // Calculate segment center for alignment
-    // Segments are rendered with -90 offset (starting from top)
-    const segmentVisualCenter = (winningSegmentIndex * segmentAngle) + (segmentAngle / 2) - 90;
-    
-    // Add random offset within the segment
-    const randomOffset = (Math.random() - 0.5) * segmentAngle * 0.6;
+    // Calculate rotation to land on winning segment
+    // Segments are drawn starting from -90° (top), so segment center position is:
+    // segmentVisualCenter = winnerIndex * segmentAngle + segmentAngle/2 - 90
+    // To align this segment with the pointer at top (-90°), we need to rotate by:
+    // targetAngle = -90 - segmentVisualCenter = -90 - (winnerIndex * segmentAngle + segmentAngle/2 - 90)
+    //             = -winnerIndex * segmentAngle - segmentAngle/2
+    const segmentVisualCenter = (winnerIndex * segmentAngle) + (segmentAngle / 2) - 90;
+    const randomOffset = (Math.random() - 0.5) * segmentAngle * 0.6; // Random offset within segment
 
-    // Target rotation
-    // Align segment center to -90 (Top)
-    // We use a clean geometric calculation: Target = Top(-90) - Center - Random
-    // Note: extraSpins must be a multiple of 360 to preserve this alignment.
-    const currentRot = currentRotationRef.current;
+    // Calculate target angle to align segment with pointer at top
     const targetAngle = -90 - segmentVisualCenter - randomOffset;
-    
-    // Normalize to find the delta needed
-    const currentNormalized = currentRot % 360;
-    const distToTarget = ((targetAngle - currentNormalized) % 360 + 360) % 360;
-    
-    // Add 5-7 full spins for variety
-    const minSpins = 5;
-    const extraSpins = 360 * minSpins + Math.floor(Math.random() * 3) * 360; // 5 to 7 full spins
-    const totalRotation = currentRot + extraSpins + distToTarget;
 
-    if (wheelRef.current) {
-      wheelRef.current.style.transform = `rotate(${totalRotation}deg)`;
-      currentRotationRef.current = totalRotation;
-    }
+    // Normalize current rotation
+    const currentNormalized = rotation % 360;
+    const distToTarget = ((targetAngle - currentNormalized) % 360 + 360) % 360;
+
+    // Add 5-7 full spins
+    const extraSpins = 5 + Math.floor(Math.random() * 3);
+    const totalRotation = rotation + (extraSpins * 360) + distToTarget;
+
+    setRotation(totalRotation);
 
     setTimeout(async () => {
+      let type: 'win' | 'retry' | 'lost' = 'lost';
+      let selectedPrize: Prize | undefined = undefined;
+
+      if (winningSegment.type === 'prize' && winningSegment.prize) {
+        type = 'win';
+        selectedPrize = winningSegment.prize;
+      } else if (winningSegment.type === 'retry') {
+        type = 'retry';
+      } else {
+        type = 'lost';
+      }
+
+      setWinner(winningSegment);
       await handleSpinComplete(selectedPrize, type);
       setIsSpinning(false);
     }, 5000);
@@ -271,13 +275,12 @@ export default function SpinPage() {
 
   const handleSpinComplete = async (prize: Prize | undefined, type: 'win' | 'retry' | 'lost') => {
     setResultType(type);
-    
+
     if (type === 'win' && prize) {
       setIsSaving(true);
       setSaveError(false);
       setResult(prize.name);
-      
-      // Confetti effect
+
       if (typeof window !== 'undefined' && (window as any).confetti) {
         (window as any).confetti({
           particleCount: 150,
@@ -320,7 +323,6 @@ export default function SpinPage() {
 
           setCouponCode(generatedCode);
 
-          // Send spin notification to merchant
           fetch('/api/notifications', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -331,9 +333,8 @@ export default function SpinPage() {
               message: `Un client a gagné "${prize.name}" !`,
               data: { prizeName: prize.name, couponCode: generatedCode },
             }),
-          }).catch(() => {}); // Fire and forget
+          }).catch(() => {});
 
-          // Send WhatsApp congratulation message if phone number is available (WhatsApp workflow)
           if (phoneFromUrl && merchant?.workflow_mode === 'whatsapp') {
             fetch('/api/whatsapp/congratulate', {
               method: 'POST',
@@ -345,7 +346,7 @@ export default function SpinPage() {
                 couponCode: generatedCode,
                 language: currentLang,
               }),
-            }).catch(() => {}); // Fire and forget
+            }).catch(() => {});
           }
         }
       } catch {
@@ -355,20 +356,58 @@ export default function SpinPage() {
       }
     } else if (type === 'retry') {
       setResult(t('wheel.retry'));
-      // Grant an extra spin for RETRY
       setSpinsRemaining(prev => prev + 1);
     } else {
       setResult(t('wheel.unlucky'));
-      // UNLUCKY is eliminatory - mark as spun to prevent further spins
       setHasSpun(true);
     }
   };
 
+  // SVG helpers for wheel rendering
+  const createSegmentPath = (index: number, radius: number, innerRadius: number) => {
+    const startAngle = (index * segmentAngle - 90) * Math.PI / 180;
+    const endAngle = ((index + 1) * segmentAngle - 90) * Math.PI / 180;
+
+    const x1 = 200 + radius * Math.cos(startAngle);
+    const y1 = 200 + radius * Math.sin(startAngle);
+    const x2 = 200 + radius * Math.cos(endAngle);
+    const y2 = 200 + radius * Math.sin(endAngle);
+    const x3 = 200 + innerRadius * Math.cos(endAngle);
+    const y3 = 200 + innerRadius * Math.sin(endAngle);
+    const x4 = 200 + innerRadius * Math.cos(startAngle);
+    const y4 = 200 + innerRadius * Math.sin(startAngle);
+
+    return `M ${x4} ${y4} L ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${innerRadius} ${innerRadius} 0 0 0 ${x4} ${y4} Z`;
+  };
+
+  const getTextPosition = (index: number) => {
+    const midAngle = ((index * segmentAngle) + (segmentAngle / 2) - 90) * Math.PI / 180;
+    const radius = 130;
+    return {
+      x: 200 + radius * Math.cos(midAngle),
+      y: 200 + radius * Math.sin(midAngle),
+      rotation: index * segmentAngle + segmentAngle / 2
+    };
+  };
+
+  // Decorative balls
+  const decorativeBalls = [];
+  const ballCount = Math.max(12, totalSegments);
+  for (let i = 0; i < ballCount; i++) {
+    const angle = (i * (360 / ballCount) - 90) * Math.PI / 180;
+    decorativeBalls.push({
+      x: 200 + 185 * Math.cos(angle),
+      y: 200 + 185 * Math.sin(angle)
+    });
+  }
+
+  const isUnlucky = winner && winner.label === '#UNLUCKY#';
+
   if (!isClient || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-600 to-teal-700">
+      <div className="min-h-screen flex items-center justify-center bg-[#4a4a52]">
         <div className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-8">
-          <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <div className="w-12 h-12 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
         </div>
       </div>
     );
@@ -379,14 +418,14 @@ export default function SpinPage() {
       <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
         {merchant?.background_url ? (
           <>
-            <div 
+            <div
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${merchant.background_url})` }}
             />
             <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
           </>
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-teal-600 to-teal-700"></div>
+          <div className="absolute inset-0 bg-[#4a4a52]"></div>
         )}
         <div className="relative z-10 bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">
@@ -399,310 +438,358 @@ export default function SpinPage() {
   }
 
   return (
-    <>
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+    <div
+      className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden"
+      style={{
+        backgroundColor: merchant?.wheel_bg_color || '#4a4a52'
+      }}
+    >
+      {/* Background */}
+      {merchant?.background_url && (
+        <>
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${merchant.background_url})` }}
+          />
+          <div className="absolute inset-0 bg-black/40"></div>
+        </>
+      )}
 
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(100vh);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+      {/* Wheel Assembly */}
+      <div className="relative z-10" style={{ perspective: '1200px' }}>
 
-        @keyframes fadeIn {
-          from { opacity: 0; transform: scale(0.9); }
-          to { opacity: 1; transform: scale(1); }
-        }
-
-        .game-container {
-          animation: slideUp 1s ease-out;
-        }
-
-        .wheel {
-          transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-        }
-
-        .segment {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-          overflow: hidden;
-        }
-
-        .segment-content {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: flex-start;
-          justify-content: center;
-          padding-top: 8%;
-        }
-
-        .segment-content.green {
-          background: linear-gradient(180deg, #2d8a3e 0%, #1e6b2f 100%);
-        }
-
-        .segment-content.black {
-          background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
-        }
-
-        .segment-content.yellow {
-          background: linear-gradient(180deg, #ffd700 0%, #e6a800 100%);
-        }
-
-        .segment-text {
-          color: #ffd700;
-          font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
-          font-size: clamp(0.55rem, 2.2vw, 0.9rem);
-          font-weight: 900;
-          text-shadow: 1px 1px 3px rgba(0, 0, 0, 1), 0 0 8px rgba(0, 0, 0, 0.9);
-          white-space: nowrap;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-          -webkit-text-stroke: 0.3px rgba(0, 0, 0, 0.5);
-        }
-
-        .segment-text.yellow-text {
-          color: #1a1a1a;
-          text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
-          -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.3);
-        }
-
-        .dot {
-          position: absolute;
-          width: 3%;
-          height: 3%;
-          background: radial-gradient(circle, #ffd700 0%, #ffb700 50%, #ff9500 100%);
-          border-radius: 50%;
-          top: 0;
-          left: 50%;
-          transform-origin: 0 calc(50vw * 0.47);
-          box-shadow: 0 2px 8px rgba(255, 215, 0, 0.6), inset 0 1px 3px rgba(255, 255, 255, 0.5);
-        }
-      `}</style>
-
-      <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-        {/* Background */}
-        {merchant?.background_url ? (
-          <>
-            <div 
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${merchant.background_url})` }}
-            />
-            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
-          </>
-        ) : (
-          <div className="absolute inset-0 bg-[#1a1a2e]"></div>
-        )}
-
-        {/* Game Container */}
-        <div className="game-container relative z-10 text-center w-full max-w-[500px]">
-          
-          {/* Wheel Wrapper */}
-          <div className="relative w-full aspect-square max-w-[450px] mx-auto">
-            {/* Pointer */}
-            <div className="absolute top-[-15%] left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center" style={{ filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5))' }}>
-              {merchant?.logo_url ? (
-                <>
-                  <div
-                    className="w-24 h-24 rounded-full p-2 shadow-xl flex items-center justify-center border-4 border-[#ffd700] mb-[-15px] relative z-10"
-                    style={{ backgroundColor: merchant.logo_background_color || '#FFFFFF' }}
-                  >
-                    <img
-                      src={merchant.logo_url}
-                      alt="Merchant Logo"
-                      className="w-full h-full object-contain rounded-full"
-                    />
-                  </div>
-                  <div className="w-0 h-0 border-l-[25px] border-l-transparent border-r-[25px] border-r-transparent border-t-[40px] border-t-[#ffd700] relative z-0"></div>
-                </>
-              ) : (
-                <>
-                  <div className="w-[18px] h-[18px] bg-[#1a1a1a] rounded-full mb-[-8px] relative z-10" style={{ boxShadow: '0 2px 5px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.2)' }}></div>
-                  <div className="w-[36px] h-[22px] rounded-t-[18px] mb-[-1px]" style={{ background: 'linear-gradient(180deg, #ffb84d 0%, #ffa500 100%)', boxShadow: 'inset 0 2px 4px rgba(255, 255, 255, 0.3)' }}></div>
-                  <div className="w-0 h-0 border-l-[22px] border-l-transparent border-r-[22px] border-r-transparent border-t-[45px] border-t-[#ffa500]" style={{ filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))' }}></div>
-                </>
-              )}
-            </div>
-
-            {/* Wheel Container */}
-            <div className="w-full h-full rounded-full relative p-[3%]" style={{ background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)', boxShadow: '0 20px 60px rgba(0, 0, 0, 0.8), inset 0 2px 15px rgba(255, 255, 255, 0.15)' }}>
-              {/* Decorative Dots */}
-              <div className="absolute inset-[3%] rounded-full">
-                {allSegments.map((_, i) => (
-                  <div
-                    key={i}
-                    className="dot"
-                    style={{ transform: `rotate(${i * segmentAngle + segmentAngle / 2}deg) translateX(-50%)` }}
-                  />
-                ))}
-              </div>
-
-              {/* Wheel */}
+        {/* Pointer at TOP pointing DOWN */}
+        <div
+          className="absolute left-1/2 -translate-x-1/2 z-30"
+          style={{ top: '-25px' }}
+        >
+          {merchant?.logo_url ? (
+            <div className="flex flex-col items-center">
               <div
-                ref={wheelRef}
-                className="wheel w-full h-full rounded-full relative overflow-hidden"
-                style={{ boxShadow: 'inset 0 0 30px rgba(0, 0, 0, 0.5)' }}
+                className="w-20 h-20 rounded-full p-2 shadow-xl flex items-center justify-center border-4 border-amber-400 mb-[-15px] relative z-10"
+                style={{ backgroundColor: merchant.logo_background_color || '#FFFFFF' }}
               >
-                {allSegments.map((segment, index) => {
-                  // New color logic: alternate yellow/black for ALL segments
-                  // Start with yellow (index 0 = yellow, index 1 = black, etc.)
-                  // UNLUCKY segments are always black
-                  let segmentColor = index % 2 === 0 ? 'yellow' : 'black';
-
-                  // Override: UNLUCKY is always black
-                  if (segment.type === 'unlucky') {
-                    segmentColor = 'black';
-                  }
-                  
-                  // Use segment label directly
-                  const segmentText = segment.label;
-                  
-                  // Calculate clip-path for pie slice
-                  // Each segment is a triangle from center to edge
-                  const startAngle = index * segmentAngle - 90; // -90 to start from top
-                  const endAngle = startAngle + segmentAngle;
-                  const midAngle = startAngle + segmentAngle / 2;
-                  
-                  // Convert angles to radians for calculation
-                  const startRad = (startAngle * Math.PI) / 180;
-                  const endRad = (endAngle * Math.PI) / 180;
-                  const midRad = (midAngle * Math.PI) / 180;
-                  
-                  // Calculate points for clip-path polygon (center + arc approximation)
-                  const r = 50; // radius percentage
-                  const cx = 50; // center x
-                  const cy = 50; // center y
-                  
-                  // For small angles, we can use a simple triangle
-                  // For larger angles, add intermediate points
-                  const points = [`${cx}% ${cy}%`]; // center point
-                  
-                  // Add points along the arc
-                  const numArcPoints = Math.max(2, Math.ceil(segmentAngle / 30));
-                  for (let i = 0; i <= numArcPoints; i++) {
-                    const angle = startRad + (endRad - startRad) * (i / numArcPoints);
-                    const x = cx + r * Math.cos(angle);
-                    const y = cy + r * Math.sin(angle);
-                    points.push(`${x}% ${y}%`);
-                  }
-                  
-                  const clipPath = `polygon(${points.join(', ')})`;
-                  
-                  // Text position: start from near center, extend toward edge
-                  // Text should be readable from center outward (vertical orientation)
-                  const textDistance = 22; // % from center where text starts (moved further from SPIN button)
-                  const textX = cx + textDistance * Math.cos(midRad);
-                  const textY = cy + textDistance * Math.sin(midRad);
-
-                  return (
-                    <div
-                      key={`${segment.type}-${index}`}
-                      className="segment"
-                      style={{ 
-                        clipPath: clipPath
-                      }}
-                    >
-                      <div 
-                        className={`segment-content ${segmentColor}`}
-                      >
-                        <div
-                          className={`segment-text ${segmentColor === 'yellow' ? 'yellow-text' : ''}`}
-                          style={{
-                            position: 'absolute',
-                            top: `${textY}%`,
-                            left: `${textX}%`,
-                            transform: `rotate(${midAngle}deg)`,
-                            transformOrigin: 'left center'
-                          }}
-                        >
-                          {segmentText}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+                <img
+                  src={merchant.logo_url}
+                  alt="Logo"
+                  className="w-full h-full object-contain rounded-full"
+                />
               </div>
-
-              {/* Center SPIN Button */}
-              <div
-                onClick={spinWheel}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[28%] h-[28%] rounded-full flex items-center justify-center cursor-pointer z-10 border-[3px] border-[#1a1a1a] transition-transform hover:scale-105 active:scale-95"
-                style={{
-                  background: 'radial-gradient(circle at 30% 30%, #3a3a3a, #2a2a2a 40%, #1a1a1a)',
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.8), inset 0 3px 15px rgba(255, 255, 255, 0.15), inset 0 -3px 10px rgba(0, 0, 0, 0.5)'
-                }}
-              >
-                <div className="absolute inset-[-6px] rounded-full -z-10" style={{ background: 'linear-gradient(145deg, #2a2a2a, #1a1a1a)' }}></div>
-                <div className="text-2xl md:text-4xl font-black text-[#ffd700]" style={{ textShadow: '2px 2px 6px rgba(0, 0, 0, 0.9), 0 0 15px rgba(255, 215, 0, 0.5)', letterSpacing: '0.1em' }}>
-                  SPIN
-                </div>
-              </div>
+              <svg width="70" height="50" viewBox="0 0 70 50" style={{ marginTop: '-10px' }}>
+                <defs>
+                  <linearGradient id="pointerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#8B6914" />
+                    <stop offset="25%" stopColor="#D4AF37" />
+                    <stop offset="50%" stopColor="#F5E6A3" />
+                    <stop offset="75%" stopColor="#D4AF37" />
+                    <stop offset="100%" stopColor="#8B6914" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M35 50 L15 0 L55 0 Z"
+                  fill="url(#pointerGradient)"
+                  stroke="#8B6914"
+                  strokeWidth="1"
+                />
+              </svg>
             </div>
-          </div>
-
-          {/* Result */}
-          {result && (
-            <div className="mt-8" style={{ animation: 'fadeIn 0.5s ease' }}>
-              <div className="inline-block bg-black/90 px-8 py-6 rounded-2xl backdrop-blur-lg border-2 border-[#ffd700]" style={{ boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.3)' }}>
-                {resultType === 'win' ? (
-                  <>
-                    <div className="text-xl text-[#ffd700] mb-3">🎊 FÉLICITATIONS ! 🎊</div>
-                    <div className="text-2xl text-white font-bold mb-4">{result}</div>
-                    <button
-                      disabled={isSaving || !couponCode}
-                      onClick={() => router.push(`/coupon/${shopId}?code=${couponCode}&lang=${currentLang}`)}
-                      className={`w-full py-3 px-6 font-bold rounded-xl transition-colors text-lg ${
-                        isSaving || !couponCode 
-                          ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
-                          : 'bg-[#ffd700] text-black hover:bg-[#ffb700]'
-                      }`}
-                      style={!(isSaving || !couponCode) ? { boxShadow: '0 4px 15px rgba(255, 215, 0, 0.4)' } : {}}
-                    >
-                      {isSaving ? 'Génération du coupon...' : 'Récupérer mon prix →'}
-                    </button>
-                    {saveError && (
-                      <p className="text-red-500 mt-2 text-sm font-bold">Erreur de connexion. Veuillez contacter le support.</p>
-                    )}
-                  </>
-                ) : resultType === 'retry' ? (
-                  <>
-                    <div className="text-xl text-[#ffd700] mb-3">😬 PAS DE CHANCE... 😬</div>
-                    <div className="text-2xl text-white font-bold mb-4">Réessayez !</div>
-                    <button
-                      onClick={() => setResult('')}
-                      className="w-full py-3 px-6 bg-[#ffd700] text-black font-bold rounded-xl hover:bg-[#ffb700] transition-colors text-lg"
-                      style={{ boxShadow: '0 4px 15px rgba(255, 215, 0, 0.4)' }}
-                    >
-                      Tourner encore ↻
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <div className="text-xl text-red-500 mb-3">😢 PERDU... 😢</div>
-                    <div className="text-xl text-white font-bold mb-4">Meilleure chance la prochaine fois !</div>
-                    <button
-                      onClick={() => router.push('/')}
-                      className="w-full py-3 px-6 bg-gray-600 text-white font-bold rounded-xl hover:bg-gray-500 transition-colors text-lg"
-                    >
-                      Retour
-                    </button>
-                  </>
-                )}
-              </div>
-            </div>
+          ) : (
+            <svg width="70" height="90" viewBox="0 0 70 90" style={{ filter: 'drop-shadow(3px 4px 6px rgba(0,0,0,0.5))' }}>
+              <defs>
+                <linearGradient id="pointerGradientDefault" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#4A0F2A" />
+                  <stop offset="25%" stopColor="#6B1B3D" />
+                  <stop offset="50%" stopColor="#8B2252" />
+                  <stop offset="75%" stopColor="#6B1B3D" />
+                  <stop offset="100%" stopColor="#4A0F2A" />
+                </linearGradient>
+                <radialGradient id="pointerCenterGold" cx="50%" cy="40%" r="50%">
+                  <stop offset="0%" stopColor="#F5E6A3" />
+                  <stop offset="40%" stopColor="#D4AF37" />
+                  <stop offset="70%" stopColor="#B8860B" />
+                  <stop offset="100%" stopColor="#8B6914" />
+                </radialGradient>
+              </defs>
+              <path
+                d="M35 90 C15 70, 5 50, 5 35 C5 15, 18 2, 35 2 C52 2, 65 15, 65 35 C65 50, 55 70, 35 90 Z"
+                fill="url(#pointerGradientDefault)"
+                stroke="#3A0820"
+                strokeWidth="2"
+              />
+              <circle cx="35" cy="32" r="22" fill="url(#pointerCenterGold)" stroke="#8B6914" strokeWidth="1" />
+              <circle cx="35" cy="32" r="17" fill="#B8860B" />
+              <circle cx="35" cy="32" r="13" fill="#D4AF37" />
+              <ellipse cx="28" cy="25" rx="6" ry="5" fill="rgba(255,255,255,0.35)" />
+            </svg>
           )}
+        </div>
+
+        {/* Main Wheel */}
+        <div className="relative" style={{ transform: 'rotateX(5deg)' }}>
+          <svg
+            width="400"
+            height="400"
+            viewBox="0 0 400 400"
+            style={{
+              transform: `rotate(${rotation}deg)`,
+              transition: isSpinning ? 'transform 5s cubic-bezier(0.15, 0.60, 0.15, 1)' : 'none',
+              filter: 'drop-shadow(0 15px 35px rgba(0,0,0,0.4))'
+            }}
+          >
+            <defs>
+              <linearGradient id="goldRimOuter" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#D4AF37" />
+                <stop offset="20%" stopColor="#F5E6A3" />
+                <stop offset="40%" stopColor="#D4AF37" />
+                <stop offset="60%" stopColor="#B8860B" />
+                <stop offset="80%" stopColor="#D4AF37" />
+                <stop offset="100%" stopColor="#8B6914" />
+              </linearGradient>
+
+              <linearGradient id="goldRimInner" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#B8860B" />
+                <stop offset="25%" stopColor="#D4AF37" />
+                <stop offset="50%" stopColor="#F5E6A3" />
+                <stop offset="75%" stopColor="#D4AF37" />
+                <stop offset="100%" stopColor="#8B6914" />
+              </linearGradient>
+
+              <radialGradient id="centerHubGold" cx="35%" cy="35%" r="65%">
+                <stop offset="0%" stopColor="#F5E6A3" />
+                <stop offset="30%" stopColor="#D4AF37" />
+                <stop offset="60%" stopColor="#B8860B" />
+                <stop offset="100%" stopColor="#8B6914" />
+              </radialGradient>
+
+              <linearGradient id="segmentShine" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="rgba(255,255,255,0.3)" />
+                <stop offset="50%" stopColor="rgba(255,255,255,0.05)" />
+                <stop offset="100%" stopColor="rgba(0,0,0,0.15)" />
+              </linearGradient>
+
+              <linearGradient id="blackSegmentShine" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="rgba(255,255,255,0.15)" />
+                <stop offset="50%" stopColor="rgba(255,255,255,0.02)" />
+                <stop offset="100%" stopColor="rgba(0,0,0,0.3)" />
+              </linearGradient>
+            </defs>
+
+            {/* Outer gold ring */}
+            <circle cx="200" cy="200" r="198" fill="url(#goldRimOuter)" />
+            <circle cx="200" cy="200" r="190" fill="url(#goldRimInner)" />
+            <circle cx="200" cy="200" r="182" fill="#1a1a1a" />
+
+            {/* Segments */}
+            {allSegments.map((segment, index) => {
+              const pos = getTextPosition(index);
+              const isBlackSegment = segment.color === '#1a1a1a' || segment.color === '#000000';
+              return (
+                <g key={`segment-${index}`}>
+                  <path
+                    d={createSegmentPath(index, 178, 60)}
+                    fill={segment.color}
+                    stroke="rgba(0,0,0,0.15)"
+                    strokeWidth="1"
+                  />
+                  <path
+                    d={createSegmentPath(index, 178, 60)}
+                    fill={isBlackSegment ? "url(#blackSegmentShine)" : "url(#segmentShine)"}
+                  />
+                  {/* Skull icon for UNLUCKY segment */}
+                  {segment.label === '#UNLUCKY#' && (
+                    <text
+                      x={200 + 105 * Math.cos(((index * segmentAngle) + (segmentAngle / 2) - 90) * Math.PI / 180)}
+                      y={200 + 105 * Math.sin(((index * segmentAngle) + (segmentAngle / 2) - 90) * Math.PI / 180)}
+                      fontSize="16"
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      transform={`rotate(${index * segmentAngle + segmentAngle / 2}, ${200 + 105 * Math.cos(((index * segmentAngle) + (segmentAngle / 2) - 90) * Math.PI / 180)}, ${200 + 105 * Math.sin(((index * segmentAngle) + (segmentAngle / 2) - 90) * Math.PI / 180)})`}
+                    >
+                      💀
+                    </text>
+                  )}
+                  <text
+                    x={pos.x}
+                    y={pos.y}
+                    fill={segment.textColor}
+                    fontSize={segment.label.length > 8 ? "12" : "16"}
+                    fontWeight="bold"
+                    fontFamily="Arial Black, sans-serif"
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    transform={`rotate(${pos.rotation}, ${pos.x}, ${pos.y})`}
+                    style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}
+                  >
+                    {segment.label}
+                  </text>
+                </g>
+              );
+            })}
+
+            {/* Decorative balls */}
+            {decorativeBalls.map((ball, i) => (
+              <g key={`ball-${i}`}>
+                <ellipse cx={ball.x + 2} cy={ball.y + 3} rx="8" ry="6" fill="rgba(0,0,0,0.3)" />
+                <circle cx={ball.x} cy={ball.y} r="9" fill="#E0E0E0" />
+                <circle cx={ball.x} cy={ball.y} r="8" fill="#F8F8F8" />
+                <circle cx={ball.x} cy={ball.y} r="6" fill="#FFFFFF" />
+                <ellipse cx={ball.x - 2} cy={ball.y - 2} rx="3" ry="2.5" fill="rgba(255,255,255,1)" />
+              </g>
+            ))}
+
+            {/* Center Hub with concentric rings */}
+            <circle cx="200" cy="200" r="58" fill="url(#goldRimOuter)" />
+            <circle cx="200" cy="200" r="54" fill="url(#centerHubGold)" />
+
+            {/* Concentric decorative rings */}
+            <circle cx="200" cy="200" r="48" fill="none" stroke="#8B6914" strokeWidth="2" />
+            <circle cx="200" cy="200" r="42" fill="none" stroke="#B8860B" strokeWidth="2" />
+            <circle cx="200" cy="200" r="36" fill="none" stroke="#8B6914" strokeWidth="1.5" />
+            <circle cx="200" cy="200" r="30" fill="none" stroke="#D4AF37" strokeWidth="1.5" />
+            <circle cx="200" cy="200" r="24" fill="none" stroke="#8B6914" strokeWidth="1" />
+            <circle cx="200" cy="200" r="18" fill="none" stroke="#B8860B" strokeWidth="1" />
+
+            {/* Center highlight */}
+            <ellipse cx="185" cy="185" rx="18" ry="14" fill="rgba(255,255,255,0.25)" />
+          </svg>
+
+          {/* SPIN Button */}
+          <button
+            onClick={spinWheel}
+            disabled={isSpinning}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full font-black text-lg tracking-wider transition-all z-20 flex items-center justify-center"
+            style={{
+              background: isSpinning
+                ? 'radial-gradient(circle at 35% 35%, #666 0%, #444 50%, #333 100%)'
+                : 'radial-gradient(circle at 35% 35%, #F5E6A3 0%, #D4AF37 30%, #B8860B 70%, #8B6914 100%)',
+              color: isSpinning ? '#888' : '#4a2c00',
+              boxShadow: isSpinning
+                ? 'inset 0 2px 5px rgba(0,0,0,0.5)'
+                : '0 4px 15px rgba(139,105,20,0.5), inset 0 2px 0 rgba(255,255,255,0.4), inset 0 -2px 0 rgba(0,0,0,0.2)',
+              cursor: isSpinning ? 'not-allowed' : 'pointer',
+              textShadow: isSpinning ? 'none' : '0 1px 0 rgba(255,255,255,0.3)',
+              border: '3px solid #8B6914',
+              transform: 'translate(-50%, -50%) rotateX(-5deg)'
+            }}
+          >
+            {isSpinning ? (
+              <span className="animate-pulse">•••</span>
+            ) : (
+              'SPIN'
+            )}
+          </button>
+        </div>
+
+        {/* Gold Pedestal */}
+        <div className="flex flex-col items-center -mt-2" style={{ filter: 'drop-shadow(0 8px 15px rgba(0,0,0,0.4))' }}>
+          <svg width="80" height="55" viewBox="0 0 80 55">
+            <defs>
+              <linearGradient id="standNeck" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#8B6914" />
+                <stop offset="25%" stopColor="#B8860B" />
+                <stop offset="50%" stopColor="#F5E6A3" />
+                <stop offset="75%" stopColor="#B8860B" />
+                <stop offset="100%" stopColor="#8B6914" />
+              </linearGradient>
+            </defs>
+            <path d="M28 0 L52 0 L58 55 L22 55 Z" fill="url(#standNeck)" />
+            <ellipse cx="40" cy="5" rx="14" ry="5" fill="#D4AF37" />
+          </svg>
+
+          <svg width="130" height="55" viewBox="0 0 130 55" className="-mt-1">
+            <defs>
+              <linearGradient id="standBase" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#8B6914" />
+                <stop offset="20%" stopColor="#B8860B" />
+                <stop offset="40%" stopColor="#D4AF37" />
+                <stop offset="50%" stopColor="#F5E6A3" />
+                <stop offset="60%" stopColor="#D4AF37" />
+                <stop offset="80%" stopColor="#B8860B" />
+                <stop offset="100%" stopColor="#8B6914" />
+              </linearGradient>
+            </defs>
+            <path d="M45 0 L85 0 L110 40 L110 48 L20 48 L20 40 Z" fill="url(#standBase)" />
+            <ellipse cx="65" cy="5" rx="22" ry="7" fill="#D4AF37" />
+            <rect x="20" y="45" width="90" height="8" rx="2" fill="url(#standBase)" />
+            <ellipse cx="55" cy="25" rx="12" ry="16" fill="rgba(255,255,255,0.1)" />
+          </svg>
         </div>
       </div>
 
-    </>
+      {/* Winner Display */}
+      {winner && (
+        <div
+          className="mt-8 p-6 rounded-2xl text-center max-w-sm relative z-10"
+          style={{
+            background: isUnlucky
+              ? 'linear-gradient(135deg, rgba(30,30,30,0.9) 0%, rgba(60,20,20,0.9) 100%)'
+              : resultType === 'retry'
+              ? 'linear-gradient(135deg, rgba(212,165,116,0.2) 0%, rgba(180,130,80,0.3) 100%)'
+              : 'linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(139,105,20,0.3) 100%)',
+            border: isUnlucky ? '2px solid #ff4444' : '2px solid #D4AF37',
+            boxShadow: isUnlucky ? '0 0 40px rgba(255,50,50,0.4)' : '0 0 40px rgba(212,175,55,0.3)'
+          }}
+        >
+          {resultType === 'win' ? (
+            <>
+              <p className="text-amber-400 text-lg">🎉 Félicitations!</p>
+              <p
+                className="text-4xl font-black mt-2"
+                style={{
+                  color: '#ffffff',
+                  textShadow: '0 0 20px rgba(212,175,55,0.5)'
+                }}
+              >
+                {result}
+              </p>
+              <button
+                disabled={isSaving || !couponCode}
+                onClick={() => router.push(`/coupon/${shopId}?code=${couponCode}&lang=${currentLang}`)}
+                className={`mt-4 w-full py-3 px-6 font-bold rounded-xl transition-colors text-lg ${
+                  isSaving || !couponCode
+                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                    : 'bg-amber-500 text-black hover:bg-amber-400'
+                }`}
+              >
+                {isSaving ? 'Génération...' : 'Récupérer mon prix →'}
+              </button>
+              {saveError && (
+                <p className="text-red-500 mt-2 text-sm font-bold">Erreur. Contactez le support.</p>
+              )}
+            </>
+          ) : resultType === 'retry' ? (
+            <>
+              <p className="text-amber-400 text-lg">🔄 Réessayez!</p>
+              <p className="text-2xl font-black mt-2 text-white">Vous avez un tour gratuit!</p>
+              <button
+                onClick={() => { setWinner(null); setResult(''); }}
+                className="mt-4 w-full py-3 px-6 bg-amber-500 text-black font-bold rounded-xl hover:bg-amber-400 transition-colors text-lg"
+              >
+                Tourner encore ↻
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="text-red-400 text-lg">😈 Pas de chance!</p>
+              <p
+                className="text-4xl font-black mt-2"
+                style={{
+                  color: '#ff4444',
+                  textShadow: '0 0 20px rgba(255,50,50,0.5)'
+                }}
+              >
+                💀 UNLUCKY 💀
+              </p>
+              <p className="text-gray-400 text-sm mt-2">Retentez votre chance demain!</p>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* Footer instruction */}
+      <p className="mt-6 text-gray-400 text-sm relative z-10">
+        Cliquez sur <span className="text-amber-400 font-bold">SPIN</span> au centre pour tourner!
+      </p>
+    </div>
   );
 }

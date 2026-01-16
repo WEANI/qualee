@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/atoms/Input';
 import { Prize } from '@/lib/types/database';
-import { Plus, Trash2, AlertCircle, Upload, Image as ImageIcon, Info, Percent, TrendingUp, Pencil, X, Ban, RefreshCw, Lock } from 'lucide-react';
+import { Plus, Trash2, AlertCircle, Upload, Image as ImageIcon, Info, Percent, TrendingUp, Pencil, X, Ban, RefreshCw, Lock, Palette } from 'lucide-react';
 import { WheelPreview, PrizeWithQuantity } from '@/components/dashboard/WheelPreview';
 
 // Special segment types that are always present on the wheel
@@ -41,6 +41,19 @@ export default function PrizesPage() {
   const [uploading, setUploading] = useState(false);
   const [migrationNeeded, setMigrationNeeded] = useState(false);
 
+  // Wheel appearance configuration
+  const [wheelBgColor, setWheelBgColor] = useState('#4a4a52');
+  const [segmentColors, setSegmentColors] = useState<{ color: string; textColor: string }[]>([
+    { color: '#E85A5A', textColor: '#ffffff' },
+    { color: '#F5C6C6', textColor: '#8B4513' },
+    { color: '#D4548A', textColor: '#ffffff' },
+    { color: '#D4A574', textColor: '#ffffff' },
+    { color: '#E85A5A', textColor: '#ffffff' },
+    { color: '#F5C6C6', textColor: '#8B4513' },
+    { color: '#D4548A', textColor: '#ffffff' },
+    { color: '#D4A574', textColor: '#ffffff' },
+  ]);
+
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -70,7 +83,14 @@ export default function PrizesPage() {
       if (merchantData?.prize_quantities) {
         setPrizeQuantities(merchantData.prize_quantities);
       }
-      
+      // Load wheel appearance config
+      if (merchantData?.wheel_bg_color) {
+        setWheelBgColor(merchantData.wheel_bg_color);
+      }
+      if (merchantData?.segment_colors) {
+        setSegmentColors(merchantData.segment_colors);
+      }
+
       fetchPrizes(user.id);
     };
 
@@ -243,7 +263,7 @@ export default function PrizesPage() {
   // Save segment quantities to merchant
   const saveSegmentQuantities = async () => {
     if (!user) return;
-    
+
     try {
       const { error } = await supabase
         .from('merchants')
@@ -251,9 +271,11 @@ export default function PrizesPage() {
           unlucky_quantity: unluckyQuantity,
           retry_quantity: retryQuantity,
           prize_quantities: prizeQuantities,
+          wheel_bg_color: wheelBgColor,
+          segment_colors: segmentColors,
         })
         .eq('id', user.id);
-      
+
       if (error) throw error;
       setMigrationNeeded(false);
     } catch (error: unknown) {
@@ -263,8 +285,15 @@ export default function PrizesPage() {
       }
     }
   };
-  
-  // Auto-save when quantities change
+
+  // Update segment color
+  const updateSegmentColor = (index: number, field: 'color' | 'textColor', value: string) => {
+    const newColors = [...segmentColors];
+    newColors[index] = { ...newColors[index], [field]: value };
+    setSegmentColors(newColors);
+  };
+
+  // Auto-save when quantities or appearance change
   useEffect(() => {
     if (user) {
       const timer = setTimeout(() => {
@@ -272,7 +301,7 @@ export default function PrizesPage() {
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [unluckyQuantity, retryQuantity, prizeQuantities, user]);
+  }, [unluckyQuantity, retryQuantity, prizeQuantities, wheelBgColor, segmentColors, user]);
 
   const getChanceDescription = (prob: number) => {
     if (prob >= 50) return { text: 'Très fréquent', color: 'text-green-600', bg: 'bg-green-50' };
@@ -629,16 +658,200 @@ export default function PrizesPage() {
           </div>
         </Card>
 
+        {/* Wheel Appearance Configuration */}
+        <Card className="p-6 bg-gradient-to-r from-purple-900 to-indigo-900 border-purple-700">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center">
+              <Palette className="w-6 h-6 text-amber-900" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-white">🎨 Apparence de la Roue</h3>
+              <p className="text-purple-300 text-sm">Personnalisez les couleurs de votre roue</p>
+            </div>
+          </div>
+
+          {/* Background Color */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-purple-200 mb-2">
+              Couleur de fond de la page
+            </label>
+            <div className="flex items-center gap-4">
+              <input
+                type="color"
+                value={wheelBgColor}
+                onChange={(e) => setWheelBgColor(e.target.value)}
+                className="w-16 h-12 rounded cursor-pointer border-2 border-purple-500"
+              />
+              <input
+                type="text"
+                value={wheelBgColor}
+                onChange={(e) => setWheelBgColor(e.target.value)}
+                className="flex-1 bg-purple-800/50 text-white px-4 py-2 rounded-lg border border-purple-500 text-sm"
+                placeholder="#4a4a52"
+              />
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setWheelBgColor('#4a4a52')}
+                  className="px-3 py-2 rounded-lg bg-[#4a4a52] border-2 border-purple-400 text-white text-xs"
+                  title="Gris par défaut"
+                >
+                  Gris
+                </button>
+                <button
+                  onClick={() => setWheelBgColor('#1a1a2e')}
+                  className="px-3 py-2 rounded-lg bg-[#1a1a2e] border-2 border-purple-400 text-white text-xs"
+                  title="Bleu nuit"
+                >
+                  Nuit
+                </button>
+                <button
+                  onClick={() => setWheelBgColor('#2d0a31')}
+                  className="px-3 py-2 rounded-lg bg-[#2d0a31] border-2 border-purple-400 text-white text-xs"
+                  title="Violet sombre"
+                >
+                  Violet
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Segment Colors */}
+          <div>
+            <label className="block text-sm font-medium text-purple-200 mb-3">
+              Couleurs des segments (prix)
+            </label>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {segmentColors.map((seg, index) => (
+                <div key={index} className="bg-purple-800/30 rounded-lg p-3 border border-purple-600">
+                  <p className="text-xs text-purple-300 mb-2">Segment {index + 1}</p>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1">
+                      <label className="text-xs text-purple-400">Fond</label>
+                      <input
+                        type="color"
+                        value={seg.color}
+                        onChange={(e) => updateSegmentColor(index, 'color', e.target.value)}
+                        className="w-full h-8 rounded cursor-pointer"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <label className="text-xs text-purple-400">Texte</label>
+                      <input
+                        type="color"
+                        value={seg.textColor}
+                        onChange={(e) => updateSegmentColor(index, 'textColor', e.target.value)}
+                        className="w-full h-8 rounded cursor-pointer"
+                      />
+                    </div>
+                  </div>
+                  {/* Preview */}
+                  <div
+                    className="mt-2 py-1 px-2 rounded text-xs font-bold text-center"
+                    style={{ backgroundColor: seg.color, color: seg.textColor }}
+                  >
+                    Aperçu
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Preset Color Schemes */}
+            <div className="mt-4 pt-4 border-t border-purple-600">
+              <label className="block text-sm font-medium text-purple-200 mb-3">
+                Thèmes prédéfinis
+              </label>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setSegmentColors([
+                    { color: '#E85A5A', textColor: '#ffffff' },
+                    { color: '#F5C6C6', textColor: '#8B4513' },
+                    { color: '#D4548A', textColor: '#ffffff' },
+                    { color: '#D4A574', textColor: '#ffffff' },
+                    { color: '#E85A5A', textColor: '#ffffff' },
+                    { color: '#F5C6C6', textColor: '#8B4513' },
+                    { color: '#D4548A', textColor: '#ffffff' },
+                    { color: '#D4A574', textColor: '#ffffff' },
+                  ])}
+                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-orange-400 text-white text-sm font-medium hover:opacity-90"
+                >
+                  🌸 Rose/Corail
+                </button>
+                <button
+                  onClick={() => setSegmentColors([
+                    { color: '#4CAF50', textColor: '#ffffff' },
+                    { color: '#8BC34A', textColor: '#1a1a1a' },
+                    { color: '#2E7D32', textColor: '#ffffff' },
+                    { color: '#66BB6A', textColor: '#1a1a1a' },
+                    { color: '#4CAF50', textColor: '#ffffff' },
+                    { color: '#8BC34A', textColor: '#1a1a1a' },
+                    { color: '#2E7D32', textColor: '#ffffff' },
+                    { color: '#66BB6A', textColor: '#1a1a1a' },
+                  ])}
+                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-400 text-white text-sm font-medium hover:opacity-90"
+                >
+                  🌿 Vert Nature
+                </button>
+                <button
+                  onClick={() => setSegmentColors([
+                    { color: '#7C3AED', textColor: '#ffffff' },
+                    { color: '#A78BFA', textColor: '#1a1a1a' },
+                    { color: '#5B21B6', textColor: '#ffffff' },
+                    { color: '#C4B5FD', textColor: '#1a1a1a' },
+                    { color: '#7C3AED', textColor: '#ffffff' },
+                    { color: '#A78BFA', textColor: '#1a1a1a' },
+                    { color: '#5B21B6', textColor: '#ffffff' },
+                    { color: '#C4B5FD', textColor: '#1a1a1a' },
+                  ])}
+                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-violet-500 to-purple-400 text-white text-sm font-medium hover:opacity-90"
+                >
+                  💜 Violet Royal
+                </button>
+                <button
+                  onClick={() => setSegmentColors([
+                    { color: '#FFD700', textColor: '#1a1a1a' },
+                    { color: '#1a1a1a', textColor: '#FFD700' },
+                    { color: '#FFD700', textColor: '#1a1a1a' },
+                    { color: '#1a1a1a', textColor: '#FFD700' },
+                    { color: '#FFD700', textColor: '#1a1a1a' },
+                    { color: '#1a1a1a', textColor: '#FFD700' },
+                    { color: '#FFD700', textColor: '#1a1a1a' },
+                    { color: '#1a1a1a', textColor: '#FFD700' },
+                  ])}
+                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-yellow-400 to-amber-500 text-black text-sm font-medium hover:opacity-90"
+                >
+                  ✨ Or & Noir
+                </button>
+                <button
+                  onClick={() => setSegmentColors([
+                    { color: '#EF4444', textColor: '#ffffff' },
+                    { color: '#3B82F6', textColor: '#ffffff' },
+                    { color: '#EF4444', textColor: '#ffffff' },
+                    { color: '#3B82F6', textColor: '#ffffff' },
+                    { color: '#EF4444', textColor: '#ffffff' },
+                    { color: '#3B82F6', textColor: '#ffffff' },
+                    { color: '#EF4444', textColor: '#ffffff' },
+                    { color: '#3B82F6', textColor: '#ffffff' },
+                  ])}
+                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-red-500 to-blue-500 text-white text-sm font-medium hover:opacity-90"
+                >
+                  🎯 Rouge & Bleu
+                </button>
+              </div>
+            </div>
+          </div>
+        </Card>
+
         {/* Wheel Preview Section */}
         <Card className="p-6 bg-gradient-to-br from-slate-50 to-gray-100 border-2 border-gray-200">
           <div className="flex flex-col lg:flex-row items-center gap-8">
             <div className="flex-shrink-0">
-              <WheelPreview 
+              <WheelPreview
                 prizeQuantities={prizeQuantitiesArray}
                 unluckyQuantity={unluckyQuantity}
                 retryQuantity={retryQuantity}
                 size={320}
                 maxSegments={MAX_SEGMENTS}
+                segmentColors={segmentColors}
               />
             </div>
             <div className="flex-1 text-center lg:text-left">
