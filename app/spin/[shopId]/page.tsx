@@ -439,7 +439,7 @@ export default function SpinPage() {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden"
+      className="min-h-screen flex flex-col items-center justify-start pt-8 pb-16 px-4 relative overflow-x-hidden overflow-y-auto"
       style={{
         backgroundColor: merchant?.wheel_bg_color || '#4a4a52'
       }}
@@ -448,10 +448,10 @@ export default function SpinPage() {
       {merchant?.background_url && (
         <>
           <div
-            className="absolute inset-0 bg-cover bg-center"
+            className="absolute inset-0 bg-cover bg-center blur-sm"
             style={{ backgroundImage: `url(${merchant.background_url})` }}
           />
-          <div className="absolute inset-0 bg-black/40"></div>
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
         </>
       )}
 
@@ -657,7 +657,7 @@ export default function SpinPage() {
           <button
             onClick={spinWheel}
             disabled={isSpinning}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full font-black text-lg tracking-wider transition-all z-20 flex items-center justify-center"
+            className="absolute top-1/2 left-1/2 w-24 h-24 rounded-full font-black text-lg tracking-wider transition-all z-20 flex items-center justify-center"
             style={{
               background: isSpinning
                 ? 'radial-gradient(circle at 35% 35%, #666 0%, #444 50%, #333 100%)'
@@ -719,15 +719,16 @@ export default function SpinPage() {
       {/* Winner Display */}
       {winner && (
         <div
-          className="mt-8 p-6 rounded-2xl text-center max-w-sm relative z-10"
+          className="mt-8 p-6 rounded-2xl text-center max-w-sm relative z-20 mx-4 w-full sm:w-auto"
           style={{
             background: isUnlucky
-              ? 'linear-gradient(135deg, rgba(30,30,30,0.9) 0%, rgba(60,20,20,0.9) 100%)'
+              ? 'linear-gradient(135deg, rgba(30,30,30,0.95) 0%, rgba(60,20,20,0.95) 100%)'
               : resultType === 'retry'
-              ? 'linear-gradient(135deg, rgba(212,165,116,0.2) 0%, rgba(180,130,80,0.3) 100%)'
-              : 'linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(139,105,20,0.3) 100%)',
+              ? 'linear-gradient(135deg, rgba(212,165,116,0.95) 0%, rgba(180,130,80,0.95) 100%)'
+              : 'linear-gradient(135deg, rgba(212,175,55,0.95) 0%, rgba(139,105,20,0.95) 100%)',
             border: isUnlucky ? '2px solid #ff4444' : '2px solid #D4AF37',
-            boxShadow: isUnlucky ? '0 0 40px rgba(255,50,50,0.4)' : '0 0 40px rgba(212,175,55,0.3)'
+            boxShadow: isUnlucky ? '0 0 40px rgba(255,50,50,0.4)' : '0 0 40px rgba(212,175,55,0.3)',
+            backdropFilter: 'blur(10px)'
           }}
         >
           {resultType === 'win' ? (
