@@ -666,101 +666,16 @@ export default function PrizesPage() {
             </div>
             <div>
               <h3 className="text-xl font-bold text-white">🎨 Apparence de la Roue</h3>
-              <p className="text-purple-300 text-sm">Personnalisez les couleurs de votre roue</p>
+              <p className="text-purple-300 text-sm">Choisissez un thème pour votre roue</p>
             </div>
           </div>
 
-          {/* Background Color */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-purple-200 mb-2">
-              Couleur de fond de la page
-            </label>
-            <div className="flex items-center gap-4">
-              <input
-                type="color"
-                value={wheelBgColor}
-                onChange={(e) => setWheelBgColor(e.target.value)}
-                className="w-16 h-12 rounded cursor-pointer border-2 border-purple-500"
-              />
-              <input
-                type="text"
-                value={wheelBgColor}
-                onChange={(e) => setWheelBgColor(e.target.value)}
-                className="flex-1 bg-purple-800/50 text-white px-4 py-2 rounded-lg border border-purple-500 text-sm"
-                placeholder="#4a4a52"
-              />
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setWheelBgColor('#4a4a52')}
-                  className="px-3 py-2 rounded-lg bg-[#4a4a52] border-2 border-purple-400 text-white text-xs"
-                  title="Gris par défaut"
-                >
-                  Gris
-                </button>
-                <button
-                  onClick={() => setWheelBgColor('#1a1a2e')}
-                  className="px-3 py-2 rounded-lg bg-[#1a1a2e] border-2 border-purple-400 text-white text-xs"
-                  title="Bleu nuit"
-                >
-                  Nuit
-                </button>
-                <button
-                  onClick={() => setWheelBgColor('#2d0a31')}
-                  className="px-3 py-2 rounded-lg bg-[#2d0a31] border-2 border-purple-400 text-white text-xs"
-                  title="Violet sombre"
-                >
-                  Violet
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Segment Colors */}
+          {/* Preset Color Schemes */}
           <div>
             <label className="block text-sm font-medium text-purple-200 mb-3">
-              Couleurs des segments (prix)
+              Thèmes prédéfinis
             </label>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {segmentColors.map((seg, index) => (
-                <div key={index} className="bg-purple-800/30 rounded-lg p-3 border border-purple-600">
-                  <p className="text-xs text-purple-300 mb-2">Segment {index + 1}</p>
-                  <div className="flex items-center gap-2">
-                    <div className="flex-1">
-                      <label className="text-xs text-purple-400">Fond</label>
-                      <input
-                        type="color"
-                        value={seg.color}
-                        onChange={(e) => updateSegmentColor(index, 'color', e.target.value)}
-                        className="w-full h-8 rounded cursor-pointer"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <label className="text-xs text-purple-400">Texte</label>
-                      <input
-                        type="color"
-                        value={seg.textColor}
-                        onChange={(e) => updateSegmentColor(index, 'textColor', e.target.value)}
-                        className="w-full h-8 rounded cursor-pointer"
-                      />
-                    </div>
-                  </div>
-                  {/* Preview */}
-                  <div
-                    className="mt-2 py-1 px-2 rounded text-xs font-bold text-center"
-                    style={{ backgroundColor: seg.color, color: seg.textColor }}
-                  >
-                    Aperçu
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Preset Color Schemes */}
-            <div className="mt-4 pt-4 border-t border-purple-600">
-              <label className="block text-sm font-medium text-purple-200 mb-3">
-                Thèmes prédéfinis
-              </label>
-              <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
                 <button
                   onClick={() => setSegmentColors([
                     { color: '#E85A5A', textColor: '#ffffff' },
@@ -836,7 +751,6 @@ export default function PrizesPage() {
                 >
                   🎯 Rouge & Bleu
                 </button>
-              </div>
             </div>
           </div>
         </Card>
