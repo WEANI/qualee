@@ -369,33 +369,33 @@ export default function PrizesPage() {
         </div>
 
         {/* Segment Counter Card */}
-        <Card className="p-6 bg-gradient-to-r from-teal-50 to-blue-50 border-teal-200">
-          <div className="flex items-start gap-4">
-            <div className="w-16 h-16 bg-violet-600 rounded-full flex items-center justify-center flex-shrink-0">
-              <span className="text-2xl">🎡</span>
+        <Card className="p-4 sm:p-6 bg-gradient-to-r from-teal-50 to-blue-50 border-teal-200">
+          <div className="flex flex-col sm:flex-row items-start gap-4">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-violet-600 rounded-full flex items-center justify-center flex-shrink-0 mx-auto sm:mx-0">
+              <span className="text-xl sm:text-2xl">🎡</span>
             </div>
-            <div className="flex-1">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Composition de la Roue</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <div className="bg-white rounded-lg p-4 border-2 border-teal-200">
-                  <p className="text-sm text-gray-600 mb-1">Segments utilisés</p>
-                  <p className="text-3xl font-bold text-violet-600">{totalSegments}/{MAX_SEGMENTS}</p>
+            <div className="flex-1 w-full">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 text-center sm:text-left">Composition de la Roue</h3>
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4">
+                <div className="bg-white rounded-lg p-2 sm:p-4 border-2 border-teal-200">
+                  <p className="text-xs sm:text-sm text-gray-600 mb-1">Segments utilisés</p>
+                  <p className="text-xl sm:text-3xl font-bold text-violet-600">{totalSegments}/{MAX_SEGMENTS}</p>
                 </div>
-                <div className={`rounded-lg p-4 border-2 ${
-                  remainingSegments === 0 ? 'bg-green-50 border-green-200' : 
-                  remainingSegments > 0 ? 'bg-yellow-50 border-yellow-200' : 
+                <div className={`rounded-lg p-2 sm:p-4 border-2 ${
+                  remainingSegments === 0 ? 'bg-green-50 border-green-200' :
+                  remainingSegments > 0 ? 'bg-yellow-50 border-yellow-200' :
                   'bg-red-50 border-red-200'
                 }`}>
-                  <p className="text-sm text-gray-600 mb-1">Segments restants</p>
-                  <p className={`text-3xl font-bold ${
-                    remainingSegments === 0 ? 'text-green-600' : 
-                    remainingSegments > 0 ? 'text-yellow-600' : 
+                  <p className="text-xs sm:text-sm text-gray-600 mb-1">Restants</p>
+                  <p className={`text-xl sm:text-3xl font-bold ${
+                    remainingSegments === 0 ? 'text-green-600' :
+                    remainingSegments > 0 ? 'text-yellow-600' :
                     'text-red-600'
                   }`}>{remainingSegments}</p>
                 </div>
-                <div className="bg-white rounded-lg p-4 border-2 border-gray-200">
-                  <p className="text-sm text-gray-600 mb-1">Prix disponibles</p>
-                  <p className="text-3xl font-bold text-gray-900">{prizes.length}</p>
+                <div className="bg-white rounded-lg p-2 sm:p-4 border-2 border-gray-200">
+                  <p className="text-xs sm:text-sm text-gray-600 mb-1">Prix</p>
+                  <p className="text-xl sm:text-3xl font-bold text-gray-900">{prizes.length}</p>
                 </div>
               </div>
               
@@ -659,23 +659,23 @@ export default function PrizesPage() {
         </Card>
 
         {/* Wheel Appearance Configuration */}
-        <Card className="p-6 bg-gradient-to-r from-purple-900 to-indigo-900 border-purple-700">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center">
-              <Palette className="w-6 h-6 text-amber-900" />
+        <Card className="p-4 sm:p-6 bg-gradient-to-r from-purple-900 to-indigo-900 border-purple-700">
+          <div className="flex items-center gap-3 mb-4 sm:mb-6">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center flex-shrink-0">
+              <Palette className="w-5 h-5 sm:w-6 sm:h-6 text-amber-900" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white">🎨 Apparence de la Roue</h3>
-              <p className="text-purple-300 text-sm">Choisissez un thème pour votre roue</p>
+              <h3 className="text-lg sm:text-xl font-bold text-white">🎨 Apparence de la Roue</h3>
+              <p className="text-purple-300 text-xs sm:text-sm">Choisissez un thème pour votre roue</p>
             </div>
           </div>
 
           {/* Preset Color Schemes */}
           <div>
-            <label className="block text-sm font-medium text-purple-200 mb-3">
+            <label className="block text-xs sm:text-sm font-medium text-purple-200 mb-3">
               Thèmes prédéfinis
             </label>
-            <div className="flex flex-wrap gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-2 sm:gap-3">
                 <button
                   onClick={() => setSegmentColors([
                     { color: '#E85A5A', textColor: '#ffffff' },
@@ -687,7 +687,7 @@ export default function PrizesPage() {
                     { color: '#D4548A', textColor: '#ffffff' },
                     { color: '#D4A574', textColor: '#ffffff' },
                   ])}
-                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-orange-400 text-white text-sm font-medium hover:opacity-90"
+                  className="px-3 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-orange-400 text-white text-xs sm:text-sm font-medium hover:opacity-90"
                 >
                   🌸 Rose/Corail
                 </button>
@@ -702,7 +702,7 @@ export default function PrizesPage() {
                     { color: '#2E7D32', textColor: '#ffffff' },
                     { color: '#66BB6A', textColor: '#1a1a1a' },
                   ])}
-                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-400 text-white text-sm font-medium hover:opacity-90"
+                  className="px-3 py-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-400 text-white text-xs sm:text-sm font-medium hover:opacity-90"
                 >
                   🌿 Vert Nature
                 </button>
@@ -717,7 +717,7 @@ export default function PrizesPage() {
                     { color: '#5B21B6', textColor: '#ffffff' },
                     { color: '#C4B5FD', textColor: '#1a1a1a' },
                   ])}
-                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-violet-500 to-purple-400 text-white text-sm font-medium hover:opacity-90"
+                  className="px-3 py-2 rounded-lg bg-gradient-to-r from-violet-500 to-purple-400 text-white text-xs sm:text-sm font-medium hover:opacity-90"
                 >
                   💜 Violet Royal
                 </button>
@@ -732,7 +732,7 @@ export default function PrizesPage() {
                     { color: '#FFD700', textColor: '#1a1a1a' },
                     { color: '#1a1a1a', textColor: '#FFD700' },
                   ])}
-                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-yellow-400 to-amber-500 text-black text-sm font-medium hover:opacity-90"
+                  className="px-3 py-2 rounded-lg bg-gradient-to-r from-yellow-400 to-amber-500 text-black text-xs sm:text-sm font-medium hover:opacity-90"
                 >
                   ✨ Or & Noir
                 </button>
@@ -747,7 +747,7 @@ export default function PrizesPage() {
                     { color: '#EF4444', textColor: '#ffffff' },
                     { color: '#3B82F6', textColor: '#ffffff' },
                   ])}
-                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-red-500 to-blue-500 text-white text-sm font-medium hover:opacity-90"
+                  className="px-3 py-2 rounded-lg bg-gradient-to-r from-red-500 to-blue-500 text-white text-xs sm:text-sm font-medium hover:opacity-90"
                 >
                   🎯 Rouge & Bleu
                 </button>

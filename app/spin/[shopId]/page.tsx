@@ -461,12 +461,12 @@ export default function SpinPage() {
         {/* Pointer at TOP pointing DOWN */}
         <div
           className="absolute left-1/2 -translate-x-1/2 z-30"
-          style={{ top: '-25px' }}
+          style={{ top: '-20px' }}
         >
           {merchant?.logo_url ? (
             <div className="flex flex-col items-center">
               <div
-                className="w-20 h-20 rounded-full p-2 shadow-xl flex items-center justify-center border-4 border-amber-400 mb-[-15px] relative z-10"
+                className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full p-1.5 sm:p-2 shadow-xl flex items-center justify-center border-2 sm:border-4 border-amber-400 mb-[-12px] sm:mb-[-15px] relative z-10"
                 style={{ backgroundColor: merchant.logo_background_color || '#FFFFFF' }}
               >
                 <img
@@ -527,9 +527,10 @@ export default function SpinPage() {
         {/* Main Wheel */}
         <div className="relative" style={{ transform: 'rotateX(5deg)' }}>
           <svg
-            width="400"
-            height="400"
+            width="100%"
+            height="100%"
             viewBox="0 0 400 400"
+            className="w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] md:w-[400px] md:h-[400px]"
             style={{
               transform: `rotate(${rotation}deg)`,
               transition: isSpinning ? 'transform 5s cubic-bezier(0.15, 0.60, 0.15, 1)' : 'none',
@@ -657,7 +658,7 @@ export default function SpinPage() {
           <button
             onClick={spinWheel}
             disabled={isSpinning}
-            className="absolute top-1/2 left-1/2 w-24 h-24 rounded-full font-black text-lg tracking-wider transition-all z-20 flex items-center justify-center"
+            className="absolute top-1/2 left-1/2 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full font-black text-sm sm:text-base md:text-lg tracking-wider transition-all z-20 flex items-center justify-center"
             style={{
               background: isSpinning
                 ? 'radial-gradient(circle at 35% 35%, #666 0%, #444 50%, #333 100%)'

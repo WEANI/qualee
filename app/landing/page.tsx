@@ -289,15 +289,15 @@ export default function LandingPage() {
       </section>
 
       {/* Logos Section */}
-      <section className="py-12 border-y border-gray-200 bg-gray-50">
+      <section className="py-8 sm:py-12 border-y border-gray-200 bg-gray-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-center text-gray-500 text-sm mb-8">Ils nous font déjà confiance</p>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60">
-            <div className="text-2xl font-bold text-gray-400">BarberKing</div>
-            <div className="text-2xl font-bold text-gray-400">L'Atelier Beauté</div>
-            <div className="text-2xl font-bold text-gray-400">InkMaster</div>
-            <div className="text-2xl font-bold text-gray-400">NailArt Studio</div>
-            <div className="text-2xl font-bold text-gray-400">Hair & Co</div>
+          <p className="text-center text-gray-500 text-xs sm:text-sm mb-6 sm:mb-8">Ils nous font déjà confiance</p>
+          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-8 md:gap-16 opacity-60">
+            <div className="text-base sm:text-xl md:text-2xl font-bold text-gray-400">BarberKing</div>
+            <div className="text-base sm:text-xl md:text-2xl font-bold text-gray-400">L'Atelier Beauté</div>
+            <div className="text-base sm:text-xl md:text-2xl font-bold text-gray-400">InkMaster</div>
+            <div className="text-base sm:text-xl md:text-2xl font-bold text-gray-400 hidden sm:block">NailArt Studio</div>
+            <div className="text-base sm:text-xl md:text-2xl font-bold text-gray-400 hidden md:block">Hair & Co</div>
           </div>
         </div>
       </section>
