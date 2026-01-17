@@ -180,7 +180,7 @@ export default function LandingPage() {
 
               {/* Subtitle */}
               <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-xl mx-auto lg:mx-0">
-                La solution tout-en-un pour <strong className="text-gray-900">Coiffeurs, Barbiers et Instituts</strong>.
+                La solution tout-en-un pour les <strong className="text-gray-900">Spécialistes de la beauté, Instituts, Coiffeurs, Barbiers</strong>.
                 Transformez chaque client en ambassadeur grâce à la gamification.
               </p>
 
@@ -348,10 +348,10 @@ export default function LandingPage() {
               <div className="w-14 h-14 bg-[#EB1E99]/10 rounded-2xl flex items-center justify-center mb-6">
                 <Clock className="w-7 h-7 text-[#EB1E99]" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">Manque de relance automatique</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Absence d'incitation au retour</h3>
               <p className="text-gray-600">
-                Vous n'avez pas le temps de relancer vos clients manuellement.
-                Ils vous oublient et vont voir ailleurs.
+                Vos clients n'ont pas de raison concrète de revenir rapidement.
+                Sans récompense valable uniquement sur leur prochain RDV, ils sont plus volatiles.
               </p>
             </div>
           </div>
@@ -405,8 +405,8 @@ export default function LandingPage() {
                 </div>
                 <h3 className="text-xl font-bold mb-4 text-gray-900">L'Avis Google</h3>
                 <p className="text-gray-600">
-                  Il est redirigé vers Google pour laisser 5 étoiles.
-                  Notre filtrage intelligent protège votre réputation des avis négatifs.
+                  Il est redirigé automatiquement vers votre fiche Google pour déposer un avis.
+                  Une solution simple pour faire grimper votre visibilité grâce à la satisfaction de vos clients.
                 </p>
               </div>
             </div>
@@ -486,13 +486,13 @@ export default function LandingPage() {
                 <div>
                   <h3 className="text-xl font-bold mb-3 text-gray-900">Carte de fidélité digitale</h3>
                   <p className="text-gray-600 mb-4">
-                    Fini le papier ! Vos clients retrouvent leur carte directement dans leur Wallet Apple/Google
-                    ou sur WhatsApp. Impossible à perdre.
+                    Fini le papier ! Vos clients reçoivent leur carte directement sur WhatsApp.
+                    Impossible à perdre.
                   </p>
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-sm text-gray-700">
                       <Check className="w-4 h-4 text-green-500" />
-                      Compatible Apple Wallet & Google Pay
+                      Envoi instantané via WhatsApp
                     </li>
                     <li className="flex items-center gap-2 text-sm text-gray-700">
                       <Check className="w-4 h-4 text-green-500" />
@@ -507,22 +507,22 @@ export default function LandingPage() {
             <div className="bg-white border border-gray-200 rounded-3xl p-8 hover:border-[#00A7E1]/50 hover:shadow-xl hover:shadow-[#00A7E1]/10 transition-all group">
               <div className="flex items-start gap-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-[#00A7E1]/10 to-[#3A0CA3]/10 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <MessageCircle className="w-8 h-8 text-[#00A7E1]" />
+                  <Gift className="w-8 h-8 text-[#00A7E1]" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold mb-3 text-gray-900">Automatisation WhatsApp</h3>
+                  <h3 className="text-xl font-bold mb-3 text-gray-900">La Gamification</h3>
                   <p className="text-gray-600 mb-4">
-                    Rappels de RDV, offres d'anniversaire, relances après X jours sans visite...
-                    Tout est automatique, vous ne faites rien.
+                    Transformez chaque visite en moment ludique avec la Roue des Cadeaux.
+                    Vos clients adorent jouer et gagnent des récompenses exclusives.
                   </p>
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-sm text-gray-700">
                       <Check className="w-4 h-4 text-green-500" />
-                      Messages personnalisés automatiques
+                      Roue des cadeaux personnalisable
                     </li>
                     <li className="flex items-center gap-2 text-sm text-gray-700">
                       <Check className="w-4 h-4 text-green-500" />
-                      Taux d'ouverture de 98%
+                      Récompenses valables sur le prochain RDV
                     </li>
                   </ul>
                 </div>
@@ -785,7 +785,7 @@ export default function LandingPage() {
               </Link>
             </div>
 
-            {/* Franchise Plan */}
+            {/* Multi Shop Plan */}
             <div className="relative bg-gradient-to-b from-[#EB1E99]/10 to-white border-2 border-[#EB1E99]/50 rounded-3xl p-8 shadow-lg shadow-[#EB1E99]/10">
               {/* Popular Badge */}
               <div className="absolute -top-4 left-1/2 -translate-x-1/2">
@@ -795,7 +795,7 @@ export default function LandingPage() {
               </div>
 
               <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2 text-gray-900">Franchise</h3>
+                <h3 className="text-2xl font-bold mb-2 text-gray-900">Multi Shop</h3>
                 <p className="text-gray-600">Pour les réseaux multi-établissements</p>
               </div>
 
