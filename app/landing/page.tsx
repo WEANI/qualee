@@ -100,7 +100,7 @@ export default function LandingPage() {
                 Connexion
               </Link>
               <Link
-                href="/auth/register"
+                href="/auth/signup"
                 className="px-5 py-2.5 bg-gradient-to-r from-[#EB1E99] to-[#7209B7] text-white font-semibold rounded-full hover:from-[#f540ad] hover:to-[#8a1ed1] transition-all text-sm"
               >
                 Essai gratuit
@@ -138,7 +138,7 @@ export default function LandingPage() {
                 Connexion
               </Link>
               <Link
-                href="/auth/register"
+                href="/auth/signup"
                 className="px-5 py-3 bg-gradient-to-r from-[#EB1E99] to-[#7209B7] text-white font-semibold rounded-full text-center"
               >
                 Essai gratuit
@@ -187,7 +187,7 @@ export default function LandingPage() {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
                 <Link
-                  href="/auth/register"
+                  href="/auth/signup"
                   className="group px-8 py-4 bg-gradient-to-r from-[#EB1E99] to-[#7209B7] text-white font-bold rounded-full hover:from-[#f540ad] hover:to-[#8a1ed1] transition-all flex items-center justify-center gap-2 text-lg shadow-lg shadow-[#EB1E99]/25"
                 >
                   Essayer gratuitement
@@ -451,7 +451,7 @@ export default function LandingPage() {
           {/* CTA */}
           <div className="text-center mt-16">
             <Link
-              href="/auth/register"
+              href="/auth/signup"
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#EB1E99] to-[#7209B7] text-white font-bold rounded-full hover:from-[#f540ad] hover:to-[#8a1ed1] transition-all text-lg shadow-lg shadow-[#EB1E99]/25"
             >
               Mettre en place Qualee
@@ -778,7 +778,7 @@ export default function LandingPage() {
               </ul>
 
               <Link
-                href="/auth/register"
+                href="/auth/signup"
                 className="block w-full py-4 border-2 border-[#3A0CA3]/30 text-[#3A0CA3] font-semibold rounded-full text-center hover:bg-[#3A0CA3]/5 transition-all"
               >
                 Commencer l'essai gratuit
@@ -853,7 +853,7 @@ export default function LandingPage() {
               </ul>
 
               <Link
-                href="/auth/register"
+                href="/auth/signup"
                 className="block w-full py-4 bg-gradient-to-r from-[#EB1E99] to-[#7209B7] text-white font-bold rounded-full text-center hover:from-[#f540ad] hover:to-[#8a1ed1] transition-all shadow-lg shadow-[#EB1E99]/25"
               >
                 Commencer l'essai gratuit
@@ -933,7 +933,7 @@ export default function LandingPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  href="/auth/register"
+                  href="/auth/signup"
                   className="group px-8 py-4 bg-gradient-to-r from-[#EB1E99] to-[#7209B7] text-white font-bold rounded-full hover:from-[#f540ad] hover:to-[#8a1ed1] transition-all flex items-center justify-center gap-2 text-lg shadow-lg shadow-[#EB1E99]/25"
                 >
                   Démarrer mon essai gratuit
