@@ -359,28 +359,6 @@ export default function LandingPage() {
             <div className="absolute -top-6 -right-6 w-12 h-12 bg-[#EB1E99]/20 rounded-full blur-xl" />
             <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-[#7209B7]/20 rounded-full blur-xl" />
           </div>
-
-          {/* Video Features */}
-          <div className="grid grid-cols-3 gap-4 md:gap-8 mt-12">
-            <div className="text-center">
-              <div className="w-12 h-12 mx-auto bg-[#EB1E99]/10 rounded-xl flex items-center justify-center mb-3">
-                <QrCode className="w-6 h-6 text-[#EB1E99]" />
-              </div>
-              <p className="text-gray-700 text-sm md:text-base font-medium">Scan en 2 secondes</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 mx-auto bg-[#7209B7]/10 rounded-xl flex items-center justify-center mb-3">
-                <Gift className="w-6 h-6 text-[#7209B7]" />
-              </div>
-              <p className="text-gray-700 text-sm md:text-base font-medium">Récompense instantanée</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 mx-auto bg-[#00A7E1]/10 rounded-xl flex items-center justify-center mb-3">
-                <MessageCircle className="w-6 h-6 text-[#00A7E1]" />
-              </div>
-              <p className="text-gray-700 text-sm md:text-base font-medium">Envoi WhatsApp auto</p>
-            </div>
-          </div>
         </div>
       </section>
 
