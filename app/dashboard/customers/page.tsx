@@ -424,7 +424,7 @@ export default function CustomersPage() {
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Statut</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Note Moyenne</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Avis</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Dernier Commentaire</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Dernière Visite</th>
                   <th className="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
                 </tr>
@@ -498,10 +498,17 @@ export default function CustomersPage() {
                         <div className="flex items-center gap-1">
                           <span className="font-semibold text-slate-900">{customer.avg_rating.toFixed(1)}</span>
                           <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                          <span className="text-xs text-slate-400 ml-1">({customer.total_reviews})</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-slate-600">{customer.total_reviews} avis</span>
+                      <td className="px-6 py-4">
+                        {customer.feedbacks[0]?.comment ? (
+                          <p className="text-sm text-slate-600 max-w-[200px] truncate" title={customer.feedbacks[0].comment}>
+                            {customer.feedbacks[0].comment}
+                          </p>
+                        ) : (
+                          <span className="text-slate-400 text-sm italic">Pas de commentaire</span>
+                        )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-2 text-sm text-slate-500">
