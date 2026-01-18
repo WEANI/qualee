@@ -417,6 +417,214 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* iPhone Carousel Section */}
+      <section className="py-20 md:py-32 px-4 bg-gradient-to-b from-white via-[#7209B7]/5 to-white overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#EB1E99]/10 border border-[#EB1E99]/20 rounded-full mb-6">
+              <Smartphone className="w-4 h-4 text-[#EB1E99]" />
+              <span className="text-[#EB1E99] text-sm font-medium">L'expérience client</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-gray-900">
+              Découvrez le parcours{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#EB1E99] to-[#7209B7]">
+                client
+              </span>
+            </h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Une expérience fluide et engageante à chaque étape
+            </p>
+          </div>
+
+          {/* Carousel Container */}
+          <div className="relative">
+            {/* Gradient Overlays */}
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+            {/* Scrollable Carousel */}
+            <div className="flex gap-8 overflow-x-auto pb-8 px-4 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              {/* iPhone 1 - QR Scan */}
+              <div className="flex-shrink-0 snap-center">
+                <div className="relative group">
+                  {/* Glow Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#EB1E99]/20 to-[#7209B7]/20 rounded-[3rem] blur-2xl scale-105 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                  {/* iPhone Frame */}
+                  <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-[3rem] p-3 shadow-2xl w-[280px]">
+                    {/* Notch */}
+                    <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20" />
+
+                    {/* Screen */}
+                    <div className="bg-white rounded-[2.5rem] overflow-hidden aspect-[9/19]">
+                      <div className="h-full bg-gradient-to-b from-[#EB1E99]/10 to-white flex flex-col items-center justify-center p-6">
+                        <div className="w-32 h-32 bg-white border-4 border-[#EB1E99] rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                          <QrCode className="w-20 h-20 text-[#EB1E99]" />
+                        </div>
+                        <h3 className="text-lg font-bold text-gray-900 mb-2 text-center">Scannez le QR Code</h3>
+                        <p className="text-sm text-gray-600 text-center">En caisse, scannez avec votre smartphone</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Step Label */}
+                  <div className="mt-6 text-center">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#EB1E99]/10 rounded-full">
+                      <span className="w-6 h-6 bg-[#EB1E99] rounded-full text-white text-sm font-bold flex items-center justify-center">1</span>
+                      <span className="text-[#EB1E99] font-medium">Scan QR</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* iPhone 2 - Rating */}
+              <div className="flex-shrink-0 snap-center">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#7209B7]/20 to-[#3A0CA3]/20 rounded-[3rem] blur-2xl scale-105 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                  <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-[3rem] p-3 shadow-2xl w-[280px]">
+                    <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20" />
+
+                    <div className="bg-white rounded-[2.5rem] overflow-hidden aspect-[9/19]">
+                      <div className="h-full bg-gradient-to-b from-[#7209B7]/10 to-white flex flex-col items-center justify-center p-6">
+                        <div className="w-20 h-20 bg-gradient-to-br from-[#7209B7] to-[#3A0CA3] rounded-full flex items-center justify-center mb-6">
+                          <Star className="w-10 h-10 text-white fill-white" />
+                        </div>
+                        <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">Notez votre expérience</h3>
+                        <div className="flex gap-2 mb-4">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Star key={star} className={`w-8 h-8 ${star <= 4 ? 'text-amber-400 fill-amber-400' : 'text-gray-300'}`} />
+                          ))}
+                        </div>
+                        <p className="text-sm text-gray-600 text-center">Partagez votre avis en 1 clic</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 text-center">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#7209B7]/10 rounded-full">
+                      <span className="w-6 h-6 bg-[#7209B7] rounded-full text-white text-sm font-bold flex items-center justify-center">2</span>
+                      <span className="text-[#7209B7] font-medium">Avis Google</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* iPhone 3 - Wheel */}
+              <div className="flex-shrink-0 snap-center">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#3A0CA3]/20 to-[#00A7E1]/20 rounded-[3rem] blur-2xl scale-105 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                  <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-[3rem] p-3 shadow-2xl w-[280px]">
+                    <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20" />
+
+                    <div className="bg-white rounded-[2.5rem] overflow-hidden aspect-[9/19]">
+                      <div className="h-full bg-gradient-to-b from-[#3A0CA3]/10 to-white flex flex-col items-center justify-center p-6">
+                        <div className="relative w-40 h-40 mb-6">
+                          <div className="absolute inset-0 bg-gradient-conic from-[#EB1E99] via-[#7209B7] via-[#3A0CA3] via-[#00A7E1] to-[#EB1E99] rounded-full animate-spin-slow" style={{ animationDuration: '10s' }} />
+                          <div className="absolute inset-3 bg-white rounded-full flex items-center justify-center">
+                            <span className="text-[#EB1E99] font-black text-sm">SPIN</span>
+                          </div>
+                        </div>
+                        <h3 className="text-lg font-bold text-gray-900 mb-2 text-center">Tournez la roue !</h3>
+                        <p className="text-sm text-gray-600 text-center">Tentez votre chance et gagnez</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 text-center">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#3A0CA3]/10 rounded-full">
+                      <span className="w-6 h-6 bg-[#3A0CA3] rounded-full text-white text-sm font-bold flex items-center justify-center">3</span>
+                      <span className="text-[#3A0CA3] font-medium">Roue cadeaux</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* iPhone 4 - Prize Won */}
+              <div className="flex-shrink-0 snap-center">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#00A7E1]/20 to-[#EB1E99]/20 rounded-[3rem] blur-2xl scale-105 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                  <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-[3rem] p-3 shadow-2xl w-[280px]">
+                    <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20" />
+
+                    <div className="bg-white rounded-[2.5rem] overflow-hidden aspect-[9/19]">
+                      <div className="h-full bg-gradient-to-b from-amber-100 to-white flex flex-col items-center justify-center p-6">
+                        <div className="text-5xl mb-4">🎉</div>
+                        <h3 className="text-lg font-bold text-gray-900 mb-2 text-center">Félicitations !</h3>
+                        <div className="bg-gradient-to-r from-[#EB1E99] to-[#7209B7] text-white font-bold text-xl px-6 py-3 rounded-xl mb-4">
+                          -15%
+                        </div>
+                        <p className="text-sm text-gray-600 text-center">Sur votre prochain RDV</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 text-center">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 rounded-full">
+                      <span className="w-6 h-6 bg-amber-500 rounded-full text-white text-sm font-bold flex items-center justify-center">4</span>
+                      <span className="text-amber-600 font-medium">Récompense</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* iPhone 5 - WhatsApp */}
+              <div className="flex-shrink-0 snap-center">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-green-600/20 rounded-[3rem] blur-2xl scale-105 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                  <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-[3rem] p-3 shadow-2xl w-[280px]">
+                    <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20" />
+
+                    <div className="bg-[#0b141a] rounded-[2.5rem] overflow-hidden aspect-[9/19]">
+                      {/* WhatsApp Header */}
+                      <div className="bg-[#1f2c34] px-4 py-3 flex items-center gap-3 mt-8">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#EB1E99] to-[#7209B7] flex items-center justify-center">
+                          <span className="text-white font-bold text-sm">Q</span>
+                        </div>
+                        <div>
+                          <p className="text-white font-semibold text-sm">Qualee</p>
+                          <p className="text-gray-400 text-xs">En ligne</p>
+                        </div>
+                      </div>
+
+                      {/* Chat */}
+                      <div className="p-3 space-y-3">
+                        <div className="bg-[#1f2c34] rounded-xl rounded-tl-none px-3 py-2 max-w-[90%]">
+                          <p className="text-white text-xs">Votre carte de fidélité a été créditée ! ⭐</p>
+                          <p className="text-gray-400 text-[10px] mt-1 text-right">14:32</p>
+                        </div>
+                        <div className="bg-gradient-to-r from-[#EB1E99]/20 to-[#7209B7]/20 border border-[#EB1E99]/30 rounded-xl rounded-tl-none px-3 py-2 max-w-[90%]">
+                          <p className="text-[#EB1E99] font-bold text-xs">🎁 Vous avez gagné -15% !</p>
+                          <p className="text-white text-[10px] mt-1">Valable sur votre prochain RDV</p>
+                          <p className="text-gray-400 text-[10px] mt-1 text-right">14:33</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 text-center">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 rounded-full">
+                      <span className="w-6 h-6 bg-green-500 rounded-full text-white text-sm font-bold flex items-center justify-center">5</span>
+                      <span className="text-green-600 font-medium">WhatsApp</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Scroll Indicator */}
+            <div className="flex justify-center gap-2 mt-4">
+              <span className="text-gray-400 text-sm flex items-center gap-2">
+                <span>←</span> Glissez pour voir plus <span>→</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section id="fonctionnalites" className="py-20 md:py-32 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
