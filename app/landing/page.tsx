@@ -465,6 +465,171 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Loyalty / Fidélisation Section */}
+      <section className="py-20 md:py-32 px-4 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#EB1E99]/10 border border-[#EB1E99]/20 rounded-full mb-6">
+              <CreditCard className="w-4 h-4 text-[#EB1E99]" />
+              <span className="text-[#EB1E99] text-sm font-medium">Fidélisez vos clients</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-gray-900">
+              LA FIDÉLISATION{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#EB1E99] to-[#7209B7]">
+                AUTOMATISÉE
+              </span>{' '}
+              ET INTELLIGENTE
+            </h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Offrez-leur un programme de fidélité digital, simple et engageant.
+            </p>
+          </div>
+
+          {/* 3 Feature Cards */}
+          <div className="grid md:grid-cols-3 gap-8 mb-20">
+            {/* Card 1 - Programme Automatique */}
+            <div className="bg-white border border-gray-200 rounded-3xl p-8 hover:border-[#EB1E99]/50 hover:shadow-xl hover:shadow-[#EB1E99]/10 transition-all group">
+              <div className="w-14 h-14 bg-gradient-to-br from-[#EB1E99]/10 to-[#7209B7]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Zap className="w-7 h-7 text-[#EB1E99]" />
+              </div>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Programme Automatique</h3>
+              <p className="text-gray-600">
+                Dès qu'un client laisse un avis, sa carte de fidélité est créée automatiquement.
+                Il reçoit instantanément ses premiers points et peut suivre ses récompenses sur WhatsApp.
+              </p>
+            </div>
+
+            {/* Card 2 - Points & Récompenses */}
+            <div className="bg-white border border-gray-200 rounded-3xl p-8 hover:border-[#7209B7]/50 hover:shadow-xl hover:shadow-[#7209B7]/10 transition-all group">
+              <div className="w-14 h-14 bg-gradient-to-br from-[#7209B7]/10 to-[#3A0CA3]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Gift className="w-7 h-7 text-[#7209B7]" />
+              </div>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Points & Récompenses</h3>
+              <p className="text-gray-600">
+                Vos clients cumulent des points à chaque passage. Vous définissez les paliers,
+                les récompenses, et Qualee s'occupe du reste. Simple et engageant.
+              </p>
+            </div>
+
+            {/* Card 3 - Pas Application Requise */}
+            <div className="bg-white border border-gray-200 rounded-3xl p-8 hover:border-[#3A0CA3]/50 hover:shadow-xl hover:shadow-[#3A0CA3]/10 transition-all group">
+              <div className="w-14 h-14 bg-gradient-to-br from-[#3A0CA3]/10 to-[#00A7E1]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Smartphone className="w-7 h-7 text-[#3A0CA3]" />
+              </div>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Pas Application Requise</h3>
+              <p className="text-gray-600">
+                Fini les frictions ! Tout se passe sur WhatsApp. Vos clients n'ont rien à télécharger,
+                rien à créer. Leur carte est toujours accessible, impossible à perdre.
+              </p>
+            </div>
+          </div>
+
+          {/* Phone Mockup with Features */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Phone Images */}
+            <div className="relative flex justify-center">
+              <div className="relative">
+                {/* Glow Effects */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#EB1E99]/20 to-[#7209B7]/20 rounded-full blur-[80px] scale-110" />
+
+                {/* Phone Mockups */}
+                <div className="relative z-10 flex items-center justify-center gap-4">
+                  {/* Main Phone - Loyalty Card with Points */}
+                  <div className="relative animate-float">
+                    <img
+                      src="/replicate-prediction-jb1x0164yhrmy0cvtdcrfe4mxg.png"
+                      alt="Carte de fidélité digitale - Points et historique"
+                      className="w-[240px] md:w-[280px] h-auto rounded-3xl shadow-2xl"
+                    />
+                  </div>
+
+                  {/* Secondary Phone - Full Card */}
+                  <div className="relative animate-float hidden md:block" style={{ animationDelay: '1s' }}>
+                    <img
+                      src="/replicate-prediction-ptb60y9x99rmy0cvtdbbk90v7w.png"
+                      alt="Carte de fidélité complète avec QR Code"
+                      className="w-[200px] md:w-[240px] h-auto rounded-3xl shadow-2xl -mt-12"
+                    />
+                  </div>
+                </div>
+
+                {/* Decorative Elements */}
+                <div className="absolute top-10 -left-4 w-3 h-3 bg-[#EB1E99] rounded-full animate-[ping_2s_ease-in-out_infinite]" />
+                <div className="absolute bottom-20 -right-4 w-2 h-2 bg-[#7209B7] rounded-full animate-[ping_2.5s_ease-in-out_infinite_0.5s]" />
+              </div>
+            </div>
+
+            {/* Features List */}
+            <div className="space-y-6">
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
+                Une carte de fidélité{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#EB1E99] to-[#7209B7]">
+                  nouvelle génération
+                </span>
+              </h3>
+
+              <div className="space-y-5">
+                {/* Feature 1 */}
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check className="w-5 h-5 text-green-500" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">QR Code unique</h4>
+                    <p className="text-gray-600">Chaque client possède son propre QR Code pour un suivi personnalisé et sécurisé.</p>
+                  </div>
+                </div>
+
+                {/* Feature 2 */}
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check className="w-5 h-5 text-green-500" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">Votre branding 100% personnalisé</h4>
+                    <p className="text-gray-600">Logo, couleurs, nom de votre établissement : la carte reflète votre identité.</p>
+                  </div>
+                </div>
+
+                {/* Feature 3 */}
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check className="w-5 h-5 text-green-500" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">Historique complet</h4>
+                    <p className="text-gray-600">Vos clients voient leur historique de points, leurs récompenses gagnées et à venir.</p>
+                  </div>
+                </div>
+
+                {/* Feature 4 */}
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check className="w-5 h-5 text-green-500" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">Création automatique</h4>
+                    <p className="text-gray-600">Aucune action requise : la carte est créée dès le premier avis Google déposé.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <div className="pt-6">
+                <Link
+                  href="/auth/signup"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#EB1E99] to-[#7209B7] text-white font-bold rounded-full hover:from-[#f540ad] hover:to-[#8a1ed1] transition-all text-lg shadow-lg shadow-[#EB1E99]/25"
+                >
+                  Créer mon programme fidélité
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* iPhone Carousel Section */}
       <section className="py-20 md:py-32 px-4 bg-gradient-to-b from-white via-[#7209B7]/5 to-white overflow-hidden">
         <div className="max-w-7xl mx-auto">
