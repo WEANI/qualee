@@ -218,70 +218,26 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Right Content - Phone Mockup */}
+            {/* Right Content - Hero Image */}
             <div className="relative flex justify-center lg:justify-end">
               <div className="relative">
-                {/* Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#EB1E99]/20 to-[#00A7E1]/20 rounded-[3rem] blur-3xl scale-110" />
+                {/* Animated Glow Effects */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#EB1E99]/30 to-[#7209B7]/30 rounded-full blur-[80px] scale-110 animate-pulse" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#00A7E1]/20 to-[#3A0CA3]/20 rounded-full blur-[60px] scale-105 animate-[pulse_3s_ease-in-out_infinite_0.5s]" />
 
-                {/* Phone Frame */}
-                <div className="relative bg-gradient-to-b from-[#3A0CA3] to-[#7209B7] rounded-[3rem] p-3 shadow-2xl shadow-[#7209B7]/30">
-                  <div className="bg-[#0b141a] rounded-[2.5rem] overflow-hidden w-[280px] md:w-[320px]">
-                    {/* WhatsApp Header */}
-                    <div className="bg-[#1f2c34] px-4 py-3 flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#EB1E99] to-[#7209B7] flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">Q</span>
-                      </div>
-                      <div>
-                        <p className="text-white font-semibold text-sm">Qualee - Votre Salon</p>
-                        <p className="text-gray-400 text-xs">En ligne</p>
-                      </div>
-                    </div>
-
-                    {/* Chat Content */}
-                    <div className="p-4 min-h-[400px] bg-[#0b141a] space-y-4">
-                      {/* Received Message */}
-                      <div className="flex justify-start">
-                        <div className="bg-[#1f2c34] rounded-2xl rounded-tl-none px-4 py-3 max-w-[85%]">
-                          <p className="text-white text-sm">Merci pour votre visite ! Votre carte de fidélité a été créditée.</p>
-                          <p className="text-gray-400 text-xs mt-1 text-right">14:32</p>
-                        </div>
-                      </div>
-
-                      {/* Wheel Preview */}
-                      <div className="flex justify-start">
-                        <div className="bg-[#1f2c34] rounded-2xl rounded-tl-none px-4 py-4 max-w-[90%]">
-                          <p className="text-white text-sm mb-3">Tournez la roue pour gagner un cadeau !</p>
-                          <div className="relative w-full aspect-square max-w-[200px] mx-auto">
-                            <div className="absolute inset-0 bg-gradient-to-r from-[#EB1E99]/30 to-[#7209B7]/30 rounded-full blur-xl animate-pulse" />
-                            <div className="relative w-full h-full rounded-full border-4 border-[#EB1E99] bg-gradient-conic from-[#EB1E99] via-[#7209B7] via-[#3A0CA3] via-[#00A7E1] via-[#EB1E99] to-[#7209B7] flex items-center justify-center">
-                              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#EB1E99] to-[#7209B7] flex items-center justify-center shadow-lg">
-                                <span className="text-white font-black text-xs">SPIN</span>
-                              </div>
-                            </div>
-                          </div>
-                          <p className="text-gray-400 text-xs mt-3 text-right">14:32</p>
-                        </div>
-                      </div>
-
-                      {/* Win Message */}
-                      <div className="flex justify-start">
-                        <div className="bg-gradient-to-r from-[#EB1E99]/20 to-[#7209B7]/20 border border-[#EB1E99]/30 rounded-2xl rounded-tl-none px-4 py-3 max-w-[85%]">
-                          <p className="text-[#EB1E99] font-bold text-sm">Félicitations ! Vous avez gagné -15% sur votre prochain soin !</p>
-                          <p className="text-gray-400 text-xs mt-1 text-right">14:33</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                {/* Main Hero Image */}
+                <div className="relative z-10 animate-float">
+                  <img
+                    src="/Design sans titre (2) (1).png"
+                    alt="Qualee - Roue des cadeaux WhatsApp"
+                    className="w-[320px] md:w-[420px] lg:w-[480px] h-auto drop-shadow-2xl"
+                  />
                 </div>
 
-                {/* Floating Elements */}
-                <div className="absolute -top-4 -right-4 bg-gradient-to-br from-[#EB1E99] to-[#7209B7] rounded-2xl p-3 shadow-xl animate-bounce">
-                  <Star className="w-6 h-6 text-white fill-white" />
-                </div>
-                <div className="absolute -bottom-4 -left-4 bg-gradient-to-br from-[#00A7E1] to-[#3A0CA3] rounded-2xl p-3 shadow-xl">
-                  <MessageCircle className="w-6 h-6 text-white" />
-                </div>
+                {/* Sparkle Effects */}
+                <div className="absolute top-10 left-0 w-3 h-3 bg-[#EB1E99] rounded-full animate-[ping_2s_ease-in-out_infinite]" />
+                <div className="absolute top-1/4 right-0 w-2 h-2 bg-[#00A7E1] rounded-full animate-[ping_2.5s_ease-in-out_infinite_0.5s]" />
+                <div className="absolute bottom-1/4 left-5 w-2 h-2 bg-[#7209B7] rounded-full animate-[ping_3s_ease-in-out_infinite_1s]" />
               </div>
             </div>
           </div>
