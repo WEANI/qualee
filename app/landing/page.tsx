@@ -263,20 +263,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Logos Section */}
-      <section className="py-8 sm:py-12 border-y border-gray-200 bg-gray-50 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4">
-          <p className="text-center text-gray-500 text-xs sm:text-sm mb-6 sm:mb-8">Ils nous font déjà confiance</p>
-          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-8 md:gap-16 opacity-60">
-            <div className="text-base sm:text-xl md:text-2xl font-bold text-gray-400">BarberKing</div>
-            <div className="text-base sm:text-xl md:text-2xl font-bold text-gray-400">L'Atelier Beauté</div>
-            <div className="text-base sm:text-xl md:text-2xl font-bold text-gray-400">InkMaster</div>
-            <div className="text-base sm:text-xl md:text-2xl font-bold text-gray-400 hidden sm:block">NailArt Studio</div>
-            <div className="text-base sm:text-xl md:text-2xl font-bold text-gray-400 hidden md:block">Hair & Co</div>
-          </div>
-        </div>
-      </section>
-
       {/* Pain Points Section */}
       <section className="py-20 md:py-32 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
@@ -333,8 +319,73 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Video Demo Section */}
+      <section className="py-20 md:py-32 px-4 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#7209B7]/10 border border-[#7209B7]/20 rounded-full mb-6">
+              <Play className="w-4 h-4 text-[#7209B7]" />
+              <span className="text-[#7209B7] text-sm font-medium">Voir en action</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-gray-900">
+              Découvrez Qualee en{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#EB1E99] to-[#7209B7]">
+                2 minutes
+              </span>
+            </h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Voyez comment transformer chaque visite en opportunité de fidélisation
+            </p>
+          </div>
+
+          {/* Video Container */}
+          <div className="relative group">
+            {/* Glow Effect */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-[#EB1E99]/20 via-[#7209B7]/20 to-[#3A0CA3]/20 rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 transition-opacity" />
+
+            {/* Video Wrapper */}
+            <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-2xl p-2 shadow-2xl">
+              <video
+                className="w-full aspect-video rounded-xl"
+                controls
+                poster="/Design sans titre (2) (1).png"
+              >
+                <source src="/PRESENTATION QUALEE 1.mp4" type="video/mp4" />
+                Votre navigateur ne supporte pas la lecture de vidéos.
+              </video>
+            </div>
+
+            {/* Decorative Elements */}
+            <div className="absolute -top-6 -right-6 w-12 h-12 bg-[#EB1E99]/20 rounded-full blur-xl" />
+            <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-[#7209B7]/20 rounded-full blur-xl" />
+          </div>
+
+          {/* Video Features */}
+          <div className="grid grid-cols-3 gap-4 md:gap-8 mt-12">
+            <div className="text-center">
+              <div className="w-12 h-12 mx-auto bg-[#EB1E99]/10 rounded-xl flex items-center justify-center mb-3">
+                <QrCode className="w-6 h-6 text-[#EB1E99]" />
+              </div>
+              <p className="text-gray-700 text-sm md:text-base font-medium">Scan en 2 secondes</p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 mx-auto bg-[#7209B7]/10 rounded-xl flex items-center justify-center mb-3">
+                <Gift className="w-6 h-6 text-[#7209B7]" />
+              </div>
+              <p className="text-gray-700 text-sm md:text-base font-medium">Récompense instantanée</p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 mx-auto bg-[#00A7E1]/10 rounded-xl flex items-center justify-center mb-3">
+                <MessageCircle className="w-6 h-6 text-[#00A7E1]" />
+              </div>
+              <p className="text-gray-700 text-sm md:text-base font-medium">Envoi WhatsApp auto</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* How it Works Section */}
-      <section id="fonctionnement" className="py-20 md:py-32 px-4 bg-gradient-to-b from-gray-50 to-white">
+      <section id="fonctionnement" className="py-20 md:py-32 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#00A7E1]/10 border border-[#00A7E1]/20 rounded-full mb-6">
@@ -432,71 +483,6 @@ export default function LandingPage() {
               Mettre en place Qualee
               <ArrowRight className="w-5 h-5" />
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Video Demo Section */}
-      <section className="py-20 md:py-32 px-4 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#7209B7]/10 border border-[#7209B7]/20 rounded-full mb-6">
-              <Play className="w-4 h-4 text-[#7209B7]" />
-              <span className="text-[#7209B7] text-sm font-medium">Voir en action</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-gray-900">
-              Découvrez Qualee en{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#EB1E99] to-[#7209B7]">
-                2 minutes
-              </span>
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Voyez comment transformer chaque visite en opportunité de fidélisation
-            </p>
-          </div>
-
-          {/* Video Container */}
-          <div className="relative group">
-            {/* Glow Effect */}
-            <div className="absolute -inset-4 bg-gradient-to-r from-[#EB1E99]/20 via-[#7209B7]/20 to-[#3A0CA3]/20 rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 transition-opacity" />
-
-            {/* Video Wrapper */}
-            <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-2xl p-2 shadow-2xl">
-              <video
-                className="w-full aspect-video rounded-xl"
-                controls
-                poster="/Design sans titre (2) (1).png"
-              >
-                <source src="/PRESENTATION QUALEE 1.mp4" type="video/mp4" />
-                Votre navigateur ne supporte pas la lecture de vidéos.
-              </video>
-            </div>
-
-            {/* Decorative Elements */}
-            <div className="absolute -top-6 -right-6 w-12 h-12 bg-[#EB1E99]/20 rounded-full blur-xl" />
-            <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-[#7209B7]/20 rounded-full blur-xl" />
-          </div>
-
-          {/* Video Features */}
-          <div className="grid grid-cols-3 gap-4 md:gap-8 mt-12">
-            <div className="text-center">
-              <div className="w-12 h-12 mx-auto bg-[#EB1E99]/10 rounded-xl flex items-center justify-center mb-3">
-                <QrCode className="w-6 h-6 text-[#EB1E99]" />
-              </div>
-              <p className="text-gray-700 text-sm md:text-base font-medium">Scan en 2 secondes</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 mx-auto bg-[#7209B7]/10 rounded-xl flex items-center justify-center mb-3">
-                <Gift className="w-6 h-6 text-[#7209B7]" />
-              </div>
-              <p className="text-gray-700 text-sm md:text-base font-medium">Récompense instantanée</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 mx-auto bg-[#00A7E1]/10 rounded-xl flex items-center justify-center mb-3">
-                <MessageCircle className="w-6 h-6 text-[#00A7E1]" />
-              </div>
-              <p className="text-gray-700 text-sm md:text-base font-medium">Envoi WhatsApp auto</p>
-            </div>
           </div>
         </div>
       </section>
