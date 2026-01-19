@@ -535,21 +535,21 @@ export default function LandingPage() {
 
                 {/* Phone Mockups */}
                 <div className="relative z-10 flex items-center justify-center gap-4">
-                  {/* Main Phone - Loyalty Card with Points */}
-                  <div className="relative animate-float">
+                  {/* First Phone - Full Card */}
+                  <div className="relative animate-float hidden md:block" style={{ animationDelay: '1s' }}>
                     <img
-                      src="/replicate-prediction-jb1x0164yhrmy0cvtdcrfe4mxg.png"
-                      alt="Carte de fidélité digitale - Points et historique"
-                      className="w-[240px] md:w-[280px] h-auto rounded-3xl shadow-2xl"
+                      src="/1.png"
+                      alt="Carte de fidélité complète avec QR Code"
+                      className="w-[200px] md:w-[240px] h-auto rounded-3xl shadow-2xl -mt-12"
                     />
                   </div>
 
-                  {/* Secondary Phone - Full Card */}
-                  <div className="relative animate-float hidden md:block" style={{ animationDelay: '1s' }}>
+                  {/* Main Phone - Loyalty Card with Points */}
+                  <div className="relative animate-float">
                     <img
-                      src="/replicate-prediction-ptb60y9x99rmy0cvtdbbk90v7w.png"
-                      alt="Carte de fidélité complète avec QR Code"
-                      className="w-[200px] md:w-[240px] h-auto rounded-3xl shadow-2xl -mt-12"
+                      src="/replicate-prediction-jb1x0164yhrmy0cvtdcrfe4mxg (4).jpg"
+                      alt="Carte de fidélité digitale - Points et historique"
+                      className="w-[240px] md:w-[280px] h-auto rounded-3xl shadow-2xl"
                     />
                   </div>
                 </div>
