@@ -311,11 +311,11 @@ export default function InternalFeedbackPage() {
         </div>
 
         {/* Link to Google reviews page - outside the card */}
-        {!submitted && merchant?.google_review_url && (
+        {!submitted && merchant?.google_review_link && (
           <p className="text-center mt-6" style={{ fontSize: '10px', color: '#888888' }}>
             Accéder à la page des{' '}
             <a
-              href={merchant.google_review_url}
+              href={merchant.google_review_link}
               target="_blank"
               rel="noopener noreferrer"
               style={{ textDecoration: 'underline', color: '#888888' }}

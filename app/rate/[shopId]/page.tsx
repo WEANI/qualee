@@ -417,11 +417,11 @@ export default function RatingPage() {
               </Button>
 
               {/* Link to Google reviews page */}
-              {merchant?.google_review_url && (
+              {merchant?.google_review_link && (
                 <p className="text-center mt-6" style={{ fontSize: '10px', color: '#888888' }}>
                   Accéder à la page des{' '}
                   <a
-                    href={merchant.google_review_url}
+                    href={merchant.google_review_link}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ textDecoration: 'underline', color: '#888888' }}
@@ -502,11 +502,11 @@ export default function RatingPage() {
               </Button>
 
               {/* Link to Google reviews page */}
-              {merchant?.google_review_url && (
+              {merchant?.google_review_link && (
                 <p className="text-center mt-6" style={{ fontSize: '10px', color: '#888888' }}>
                   Accéder à la page des{' '}
                   <a
-                    href={merchant.google_review_url}
+                    href={merchant.google_review_link}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ textDecoration: 'underline', color: '#888888' }}
