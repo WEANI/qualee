@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
+import Link from 'next/link';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 import { Prize } from '@/lib/types/database';
@@ -792,6 +793,15 @@ export default function SpinPage() {
       <p className="mt-6 text-gray-400 text-sm relative z-10">
         Cliquez sur <span className="text-amber-400 font-bold">SPIN</span> au centre pour tourner!
       </p>
+
+      {/* CGU Link */}
+      <Link
+        href="/cgu"
+        className="mt-4 relative z-10"
+        style={{ fontSize: '10px', color: '#888888', textDecoration: 'underline' }}
+      >
+        CGU & Reglement
+      </Link>
     </div>
   );
 }
