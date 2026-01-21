@@ -671,27 +671,19 @@ export default function LandingPage() {
                 className="flex transition-transform duration-500 ease-in-out"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
-                {/* iPhone 1 - QR Scan */}
+                {/* iPhone 1 - Step 1 */}
                 <div className="w-full flex-shrink-0 flex justify-center px-4">
                   <div className="relative group">
                     {/* Glow Effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-[#EB1E99]/30 to-[#7209B7]/30 rounded-[3rem] blur-2xl scale-105 opacity-100" />
 
-                    {/* iPhone Frame */}
-                    <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-[3rem] p-3 shadow-2xl w-[280px]">
-                      {/* Notch */}
-                      <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20" />
-
-                      {/* Screen */}
-                      <div className="bg-white rounded-[2.5rem] overflow-hidden aspect-[9/19]">
-                        <div className="h-full bg-gradient-to-b from-[#EB1E99]/10 to-white flex flex-col items-center justify-center p-6">
-                          <div className="w-32 h-32 bg-white border-4 border-[#EB1E99] rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-                            <QrCode className="w-20 h-20 text-[#EB1E99]" />
-                          </div>
-                          <h3 className="text-lg font-bold text-gray-900 mb-2 text-center">Scannez le QR Code</h3>
-                          <p className="text-sm text-gray-600 text-center">En caisse, scannez avec votre smartphone</p>
-                        </div>
-                      </div>
+                    {/* iPhone Image */}
+                    <div className="relative">
+                      <img
+                        src="/QUALEE step 1.png"
+                        alt="Étape 1 - Scan QR Code"
+                        className="w-[280px] h-auto rounded-[2rem] shadow-2xl"
+                      />
                     </div>
 
                     {/* Step Label */}
@@ -704,28 +696,17 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* iPhone 2 - Rating */}
+                {/* iPhone 2 - Step 2 */}
                 <div className="w-full flex-shrink-0 flex justify-center px-4">
                   <div className="relative group">
                     <div className="absolute inset-0 bg-gradient-to-r from-[#7209B7]/30 to-[#3A0CA3]/30 rounded-[3rem] blur-2xl scale-105 opacity-100" />
 
-                    <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-[3rem] p-3 shadow-2xl w-[280px]">
-                      <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20" />
-
-                      <div className="bg-white rounded-[2.5rem] overflow-hidden aspect-[9/19]">
-                        <div className="h-full bg-gradient-to-b from-[#7209B7]/10 to-white flex flex-col items-center justify-center p-6">
-                          <div className="w-20 h-20 bg-gradient-to-br from-[#7209B7] to-[#3A0CA3] rounded-full flex items-center justify-center mb-6">
-                            <Star className="w-10 h-10 text-white fill-white" />
-                          </div>
-                          <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">Notez votre expérience</h3>
-                          <div className="flex gap-2 mb-4">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                              <Star key={star} className={`w-8 h-8 ${star <= 4 ? 'text-amber-400 fill-amber-400' : 'text-gray-300'}`} />
-                            ))}
-                          </div>
-                          <p className="text-sm text-gray-600 text-center">Partagez votre avis en 1 clic</p>
-                        </div>
-                      </div>
+                    <div className="relative">
+                      <img
+                        src="/QUALEE step 2.png"
+                        alt="Étape 2 - Avis Google"
+                        className="w-[280px] h-auto rounded-[2rem] shadow-2xl"
+                      />
                     </div>
 
                     <div className="mt-6 text-center">
@@ -737,26 +718,17 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* iPhone 3 - Wheel */}
+                {/* iPhone 3 - Step 3 */}
                 <div className="w-full flex-shrink-0 flex justify-center px-4">
                   <div className="relative group">
                     <div className="absolute inset-0 bg-gradient-to-r from-[#3A0CA3]/30 to-[#00A7E1]/30 rounded-[3rem] blur-2xl scale-105 opacity-100" />
 
-                    <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-[3rem] p-3 shadow-2xl w-[280px]">
-                      <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20" />
-
-                      <div className="bg-white rounded-[2.5rem] overflow-hidden aspect-[9/19]">
-                        <div className="h-full bg-gradient-to-b from-[#3A0CA3]/10 to-white flex flex-col items-center justify-center p-6">
-                          <div className="relative w-40 h-40 mb-6">
-                            <div className="absolute inset-0 bg-gradient-conic from-[#EB1E99] via-[#7209B7] via-[#3A0CA3] via-[#00A7E1] to-[#EB1E99] rounded-full animate-spin-slow" style={{ animationDuration: '10s' }} />
-                            <div className="absolute inset-3 bg-white rounded-full flex items-center justify-center">
-                              <span className="text-[#EB1E99] font-black text-sm">SPIN</span>
-                            </div>
-                          </div>
-                          <h3 className="text-lg font-bold text-gray-900 mb-2 text-center">Tournez la roue !</h3>
-                          <p className="text-sm text-gray-600 text-center">Tentez votre chance et gagnez</p>
-                        </div>
-                      </div>
+                    <div className="relative">
+                      <img
+                        src="/QUALEE step 3.png"
+                        alt="Étape 3 - Roue des cadeaux"
+                        className="w-[280px] h-auto rounded-[2rem] shadow-2xl"
+                      />
                     </div>
 
                     <div className="mt-6 text-center">
@@ -768,24 +740,17 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* iPhone 4 - Prize Won */}
+                {/* iPhone 4 - Step 4 */}
                 <div className="w-full flex-shrink-0 flex justify-center px-4">
                   <div className="relative group">
                     <div className="absolute inset-0 bg-gradient-to-r from-[#00A7E1]/30 to-[#EB1E99]/30 rounded-[3rem] blur-2xl scale-105 opacity-100" />
 
-                    <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-[3rem] p-3 shadow-2xl w-[280px]">
-                      <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20" />
-
-                      <div className="bg-white rounded-[2.5rem] overflow-hidden aspect-[9/19]">
-                        <div className="h-full bg-gradient-to-b from-amber-100 to-white flex flex-col items-center justify-center p-6">
-                          <div className="text-5xl mb-4">🎉</div>
-                          <h3 className="text-lg font-bold text-gray-900 mb-2 text-center">Félicitations !</h3>
-                          <div className="bg-gradient-to-r from-[#EB1E99] to-[#7209B7] text-white font-bold text-xl px-6 py-3 rounded-xl mb-4">
-                            -15%
-                          </div>
-                          <p className="text-sm text-gray-600 text-center">Sur votre prochain RDV</p>
-                        </div>
-                      </div>
+                    <div className="relative">
+                      <img
+                        src="/QUALEE step 4.png"
+                        alt="Étape 4 - Récompense"
+                        className="w-[280px] h-auto rounded-[2rem] shadow-2xl"
+                      />
                     </div>
 
                     <div className="mt-6 text-center">
@@ -797,39 +762,17 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* iPhone 5 - WhatsApp */}
+                {/* iPhone 5 - Step 5 */}
                 <div className="w-full flex-shrink-0 flex justify-center px-4">
                   <div className="relative group">
                     <div className="absolute inset-0 bg-gradient-to-r from-green-400/30 to-green-600/30 rounded-[3rem] blur-2xl scale-105 opacity-100" />
 
-                    <div className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-[3rem] p-3 shadow-2xl w-[280px]">
-                      <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20" />
-
-                      <div className="bg-[#0b141a] rounded-[2.5rem] overflow-hidden aspect-[9/19]">
-                        {/* WhatsApp Header */}
-                        <div className="bg-[#1f2c34] px-4 py-3 flex items-center gap-3 mt-8">
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#EB1E99] to-[#7209B7] flex items-center justify-center">
-                            <span className="text-white font-bold text-sm">Q</span>
-                          </div>
-                          <div>
-                            <p className="text-white font-semibold text-sm">Qualee</p>
-                            <p className="text-gray-400 text-xs">En ligne</p>
-                          </div>
-                        </div>
-
-                        {/* Chat */}
-                        <div className="p-3 space-y-3">
-                          <div className="bg-[#1f2c34] rounded-xl rounded-tl-none px-3 py-2 max-w-[90%]">
-                            <p className="text-white text-xs">Votre carte de fidélité a été créditée ! ⭐</p>
-                            <p className="text-gray-400 text-[10px] mt-1 text-right">14:32</p>
-                          </div>
-                          <div className="bg-gradient-to-r from-[#EB1E99]/20 to-[#7209B7]/20 border border-[#EB1E99]/30 rounded-xl rounded-tl-none px-3 py-2 max-w-[90%]">
-                            <p className="text-[#EB1E99] font-bold text-xs">🎁 Vous avez gagné -15% !</p>
-                            <p className="text-white text-[10px] mt-1">Valable sur votre prochain RDV</p>
-                            <p className="text-gray-400 text-[10px] mt-1 text-right">14:33</p>
-                          </div>
-                        </div>
-                      </div>
+                    <div className="relative">
+                      <img
+                        src="/QUALEE step 5.png"
+                        alt="Étape 5 - WhatsApp"
+                        className="w-[280px] h-auto rounded-[2rem] shadow-2xl"
+                      />
                     </div>
 
                     <div className="mt-6 text-center">
