@@ -290,21 +290,6 @@ export default function InternalFeedbackPage() {
                 )}
               </Button>
 
-              {/* Link to Google reviews page */}
-              {merchant?.google_review_url && (
-                <p className="text-center mt-6" style={{ fontSize: '10px', color: '#888888' }}>
-                  Accéder à la page des{' '}
-                  <a
-                    href={merchant.google_review_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ textDecoration: 'underline', color: '#888888' }}
-                  >
-                    Avis
-                  </a>
-                  .
-                </p>
-              )}
             </>
           ) : (
             // Success State
@@ -324,6 +309,22 @@ export default function InternalFeedbackPage() {
             </div>
           )}
         </div>
+
+        {/* Link to Google reviews page - outside the card */}
+        {!submitted && merchant?.google_review_url && (
+          <p className="text-center mt-6" style={{ fontSize: '10px', color: '#888888' }}>
+            Accéder à la page des{' '}
+            <a
+              href={merchant.google_review_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'underline', color: '#888888' }}
+            >
+              Avis
+            </a>
+            .
+          </p>
+        )}
       </div>
     </div>
   );
