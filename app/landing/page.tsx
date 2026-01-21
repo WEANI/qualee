@@ -213,7 +213,7 @@ export default function LandingPage() {
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <a
-                  href="#fonctionnement"
+                  href="#voir-en-action"
                   className="px-8 py-4 border-2 border-[#3A0CA3]/30 text-[#3A0CA3] font-semibold rounded-full hover:bg-[#3A0CA3]/5 transition-all flex items-center justify-center gap-2 text-lg"
                 >
                   Voir la démo
@@ -320,7 +320,7 @@ export default function LandingPage() {
       </section>
 
       {/* Video Demo Section */}
-      <section className="py-20 md:py-32 px-4 bg-gradient-to-b from-gray-50 to-white">
+      <section id="voir-en-action" className="py-20 md:py-32 px-4 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#7209B7]/10 border border-[#7209B7]/20 rounded-full mb-6">
@@ -718,67 +718,67 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* iPhone 3 - Step 3 */}
-                <div className="w-full flex-shrink-0 flex justify-center px-4">
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#3A0CA3]/30 to-[#00A7E1]/30 rounded-[3rem] blur-2xl scale-105 opacity-100" />
-
-                    <div className="relative">
-                      <img
-                        src="/QUALEE step 3.png"
-                        alt="Étape 3 - Roue des cadeaux"
-                        className="w-[280px] h-auto rounded-[2rem] shadow-2xl"
-                      />
-                    </div>
-
-                    <div className="mt-6 text-center">
-                      <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#3A0CA3]/10 rounded-full">
-                        <span className="w-6 h-6 bg-[#3A0CA3] rounded-full text-white text-sm font-bold flex items-center justify-center">3</span>
-                        <span className="text-[#3A0CA3] font-medium">Roue cadeaux</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* iPhone 4 - Step 4 */}
-                <div className="w-full flex-shrink-0 flex justify-center px-4">
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#00A7E1]/30 to-[#EB1E99]/30 rounded-[3rem] blur-2xl scale-105 opacity-100" />
-
-                    <div className="relative">
-                      <img
-                        src="/QUALEE step 4.png"
-                        alt="Étape 4 - Récompense"
-                        className="w-[280px] h-auto rounded-[2rem] shadow-2xl"
-                      />
-                    </div>
-
-                    <div className="mt-6 text-center">
-                      <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 rounded-full">
-                        <span className="w-6 h-6 bg-amber-500 rounded-full text-white text-sm font-bold flex items-center justify-center">4</span>
-                        <span className="text-amber-600 font-medium">Récompense</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* iPhone 5 - Step 5 */}
+                {/* iPhone 3 - Step 3 (WhatsApp) */}
                 <div className="w-full flex-shrink-0 flex justify-center px-4">
                   <div className="relative group">
                     <div className="absolute inset-0 bg-gradient-to-r from-green-400/30 to-green-600/30 rounded-[3rem] blur-2xl scale-105 opacity-100" />
 
                     <div className="relative">
                       <img
-                        src="/QUALEE step 5.png"
-                        alt="Étape 5 - WhatsApp"
+                        src="/QUALEE step 3.png"
+                        alt="Étape 3 - WhatsApp"
                         className="w-[280px] h-auto rounded-[2rem] shadow-2xl"
                       />
                     </div>
 
                     <div className="mt-6 text-center">
                       <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 rounded-full">
-                        <span className="w-6 h-6 bg-green-500 rounded-full text-white text-sm font-bold flex items-center justify-center">5</span>
+                        <span className="w-6 h-6 bg-green-500 rounded-full text-white text-sm font-bold flex items-center justify-center">3</span>
                         <span className="text-green-600 font-medium">WhatsApp</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* iPhone 4 - Step 4 (Roue cadeaux) */}
+                <div className="w-full flex-shrink-0 flex justify-center px-4">
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#3A0CA3]/30 to-[#00A7E1]/30 rounded-[3rem] blur-2xl scale-105 opacity-100" />
+
+                    <div className="relative">
+                      <img
+                        src="/QUALEE step 4.png"
+                        alt="Étape 4 - Roue des cadeaux"
+                        className="w-[280px] h-auto rounded-[2rem] shadow-2xl"
+                      />
+                    </div>
+
+                    <div className="mt-6 text-center">
+                      <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#3A0CA3]/10 rounded-full">
+                        <span className="w-6 h-6 bg-[#3A0CA3] rounded-full text-white text-sm font-bold flex items-center justify-center">4</span>
+                        <span className="text-[#3A0CA3] font-medium">Roue cadeaux</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* iPhone 5 - Step 5 (Récompense) */}
+                <div className="w-full flex-shrink-0 flex justify-center px-4">
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-amber-400/30 to-amber-600/30 rounded-[3rem] blur-2xl scale-105 opacity-100" />
+
+                    <div className="relative">
+                      <img
+                        src="/QUALEE step 5.png"
+                        alt="Étape 5 - Récompense"
+                        className="w-[280px] h-auto rounded-[2rem] shadow-2xl"
+                      />
+                    </div>
+
+                    <div className="mt-6 text-center">
+                      <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 rounded-full">
+                        <span className="w-6 h-6 bg-amber-500 rounded-full text-white text-sm font-bold flex items-center justify-center">5</span>
+                        <span className="text-amber-600 font-medium">Récompense</span>
                       </div>
                     </div>
                   </div>
