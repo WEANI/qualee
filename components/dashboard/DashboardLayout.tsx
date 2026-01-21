@@ -5,10 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
-import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 import { NotificationDropdown } from '@/components/dashboard/NotificationDropdown';
-import { useTranslation } from 'react-i18next';
-import '@/lib/i18n/config';
 import {
   LayoutDashboard,
   Gift,
@@ -36,7 +33,6 @@ interface DashboardLayoutProps {
 }
 
 export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
-  const { t, ready } = useTranslation(undefined, { useSuspense: false });
   const pathname = usePathname();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -52,28 +48,28 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
   };
 
   const navigation = [
-    { name: t('dashboard.nav.dashboard'), href: '/dashboard', icon: LayoutDashboard },
-    { name: t('dashboard.nav.scanner'), href: '/dashboard/scan', icon: ScanLine },
-    { name: t('dashboard.nav.prizes'), href: '/dashboard/prizes', icon: Gift },
-    { name: t('dashboard.nav.feedback'), href: '/dashboard/feedback', icon: MessageSquare },
-    { name: t('dashboard.nav.qrCode'), href: '/dashboard/qr', icon: QrCode },
-    { name: t('dashboard.nav.analytics'), href: '/dashboard/analytics', icon: BarChart3 },
-    { name: t('dashboard.nav.strategy'), href: '/dashboard/strategy', icon: Target },
-    { name: t('dashboard.nav.customers'), href: '/dashboard/customers', icon: Users },
-    { name: t('dashboard.nav.billing'), href: '/dashboard/billing', icon: CreditCard },
-    { name: t('dashboard.nav.settings'), href: '/dashboard/settings', icon: Settings },
+    { name: 'Tableau de bord', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Scanner', href: '/dashboard/scan', icon: ScanLine },
+    { name: 'Lots', href: '/dashboard/prizes', icon: Gift },
+    { name: 'Avis', href: '/dashboard/feedback', icon: MessageSquare },
+    { name: 'QR Code', href: '/dashboard/qr', icon: QrCode },
+    { name: 'Statistiques', href: '/dashboard/analytics', icon: BarChart3 },
+    { name: 'Strategie', href: '/dashboard/strategy', icon: Target },
+    { name: 'Clients', href: '/dashboard/customers', icon: Users },
+    { name: 'Facturation', href: '/dashboard/billing', icon: CreditCard },
+    { name: 'Parametres', href: '/dashboard/settings', icon: Settings },
   ];
 
   const loyaltyNavigation = [
-    { name: t('dashboard.nav.loyalty'), href: '/dashboard/loyalty', icon: Award },
+    { name: 'Programme fidelite', href: '/dashboard/loyalty', icon: Award },
   ];
 
   const marketingNavigation = [
-    { name: t('dashboard.nav.whatsappCampaign'), href: '/dashboard/marketing/whatsapp-campaign', icon: Send },
+    { name: 'Campagne WhatsApp', href: '/dashboard/marketing/whatsapp-campaign', icon: Send },
   ];
 
   if (!mounted) {
-    return null; // Prevent hydration mismatch
+    return null;
   }
 
   return (
@@ -89,7 +85,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
 
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
@@ -111,7 +107,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                 className="h-8 w-auto transition-transform hover:scale-105"
               />
             </Link>
-            <button 
+            <button
               onClick={() => setSidebarOpen(false)}
               className="lg:hidden p-2 rounded-lg hover:bg-slate-800 text-slate-400 transition-colors"
             >
@@ -132,7 +128,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                   </p>
                   <p className="text-xs text-slate-400 capitalize flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#EB1E99] animate-pulse"></span>
-                    {merchant.subscription_tier || 'Free'} Plan
+                    Plan {merchant.subscription_tier || 'Gratuit'}
                   </p>
                 </div>
               </div>
@@ -141,7 +137,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
 
           {/* Navigation */}
           <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800">
-            <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">{t('dashboard.nav.mainMenu')}</p>
+            <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Menu principal</p>
             {navigation.map((item) => {
               const isActive = pathname === item.href;
               const Icon = item.icon;
@@ -174,7 +170,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
             {/* Loyalty Section */}
             <div className="flex items-center gap-2 px-4 mb-4">
               <Award className="w-4 h-4 text-[#00A7E1]" />
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{t('dashboard.nav.loyaltySection')}</p>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Fidelite</p>
             </div>
             {loyaltyNavigation.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
@@ -208,7 +204,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
             {/* Marketing Section */}
             <div className="flex items-center gap-2 px-4 mb-4">
               <Megaphone className="w-4 h-4 text-[#EB1E99]" />
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{t('dashboard.nav.marketing')}</p>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Marketing</p>
             </div>
             {marketingNavigation.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
@@ -243,7 +239,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
               className="w-full justify-start gap-3 text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-all"
             >
               <LogOut className="w-5 h-5" />
-              {t('dashboard.nav.signOut')}
+              Se deconnecter
             </Button>
           </div>
         </div>
@@ -264,28 +260,30 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
 
               <div className="flex flex-col">
                 <h1 className="text-xl font-bold text-slate-900">
-                  {navigation.find(item => item.href === pathname)?.name || t('dashboard.nav.dashboard')}
+                  {navigation.find(item => item.href === pathname)?.name ||
+                   loyaltyNavigation.find(item => pathname.startsWith(item.href))?.name ||
+                   marketingNavigation.find(item => pathname.startsWith(item.href))?.name ||
+                   'Tableau de bord'}
                 </h1>
                 <p className="text-sm text-slate-500 hidden sm:block">
-                  {t('dashboard.common.online')}
+                  En ligne
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <LanguageSwitcher variant="dark" />
               <div className="h-9 px-4 rounded-full bg-violet-50 text-violet-700 border border-violet-100 flex items-center gap-2 text-sm font-medium hidden sm:flex">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#EB1E99] opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#EB1E99]"></span>
                 </span>
-                {t('dashboard.common.online')}
+                En ligne
               </div>
               {merchant && <NotificationDropdown merchantId={merchant.id} />}
               <button
                 onClick={handleSignOut}
                 className="p-2.5 rounded-full hover:bg-red-50 text-slate-600 hover:text-red-600 transition-colors"
-                title={t('dashboard.nav.signOut')}
+                title="Se deconnecter"
               >
                 <LogOut className="w-5 h-5" />
               </button>

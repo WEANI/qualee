@@ -8,14 +8,11 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ChartAreaInteractive } from '@/components/dashboard/ChartAreaInteractive';
-import { useTranslation } from 'react-i18next';
-import '@/lib/i18n/config';
-import { 
-  TrendingUp, 
-  Copy, 
+import {
+  TrendingUp,
+  Copy,
   ArrowUpRight,
   Star,
-  Users,
   Gift,
   RotateCw,
   MessageSquare,
@@ -52,7 +49,6 @@ interface ChartDataItem {
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { t, i18n } = useTranslation(undefined, { useSuspense: false });
   const [user, setUser] = useState<DashboardUser | null>(null);
   const [merchant, setMerchant] = useState<DashboardMerchant | null>(null);
   const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([]);
@@ -63,24 +59,23 @@ export default function DashboardPage() {
     avgRating: 0,
     totalSpins: 0,
     rewardsRedeemed: 0,
-    reviewsTrend: 0, // Percentage change from last period
-    positiveRatio: 0, // Percentage of positive reviews
+    reviewsTrend: 0,
+    positiveRatio: 0,
   });
 
-  // Set current date on client-side only to avoid hydration mismatch
   useEffect(() => {
-    setCurrentDate(new Date().toLocaleDateString(i18n.language, {
+    setCurrentDate(new Date().toLocaleDateString('fr-FR', {
       weekday: 'long',
       day: 'numeric',
       month: 'long',
       year: 'numeric'
     }));
-  }, [i18n.language]);
+  }, []);
 
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) {
         router.push('/auth/login');
         return;
@@ -94,7 +89,6 @@ export default function DashboardPage() {
         .eq('id', user.id)
         .maybeSingle();
 
-      // If merchant profile doesn't exist, create it (fallback)
       if (!merchantData) {
         console.log('Merchant profile not found, creating...');
         const { data: newMerchant, error: createError } = await supabase
@@ -108,7 +102,7 @@ export default function DashboardPage() {
           })
           .select()
           .maybeSingle();
-        
+
         if (createError) {
           console.error('Failed to create merchant:', createError);
         } else {
@@ -118,10 +112,6 @@ export default function DashboardPage() {
 
       setMerchant(merchantData);
 
-      // Fetch all necessary data
-      // Optimization: In a real large-scale app, we would use .count() or specific RPC calls
-      // but for a single merchant dashboard, fetching lists is acceptable for now.
-      
       const { data: feedbackData } = await supabase
         .from('feedback')
         .select('rating, is_positive, created_at, comment, customer_email, customer_phone')
@@ -143,7 +133,6 @@ export default function DashboardPage() {
       const totalSpins = spinsCount || 0;
       const rewardsRedeemed = couponsData?.filter(c => c.used).length || 0;
 
-      // Calculate trend: compare last 30 days vs previous 30 days
       const now = new Date();
       const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
       const sixtyDaysAgo = new Date(now.getTime() - 60 * 24 * 60 * 60 * 1000);
@@ -158,7 +147,6 @@ export default function DashboardPage() {
         ? Math.round(((recentReviews - previousReviews) / previousReviews) * 100)
         : (recentReviews > 0 ? 100 : 0);
 
-      // Calculate positive review ratio
       const positiveReviews = feedbackData?.filter(f => f.is_positive).length || 0;
       const positiveRatio = totalReviews > 0 ? Math.round((positiveReviews / totalReviews) * 100) : 0;
 
@@ -171,7 +159,6 @@ export default function DashboardPage() {
         positiveRatio,
       });
 
-      // Recent activity from feedback
       const activity: ActivityItem[] = feedbackData?.slice(0, 5).map((f: { is_positive: boolean; rating: number; comment: string | null; created_at: string; customer_email: string | null; customer_phone: string | null }, idx: number) => ({
         id: idx,
         type: f.is_positive ? 'positive' as const : 'negative' as const,
@@ -184,19 +171,16 @@ export default function DashboardPage() {
 
       setRecentActivity(activity);
 
-      // Process chart data (last 90 days)
       const chartMap = new Map<string, { date: string; positive: number; negative: number }>();
       const today = new Date();
       const ninetyDaysAgo = new Date();
       ninetyDaysAgo.setDate(today.getDate() - 90);
 
-      // Initialize map with 0 values for last 90 days
       for (let d = new Date(ninetyDaysAgo); d <= today; d.setDate(d.getDate() + 1)) {
         const dateStr = d.toISOString().split('T')[0];
         chartMap.set(dateStr, { date: dateStr, positive: 0, negative: 0 });
       }
 
-      // Fill with actual data
       feedbackData?.forEach((f: any) => {
         const dateStr = new Date(f.created_at).toISOString().split('T')[0];
         if (chartMap.has(dateStr)) {
@@ -228,16 +212,16 @@ export default function DashboardPage() {
               </div>
               <h3 className="text-lg font-medium text-slate-900 mb-2">Erreur de chargement du profil</h3>
               <p className="text-slate-600 mb-6">
-                Impossible de charger ou créer votre profil marchand. Veuillez contacter le support ou essayer de vous reconnecter.
+                Impossible de charger ou creer votre profil marchand. Veuillez contacter le support ou essayer de vous reconnecter.
               </p>
               <Button onClick={() => supabase.auth.signOut().then(() => router.push('/auth/login'))}>
-                Se déconnecter
+                Se deconnecter
               </Button>
             </div>
           ) : (
             <>
               <div className="w-16 h-16 border-4 border-slate-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-lg text-slate-600">{t('dashboard.common.loading')}</p>
+              <p className="text-lg text-slate-600">Chargement...</p>
             </>
           )}
         </div>
@@ -252,10 +236,10 @@ export default function DashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold text-slate-900">
-              {t('dashboard.welcome', { name: merchant.business_name || 'Commerçant' })}
+              Bonjour, {merchant.business_name || 'Commercant'}
             </h2>
             <p className="text-slate-500 mt-1">
-              {t('dashboard.welcomeSubtitle')}
+              Voici un apercu de votre activite
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -267,11 +251,10 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Stats Grid - Modernized */}
+        {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Total Reviews - Enhanced */}
+          {/* Total Reviews */}
           <Card className="relative p-6 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden bg-gradient-to-br from-white to-blue-50/30">
-            {/* Gradient border on hover */}
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute inset-[2px] bg-gradient-to-br from-white to-blue-50/30 rounded-[inherit]" />
 
@@ -288,13 +271,13 @@ export default function DashboardPage() {
                 )}
               </div>
               <div>
-                <p className="text-sm font-medium text-slate-500">{t('dashboard.totalReviews')}</p>
+                <p className="text-sm font-medium text-slate-500">Total avis</p>
                 <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mt-1">{stats.totalReviews}</h3>
               </div>
             </div>
           </Card>
 
-          {/* Average Rating - With Progress Ring */}
+          {/* Average Rating */}
           <Card className="relative p-6 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden bg-gradient-to-br from-white to-amber-50/30">
             <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute inset-[2px] bg-gradient-to-br from-white to-amber-50/30 rounded-[inherit]" />
@@ -302,7 +285,6 @@ export default function DashboardPage() {
             <div className="relative z-10">
               <div className="flex justify-between items-start mb-4">
                 <div className="relative">
-                  {/* Progress Ring */}
                   <svg className="w-14 h-14 -rotate-90">
                     <circle cx="28" cy="28" r="24" fill="none" stroke="#fef3c7" strokeWidth="4"/>
                     <circle
@@ -332,7 +314,7 @@ export default function DashboardPage() {
                 )}
               </div>
               <div>
-                <p className="text-sm font-medium text-slate-500">{t('dashboard.avgRating')}</p>
+                <p className="text-sm font-medium text-slate-500">Note moyenne</p>
                 <div className="flex items-baseline gap-2 mt-1">
                   <h3 className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">{stats.avgRating}</h3>
                   <span className="text-sm text-slate-400">/ 5.0</span>
@@ -341,7 +323,7 @@ export default function DashboardPage() {
             </div>
           </Card>
 
-          {/* Total Spins - With Animation */}
+          {/* Total Spins */}
           <Card className="relative p-6 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden bg-gradient-to-br from-white to-purple-50/30">
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute inset-[2px] bg-gradient-to-br from-white to-purple-50/30 rounded-[inherit]" />
@@ -353,18 +335,18 @@ export default function DashboardPage() {
                 </div>
                 {stats.totalSpins > 0 && (
                   <Badge className="bg-purple-100 text-purple-700 border-purple-200 shadow-sm">
-                    {t('dashboard.common.online')}
+                    Actif
                   </Badge>
                 )}
               </div>
               <div>
-                <p className="text-sm font-medium text-slate-500">{t('dashboard.totalSpins')}</p>
+                <p className="text-sm font-medium text-slate-500">Total tours de roue</p>
                 <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mt-1">{stats.totalSpins}</h3>
               </div>
             </div>
           </Card>
 
-          {/* Prizes Redeemed - Enhanced */}
+          {/* Prizes Redeemed */}
           <Card className="relative p-6 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden bg-gradient-to-br from-white to-violet-50/30">
             <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-violet-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute inset-[2px] bg-gradient-to-br from-white to-violet-50/30 rounded-[inherit]" />
@@ -381,7 +363,7 @@ export default function DashboardPage() {
                 )}
               </div>
               <div>
-                <p className="text-sm font-medium text-slate-500">{t('dashboard.rewards')}</p>
+                <p className="text-sm font-medium text-slate-500">Recompenses utilisees</p>
                 <h3 className="text-3xl font-bold bg-gradient-to-r from-violet-600 to-violet-600 bg-clip-text text-transparent mt-1">{stats.rewardsRedeemed}</h3>
               </div>
             </div>
@@ -393,8 +375,8 @@ export default function DashboardPage() {
           <Card className="lg:col-span-2 p-6 border-slate-100 shadow-sm">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="text-lg font-bold text-slate-900">{t('dashboard.activity.title')}</h3>
-                <p className="text-sm text-slate-500">{t('dashboard.activity.subtitle')}</p>
+                <h3 className="text-lg font-bold text-slate-900">Activite</h3>
+                <p className="text-sm text-slate-500">Avis des 90 derniers jours</p>
               </div>
             </div>
             <ChartAreaInteractive data={chartData} />
@@ -402,7 +384,7 @@ export default function DashboardPage() {
 
           {/* Recent Activity Feed */}
           <Card className="p-6 border-slate-100 shadow-sm">
-            <h3 className="text-lg font-bold text-slate-900 mb-6">{t('dashboard.recentReviews.title')}</h3>
+            <h3 className="text-lg font-bold text-slate-900 mb-6">Avis recents</h3>
             <div className="space-y-6">
               {recentActivity.length > 0 ? (
                 recentActivity.map((activity, idx) => (
@@ -416,30 +398,30 @@ export default function DashboardPage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between items-start">
                         <p className="text-sm font-medium text-slate-900 truncate">
-                          {activity.customer_email || activity.customer_phone || t('dashboard.recentReviews.anonymous')}
+                          {activity.customer_email || activity.customer_phone || 'Client anonyme'}
                         </p>
                         <span className="text-xs text-slate-400 whitespace-nowrap">
-                          {new Date(activity.date).toLocaleDateString(i18n.language)}
+                          {new Date(activity.date).toLocaleDateString('fr-FR')}
                         </span>
                       </div>
                       <p className="text-sm text-slate-600 mt-1 line-clamp-2">
-                        {activity.comment || new Date(activity.date).toLocaleTimeString(i18n.language, { hour: '2-digit', minute: '2-digit' })}
+                        {activity.comment || new Date(activity.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
                       </p>
                     </div>
                   </div>
                 ))
               ) : (
                 <div className="text-center py-8 text-slate-500 text-sm">
-                  {t('dashboard.recentReviews.noReviews')}
+                  Aucun avis pour le moment
                 </div>
               )}
-              
-              <Button 
-                variant="outline" 
+
+              <Button
+                variant="outline"
                 className="w-full mt-4"
                 onClick={() => router.push('/dashboard/feedback')}
               >
-                {t('dashboard.recentReviews.viewAll')}
+                Voir tous les avis
               </Button>
             </div>
           </Card>
@@ -449,62 +431,62 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Quick Actions Grid */}
           <div>
-            <h3 className="text-lg font-bold text-slate-900 mb-4">{t('dashboard.quickActions.title')}</h3>
+            <h3 className="text-lg font-bold text-slate-900 mb-4">Actions rapides</h3>
             <div className="grid grid-cols-2 gap-4">
-              <button 
+              <button
                 onClick={() => router.push('/dashboard/scan')}
                 className="p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all text-left group"
               >
                 <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                   <ScanLine className="w-5 h-5" />
                 </div>
-                <h4 className="font-semibold text-slate-900">{t('dashboard.quickActions.scan')}</h4>
-                <p className="text-xs text-slate-500 mt-1">{t('dashboard.quickActions.scanDesc')}</p>
+                <h4 className="font-semibold text-slate-900">Scanner</h4>
+                <p className="text-xs text-slate-500 mt-1">Valider une carte client</p>
               </button>
 
-              <button 
+              <button
                 onClick={() => router.push('/dashboard/prizes')}
                 className="p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all text-left group"
               >
                 <div className="w-10 h-10 bg-pink-50 text-pink-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-pink-600 group-hover:text-white transition-colors">
                   <Gift className="w-5 h-5" />
                 </div>
-                <h4 className="font-semibold text-slate-900">{t('dashboard.quickActions.prizes')}</h4>
-                <p className="text-xs text-slate-500 mt-1">{t('dashboard.quickActions.prizesDesc')}</p>
+                <h4 className="font-semibold text-slate-900">Lots</h4>
+                <p className="text-xs text-slate-500 mt-1">Gerer vos recompenses</p>
               </button>
 
-              <button 
+              <button
                 onClick={() => router.push('/dashboard/feedback')}
                 className="p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all text-left group"
               >
                 <div className="w-10 h-10 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-amber-600 group-hover:text-white transition-colors">
                   <Star className="w-5 h-5" />
                 </div>
-                <h4 className="font-semibold text-slate-900">{t('dashboard.quickActions.reviews')}</h4>
-                <p className="text-xs text-slate-500 mt-1">{t('dashboard.quickActions.reviewsDesc')}</p>
+                <h4 className="font-semibold text-slate-900">Avis</h4>
+                <p className="text-xs text-slate-500 mt-1">Consulter les retours clients</p>
               </button>
 
-              <button 
+              <button
                 onClick={() => router.push('/dashboard/analytics')}
                 className="p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all text-left group"
               >
                 <div className="w-10 h-10 bg-teal-50 text-violet-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-violet-600 group-hover:text-white transition-colors">
                   <BarChart3 className="w-5 h-5" />
                 </div>
-                <h4 className="font-semibold text-slate-900">{t('dashboard.quickActions.analytics')}</h4>
-                <p className="text-xs text-slate-500 mt-1">{t('dashboard.quickActions.analyticsDesc')}</p>
+                <h4 className="font-semibold text-slate-900">Statistiques</h4>
+                <p className="text-xs text-slate-500 mt-1">Analyser vos performances</p>
               </button>
             </div>
           </div>
 
           {/* Review Link Card */}
           <div>
-            <h3 className="text-lg font-bold text-slate-900 mb-4">{t('dashboard.reviewLink.title')}</h3>
+            <h3 className="text-lg font-bold text-slate-900 mb-4">Votre lien d'avis</h3>
             <Card className="p-6 border-slate-100 shadow-sm bg-gradient-to-br from-slate-900 to-slate-800 text-white">
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h4 className="text-lg font-semibold text-white">{t('dashboard.reviewLink.publicLink')}</h4>
-                  <p className="text-sm text-slate-400 mt-1">{t('dashboard.reviewLink.desc')}</p>
+                  <h4 className="text-lg font-semibold text-white">Lien public</h4>
+                  <p className="text-sm text-slate-400 mt-1">Partagez ce lien avec vos clients</p>
                 </div>
                 <div className="p-2 bg-white/10 rounded-lg">
                   <ArrowUpRight className="w-5 h-5 text-white" />
@@ -518,23 +500,23 @@ export default function DashboardPage() {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <Button 
+                <Button
                   onClick={() => {
                     navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_APP_URL}/rate/${user.id}`);
-                    alert(t('dashboard.reviewLink.copied'));
+                    alert('Lien copie !');
                   }}
                   className="bg-white text-slate-900 hover:bg-slate-100 border-0"
                 >
                   <Copy className="w-4 h-4 mr-2" />
-                  {t('dashboard.reviewLink.copy')}
+                  Copier
                 </Button>
-                <Button 
+                <Button
                   variant="outline"
                   onClick={() => router.push('/dashboard/qr')}
                   className="border-white/20 text-white hover:bg-white/10 bg-transparent"
                 >
                   <ScanLine className="w-4 h-4 mr-2" />
-                  {t('dashboard.reviewLink.qrCode')}
+                  QR Code
                 </Button>
               </div>
             </Card>
