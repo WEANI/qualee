@@ -9,11 +9,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Upload, Image as ImageIcon, Check, X, Loader2, Award, Star, Coins, Gift } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { useTranslation } from 'react-i18next';
-import '@/lib/i18n/config';
 
 export default function SettingsPage() {
-  const { t } = useTranslation();
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [merchant, setMerchant] = useState<any>(null);
@@ -31,7 +28,7 @@ export default function SettingsPage() {
   const [loyaltyEnabled, setLoyaltyEnabled] = useState(false);
   const [pointsPerPurchase, setPointsPerPurchase] = useState(10);
   const [purchaseThreshold, setPurchaseThreshold] = useState(1000);
-  const [loyaltyCurrency, setLoyaltyCurrency] = useState<'THB' | 'EUR' | 'USD' | 'XAF'>('THB');
+  const [loyaltyCurrency, setLoyaltyCurrency] = useState<'EUR'>('EUR');
   const [welcomePoints, setWelcomePoints] = useState(50);
 
   useEffect(() => {
@@ -60,7 +57,7 @@ export default function SettingsPage() {
       setLoyaltyEnabled(merchantData?.loyalty_enabled || false);
       setPointsPerPurchase(merchantData?.points_per_purchase || 10);
       setPurchaseThreshold(merchantData?.purchase_amount_threshold || 1000);
-      setLoyaltyCurrency(merchantData?.loyalty_currency || 'THB');
+      setLoyaltyCurrency('EUR');
       setWelcomePoints(merchantData?.welcome_points || 50);
     };
 
@@ -149,7 +146,7 @@ export default function SettingsPage() {
 
       if (error) throw error;
 
-      setMessage({ type: 'success', text: t('loyalty.settings.title') + ' - ' + t('dashboard.common.save') + '!' });
+      setMessage({ type: 'success', text: 'Paramètres fidélité enregistrés avec succès !' });
       setLoyaltyCardFile(null);
 
       // Refresh merchant data
@@ -442,8 +439,8 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
               <Award className="w-5 h-5 text-amber-600" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">{t('loyalty.settings.title')}</h2>
-              <p className="text-gray-600">{t('loyalty.settings.enabledDesc')}</p>
+              <h2 className="text-2xl font-bold text-gray-900">Paramètres Fidélité</h2>
+              <p className="text-gray-600">Activez le système de carte fidélité pour vos clients</p>
             </div>
           </div>
 
@@ -456,8 +453,8 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                     <Star className={`w-6 h-6 ${loyaltyEnabled ? 'text-amber-600' : 'text-gray-400'}`} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">{t('loyalty.settings.enabled')}</h3>
-                    <p className="text-sm text-gray-600">{t('loyalty.settings.enabledDesc')}</p>
+                    <h3 className="font-semibold text-gray-900">Programme fidélité activé</h3>
+                    <p className="text-sm text-gray-600">Activez le système de carte fidélité pour vos clients</p>
                   </div>
                 </div>
                 <button
@@ -476,9 +473,9 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                 <Card className="p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <Coins className="w-5 h-5 text-amber-500" />
-                    <h3 className="font-semibold text-gray-900">{t('loyalty.settings.pointsPerPurchase')}</h3>
+                    <h3 className="font-semibold text-gray-900">Points par achat</h3>
                   </div>
-                  <p className="text-sm text-gray-600 mb-4">{t('loyalty.settings.pointsPerPurchaseDesc')}</p>
+                  <p className="text-sm text-gray-600 mb-4">Nombre de points gagnés par seuil atteint</p>
                   <Input
                     type="number"
                     min={1}
@@ -489,9 +486,9 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
 
                   <div className="flex items-center gap-3 mb-4 mt-6">
                     <Coins className="w-5 h-5 text-amber-500" />
-                    <h3 className="font-semibold text-gray-900">{t('loyalty.settings.purchaseThreshold')}</h3>
+                    <h3 className="font-semibold text-gray-900">Seuil d'achat</h3>
                   </div>
-                  <p className="text-sm text-gray-600 mb-4">{t('loyalty.settings.purchaseThresholdDesc')}</p>
+                  <p className="text-sm text-gray-600 mb-4">Montant d'achat pour gagner des points</p>
                   <Input
                     type="number"
                     min={1}
@@ -503,26 +500,10 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                 {/* Currency & Welcome Points */}
                 <Card className="p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <Star className="w-5 h-5 text-amber-500" />
-                    <h3 className="font-semibold text-gray-900">{t('loyalty.settings.currency')}</h3>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-4">{t('loyalty.settings.currencyDesc')}</p>
-                  <select
-                    value={loyaltyCurrency}
-                    onChange={(e) => setLoyaltyCurrency(e.target.value as 'THB' | 'EUR' | 'USD' | 'XAF')}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 mb-4"
-                  >
-                    <option value="THB">THB - Thai Baht (฿)</option>
-                    <option value="EUR">EUR - Euro (€)</option>
-                    <option value="USD">USD - US Dollar ($)</option>
-                    <option value="XAF">XAF - CFA Franc</option>
-                  </select>
-
-                  <div className="flex items-center gap-3 mb-4 mt-6">
                     <Gift className="w-5 h-5 text-amber-500" />
-                    <h3 className="font-semibold text-gray-900">{t('loyalty.settings.welcomePoints')}</h3>
+                    <h3 className="font-semibold text-gray-900">Points de bienvenue</h3>
                   </div>
-                  <p className="text-sm text-gray-600 mb-4">{t('loyalty.settings.welcomePointsDesc')}</p>
+                  <p className="text-sm text-gray-600 mb-4">Points offerts à l'inscription</p>
                   <Input
                     type="number"
                     min={0}
@@ -535,8 +516,8 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                 <Card className="p-6 lg:col-span-2">
                   <div className="flex items-center justify-between mb-4">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900">{t('loyalty.settings.cardImage')}</h3>
-                      <p className="text-sm text-gray-600">{t('loyalty.settings.cardImageDesc')}</p>
+                      <h3 className="text-lg font-semibold text-gray-900">Image de la carte</h3>
+                      <p className="text-sm text-gray-600">Image personnalisée affichée sur la carte fidélité</p>
                     </div>
                     <Badge variant="outline" className="border-amber-200 text-amber-700">16:9</Badge>
                   </div>
@@ -559,7 +540,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                       <label htmlFor="loyalty-card-upload" className="cursor-pointer">
                         <Award className="w-12 h-12 text-amber-400 mx-auto mb-3" />
                         <p className="text-sm text-gray-600 mb-1">
-                          <span className="text-amber-600 font-semibold">{t('loyalty.settings.uploadImage')}</span>
+                          <span className="text-amber-600 font-semibold">Télécharger une image</span>
                         </p>
                         <p className="text-xs text-gray-500">PNG, JPG (16:9) jusqu'à 5 Mo</p>
                       </label>
@@ -604,7 +585,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
               ) : (
                 <>
                   <Check className="w-4 h-4 mr-2" />
-                  {t('dashboard.common.save')}
+                  Enregistrer les paramètres
                 </>
               )}
             </Button>

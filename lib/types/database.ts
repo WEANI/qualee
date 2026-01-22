@@ -32,7 +32,7 @@ export interface Merchant {
   loyalty_card_image_url?: string | null;
   points_per_purchase?: number;
   purchase_amount_threshold?: number;
-  loyalty_currency?: 'THB' | 'EUR' | 'USD' | 'XAF';
+  loyalty_currency?: 'EUR';
   welcome_points?: number;
   loyalty_message_template?: string | null;
   created_at: string;
@@ -213,4 +213,204 @@ export interface LoyaltyStats {
   total_points_redeemed: number;
   total_rewards_redeemed: number;
   average_points_per_client: number;
+}
+
+// ============================================================================
+// MULTI-STORE SYSTEM TYPES
+// ============================================================================
+
+export interface Organization {
+  id: string;
+  name: string;
+  slug: string;
+  logo_url: string | null;
+  owner_id: string;
+
+  // Multi-store sharing settings
+  share_loyalty_cards: boolean;
+  share_prizes: boolean;
+  share_rewards: boolean;
+  allow_cross_store_redemption: boolean;
+
+  // Branding defaults
+  default_logo_url: string | null;
+  default_background_url: string | null;
+  primary_color: string;
+  secondary_color: string;
+
+  // Subscription
+  subscription_tier: 'starter' | 'pro' | 'multi-shop';
+  max_stores: number;
+
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Store {
+  id: string;
+  organization_id: string;
+  merchant_id: string | null;
+
+  // Store info
+  name: string;
+  slug: string;
+  address: string | null;
+  city: string | null;
+  country: string | null;
+  phone: string | null;
+  email: string | null;
+
+  // Branding (overrides organization defaults)
+  logo_url: string | null;
+  background_url: string | null;
+  qr_code_url: string | null;
+
+  // Settings
+  is_active: boolean;
+  is_headquarters: boolean;
+
+  // Sharing overrides
+  use_shared_loyalty: boolean;
+  use_shared_prizes: boolean;
+  use_shared_rewards: boolean;
+
+  // Social links
+  google_review_link: string | null;
+  google_maps_url: string | null;
+  tripadvisor_url: string | null;
+  instagram_url: string | null;
+
+  // Wheel config
+  wheel_bg_color: string | null;
+  segment_colors: { color: string; textColor: string }[] | null;
+  unlucky_quantity: number;
+  retry_quantity: number;
+  prize_quantities: Record<string, number>;
+
+  // Operating hours
+  operating_hours: Record<string, { open: string; close: string }> | null;
+
+  created_at: string;
+  updated_at: string;
+}
+
+export type OrganizationMemberRole = 'owner' | 'admin' | 'manager' | 'staff';
+
+export interface OrganizationMember {
+  id: string;
+  organization_id: string;
+  user_id: string;
+  role: OrganizationMemberRole;
+  store_ids: string[] | null; // null = access to all stores
+
+  // Permissions
+  can_manage_prizes: boolean;
+  can_manage_loyalty: boolean;
+  can_view_analytics: boolean;
+  can_scan_codes: boolean;
+  can_manage_staff: boolean;
+
+  // Metadata
+  invited_by: string | null;
+  invited_at: string;
+  joined_at: string | null;
+  is_active: boolean;
+}
+
+export interface OrganizationPrize {
+  id: string;
+  organization_id: string;
+  name: string;
+  description: string | null;
+  image_url: string | null;
+  probability: number;
+  is_active: boolean;
+  quantity: number | null;
+  available_at_stores: string[] | null; // null = all stores
+  redeemable_at_stores: string[] | null; // null = all stores
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OrganizationReward {
+  id: string;
+  organization_id: string;
+  name: string;
+  description: string | null;
+  type: LoyaltyRewardType;
+  value: string;
+  points_cost: number;
+  is_active: boolean;
+  quantity_available: number | null;
+  redeemable_at_stores: string[] | null;
+  valid_from: string | null;
+  valid_until: string | null;
+  image_url: string | null;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface StoreVisit {
+  id: string;
+  organization_id: string;
+  store_id: string;
+  loyalty_client_id: string | null;
+  visit_type: 'spin' | 'loyalty_scan' | 'redemption' | 'feedback';
+  user_token: string | null;
+  ip_hash: string | null;
+  created_at: string;
+}
+
+// Extended types with relations
+export interface OrganizationWithStores extends Organization {
+  stores?: Store[];
+  member_count?: number;
+}
+
+export interface StoreWithOrganization extends Store {
+  organization?: Organization;
+}
+
+export interface CouponWithStoreInfo extends Coupon {
+  organization_id?: string | null;
+  store_id?: string | null;
+  won_at_store_id?: string | null;
+  redeemed_at_store_id?: string | null;
+  redeemable_at_any_store?: boolean;
+  redeemed_by_staff_id?: string | null;
+  won_at_store?: Store;
+  redeemed_at_store?: Store;
+}
+
+// Multi-store stats
+export interface MultiStoreStats {
+  total_stores: number;
+  active_stores: number;
+  total_spins: number;
+  total_coupons: number;
+  total_feedback: number;
+  total_loyalty_clients: number;
+  stores_breakdown: {
+    store_id: string;
+    store_name: string;
+    spins: number;
+    coupons_used: number;
+    feedback_count: number;
+    avg_rating: number;
+  }[];
+}
+
+// User context for multi-store
+export interface UserStoreContext {
+  organization_id: string;
+  organization_name: string;
+  role: OrganizationMemberRole;
+  is_owner: boolean;
+  stores: {
+    store_id: string;
+    store_name: string;
+    is_headquarters: boolean;
+  }[];
+  current_store_id: string | null;
 }

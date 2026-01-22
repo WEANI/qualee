@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
 import { NotificationDropdown } from '@/components/dashboard/NotificationDropdown';
+// import { StoreSwitcher } from '@/components/dashboard/StoreSwitcher'; // Multi-store - masque pour l'instant
 import {
   LayoutDashboard,
   Gift,
@@ -24,7 +25,8 @@ import {
   Store,
   Award,
   Megaphone,
-  Send
+  Send,
+  Building2
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -67,6 +69,12 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
   const marketingNavigation = [
     { name: 'Campagne WhatsApp', href: '/dashboard/marketing/whatsapp-campaign', icon: Send },
   ];
+
+  // Multi-store navigation - masque pour l'instant
+  // const multiStoreNavigation = [
+  //   { name: 'Multi-Magasins', href: '/dashboard/multistore', icon: Building2 },
+  //   { name: 'Scan Cross-Store', href: '/dashboard/multistore/scan', icon: ScanLine },
+  // ];
 
   if (!mounted) {
     return null;
@@ -229,6 +237,39 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                 </Link>
               );
             })}
+
+            {/* Multi-Store Section - masque pour l'instant */}
+            {/*
+            <div className="my-6 px-4">
+              <div className="border-t border-slate-700/50"></div>
+            </div>
+            <div className="flex items-center gap-2 px-4 mb-4">
+              <Building2 className="w-4 h-4 text-[#F97316]" />
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Multi-Store</p>
+            </div>
+            {multiStoreNavigation.map((item) => {
+              const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setSidebarOpen(false)}
+                  className={`
+                    group flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
+                    ${isActive
+                      ? 'bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white shadow-lg shadow-orange-900/20 border border-orange-500/20'
+                      : 'text-white hover:bg-slate-800/50'
+                    }
+                  `}
+                >
+                  <Icon className={`w-5 h-5 transition-colors ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`} />
+                  {item.name}
+                  {isActive && <ChevronRight className="w-4 h-4 ml-auto text-white/50" />}
+                </Link>
+              );
+            })}
+            */}
           </nav>
 
           {/* Sign Out */}
@@ -272,6 +313,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
             </div>
 
             <div className="flex items-center gap-3">
+              {/* <StoreSwitcher /> Multi-store - masque pour l'instant */}
               <div className="h-9 px-4 rounded-full bg-violet-50 text-violet-700 border border-violet-100 flex items-center gap-2 text-sm font-medium hidden sm:flex">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#EB1E99] opacity-75"></span>
