@@ -256,6 +256,22 @@ export default function InternalFeedbackPage() {
                 />
               </div>
 
+              {/* Link to Google reviews page */}
+              {merchant?.google_review_link && (
+                <p className="text-center mb-4" style={{ fontSize: '10px', color: '#888888' }}>
+                  Accéder à la page des{' '}
+                  <a
+                    href={merchant.google_review_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ textDecoration: 'underline', color: '#888888' }}
+                  >
+                    Avis
+                  </a>
+                  .
+                </p>
+              )}
+
               {/* Reward Hint */}
               <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4 mb-6">
                 <div className="flex items-start gap-3">
@@ -289,22 +305,6 @@ export default function InternalFeedbackPage() {
                   </>
                 )}
               </Button>
-
-              {/* Link to Google reviews page - inside the card */}
-              {merchant?.google_review_link && (
-                <p className="text-center mt-4" style={{ fontSize: '10px', color: '#888888' }}>
-                  Accéder à la page des{' '}
-                  <a
-                    href={merchant.google_review_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ textDecoration: 'underline', color: '#888888' }}
-                  >
-                    Avis
-                  </a>
-                  .
-                </p>
-              )}
 
             </>
           ) : (
