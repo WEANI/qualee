@@ -81,7 +81,7 @@ export default function FeedbackPage() {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-[#7209B7] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg text-gray-600">Loading...</p>
+          <p className="text-lg text-gray-600">Chargement...</p>
         </div>
       </div>
     );
@@ -91,8 +91,8 @@ export default function FeedbackPage() {
     <DashboardLayout merchant={merchant}>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Customer Feedback</h1>
-          <p className="text-gray-600">View and manage all customer reviews and feedback</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Avis clients</h1>
+          <p className="text-gray-600">Consultez et gérez tous les avis et retours clients</p>
         </div>
         <div className="flex flex-wrap gap-3">
           <Button
@@ -101,7 +101,7 @@ export default function FeedbackPage() {
             className="gap-2"
           >
             <MessageSquare className="w-4 h-4" />
-            All ({feedback.length})
+            Tous ({feedback.length})
           </Button>
           <Button
             onClick={() => setFilter('positive')}
@@ -109,7 +109,7 @@ export default function FeedbackPage() {
             className={`gap-2 ${filter === 'positive' ? 'bg-green-600 hover:bg-green-700' : ''}`}
           >
             <ThumbsUp className="w-4 h-4" />
-            Positive ({feedback.filter(f => f.is_positive).length})
+            Positifs ({feedback.filter(f => f.is_positive).length})
           </Button>
           <Button
             onClick={() => setFilter('negative')}
@@ -117,7 +117,7 @@ export default function FeedbackPage() {
             className={`gap-2 ${filter === 'negative' ? 'bg-red-600 hover:bg-red-700' : ''}`}
           >
             <ThumbsDown className="w-4 h-4" />
-            Negative ({feedback.filter(f => !f.is_positive).length})
+            Négatifs ({feedback.filter(f => !f.is_positive).length})
           </Button>
         </div>
 
@@ -155,7 +155,7 @@ export default function FeedbackPage() {
                       <span className="text-sm text-gray-600 font-medium">({f.rating}/5)</span>
                     </div>
                     <Badge className={f.is_positive ? 'bg-green-100 text-green-700 border-green-200' : 'bg-red-100 text-red-700 border-red-200'}>
-                      {f.is_positive ? 'Positive Review' : 'Needs Attention'}
+                      {f.is_positive ? 'Avis positif' : 'Attention requise'}
                     </Badge>
                   </div>
                 </div>
@@ -190,15 +190,15 @@ export default function FeedbackPage() {
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <MessageSquare className="w-8 h-8 text-gray-400" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">No feedback yet</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Aucun avis pour le moment</h3>
               <p className="text-gray-600 mb-6">
                 {filter === 'all'
-                  ? 'Start collecting customer feedback by sharing your QR code!'
-                  : `No ${filter} feedback found.`
+                  ? 'Commencez à collecter les avis clients en partageant votre QR code !'
+                  : `Aucun avis ${filter === 'positive' ? 'positif' : 'négatif'} trouvé.`
                 }
               </p>
               <Button onClick={() => router.push('/dashboard/qr')} className="gap-2">
-                View QR Code
+                Voir le QR Code
               </Button>
             </div>
           </Card>

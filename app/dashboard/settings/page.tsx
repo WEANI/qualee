@@ -93,7 +93,7 @@ export default function SettingsPage() {
         if (Math.abs(aspectRatio - target) > 0.15) {
           setMessage({ 
             type: 'error', 
-            text: `Image ratio is ${(aspectRatio * 16 / 9).toFixed(2)}:16. Recommended: 9:16 (vertical format)` 
+            text: `Le ratio de l'image est ${(aspectRatio * 16 / 9).toFixed(2)}:16. Recommandé : 9:16 (format vertical)` 
           });
         } else {
           setMessage(null);
@@ -160,7 +160,7 @@ export default function SettingsPage() {
         .maybeSingle();
       setMerchant(merchantData);
     } catch (error: any) {
-      setMessage({ type: 'error', text: error.message || 'Failed to save loyalty settings' });
+      setMessage({ type: 'error', text: error.message || 'Échec de l\'enregistrement des paramètres de fidélité' });
     } finally {
       setSavingLoyalty(false);
     }
@@ -179,7 +179,7 @@ export default function SettingsPage() {
       });
 
     if (uploadError) {
-      throw new Error(uploadError.message || 'Failed to upload image');
+      throw new Error(uploadError.message || 'Échec du téléchargement de l\'image');
     }
 
     const { data: { publicUrl } } = supabase.storage
@@ -216,7 +216,7 @@ export default function SettingsPage() {
 
         if (error) throw error;
 
-        setMessage({ type: 'success', text: 'Images uploaded successfully!' });
+        setMessage({ type: 'success', text: 'Images téléchargées avec succès !' });
         setLogoFile(null);
         setBackgroundFile(null);
         
@@ -232,7 +232,7 @@ export default function SettingsPage() {
       if (error.message && (error.message.includes('row-level security') || error.message.includes('StorageApiError'))) {
         setMessage({
           type: 'warning',
-          text: 'Database configuration required: Storage policies are missing.',
+          text: 'Configuration requise : les politiques de stockage sont manquantes.',
           sql: `
 -- Run this in your Supabase SQL Editor:
 INSERT INTO storage.buckets (id, name, public) VALUES ('merchant-assets', 'merchant-assets', true) ON CONFLICT (id) DO NOTHING;
@@ -247,7 +247,7 @@ DROP POLICY IF EXISTS "Auth Update" ON storage.objects;
 CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'merchant-assets' AND auth.role() = 'authenticated' );`
         });
       } else {
-        setMessage({ type: 'error', text: error.message || 'Failed to upload images' });
+        setMessage({ type: 'error', text: error.message || 'Échec du téléchargement des images' });
       }
     } finally {
       setUploading(false);
@@ -259,7 +259,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-violet-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg text-gray-600">Loading...</p>
+          <p className="text-lg text-gray-600">Chargement...</p>
         </div>
       </div>
     );
@@ -269,8 +269,8 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
     <DashboardLayout merchant={merchant}>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Settings</h1>
-          <p className="text-gray-600">Customize your rating page appearance</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Paramètres</h1>
+          <p className="text-gray-600">Personnalisez l'apparence de votre page d'évaluation</p>
         </div>
 
         {message && (
@@ -310,10 +310,10 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
           <Card className="p-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Business Logo</h3>
-                <p className="text-sm text-gray-600">Displayed at the top of your rating page</p>
+                <h3 className="text-lg font-semibold text-gray-900">Logo de l'entreprise</h3>
+                <p className="text-sm text-gray-600">Affiché en haut de votre page d'évaluation</p>
               </div>
-              <Badge variant="outline">Square</Badge>
+              <Badge variant="outline">Carré</Badge>
             </div>
 
             <div className="space-y-4">
@@ -334,9 +334,9 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                 <label htmlFor="logo-upload" className="cursor-pointer">
                   <ImageIcon className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                   <p className="text-sm text-gray-600 mb-1">
-                    <span className="text-violet-600 font-semibold">Click to upload</span> or drag and drop
+                    <span className="text-violet-600 font-semibold">Cliquez pour télécharger</span> ou glissez-déposez
                   </p>
-                  <p className="text-xs text-gray-500">PNG, JPG up to 5MB</p>
+                  <p className="text-xs text-gray-500">PNG, JPG jusqu'à 5 Mo</p>
                 </label>
               </div>
             </div>
@@ -346,8 +346,8 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
           <Card className="p-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Background Image</h3>
-                <p className="text-sm text-gray-600">Background for your rating page</p>
+                <h3 className="text-lg font-semibold text-gray-900">Image de fond</h3>
+                <p className="text-sm text-gray-600">Arrière-plan de votre page d'évaluation</p>
               </div>
               <Badge variant="outline">9:16 Ratio</Badge>
             </div>
@@ -357,7 +357,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                 <div className="relative w-full h-48 bg-gray-100 rounded-lg overflow-hidden">
                   <img src={backgroundPreview} alt="Background preview" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <p className="text-white text-sm">With overlay (40% opacity)</p>
+                    <p className="text-white text-sm">Avec superposition (40% opacité)</p>
                   </div>
                 </div>
               )}
@@ -373,9 +373,9 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                 <label htmlFor="background-upload" className="cursor-pointer">
                   <Upload className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                   <p className="text-sm text-gray-600 mb-1">
-                    <span className="text-violet-600 font-semibold">Click to upload</span> or drag and drop
+                    <span className="text-violet-600 font-semibold">Cliquez pour télécharger</span> ou glissez-déposez
                   </p>
-                  <p className="text-xs text-gray-500">PNG, JPG (9:16 format) up to 10MB</p>
+                  <p className="text-xs text-gray-500">PNG, JPG (format 9:16) jusqu'à 10 Mo</p>
                 </label>
               </div>
             </div>
@@ -384,7 +384,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
 
         {/* Preview */}
         <Card className="p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Preview</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Aperçu</h3>
           <div className="bg-gray-100 rounded-lg p-4">
             <div className="max-w-sm mx-auto aspect-[9/16] bg-white rounded-2xl shadow-xl overflow-hidden relative">
               {backgroundPreview && (
@@ -399,7 +399,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                 )}
                 <div className="bg-white rounded-2xl shadow-2xl p-6 w-full">
                   <h3 className="text-xl font-bold text-center mb-4">{merchant.business_name}</h3>
-                  <p className="text-center text-gray-600 text-sm">Rating window preview</p>
+                  <p className="text-center text-gray-600 text-sm">Aperçu de la fenêtre d'évaluation</p>
                 </div>
               </div>
             </div>
@@ -417,7 +417,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
               setBackgroundPreview(merchant.background_url || '');
             }}
           >
-            Reset
+            Réinitialiser
           </Button>
           <Button
             onClick={handleSave}
@@ -427,10 +427,10 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
             {uploading ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Uploading...
+                Téléchargement...
               </>
             ) : (
-              'Save Changes'
+              'Enregistrer'
             )}
           </Button>
         </div>
@@ -561,7 +561,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
                         <p className="text-sm text-gray-600 mb-1">
                           <span className="text-amber-600 font-semibold">{t('loyalty.settings.uploadImage')}</span>
                         </p>
-                        <p className="text-xs text-gray-500">PNG, JPG (16:9) up to 5MB</p>
+                        <p className="text-xs text-gray-500">PNG, JPG (16:9) jusqu'à 5 Mo</p>
                       </label>
                     </div>
                   </div>
@@ -569,20 +569,20 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
 
                 {/* Points Calculation Preview */}
                 <Card className="p-6 lg:col-span-2 bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
-                  <h3 className="font-semibold text-gray-900 mb-4">Points Calculation Example</h3>
+                  <h3 className="font-semibold text-gray-900 mb-4">Exemple de calcul de points</h3>
                   <div className="flex items-center justify-center gap-4 text-center">
                     <div className="bg-white rounded-xl p-4 shadow-sm">
                       <p className="text-2xl font-bold text-amber-600">{purchaseThreshold.toLocaleString()} {loyaltyCurrency}</p>
-                      <p className="text-sm text-gray-600">Purchase Amount</p>
+                      <p className="text-sm text-gray-600">Montant d'achat</p>
                     </div>
                     <div className="text-2xl text-amber-500">=</div>
                     <div className="bg-white rounded-xl p-4 shadow-sm">
                       <p className="text-2xl font-bold text-amber-600">{pointsPerPurchase}</p>
-                      <p className="text-sm text-gray-600">Points Earned</p>
+                      <p className="text-sm text-gray-600">Points gagnés</p>
                     </div>
                   </div>
                   <p className="text-center text-sm text-gray-600 mt-4">
-                    Example: {(purchaseThreshold * 5).toLocaleString()} {loyaltyCurrency} purchase = {pointsPerPurchase * 5} points
+                    Exemple : achat de {(purchaseThreshold * 5).toLocaleString()} {loyaltyCurrency} = {pointsPerPurchase * 5} points
                   </p>
                 </Card>
               </>
@@ -599,7 +599,7 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
               {savingLoyalty ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Saving...
+                  Enregistrement...
                 </>
               ) : (
                 <>

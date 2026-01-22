@@ -214,7 +214,7 @@ export default function PrizesPage() {
   };
 
   const handleDelete = async (prizeId: string) => {
-    if (!confirm('Are you sure you want to delete this prize?')) return;
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce prix ?')) return;
 
     await supabase.from('prizes').delete().eq('id', prizeId);
     fetchPrizes(user.id);
@@ -316,7 +316,7 @@ export default function PrizesPage() {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-[#7209B7] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg text-gray-600">Loading...</p>
+          <p className="text-lg text-gray-600">Chargement...</p>
         </div>
       </div>
     );

@@ -70,7 +70,7 @@ export default function QRCodePage() {
     if (!user) return;
     const url = `${process.env.NEXT_PUBLIC_APP_URL}/rate/${user.id}`;
     navigator.clipboard.writeText(url);
-    alert('Lien copie dans le presse-papiers !');
+    alert('Lien copié dans le presse-papiers !');
   };
 
   const printQR = () => {
@@ -157,8 +157,8 @@ export default function QRCodePage() {
     <DashboardLayout merchant={merchant}>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Generateur de QR Code</h1>
-          <p className="text-gray-600">Telechargez et partagez votre QR code pour collecter les avis clients</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Générateur de QR Code</h1>
+          <p className="text-gray-600">Téléchargez et partagez votre QR code pour collecter les avis clients</p>
         </div>
 
         <Card className="p-8">
@@ -169,7 +169,7 @@ export default function QRCodePage() {
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  QR Code genere par l'admin
+                  QR Code généré par l'admin
                 </span>
               </div>
             )}
@@ -210,7 +210,7 @@ export default function QRCodePage() {
               </Button>
               <Button onClick={() => downloadQR('png')} className="w-full gap-2 bg-[#7209B7] hover:bg-[#3A0CA3]">
                 <Download className="w-4 h-4" />
-                Telecharger PNG
+                Télécharger PNG
               </Button>
               <Button onClick={() => downloadQR('svg')} variant="outline" className="w-full gap-2">
                 <Share2 className="w-4 h-4" />
@@ -227,14 +227,14 @@ export default function QRCodePage() {
               <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">1</div>
               <div>
                 <p className="font-semibold text-gray-900">Imprimez et affichez</p>
-                <p className="text-sm text-gray-700">Placez le QR code a votre caisse ou sur vos tables</p>
+                <p className="text-sm text-gray-700">Placez le QR code à votre caisse ou sur vos tables</p>
               </div>
             </div>
             <div className="flex gap-3">
               <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">2</div>
               <div>
                 <p className="font-semibold text-gray-900">Les clients scannent</p>
-                <p className="text-sm text-gray-700">Ils scannent et notent leur experience</p>
+                <p className="text-sm text-gray-700">Ils scannent et notent leur expérience</p>
               </div>
             </div>
             <div className="flex gap-3">
@@ -248,7 +248,7 @@ export default function QRCodePage() {
               <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">4</div>
               <div>
                 <p className="font-semibold text-gray-900">Feedback prive</p>
-                <p className="text-sm text-gray-700">Les avis negatifs restent prives pour vous ameliorer</p>
+                <p className="text-sm text-gray-700">Les avis négatifs restent privés pour vous améliorer</p>
               </div>
             </div>
           </div>
