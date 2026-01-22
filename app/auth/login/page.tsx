@@ -122,14 +122,19 @@ function LoginForm() {
 
   if (magicLinkSent) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#FF6F61] to-[#FFC107] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-[#7209B7] via-[#EB1E99] to-[#3A0CA3] flex items-center justify-center p-4">
         <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Check Your Email</h1>
+          <div className="w-16 h-16 bg-gradient-to-r from-[#7209B7] to-[#EB1E99] rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Vérifiez votre email</h1>
           <p className="text-gray-600 mb-6">
-            We've sent a magic link to <strong>{email}</strong>. Click the link to sign in.
+            Un lien magique a été envoyé à <strong>{email}</strong>. Cliquez sur le lien pour vous connecter.
           </p>
           <Button onClick={() => setMagicLinkSent(false)} variant="outline">
-            Back to Login
+            Retour à la connexion
           </Button>
         </div>
       </div>
@@ -137,10 +142,16 @@ function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FF6F61] to-[#FFC107] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#7209B7] via-[#EB1E99] to-[#3A0CA3] flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full">
-        <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">Qualee</h1>
-        <p className="text-center text-gray-600 mb-8">Merchant Login</p>
+        {/* Logo/Header */}
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-gradient-to-r from-[#7209B7] to-[#EB1E99] rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <span className="text-2xl font-bold text-white">Q</span>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Qualee</h1>
+          <p className="text-gray-600">Connexion Marchand</p>
+        </div>
 
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
@@ -154,21 +165,21 @@ function LoginForm() {
             label="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="merchant@example.com"
+            placeholder="marchand@exemple.com"
             required
           />
 
           <Input
             type="password"
-            label="Password"
+            label="Mot de passe"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="••••••••"
             required
           />
 
-          <Button type="submit" disabled={loading} className="w-full">
-            {loading ? 'Signing in...' : 'Sign In'}
+          <Button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-[#7209B7] to-[#EB1E99] hover:opacity-90">
+            {loading ? 'Connexion...' : 'Se connecter'}
           </Button>
         </form>
 
@@ -177,7 +188,7 @@ function LoginForm() {
             <div className="w-full border-t border-gray-300"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">Or</span>
+            <span className="px-2 bg-white text-gray-500">Ou</span>
           </div>
         </div>
 
@@ -185,15 +196,15 @@ function LoginForm() {
           onClick={handleMagicLink}
           disabled={loading || !email}
           variant="outline"
-          className="w-full"
+          className="w-full border-[#7209B7] text-[#7209B7] hover:bg-[#7209B7]/5"
         >
-          Send Magic Link
+          Envoyer un lien magique
         </Button>
 
         <p className="text-center text-sm text-gray-600 mt-6">
-          Don't have an account?{' '}
-          <a href="/auth/signup" className="text-[#FF6F61] font-semibold hover:underline">
-            Sign Up
+          Pas encore de compte ?{' '}
+          <a href="/auth/signup" className="text-[#7209B7] font-semibold hover:underline">
+            S&apos;inscrire
           </a>
         </p>
       </div>
@@ -203,10 +214,10 @@ function LoginForm() {
 
 function LoginLoading() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FF6F61] to-[#FFC107] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#7209B7] via-[#EB1E99] to-[#3A0CA3] flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full text-center">
-        <div className="w-12 h-12 border-4 border-gray-300 border-t-[#FF6F61] rounded-full animate-spin mx-auto mb-4"></div>
-        <p className="text-gray-600">Loading...</p>
+        <div className="w-12 h-12 border-4 border-gray-300 border-t-[#7209B7] rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-gray-600">Chargement...</p>
       </div>
     </div>
   );
