@@ -8,6 +8,15 @@ export interface Merchant {
   background_url: string | null;
   qr_code_url: string | null;
   branding: Record<string, any>;
+  // Coordonnées du merchant
+  phone: string | null;
+  address: string | null;
+  city: string | null;
+  postal_code: string | null;
+  country: string | null;
+  website: string | null;
+  siret: string | null;
+  // Liens sociaux et avis
   google_review_link: string | null;
   google_maps_url: string | null;
   tripadvisor_url: string | null;

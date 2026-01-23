@@ -26,7 +26,8 @@ import {
   Award,
   Megaphone,
   Send,
-  Building2
+  Building2,
+  UserCircle
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -59,6 +60,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
     { name: 'Strategie', href: '/dashboard/strategy', icon: Target },
     { name: 'Clients', href: '/dashboard/customers', icon: Users },
     { name: 'Facturation', href: '/dashboard/billing', icon: CreditCard },
+    { name: 'Mon Profil', href: '/dashboard/profile', icon: UserCircle },
     { name: 'Parametres', href: '/dashboard/settings', icon: Settings },
   ];
 
