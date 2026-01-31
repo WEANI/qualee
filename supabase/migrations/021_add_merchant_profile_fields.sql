@@ -6,6 +6,7 @@
 -- Add profile fields to merchants table
 ALTER TABLE merchants
 ADD COLUMN IF NOT EXISTS phone text,
+ADD COLUMN IF NOT EXISTS shop_phone text,
 ADD COLUMN IF NOT EXISTS address text,
 ADD COLUMN IF NOT EXISTS city text,
 ADD COLUMN IF NOT EXISTS postal_code text,
@@ -14,7 +15,8 @@ ADD COLUMN IF NOT EXISTS website text,
 ADD COLUMN IF NOT EXISTS siret text;
 
 -- Add comment for documentation
-COMMENT ON COLUMN merchants.phone IS 'Phone number of the business';
+COMMENT ON COLUMN merchants.phone IS 'Phone number of the manager';
+COMMENT ON COLUMN merchants.shop_phone IS 'Phone number of the shop';
 COMMENT ON COLUMN merchants.address IS 'Street address of the business';
 COMMENT ON COLUMN merchants.city IS 'City where the business is located';
 COMMENT ON COLUMN merchants.postal_code IS 'Postal/ZIP code';

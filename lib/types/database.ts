@@ -10,6 +10,7 @@ export interface Merchant {
   branding: Record<string, any>;
   // Coordonnées du merchant
   phone: string | null;
+  shop_phone: string | null;
   address: string | null;
   city: string | null;
   postal_code: string | null;

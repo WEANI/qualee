@@ -27,7 +27,8 @@ import {
   Megaphone,
   Send,
   Building2,
-  UserCircle
+  UserCircle,
+  CircleUserRound
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -61,6 +62,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
     { name: 'Clients', href: '/dashboard/customers', icon: Users },
     { name: 'Facturation', href: '/dashboard/billing', icon: CreditCard },
     { name: 'Mon Profil', href: '/dashboard/profile', icon: UserCircle },
+    { name: 'Mon Compte', href: '/dashboard/account', icon: CircleUserRound },
     { name: 'Parametres', href: '/dashboard/settings', icon: Settings },
   ];
 

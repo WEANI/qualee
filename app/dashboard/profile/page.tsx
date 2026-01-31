@@ -34,6 +34,7 @@ export default function ProfilePage() {
     business_name: '',
     email: '',
     phone: '',
+    shop_phone: '',
     address: '',
     city: '',
     postal_code: '',
@@ -67,6 +68,7 @@ export default function ProfilePage() {
           business_name: merchantData.business_name || '',
           email: merchantData.email || user.email || '',
           phone: merchantData.phone || '',
+          shop_phone: merchantData.shop_phone || '',
           address: merchantData.address || '',
           city: merchantData.city || '',
           postal_code: merchantData.postal_code || '',
@@ -97,6 +99,7 @@ export default function ProfilePage() {
           name: formData.name || null,
           business_name: formData.business_name || null,
           phone: formData.phone || null,
+          shop_phone: formData.shop_phone || null,
           address: formData.address || null,
           city: formData.city || null,
           postal_code: formData.postal_code || null,
@@ -170,15 +173,15 @@ export default function ProfilePage() {
                 <User className="w-5 h-5 text-violet-600" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-gray-900">Informations personnelles</h2>
-                <p className="text-sm text-gray-600">Vos informations de contact</p>
+                <h2 className="text-lg font-semibold text-gray-900">Gérant</h2>
+                <p className="text-sm text-gray-600">Informations du responsable de l'établissement</p>
               </div>
             </div>
 
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Nom complet
+                  Nom du gérant
                 </label>
                 <Input
                   type="text"
@@ -208,7 +211,7 @@ export default function ProfilePage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   <div className="flex items-center gap-2">
                     <Phone className="w-4 h-4 text-gray-400" />
-                    Téléphone
+                    Téléphone du gérant
                   </div>
                 </label>
                 <Input
@@ -228,21 +231,36 @@ export default function ProfilePage() {
                 <Building2 className="w-5 h-5 text-amber-600" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-gray-900">Informations entreprise</h2>
-                <p className="text-sm text-gray-600">Détails de votre activité</p>
+                <h2 className="text-lg font-semibold text-gray-900">Informations du shop</h2>
+                <p className="text-sm text-gray-600">Détails de votre établissement</p>
               </div>
             </div>
 
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Nom commercial
+                  Nom du shop
                 </label>
                 <Input
                   type="text"
                   value={formData.business_name}
                   onChange={(e) => handleChange('business_name', e.target.value)}
                   placeholder="Ma Boutique"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-gray-400" />
+                    Téléphone du shop
+                  </div>
+                </label>
+                <Input
+                  type="tel"
+                  value={formData.shop_phone}
+                  onChange={(e) => handleChange('shop_phone', e.target.value)}
+                  placeholder="+33 1 23 45 67 89"
                 />
               </div>
 
@@ -286,7 +304,7 @@ export default function ProfilePage() {
                 <MapPin className="w-5 h-5 text-teal-600" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-gray-900">Adresse</h2>
+                <h2 className="text-lg font-semibold text-gray-900">Adresse du shop</h2>
                 <p className="text-sm text-gray-600">Localisation de votre établissement</p>
               </div>
             </div>
@@ -367,6 +385,7 @@ export default function ProfilePage() {
                   business_name: merchant.business_name || '',
                   email: merchant.email || user.email || '',
                   phone: merchant.phone || '',
+                  shop_phone: merchant.shop_phone || '',
                   address: merchant.address || '',
                   city: merchant.city || '',
                   postal_code: merchant.postal_code || '',
