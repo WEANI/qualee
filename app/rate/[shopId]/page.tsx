@@ -21,7 +21,7 @@ export default function RatingPage() {
 
   // Get language from URL or localStorage
   const langFromUrl = searchParams.get('lang');
-  const currentLang = langFromUrl || i18n.language || 'en';
+  const currentLang = langFromUrl || i18n.language || 'fr';
 
   const [rating, setRating] = useState<number | null>(null);
   const [feedback, setFeedback] = useState('');

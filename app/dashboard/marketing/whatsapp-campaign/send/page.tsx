@@ -218,10 +218,10 @@ export default function SendCampaignPage() {
         if (response.ok && data.success) {
           results.push({ phone, success: true });
         } else {
-          results.push({ phone, success: false, error: data.error || 'Failed to send' });
+          results.push({ phone, success: false, error: data.error || 'Échec de l\'envoi' });
         }
       } catch (error: any) {
-        results.push({ phone, success: false, error: error.message || 'Network error' });
+        results.push({ phone, success: false, error: error.message || 'Erreur réseau' });
       }
 
       setSendProgress(Math.round(((i + 1) / total) * 100));
@@ -300,10 +300,10 @@ export default function SendCampaignPage() {
         if (response.ok && data.success) {
           results.push({ phone, success: true });
         } else {
-          results.push({ phone, success: false, error: data.error || 'Failed to send' });
+          results.push({ phone, success: false, error: data.error || 'Échec de l\'envoi' });
         }
       } catch (error: any) {
-        results.push({ phone, success: false, error: error.message || 'Network error' });
+        results.push({ phone, success: false, error: error.message || 'Erreur réseau' });
       }
 
       await new Promise(resolve => setTimeout(resolve, 300));

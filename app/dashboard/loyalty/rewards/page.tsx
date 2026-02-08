@@ -172,13 +172,13 @@ export default function RewardsPage() {
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || 'Failed to save reward');
+        throw new Error(data.error || 'Échec de la sauvegarde de la récompense');
       }
 
       setShowModal(false);
       fetchData();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : 'Une erreur est survenue');
     } finally {
       setSaving(false);
     }

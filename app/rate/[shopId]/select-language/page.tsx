@@ -7,13 +7,13 @@ import i18n from '@/lib/i18n/config';
 import { Globe } from 'lucide-react';
 
 const LANGUAGES = [
-  { code: 'en', name: 'English', flag: '🇬🇧', nativeName: 'English' },
-  { code: 'ru', name: 'Russian', flag: '🇷🇺', nativeName: 'Русский' },
-  { code: 'fr', name: 'French', flag: '🇫🇷', nativeName: 'Français' },
-  { code: 'th', name: 'Thai', flag: '🇹🇭', nativeName: 'ไทย' },
-  { code: 'zh', name: 'Chinese', flag: '🇨🇳', nativeName: '中文' },
-  { code: 'ar', name: 'Arabic', flag: '🇸🇦', nativeName: 'العربية' },
-  { code: 'es', name: 'Spanish', flag: '🇪🇸', nativeName: 'Español' },
+  { code: 'en', name: 'Anglais', flag: '🇬🇧', nativeName: 'English' },
+  { code: 'ru', name: 'Russe', flag: '🇷🇺', nativeName: 'Русский' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷', nativeName: 'Français' },
+  { code: 'th', name: 'Thaïlandais', flag: '🇹🇭', nativeName: 'ไทย' },
+  { code: 'zh', name: 'Chinois', flag: '🇨🇳', nativeName: '中文' },
+  { code: 'ar', name: 'Arabe', flag: '🇸🇦', nativeName: 'العربية' },
+  { code: 'es', name: 'Espagnol', flag: '🇪🇸', nativeName: 'Español' },
 ];
 
 export default function SelectLanguagePage() {
@@ -91,7 +91,7 @@ export default function SelectLanguagePage() {
           <div className="flex items-center justify-center gap-3 mb-6">
             <Globe className="w-8 h-8 text-teal-600" />
             <h1 className="text-2xl font-bold text-gray-900">
-              Select Your Language
+              Choisissez votre langue
             </h1>
           </div>
 

@@ -18,7 +18,7 @@ export default function SpinPage() {
   // Get phone number and language from URL params (passed from redirect page)
   const phoneFromUrl = searchParams.get('phone');
   const langFromUrl = searchParams.get('lang');
-  const currentLang = langFromUrl || i18n.language || 'en';
+  const currentLang = langFromUrl || i18n.language || 'fr';
 
   const [prizes, setPrizes] = useState<Prize[]>([]);
   const [merchant, setMerchant] = useState<any>(null);
@@ -129,7 +129,7 @@ export default function SpinPage() {
     // Always add UNLUCKY and RETRY segments
     segments.push({
       type: 'unlucky',
-      label: '#UNLUCKY#',
+      label: '#PERDU#',
       color: '#1a1a1a',
       textColor: '#ff4444'
     });
@@ -141,9 +141,9 @@ export default function SpinPage() {
     });
 
     if (prizes.length === 0) {
-      segments.push({ type: 'unlucky', label: '#UNLUCKY#', color: '#1a1a1a', textColor: '#ff4444' });
+      segments.push({ type: 'unlucky', label: '#PERDU#', color: '#1a1a1a', textColor: '#ff4444' });
       segments.push({ type: 'retry', label: '#REESSAYER#', color: '#D4A574', textColor: '#ffffff' });
-      segments.push({ type: 'unlucky', label: '#UNLUCKY#', color: '#1a1a1a', textColor: '#ff4444' });
+      segments.push({ type: 'unlucky', label: '#PERDU#', color: '#1a1a1a', textColor: '#ff4444' });
       segments.push({ type: 'retry', label: '#REESSAYER#', color: '#D4A574', textColor: '#ffffff' });
       return segments;
     }
@@ -173,7 +173,7 @@ export default function SpinPage() {
     }
 
     while (segments.length < 6) {
-      segments.push({ type: 'unlucky', label: '#UNLUCKY#', color: '#1a1a1a', textColor: '#ff4444' });
+      segments.push({ type: 'unlucky', label: '#PERDU#', color: '#1a1a1a', textColor: '#ff4444' });
     }
 
     const prizeSegs = segments.filter(s => s.type === 'prize');
@@ -402,7 +402,7 @@ export default function SpinPage() {
     });
   }
 
-  const isUnlucky = winner && winner.label === '#UNLUCKY#';
+  const isUnlucky = winner && winner.label === '#PERDU#';
 
   if (!isClient || loading) {
     return (
@@ -598,7 +598,7 @@ export default function SpinPage() {
                     fill={isBlackSegment ? "url(#blackSegmentShine)" : "url(#segmentShine)"}
                   />
                   {/* Skull icon for UNLUCKY segment */}
-                  {segment.label === '#UNLUCKY#' && (
+                  {segment.label === '#PERDU#' && (
                     <text
                       x={200 + 105 * Math.cos(((index * segmentAngle) + (segmentAngle / 2) - 90) * Math.PI / 180)}
                       y={200 + 105 * Math.sin(((index * segmentAngle) + (segmentAngle / 2) - 90) * Math.PI / 180)}
@@ -677,7 +677,7 @@ export default function SpinPage() {
             {isSpinning ? (
               <span className="animate-pulse">•••</span>
             ) : (
-              'SPIN'
+              'JOUER'
             )}
           </button>
         </div>
@@ -781,7 +781,7 @@ export default function SpinPage() {
                   textShadow: '0 0 20px rgba(255,50,50,0.5)'
                 }}
               >
-                💀 UNLUCKY 💀
+                💀 PERDU 💀
               </p>
               <p className="text-gray-400 text-sm mt-2">Retentez votre chance demain!</p>
             </>
@@ -791,7 +791,7 @@ export default function SpinPage() {
 
       {/* Footer instruction */}
       <p className="mt-6 text-gray-400 text-sm relative z-10">
-        Cliquez sur <span className="text-amber-400 font-bold">SPIN</span> au centre pour tourner!
+        Cliquez sur <span className="text-amber-400 font-bold">JOUER</span> au centre pour tourner!
       </p>
 
       {/* CGU Link */}
@@ -800,7 +800,7 @@ export default function SpinPage() {
         className="mt-4 relative z-10"
         style={{ fontSize: '10px', color: '#888888', textDecoration: 'underline' }}
       >
-        CGU & Reglement
+        CGU & Règlement
       </Link>
     </div>
   );

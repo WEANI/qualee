@@ -120,7 +120,7 @@ export default function PrizesPage() {
       });
 
     if (uploadError) {
-      throw new Error(uploadError.message || 'Failed to upload image');
+      throw new Error(uploadError.message || 'Échec du téléchargement de l\'image');
     }
 
     const { data: { publicUrl } } = supabase.storage
@@ -185,7 +185,7 @@ export default function PrizesPage() {
       setImagePreview('');
       fetchPrizes(user.id);
     } catch (error: any) {
-      alert(error.message || 'Failed to save prize');
+      alert(error.message || 'Échec de la sauvegarde du prix');
     } finally {
       setLoading(false);
       setUploading(false);
@@ -409,7 +409,7 @@ export default function PrizesPage() {
                   <p>• La roue peut contenir <strong>maximum {MAX_SEGMENTS} segments</strong></p>
                   <p>• Ajoutez des segments pour chaque prix en cliquant sur <strong>+</strong></p>
                   <p>• Plus un prix a de segments, plus il a de chances d'être gagné</p>
-                  <p>• Les segments spéciaux (#UNLUCKY#, #RÉESSAYER#) sont configurables</p>
+                  <p>• Les segments spéciaux (#PERDU#, #RÉESSAYER#) sont configurables</p>
                 </div>
               </div>
 
@@ -571,7 +571,7 @@ export default function PrizesPage() {
                   <Ban className="w-8 h-8 text-red-400" />
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold text-red-400">#UNLUCKY#</h4>
+                  <h4 className="text-lg font-bold text-red-400">#PERDU#</h4>
                   <p className="text-gray-400 text-xs">Éliminatoire - Fin du jeu</p>
                 </div>
               </div>
@@ -787,7 +787,7 @@ export default function PrizesPage() {
               <div className="mt-4 flex flex-wrap gap-2 justify-center lg:justify-start">
                 <span className="inline-flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">
                   <span className="w-2 h-2 bg-red-600 rounded-full"></span>
-                  #UNLUCKY# × {unluckyQuantity}
+                  #PERDU# × {unluckyQuantity}
                 </span>
                 <span className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">
                   <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>

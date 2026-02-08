@@ -65,7 +65,7 @@ export default function RedirectPage() {
   // Get phone number, language, and loyalty card info from URL params
   const phoneNumber = searchParams.get('phone');
   const langFromUrl = searchParams.get('lang');
-  const currentLang = langFromUrl || i18n.language || 'en';
+  const currentLang = langFromUrl || i18n.language || 'fr';
 
   // Loyalty card QR code for 2nd WhatsApp button
   const cardQrCode = searchParams.get('cardQr');

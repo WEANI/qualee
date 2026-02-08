@@ -129,7 +129,7 @@ export function WheelPreview({
     for (let i = 0; i < unluckyQuantity; i++) {
       allSegments.push({
         id: `unlucky-${i}`,
-        name: '#UNLUCKY#',
+        name: '#PERDU#',
         color: '#1a1a1a',
         textColor: '#ff4444',
         type: 'unlucky',

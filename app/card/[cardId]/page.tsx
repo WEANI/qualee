@@ -75,7 +75,7 @@ export default function LoyaltyCardPage({ params }: PageProps) {
     try {
       const clientRes = await fetch(`/api/loyalty/client?qrCode=${cardId}`);
       if (!clientRes.ok) {
-        setError('Card not found');
+        setError('Carte introuvable');
         setLoading(false);
         return;
       }
@@ -117,7 +117,7 @@ export default function LoyaltyCardPage({ params }: PageProps) {
         }
       }
     } catch {
-      setError('Failed to load card data');
+      setError('Impossible de charger les données');
     } finally {
       setLoading(false);
     }
@@ -199,10 +199,10 @@ export default function LoyaltyCardPage({ params }: PageProps) {
         fetchData();
       } else {
         const data = await res.json();
-        alert(data.error || 'Failed to redeem reward');
+        alert(data.error || 'Impossible d\'échanger la récompense');
       }
     } catch {
-      alert('An error occurred');
+      alert('Une erreur est survenue');
     } finally {
       setRedeeming(null);
     }
@@ -339,7 +339,7 @@ export default function LoyaltyCardPage({ params }: PageProps) {
       pdf.setTextColor(148, 163, 184);
       pdf.setFontSize(6);
       pdf.setFont('helvetica', 'normal');
-      pdf.text('Powered by Qualee', pageWidth / 2, footerY, { align: 'center' });
+      pdf.text('Propulsé par Qualee', pageWidth / 2, footerY, { align: 'center' });
       pdf.setFontSize(5);
       pdf.text(`qualee.netlify.app/card/${client.qr_code_data}`, pageWidth / 2, footerY + 3, { align: 'center' });
 
@@ -347,7 +347,7 @@ export default function LoyaltyCardPage({ params }: PageProps) {
       pdf.save(`${shopName.replace(/\s+/g, '_')}_card_${client.card_id}.pdf`);
     } catch (err) {
       console.error('Download error:', err);
-      alert(t('loyalty.card.downloadError') || 'Failed to download card');
+      alert(t('loyalty.card.downloadError') || 'Impossible de télécharger la carte');
     } finally {
       setDownloading(false);
     }
@@ -366,8 +366,8 @@ export default function LoyaltyCardPage({ params }: PageProps) {
       <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl p-8 shadow-xl text-center max-w-sm">
           <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-          <h1 className="text-xl font-bold text-slate-900 mb-2">Card Not Found</h1>
-          <p className="text-slate-600">This loyalty card does not exist or has been deactivated.</p>
+          <h1 className="text-xl font-bold text-slate-900 mb-2">Carte introuvable</h1>
+          <p className="text-slate-600">Cette carte de fidélité n&apos;existe pas ou a été désactivée.</p>
         </div>
       </div>
     );
@@ -397,7 +397,7 @@ export default function LoyaltyCardPage({ params }: PageProps) {
               </div>
             )}
             <div>
-              <h1 className="text-3xl font-bold text-slate-900">{shopName} Card</h1>
+              <h1 className="text-3xl font-bold text-slate-900">Carte {shopName}</h1>
               <p className="text-slate-600">{t('loyalty.card.title')}</p>
             </div>
           </div>
@@ -514,7 +514,7 @@ export default function LoyaltyCardPage({ params }: PageProps) {
                     <div className="bg-slate-50 rounded-xl p-4 text-center">
                       <TrendingUp className="w-6 h-6 text-green-500 mx-auto mb-2" />
                       <p className="text-2xl font-semibold text-slate-900">{client.total_purchases || 0}</p>
-                      <p className="text-xs text-slate-600">Purchases</p>
+                      <p className="text-xs text-slate-600">Achats</p>
                     </div>
                     <div className="bg-slate-50 rounded-xl p-4 text-center">
                       <Calendar className="w-6 h-6 text-blue-500 mx-auto mb-2" />
@@ -700,7 +700,7 @@ export default function LoyaltyCardPage({ params }: PageProps) {
                               {tx.points > 0 ? '+' : ''}{tx.points}
                             </p>
                             <p className="text-sm text-slate-500">
-                              Balance: {tx.balance_after}
+                              Solde : {tx.balance_after}
                             </p>
                           </div>
                         </div>
@@ -865,7 +865,7 @@ export default function LoyaltyCardPage({ params }: PageProps) {
 
         {/* Footer */}
         <div className="mt-8 text-center">
-          <p className="text-sm text-slate-500">Powered by Qualee</p>
+          <p className="text-sm text-slate-500">Propulsé par Qualee</p>
         </div>
       </div>
     </div>
