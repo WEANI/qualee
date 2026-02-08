@@ -33,8 +33,8 @@ if (isBrowser) {
     .use(initReactI18next)
     .init({
       resources,
-      fallbackLng: 'en',
-      lng: 'en', // Default language for initial render (prevents hydration mismatch)
+      fallbackLng: 'fr',
+      lng: 'fr', // Default language for initial render (prevents hydration mismatch)
       supportedLngs: ['en', 'fr', 'es', 'ar', 'th', 'zh', 'ru'],
       interpolation: {
         escapeValue: false,
@@ -54,8 +54,8 @@ if (isBrowser) {
     .use(initReactI18next)
     .init({
       resources,
-      fallbackLng: 'en',
-      lng: 'en', // Fixed language for SSR
+      fallbackLng: 'fr',
+      lng: 'fr', // Fixed language for SSR
       supportedLngs: ['en', 'fr', 'es', 'ar', 'th', 'zh', 'ru'],
       interpolation: {
         escapeValue: false,

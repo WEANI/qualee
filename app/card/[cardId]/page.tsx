@@ -409,7 +409,7 @@ export default function LoyaltyCardPage({ params }: PageProps) {
               className="flex items-center gap-2 px-3 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all border border-slate-200"
             >
               <Globe className="w-4 h-4 text-slate-500" />
-              <span className="text-lg">{LANGUAGES.find(l => l.code === currentLang)?.flag || '🇬🇧'}</span>
+              <span className="text-lg">{LANGUAGES.find(l => l.code === currentLang)?.flag || '🇫🇷'}</span>
               <span className="text-sm font-medium text-slate-700 hidden sm:inline">
                 {currentLang.toUpperCase()}
               </span>

@@ -246,7 +246,7 @@ export default function CGUPage() {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-4 text-gray-900">Legal</h4>
+              <h4 className="font-semibold mb-4 text-gray-900">Légal</h4>
               <ul className="space-y-3">
                 <li><Link href="/privacy" className="text-gray-600 hover:text-[#EB1E99] transition-colors text-sm">Politique de confidentialite</Link></li>
                 <li><Link href="/terms" className="text-gray-600 hover:text-[#EB1E99] transition-colors text-sm">Conditions d'utilisation</Link></li>

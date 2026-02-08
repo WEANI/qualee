@@ -327,7 +327,7 @@ export default function RatingPage() {
             className="flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-white transition-all backdrop-blur-sm"
           >
             <Globe className="w-4 h-4" />
-            <span className="text-xl">{ALL_LANGUAGES.find(l => l.code === i18n.language)?.flag || '🇬🇧'}</span>
+            <span className="text-xl">{ALL_LANGUAGES.find(l => l.code === i18n.language)?.flag || '🇫🇷'}</span>
             <span className="text-sm font-medium">{i18n.language.toUpperCase()}</span>
           </button>
         </div>
