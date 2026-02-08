@@ -553,7 +553,7 @@ export default function AdminDashboard() {
   const copyRateLink = (merchantId: string) => {
     const url = `${process.env.NEXT_PUBLIC_APP_URL}/rate/${merchantId}`;
     navigator.clipboard.writeText(url);
-    alert('Link copied to clipboard!');
+    alert('Lien copié !');
   };
 
   if (loading) {
@@ -561,7 +561,7 @@ export default function AdminDashboard() {
       <div className="dark min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg text-white/70">Loading admin dashboard...</p>
+          <p className="text-lg text-white/70">Chargement du tableau de bord...</p>
         </div>
       </div>
     );
@@ -579,7 +579,7 @@ export default function AdminDashboard() {
               alt="Qualee Logo"
               className="h-8 w-auto"
             />
-            <p className="text-xs text-white">Admin Dashboard</p>
+            <p className="text-xs text-white">Tableau de Bord Admin</p>
           </div>
         </div>
 
@@ -650,7 +650,7 @@ export default function AdminDashboard() {
             onClick={() => supabase.auth.signOut().then(() => router.push('/auth/login'))}
             className="w-full bg-slate-800 hover:bg-slate-700 text-white border-slate-700"
           >
-            Sign Out
+            Déconnexion
           </Button>
         </div>
       </div>
@@ -769,7 +769,7 @@ export default function AdminDashboard() {
                   <span className="font-semibold">+8%</span>
                 </div>
               </div>
-              <p className="text-white text-sm mb-2">Total Reviews</p>
+              <p className="text-white text-sm mb-2">Total Avis</p>
               <p className="text-4xl font-bold text-white mb-1">{stats.totalReviews}</p>
               <p className="text-xs text-white/60">Tous marchands</p>
             </div>
@@ -805,7 +805,7 @@ export default function AdminDashboard() {
                   <span className="font-semibold">+5%</span>
                 </div>
               </div>
-              <p className="text-white text-sm mb-2">Total Spins</p>
+              <p className="text-white text-sm mb-2">Total Tours de Roue</p>
               <p className="text-4xl font-bold text-white mb-1">{stats.totalSpins}</p>
               <p className="text-xs text-white/60">Tours de roue totaux</p>
             </div>
@@ -943,7 +943,7 @@ export default function AdminDashboard() {
                         stroke="#8b5cf6"
                         fillOpacity={1}
                         fill="url(#colorReviews)"
-                        name="Reviews"
+                        name="Avis"
                       />
                       <Area
                         type="monotone"
@@ -951,7 +951,7 @@ export default function AdminDashboard() {
                         stroke="#06b6d4"
                         fillOpacity={1}
                         fill="url(#colorSpins)"
-                        name="Spins"
+                        name="Tours"
                       />
                     </AreaChart>
                   </ResponsiveContainer>
@@ -972,7 +972,7 @@ export default function AdminDashboard() {
                           return [
                             { name: 'Starter', value: starterCount, color: '#8b5cf6' },
                             { name: 'Premium', value: premiumCount, color: '#10b981' },
-                            { name: 'Free', value: freeCount, color: '#6b7280' },
+                            { name: 'Gratuit', value: freeCount, color: '#6b7280' },
                           ].filter(d => d.value > 0);
                         })()}
                         cx="50%"
@@ -989,7 +989,7 @@ export default function AdminDashboard() {
                           const data = [
                             { name: 'Starter', value: starterCount, color: '#8b5cf6' },
                             { name: 'Premium', value: premiumCount, color: '#10b981' },
-                            { name: 'Free', value: freeCount, color: '#6b7280' },
+                            { name: 'Gratuit', value: freeCount, color: '#6b7280' },
                           ].filter(d => d.value > 0);
                           return data.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={entry.color} />
@@ -1015,7 +1015,7 @@ export default function AdminDashboard() {
 
             {/* Top Merchants */}
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700/50">
-              <h3 className="text-lg font-semibold !text-white mb-4" style={{ color: 'white' }}>Top Marchands par Reviews</h3>
+              <h3 className="text-lg font-semibold !text-white mb-4" style={{ color: 'white' }}>Top Marchands par Avis</h3>
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
@@ -1041,8 +1041,8 @@ export default function AdminDashboard() {
                         color: '#fff'
                       }}
                     />
-                    <Bar dataKey="reviews" fill="#8b5cf6" radius={[4, 4, 0, 0]} name="Reviews" />
-                    <Bar dataKey="spins" fill="#06b6d4" radius={[4, 4, 0, 0]} name="Spins" />
+                    <Bar dataKey="reviews" fill="#8b5cf6" radius={[4, 4, 0, 0]} name="Avis" />
+                    <Bar dataKey="spins" fill="#06b6d4" radius={[4, 4, 0, 0]} name="Tours" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -1124,12 +1124,12 @@ export default function AdminDashboard() {
                           {merchant.is_active !== false ? (
                             <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
                               <CheckCircle2 className="w-3 h-3 mr-1" />
-                              Active
+                              Actif
                             </Badge>
                           ) : (
                             <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
                               <XCircle className="w-3 h-3 mr-1" />
-                              Inactive
+                              Inactif
                             </Badge>
                           )}
                         </div>
@@ -1138,19 +1138,19 @@ export default function AdminDashboard() {
                         {/* Stats Grid */}
                         <div className="grid grid-cols-4 gap-3 mb-4">
                           <div className="bg-slate-900/50 rounded-xl p-3 border border-slate-700/50">
-                            <p className="text-xs text-white/70">Reviews</p>
+                            <p className="text-xs text-white/70">Avis</p>
                             <p className="text-lg font-bold text-white">{stats.totalReviews}</p>
                           </div>
                           <div className="bg-slate-900/50 rounded-xl p-3 border border-slate-700/50">
-                            <p className="text-xs text-white/70">Positive</p>
+                            <p className="text-xs text-white/70">Positifs</p>
                             <p className="text-lg font-bold text-emerald-400">{stats.positiveReviews}</p>
                           </div>
                           <div className="bg-slate-900/50 rounded-xl p-3 border border-slate-700/50">
-                            <p className="text-xs text-white/70">Avg Rating</p>
+                            <p className="text-xs text-white/70">Note Moy.</p>
                             <p className="text-lg font-bold text-white">{stats.avgRating} ⭐</p>
                           </div>
                           <div className="bg-slate-900/50 rounded-xl p-3 border border-slate-700/50">
-                            <p className="text-xs text-white/70">Spins</p>
+                            <p className="text-xs text-white/70">Tours</p>
                             <p className="text-lg font-bold text-purple-400">{stats.totalSpins}</p>
                           </div>
                         </div>
@@ -1163,7 +1163,7 @@ export default function AdminDashboard() {
                             className="gap-2 bg-slate-700 hover:bg-slate-600 text-white border-slate-600"
                           >
                             <Copy className="w-4 h-4" />
-                            Copy Link
+                            Copier le Lien
                           </Button>
                           <Button
                             size="sm"
@@ -1171,7 +1171,7 @@ export default function AdminDashboard() {
                             className="gap-2 bg-slate-700 hover:bg-slate-600 text-white border-slate-600"
                           >
                             <Download className="w-4 h-4" />
-                            Download QR
+                            Télécharger QR
                           </Button>
                           <Button
                             size="sm"
@@ -1187,7 +1187,7 @@ export default function AdminDashboard() {
                             className="gap-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 border-purple-500/30"
                           >
                             <ExternalLink className="w-4 h-4" />
-                            View Page
+                            Voir la Page
                           </Button>
                           <Button
                             size="sm"
@@ -1195,7 +1195,7 @@ export default function AdminDashboard() {
                             className="gap-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 border-blue-500/30"
                           >
                             <Eye className="w-4 h-4" />
-                            {isExpanded ? 'Hide' : 'Details'}
+                            {isExpanded ? 'Masquer' : 'Détails'}
                           </Button>
                         </div>
 
@@ -1203,11 +1203,11 @@ export default function AdminDashboard() {
                         {isExpanded && (
                           <div className="mt-4 p-4 bg-slate-900/50 rounded-xl border border-slate-700/50 space-y-3">
                             <div>
-                              <p className="text-xs font-semibold text-white mb-1">Merchant ID</p>
+                              <p className="text-xs font-semibold text-white mb-1">ID Marchand</p>
                               <code className="text-xs text-white font-mono bg-slate-800 px-2 py-1 rounded">{merchant.id}</code>
                             </div>
                             <div>
-                              <p className="text-xs font-semibold text-white mb-1">Rate Link</p>
+                              <p className="text-xs font-semibold text-white mb-1">Lien d'avis</p>
                               <code className="text-xs text-white font-mono break-all bg-slate-800 px-2 py-1 rounded block">
                                 {process.env.NEXT_PUBLIC_APP_URL}/rate/{merchant.id}
                               </code>
@@ -1234,7 +1234,7 @@ export default function AdminDashboard() {
                             )}
                             {merchant.background_url && (
                               <div>
-                                <p className="text-xs font-semibold text-white mb-2">Background</p>
+                                <p className="text-xs font-semibold text-white mb-2">Arrière-plan</p>
                                 <img src={merchant.background_url} alt="Background" className="h-24 w-auto object-cover rounded-lg border border-slate-700" />
                               </div>
                             )}
@@ -1251,7 +1251,7 @@ export default function AdminDashboard() {
                                 </div>
                                 {merchant.google_maps_url && (
                                   <div className="bg-slate-800/50 p-2 rounded">
-                                    <span className="text-xs text-white/70 block mb-1">Google Reviews:</span>
+                                    <span className="text-xs text-white/70 block mb-1">Avis Google :</span>
                                     <a href={merchant.google_maps_url} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-400 hover:text-blue-300 block truncate">
                                       {merchant.google_maps_url}
                                     </a>
@@ -1619,9 +1619,9 @@ export default function AdminDashboard() {
                   <table className="w-full">
                     <thead className="bg-slate-900/50">
                       <tr>
-                        <th className="text-left px-6 py-4 text-xs font-semibold text-white/70 uppercase tracking-wider">Card ID</th>
+                        <th className="text-left px-6 py-4 text-xs font-semibold text-white/70 uppercase tracking-wider">ID Carte</th>
                         <th className="text-left px-6 py-4 text-xs font-semibold text-white/70 uppercase tracking-wider">Client</th>
-                        <th className="text-left px-6 py-4 text-xs font-semibold text-white/70 uppercase tracking-wider">Merchant</th>
+                        <th className="text-left px-6 py-4 text-xs font-semibold text-white/70 uppercase tracking-wider">Marchand</th>
                         <th className="text-left px-6 py-4 text-xs font-semibold text-white/70 uppercase tracking-wider">Points</th>
                         <th className="text-left px-6 py-4 text-xs font-semibold text-white/70 uppercase tracking-wider">Achats</th>
                         <th className="text-left px-6 py-4 text-xs font-semibold text-white/70 uppercase tracking-wider">Statut</th>

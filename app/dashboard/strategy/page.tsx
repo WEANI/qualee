@@ -10,7 +10,7 @@ import { Check, X, Loader2, Calendar, MapPin, Star, Music, Instagram as Instagra
 
 const DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 const PLATFORMS = [
-  { value: 'google_maps', label: 'Google Reviews', icon: MapPin, color: 'bg-red-500' },
+  { value: 'google_maps', label: 'Avis Google', icon: MapPin, color: 'bg-red-500' },
   { value: 'tripadvisor', label: 'TripAdvisor', icon: Star, color: 'bg-green-500' },
   { value: 'tiktok', label: 'TikTok', icon: Music, color: 'bg-black' },
   { value: 'instagram', label: 'Instagram', icon: InstagramIcon, color: 'bg-pink-500' },

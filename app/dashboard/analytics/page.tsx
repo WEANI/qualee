@@ -299,7 +299,7 @@ export default function AnalyticsPage() {
               </div>
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                 <div>
-                  <p className="text-sm text-gray-600">Total Spins</p>
+                  <p className="text-sm text-gray-600">Total Tours de Roue</p>
                   <p className="text-2xl font-bold text-gray-900">{stats.totalSpins}</p>
                 </div>
                 <div className="p-3 bg-purple-100 rounded-lg">
