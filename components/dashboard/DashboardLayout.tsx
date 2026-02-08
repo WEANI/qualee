@@ -24,7 +24,6 @@ import {
   ChevronRight,
   Store,
   Award,
-  Megaphone,
   Send,
   Building2,
   UserCircle,
@@ -53,24 +52,18 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
 
   const navigation = [
     { name: 'Tableau de bord', href: '/dashboard', icon: LayoutDashboard },
-    { name: 'Scanner', href: '/dashboard/scan', icon: ScanLine },
-    { name: 'Lots', href: '/dashboard/prizes', icon: Gift },
-    { name: 'Avis', href: '/dashboard/feedback', icon: MessageSquare },
-    { name: 'QR Code', href: '/dashboard/qr', icon: QrCode },
-    { name: 'Statistiques', href: '/dashboard/analytics', icon: BarChart3 },
-    { name: 'Strategie', href: '/dashboard/strategy', icon: Target },
-    { name: 'Clients', href: '/dashboard/customers', icon: Users },
-    { name: 'Facturation', href: '/dashboard/billing', icon: CreditCard },
-    { name: 'Mon Profil', href: '/dashboard/profile', icon: UserCircle },
     { name: 'Mon Compte', href: '/dashboard/account', icon: CircleUserRound },
-    { name: 'Parametres', href: '/dashboard/settings', icon: Settings },
-  ];
-
-  const loyaltyNavigation = [
+    { name: 'Mon Profil', href: '/dashboard/profile', icon: UserCircle },
+    { name: 'QR Code', href: '/dashboard/qr', icon: QrCode },
+    { name: 'Scanner', href: '/dashboard/scan', icon: ScanLine },
+    { name: 'Strategie', href: '/dashboard/strategy', icon: Target },
+    { name: 'Lots & Prix', href: '/dashboard/prizes', icon: Gift },
     { name: 'Programme fidelite', href: '/dashboard/loyalty', icon: Award },
-  ];
-
-  const marketingNavigation = [
+    { name: 'Avis clients', href: '/dashboard/feedback', icon: MessageSquare },
+    { name: 'Statistiques', href: '/dashboard/analytics', icon: BarChart3 },
+    { name: 'Clients', href: '/dashboard/customers', icon: Users },
+    { name: 'Abonnement', href: '/dashboard/billing', icon: CreditCard },
+    { name: 'Parametres', href: '/dashboard/settings', icon: Settings },
     { name: 'Campagne WhatsApp', href: '/dashboard/marketing/whatsapp-campaign', icon: Send },
   ];
 
@@ -151,7 +144,9 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
           <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800">
             <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Menu principal</p>
             {navigation.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = item.href === '/dashboard'
+                ? pathname === '/dashboard'
+                : pathname === item.href || pathname.startsWith(item.href + '/');
               const Icon = item.icon;
 
               return (
@@ -163,74 +158,6 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                     group flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
                     ${isActive
                       ? 'bg-gradient-to-r from-[#7209B7] to-[#3A0CA3] text-white shadow-lg shadow-violet-900/20 border border-violet-500/20'
-                      : 'text-white hover:bg-slate-800/50'
-                    }
-                  `}
-                >
-                  <Icon className={`w-5 h-5 transition-colors ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`} />
-                  {item.name}
-                  {isActive && <ChevronRight className="w-4 h-4 ml-auto text-white/50" />}
-                </Link>
-              );
-            })}
-
-            {/* Loyalty Section Separator */}
-            <div className="my-6 px-4">
-              <div className="border-t border-slate-700/50"></div>
-            </div>
-
-            {/* Loyalty Section */}
-            <div className="flex items-center gap-2 px-4 mb-4">
-              <Award className="w-4 h-4 text-[#00A7E1]" />
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Fidelite</p>
-            </div>
-            {loyaltyNavigation.map((item) => {
-              const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
-              const Icon = item.icon;
-
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setSidebarOpen(false)}
-                  className={`
-                    group flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
-                    ${isActive
-                      ? 'bg-gradient-to-r from-[#00A7E1] to-[#0090C1] text-white shadow-lg shadow-sky-900/20 border border-sky-500/20'
-                      : 'text-white hover:bg-slate-800/50'
-                    }
-                  `}
-                >
-                  <Icon className={`w-5 h-5 transition-colors ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`} />
-                  {item.name}
-                  {isActive && <ChevronRight className="w-4 h-4 ml-auto text-white/50" />}
-                </Link>
-              );
-            })}
-
-            {/* Marketing Section Separator */}
-            <div className="my-6 px-4">
-              <div className="border-t border-slate-700/50"></div>
-            </div>
-
-            {/* Marketing Section */}
-            <div className="flex items-center gap-2 px-4 mb-4">
-              <Megaphone className="w-4 h-4 text-[#EB1E99]" />
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Marketing</p>
-            </div>
-            {marketingNavigation.map((item) => {
-              const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
-              const Icon = item.icon;
-
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setSidebarOpen(false)}
-                  className={`
-                    group flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
-                    ${isActive
-                      ? 'bg-gradient-to-r from-[#EB1E99] to-[#C01682] text-white shadow-lg shadow-pink-900/20 border border-pink-500/20'
                       : 'text-white hover:bg-slate-800/50'
                     }
                   `}
@@ -305,10 +232,9 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
 
               <div className="flex flex-col">
                 <h1 className="text-xl font-bold text-slate-900">
-                  {navigation.find(item => item.href === pathname)?.name ||
-                   loyaltyNavigation.find(item => pathname.startsWith(item.href))?.name ||
-                   marketingNavigation.find(item => pathname.startsWith(item.href))?.name ||
-                   'Tableau de bord'}
+                  {navigation.find(item =>
+                    item.href === pathname || (item.href !== '/dashboard' && pathname.startsWith(item.href + '/'))
+                  )?.name || 'Tableau de bord'}
                 </h1>
                 <p className="text-sm text-slate-500 hidden sm:block">
                   En ligne
