@@ -46,11 +46,12 @@ export function StoreSwitcher({ onStoreChange }: StoreSwitcherProps) {
         .eq('owner_id', user.id)
         .order('created_at', { ascending: false });
 
-      setOrganizations(orgsData || []);
+      const typedOrgs = (orgsData || []) as OrganizationWithStores[];
+      setOrganizations(typedOrgs);
 
       // Auto-select first org and store if available
-      if (orgsData && orgsData.length > 0) {
-        const firstOrg = orgsData[0];
+      if (typedOrgs.length > 0) {
+        const firstOrg = typedOrgs[0];
         setCurrentOrg(firstOrg);
 
         // Try to get from localStorage
@@ -58,17 +59,17 @@ export function StoreSwitcher({ onStoreChange }: StoreSwitcherProps) {
         const savedOrgId = localStorage.getItem('currentOrgId');
 
         if (savedOrgId && savedStoreId) {
-          const savedOrg = orgsData.find(o => o.id === savedOrgId);
+          const savedOrg = typedOrgs.find(o => o.id === savedOrgId);
           if (savedOrg) {
             setCurrentOrg(savedOrg);
-            const savedStore = savedOrg.stores?.find(s => s.id === savedStoreId);
+            const savedStore = savedOrg.stores?.find((s: StoreType) => s.id === savedStoreId);
             if (savedStore) {
               setCurrentStore(savedStore);
               onStoreChange?.(savedStore, savedOrg);
             }
           }
         } else if (firstOrg.stores && firstOrg.stores.length > 0) {
-          const hq = firstOrg.stores.find(s => s.is_headquarters) || firstOrg.stores[0];
+          const hq = firstOrg.stores.find((s: StoreType) => s.is_headquarters) || firstOrg.stores[0];
           setCurrentStore(hq);
           onStoreChange?.(hq, firstOrg);
         }
