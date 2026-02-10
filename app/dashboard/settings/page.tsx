@@ -1,40 +1,83 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Upload, Image as ImageIcon, Check, X, Loader2, Award, Star, Coins, Gift } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import {
+  Upload,
+  Image as ImageIcon,
+  Check,
+  X,
+  Loader2,
+  Globe,
+  Bell,
+  Shield,
+  Save,
+} from 'lucide-react';
+
+const TIMEZONES = [
+  { value: 'Africa/Libreville', label: 'Africa/Libreville (UTC+1)' },
+  { value: 'Africa/Lagos', label: 'Africa/Lagos (UTC+1)' },
+  { value: 'Africa/Douala', label: 'Africa/Douala (UTC+1)' },
+  { value: 'Africa/Kinshasa', label: 'Africa/Kinshasa (UTC+1)' },
+  { value: 'Africa/Brazzaville', label: 'Africa/Brazzaville (UTC+1)' },
+  { value: 'Europe/Paris', label: 'Europe/Paris (UTC+1/+2)' },
+  { value: 'Europe/London', label: 'Europe/London (UTC+0/+1)' },
+  { value: 'America/New_York', label: 'America/New_York (UTC-5/-4)' },
+  { value: 'Asia/Bangkok', label: 'Asia/Bangkok (UTC+7)' },
+  { value: 'Asia/Shanghai', label: 'Asia/Shanghai (UTC+8)' },
+];
+
+const LANGUAGES = [
+  { value: 'fr', label: 'Fran\u00e7ais', flag: '\ud83c\uddeb\ud83c\uddf7' },
+  { value: 'en', label: 'English', flag: '\ud83c\uddec\ud83c\udde7' },
+];
 
 export default function SettingsPage() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [merchant, setMerchant] = useState<any>(null);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState<{ type: 'success' | 'error' | 'warning'; text: string; sql?: string } | null>(null);
+
+  // Language & Region
+  const [language, setLanguage] = useState('fr');
+  const [timezone, setTimezone] = useState('Africa/Libreville');
+
+  // Notifications
+  const [emailNotifications, setEmailNotifications] = useState(true);
+  const [reviewAlerts, setReviewAlerts] = useState(true);
+  const [weeklySummary, setWeeklySummary] = useState(false);
+
+  // Image uploads (kept from original)
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [backgroundFile, setBackgroundFile] = useState<File | null>(null);
-  const [loyaltyCardFile, setLoyaltyCardFile] = useState<File | null>(null);
-  const [logoPreview, setLogoPreview] = useState<string>('');
-  const [backgroundPreview, setBackgroundPreview] = useState<string>('');
-  const [loyaltyCardPreview, setLoyaltyCardPreview] = useState<string>('');
-  const [uploading, setUploading] = useState(false);
-  const [savingLoyalty, setSavingLoyalty] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error' | 'warning', text: string, sql?: string } | null>(null);
+  const [logoPreview, setLogoPreview] = useState('');
+  const [backgroundPreview, setBackgroundPreview] = useState('');
 
-  // Loyalty settings state
-  const [loyaltyEnabled, setLoyaltyEnabled] = useState(false);
-  const [pointsPerPurchase, setPointsPerPurchase] = useState(10);
-  const [purchaseThreshold, setPurchaseThreshold] = useState(1000);
-  const [loyaltyCurrency, setLoyaltyCurrency] = useState<'EUR'>('EUR');
-  const [welcomePoints, setWelcomePoints] = useState(50);
+  const loadSettings = useCallback(() => {
+    // Load from localStorage
+    const saved = localStorage.getItem('qualee_settings');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed.language) setLanguage(parsed.language);
+        if (parsed.timezone) setTimezone(parsed.timezone);
+        if (parsed.emailNotifications !== undefined) setEmailNotifications(parsed.emailNotifications);
+        if (parsed.reviewAlerts !== undefined) setReviewAlerts(parsed.reviewAlerts);
+        if (parsed.weeklySummary !== undefined) setWeeklySummary(parsed.weeklySummary);
+      } catch { /* ignore */ }
+    }
+  }, []);
 
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) {
         router.push('/auth/login');
         return;
@@ -51,27 +94,18 @@ export default function SettingsPage() {
       setMerchant(merchantData);
       if (merchantData?.logo_url) setLogoPreview(merchantData.logo_url);
       if (merchantData?.background_url) setBackgroundPreview(merchantData.background_url);
-      if (merchantData?.loyalty_card_image_url) setLoyaltyCardPreview(merchantData.loyalty_card_image_url);
-
-      // Load loyalty settings
-      setLoyaltyEnabled(merchantData?.loyalty_enabled || false);
-      setPointsPerPurchase(merchantData?.points_per_purchase || 10);
-      setPurchaseThreshold(merchantData?.purchase_amount_threshold || 1000);
-      setLoyaltyCurrency('EUR');
-      setWelcomePoints(merchantData?.welcome_points || 50);
     };
 
     checkAuth();
-  }, [router]);
+    loadSettings();
+  }, [router, loadSettings]);
 
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setLogoFile(file);
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setLogoPreview(reader.result as string);
-      };
+      reader.onloadend = () => setLogoPreview(reader.result as string);
       reader.readAsDataURL(file);
     }
   };
@@ -79,130 +113,64 @@ export default function SettingsPage() {
   const handleBackgroundChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Set file immediately to enable Save button
       setBackgroundFile(file);
-      
-      // Check aspect ratio (9:16 for vertical) - warning only, not blocking
       const img = new Image();
       img.onload = () => {
         const aspectRatio = img.width / img.height;
         const target = 9 / 16;
         if (Math.abs(aspectRatio - target) > 0.15) {
-          setMessage({ 
-            type: 'error', 
-            text: `Le ratio de l'image est ${(aspectRatio * 16 / 9).toFixed(2)}:16. Recommandé : 9:16 (format vertical)` 
+          setMessage({
+            type: 'warning',
+            text: `Le ratio de l'image est ${(aspectRatio * 16 / 9).toFixed(2)}:16. Recommand\u00e9 : 9:16 (format vertical)`
           });
-        } else {
-          setMessage(null);
         }
       };
       img.src = URL.createObjectURL(file);
-      
-      // Show preview immediately
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setBackgroundPreview(reader.result as string);
-      };
+      reader.onloadend = () => setBackgroundPreview(reader.result as string);
       reader.readAsDataURL(file);
     }
   };
 
-  const handleLoyaltyCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setLoyaltyCardFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setLoyaltyCardPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSaveLoyalty = async () => {
-    if (!user) return;
-
-    setSavingLoyalty(true);
-    setMessage(null);
-
-    try {
-      const updates: any = {
-        loyalty_enabled: loyaltyEnabled,
-        points_per_purchase: pointsPerPurchase,
-        purchase_amount_threshold: purchaseThreshold,
-        loyalty_currency: loyaltyCurrency,
-        welcome_points: welcomePoints
-      };
-
-      if (loyaltyCardFile) {
-        const cardImageUrl = await uploadImage(loyaltyCardFile, 'loyalty-cards');
-        updates.loyalty_card_image_url = cardImageUrl;
-      }
-
-      const { error } = await supabase
-        .from('merchants')
-        .update(updates)
-        .eq('id', user.id);
-
-      if (error) throw error;
-
-      setMessage({ type: 'success', text: 'Paramètres fidélité enregistrés avec succès !' });
-      setLoyaltyCardFile(null);
-
-      // Refresh merchant data
-      const { data: merchantData } = await supabase
-        .from('merchants')
-        .select('*')
-        .eq('id', user.id)
-        .maybeSingle();
-      setMerchant(merchantData);
-    } catch (error: any) {
-      setMessage({ type: 'error', text: error.message || 'Échec de l\'enregistrement des paramètres de fidélité' });
-    } finally {
-      setSavingLoyalty(false);
-    }
-  };
-
-  const uploadImage = async (file: File, path: string) => {
+  const uploadImage = async (file: File) => {
     const fileExt = file.name.split('.').pop();
     const fileName = `${user.id}-${Date.now()}.${fileExt}`;
-    const filePath = `${fileName}`;
 
-    const { error: uploadError, data } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from('merchant-assets')
-      .upload(filePath, file, { 
-        cacheControl: '3600',
-        upsert: true 
-      });
+      .upload(fileName, file, { cacheControl: '3600', upsert: true });
 
-    if (uploadError) {
-      throw new Error(uploadError.message || 'Échec du téléchargement de l\'image');
-    }
+    if (uploadError) throw new Error(uploadError.message || 'Erreur de t\u00e9l\u00e9chargement');
 
     const { data: { publicUrl } } = supabase.storage
       .from('merchant-assets')
-      .getPublicUrl(filePath);
+      .getPublicUrl(fileName);
 
     return publicUrl;
   };
 
   const handleSave = async () => {
     if (!user) return;
-
-    setUploading(true);
+    setSaving(true);
     setMessage(null);
 
     try {
-      const updates: any = {};
+      // Save settings to localStorage
+      localStorage.setItem('qualee_settings', JSON.stringify({
+        language,
+        timezone,
+        emailNotifications,
+        reviewAlerts,
+        weeklySummary,
+      }));
 
+      // Save image uploads if any
+      const updates: Record<string, string> = {};
       if (logoFile) {
-        const logoUrl = await uploadImage(logoFile, 'logos');
-        updates.logo_url = logoUrl;
+        updates.logo_url = await uploadImage(logoFile);
       }
-
       if (backgroundFile) {
-        const backgroundUrl = await uploadImage(backgroundFile, 'backgrounds');
-        updates.background_url = backgroundUrl;
+        updates.background_url = await uploadImage(backgroundFile);
       }
 
       if (Object.keys(updates).length > 0) {
@@ -210,88 +178,86 @@ export default function SettingsPage() {
           .from('merchants')
           .update(updates)
           .eq('id', user.id);
-
         if (error) throw error;
-
-        setMessage({ type: 'success', text: 'Images téléchargées avec succès !' });
-        setLogoFile(null);
-        setBackgroundFile(null);
-        
-        // Refresh merchant data
-        const { data: merchantData } = await supabase
-          .from('merchants')
-          .select('*')
-          .eq('id', user.id)
-          .maybeSingle();
-        setMerchant(merchantData);
       }
+
+      setMessage({ type: 'success', text: 'Param\u00e8tres enregistr\u00e9s avec succ\u00e8s !' });
+      setLogoFile(null);
+      setBackgroundFile(null);
+
+      // Refresh
+      const { data: merchantData } = await supabase
+        .from('merchants')
+        .select('*')
+        .eq('id', user.id)
+        .maybeSingle();
+      if (merchantData) setMerchant(merchantData);
     } catch (error: any) {
-      if (error.message && (error.message.includes('row-level security') || error.message.includes('StorageApiError'))) {
+      if (error.message?.includes('row-level security') || error.message?.includes('StorageApiError')) {
         setMessage({
           type: 'warning',
           text: 'Configuration requise : les politiques de stockage sont manquantes.',
-          sql: `
--- Run this in your Supabase SQL Editor:
-INSERT INTO storage.buckets (id, name, public) VALUES ('merchant-assets', 'merchant-assets', true) ON CONFLICT (id) DO NOTHING;
-
-DROP POLICY IF EXISTS "Public Access" ON storage.objects;
-CREATE POLICY "Public Access" ON storage.objects FOR SELECT USING ( bucket_id = 'merchant-assets' );
-
-DROP POLICY IF EXISTS "Auth Upload" ON storage.objects;
-CREATE POLICY "Auth Upload" ON storage.objects FOR INSERT WITH CHECK ( bucket_id = 'merchant-assets' AND auth.role() = 'authenticated' );
-
-DROP POLICY IF EXISTS "Auth Update" ON storage.objects;
-CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'merchant-assets' AND auth.role() = 'authenticated' );`
+          sql: `-- Run this in your Supabase SQL Editor:\nINSERT INTO storage.buckets (id, name, public) VALUES ('merchant-assets', 'merchant-assets', true) ON CONFLICT (id) DO NOTHING;\n\nDROP POLICY IF EXISTS "Public Access" ON storage.objects;\nCREATE POLICY "Public Access" ON storage.objects FOR SELECT USING ( bucket_id = 'merchant-assets' );\n\nDROP POLICY IF EXISTS "Auth Upload" ON storage.objects;\nCREATE POLICY "Auth Upload" ON storage.objects FOR INSERT WITH CHECK ( bucket_id = 'merchant-assets' AND auth.role() = 'authenticated' );\n\nDROP POLICY IF EXISTS "Auth Update" ON storage.objects;\nCREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'merchant-assets' AND auth.role() = 'authenticated' );`
         });
       } else {
-        setMessage({ type: 'error', text: error.message || 'Échec du téléchargement des images' });
+        setMessage({ type: 'error', text: error.message || '\u00c9chec de l\'enregistrement' });
       }
     } finally {
-      setUploading(false);
+      setSaving(false);
     }
   };
 
+  const Toggle = ({ enabled, onChange }: { enabled: boolean; onChange: (v: boolean) => void }) => (
+    <button
+      type="button"
+      onClick={() => onChange(!enabled)}
+      className={`w-14 h-7 rounded-full transition-colors flex-shrink-0 ${enabled ? 'bg-teal-500' : 'bg-slate-300'}`}
+    >
+      <div className={`w-6 h-6 bg-white rounded-full shadow-sm transform transition-transform ${enabled ? 'translate-x-7' : 'translate-x-0.5'}`} />
+    </button>
+  );
+
   if (!user || !merchant) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-violet-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg text-gray-600">Chargement...</p>
+      <DashboardLayout merchant={merchant}>
+        <div className="flex items-center justify-center h-96">
+          <Loader2 className="w-8 h-8 animate-spin text-violet-500" />
         </div>
-      </div>
+      </DashboardLayout>
     );
   }
 
+  const selectedLang = LANGUAGES.find(l => l.value === language) || LANGUAGES[0];
+
   return (
     <DashboardLayout merchant={merchant}>
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
+        {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Paramètres</h1>
-          <p className="text-gray-600">Personnalisez l'apparence de votre page d'évaluation</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Param\u00e8tres</h1>
+          <p className="text-slate-600 mt-1">Param\u00e8tres g\u00e9n\u00e9raux de l&apos;application</p>
         </div>
 
         {message && (
-          <Card className={`p-4 ${
-            message.type === 'success' ? 'bg-teal-50 border-teal-200' : 
+          <Card className={`p-3 sm:p-4 ${
+            message.type === 'success' ? 'bg-teal-50 border-teal-200' :
             message.type === 'warning' ? 'bg-amber-50 border-amber-200' :
             'bg-red-50 border-red-200'
           }`}>
             <div className="flex items-start gap-2">
               {message.type === 'success' ? (
-                <Check className="w-5 h-5 text-violet-600 mt-0.5" />
+                <Check className="w-5 h-5 text-teal-600 mt-0.5 flex-shrink-0" />
               ) : message.type === 'warning' ? (
-                <div className="w-5 h-5 text-amber-600 mt-0.5">⚠️</div>
+                <div className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0">!</div>
               ) : (
-                <X className="w-5 h-5 text-red-600 mt-0.5" />
+                <X className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
               )}
-              <div className="flex-1">
-                <p className={`font-medium ${
-                  message.type === 'success' ? 'text-teal-700' : 
+              <div className="flex-1 min-w-0">
+                <p className={`font-medium text-sm ${
+                  message.type === 'success' ? 'text-teal-700' :
                   message.type === 'warning' ? 'text-amber-800' :
                   'text-red-700'
-                }`}>
-                  {message.text}
-                </p>
+                }`}>{message.text}</p>
                 {message.sql && (
                   <pre className="mt-2 p-3 bg-white/50 rounded border text-xs font-mono overflow-x-auto">
                     {message.sql}
@@ -302,294 +268,198 @@ CREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'm
           </Card>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Logo Upload */}
-          <Card className="p-6">
-            <div className="flex items-center justify-between mb-4">
+        {/* Section 1: Language & Region */}
+        <Card className="p-4 sm:p-6">
+          <div className="flex items-center gap-3 mb-5 sm:mb-6">
+            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Globe className="w-5 h-5 text-blue-600" />
+            </div>
+            <div>
+              <h2 className="text-base sm:text-lg font-semibold text-slate-900">Langue & R\u00e9gion</h2>
+              <p className="text-xs sm:text-sm text-slate-500">Configurez la langue et le fuseau horaire</p>
+            </div>
+          </div>
+
+          <div className="space-y-4 sm:space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Logo de l'entreprise</h3>
-                <p className="text-sm text-gray-600">Affiché en haut de votre page d'évaluation</p>
+                <p className="text-sm font-medium text-slate-700">Langue de l&apos;application</p>
               </div>
-              <Badge variant="outline">Carré</Badge>
+              <div className="relative">
+                <select
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)}
+                  className="appearance-none px-4 py-2.5 pr-8 border border-slate-300 rounded-lg text-base sm:text-sm bg-white focus:ring-2 focus:ring-violet-500 focus:border-violet-500 cursor-pointer w-full sm:w-auto"
+                >
+                  {LANGUAGES.map(lang => (
+                    <option key={lang.value} value={lang.value}>{lang.flag} {lang.label}</option>
+                  ))}
+                </select>
+              </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="border-t border-slate-100 pt-4 sm:pt-5">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+                <div>
+                  <p className="text-sm font-medium text-slate-700">Fuseau horaire</p>
+                </div>
+                <select
+                  value={timezone}
+                  onChange={(e) => setTimezone(e.target.value)}
+                  className="px-3 py-2.5 border border-slate-300 rounded-lg text-base sm:text-sm bg-white focus:ring-2 focus:ring-violet-500 focus:border-violet-500 w-full sm:w-auto sm:min-w-[280px]"
+                >
+                  {TIMEZONES.map(tz => (
+                    <option key={tz.value} value={tz.value}>{tz.label}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+        </Card>
+
+        {/* Section 2: Notifications */}
+        <Card className="p-4 sm:p-6">
+          <div className="flex items-center gap-3 mb-5 sm:mb-6">
+            <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Bell className="w-5 h-5 text-amber-600" />
+            </div>
+            <div>
+              <h2 className="text-base sm:text-lg font-semibold text-slate-900">Notifications</h2>
+              <p className="text-xs sm:text-sm text-slate-500">G\u00e9rez vos pr\u00e9f\u00e9rences de notifications</p>
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <div className="flex items-center justify-between gap-4 p-3 sm:p-4 rounded-lg hover:bg-slate-50 transition-colors">
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-slate-900">Notifications par email</p>
+                <p className="text-xs sm:text-sm text-slate-500">Recevez les notifications par email</p>
+              </div>
+              <Toggle enabled={emailNotifications} onChange={setEmailNotifications} />
+            </div>
+
+            <div className="flex items-center justify-between gap-4 p-3 sm:p-4 rounded-lg hover:bg-slate-50 transition-colors">
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-slate-900">Alertes nouveaux avis</p>
+                <p className="text-xs sm:text-sm text-slate-500">Soyez pr\u00e9venu quand un client laisse un avis</p>
+              </div>
+              <Toggle enabled={reviewAlerts} onChange={setReviewAlerts} />
+            </div>
+
+            <div className="flex items-center justify-between gap-4 p-3 sm:p-4 rounded-lg hover:bg-slate-50 transition-colors">
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-slate-900">R\u00e9sum\u00e9 hebdomadaire</p>
+                <p className="text-xs sm:text-sm text-slate-500">Recevez un r\u00e9sum\u00e9 hebdomadaire de performance</p>
+              </div>
+              <Toggle enabled={weeklySummary} onChange={setWeeklySummary} />
+            </div>
+          </div>
+        </Card>
+
+        {/* Section 3: Account */}
+        <Card className="p-4 sm:p-6">
+          <div className="flex items-center gap-3 mb-5 sm:mb-6">
+            <div className="w-10 h-10 bg-violet-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Shield className="w-5 h-5 text-violet-600" />
+            </div>
+            <div>
+              <h2 className="text-base sm:text-lg font-semibold text-slate-900">Compte</h2>
+              <p className="text-xs sm:text-sm text-slate-500">Informations de votre compte</p>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <div className="p-3 sm:p-4 bg-slate-50 rounded-lg border border-slate-200">
+              <p className="text-xs text-slate-500 mb-1">Email</p>
+              <p className="text-sm font-medium text-slate-900 break-all">{user.email}</p>
+            </div>
+
+            <div className="p-3 sm:p-4 bg-slate-50 rounded-lg border border-slate-200">
+              <p className="text-xs text-slate-500 mb-1">Account ID</p>
+              <p className="text-xs sm:text-sm font-mono text-slate-700 break-all">{user.id}</p>
+            </div>
+          </div>
+        </Card>
+
+        {/* Section 4: Personnalisation (images) */}
+        <Card className="p-4 sm:p-6">
+          <div className="flex items-center gap-3 mb-5 sm:mb-6">
+            <div className="w-10 h-10 bg-violet-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <ImageIcon className="w-5 h-5 text-violet-600" />
+            </div>
+            <div>
+              <h2 className="text-base sm:text-lg font-semibold text-slate-900">Personnalisation</h2>
+              <p className="text-xs sm:text-sm text-slate-500">Logo et image de fond de votre page d&apos;\u00e9valuation</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            {/* Logo */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-medium text-slate-700">Logo de l&apos;entreprise</p>
+                <Badge variant="outline" className="text-xs">Carr\u00e9</Badge>
+              </div>
               {logoPreview && (
-                <div className="relative w-full h-48 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img src={logoPreview} alt="Logo preview" className="max-h-full max-w-full object-contain" />
+                <div className="relative w-full h-32 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden mb-3">
+                  <img src={logoPreview} alt="Logo" className="max-h-full max-w-full object-contain" />
                 </div>
               )}
-
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-violet-500 transition-colors">
-                <input
-                  type="file"
-                  id="logo-upload"
-                  accept="image/*"
-                  onChange={handleLogoChange}
-                  className="hidden"
-                />
+              <div className="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center hover:border-violet-500 transition-colors">
+                <input type="file" id="logo-upload" accept="image/*" onChange={handleLogoChange} className="hidden" />
                 <label htmlFor="logo-upload" className="cursor-pointer">
-                  <ImageIcon className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-sm text-gray-600 mb-1">
-                    <span className="text-violet-600 font-semibold">Cliquez pour télécharger</span> ou glissez-déposez
-                  </p>
-                  <p className="text-xs text-gray-500">PNG, JPG jusqu'à 5 Mo</p>
+                  <ImageIcon className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                  <p className="text-xs text-slate-600"><span className="text-violet-600 font-semibold">T\u00e9l\u00e9charger</span></p>
+                  <p className="text-xs text-slate-500">PNG, JPG jusqu&apos;\u00e0 5 Mo</p>
                 </label>
               </div>
             </div>
-          </Card>
 
-          {/* Background Upload */}
-          <Card className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">Image de fond</h3>
-                <p className="text-sm text-gray-600">Arrière-plan de votre page d'évaluation</p>
+            {/* Background */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-medium text-slate-700">Image de fond</p>
+                <Badge variant="outline" className="text-xs">9:16</Badge>
               </div>
-              <Badge variant="outline">9:16 Ratio</Badge>
-            </div>
-
-            <div className="space-y-4">
               {backgroundPreview && (
-                <div className="relative w-full h-48 bg-gray-100 rounded-lg overflow-hidden">
-                  <img src={backgroundPreview} alt="Background preview" className="w-full h-full object-cover" />
+                <div className="relative w-full h-32 bg-slate-100 rounded-lg overflow-hidden mb-3">
+                  <img src={backgroundPreview} alt="Background" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <p className="text-white text-sm">Avec superposition (40% opacité)</p>
+                    <p className="text-white text-xs">Superposition 40%</p>
                   </div>
                 </div>
               )}
-
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-violet-500 transition-colors">
-                <input
-                  type="file"
-                  id="background-upload"
-                  accept="image/*"
-                  onChange={handleBackgroundChange}
-                  className="hidden"
-                />
+              <div className="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center hover:border-violet-500 transition-colors">
+                <input type="file" id="background-upload" accept="image/*" onChange={handleBackgroundChange} className="hidden" />
                 <label htmlFor="background-upload" className="cursor-pointer">
-                  <Upload className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-sm text-gray-600 mb-1">
-                    <span className="text-violet-600 font-semibold">Cliquez pour télécharger</span> ou glissez-déposez
-                  </p>
-                  <p className="text-xs text-gray-500">PNG, JPG (format 9:16) jusqu'à 10 Mo</p>
+                  <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                  <p className="text-xs text-slate-600"><span className="text-violet-600 font-semibold">T\u00e9l\u00e9charger</span></p>
+                  <p className="text-xs text-slate-500">PNG, JPG (9:16) jusqu&apos;\u00e0 10 Mo</p>
                 </label>
-              </div>
-            </div>
-          </Card>
-        </div>
-
-        {/* Preview */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Aperçu</h3>
-          <div className="bg-gray-100 rounded-lg p-4">
-            <div className="max-w-sm mx-auto aspect-[9/16] bg-white rounded-2xl shadow-xl overflow-hidden relative">
-              {backgroundPreview && (
-                <div className="absolute inset-0">
-                  <img src={backgroundPreview} alt="Background" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/40"></div>
-                </div>
-              )}
-              <div className="relative z-10 p-6 flex flex-col items-center justify-center h-full">
-                {logoPreview && (
-                  <img src={logoPreview} alt="Logo" className="h-16 mb-4 object-contain" />
-                )}
-                <div className="bg-white rounded-2xl shadow-2xl p-6 w-full">
-                  <h3 className="text-xl font-bold text-center mb-4">{merchant.business_name}</h3>
-                  <p className="text-center text-gray-600 text-sm">Aperçu de la fenêtre d'évaluation</p>
-                </div>
               </div>
             </div>
           </div>
         </Card>
 
         {/* Save Button */}
-        <div className="flex justify-end gap-3">
-          <Button
-            variant="outline"
-            onClick={() => {
-              setLogoFile(null);
-              setBackgroundFile(null);
-              setLogoPreview(merchant.logo_url || '');
-              setBackgroundPreview(merchant.background_url || '');
-            }}
-          >
-            Réinitialiser
-          </Button>
+        <div className="flex justify-end">
           <Button
             onClick={handleSave}
-            disabled={uploading || (!logoFile && !backgroundFile)}
-            className="bg-violet-600 hover:bg-teal-700"
+            disabled={saving}
+            className="bg-teal-600 hover:bg-teal-700 w-full sm:w-auto"
           >
-            {uploading ? (
+            {saving ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Téléchargement...
+                Enregistrement...
               </>
             ) : (
-              'Enregistrer'
-            )}
-          </Button>
-        </div>
-
-        {/* Loyalty Settings Section */}
-        <div className="border-t border-gray-200 pt-8 mt-8">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
-              <Award className="w-5 h-5 text-amber-600" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">Paramètres Fidélité</h2>
-              <p className="text-gray-600">Activez le système de carte fidélité pour vos clients</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Enable Toggle */}
-            <Card className="p-6 lg:col-span-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${loyaltyEnabled ? 'bg-amber-100' : 'bg-gray-100'}`}>
-                    <Star className={`w-6 h-6 ${loyaltyEnabled ? 'text-amber-600' : 'text-gray-400'}`} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Programme fidélité activé</h3>
-                    <p className="text-sm text-gray-600">Activez le système de carte fidélité pour vos clients</p>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setLoyaltyEnabled(!loyaltyEnabled)}
-                  className={`w-14 h-7 rounded-full transition-colors ${loyaltyEnabled ? 'bg-amber-500' : 'bg-gray-300'}`}
-                >
-                  <div className={`w-6 h-6 bg-white rounded-full shadow-sm transform transition-transform ${loyaltyEnabled ? 'translate-x-7' : 'translate-x-0.5'}`} />
-                </button>
-              </div>
-            </Card>
-
-            {loyaltyEnabled && (
               <>
-                {/* Points Configuration */}
-                <Card className="p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Coins className="w-5 h-5 text-amber-500" />
-                    <h3 className="font-semibold text-gray-900">Points par achat</h3>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-4">Nombre de points gagnés par seuil atteint</p>
-                  <Input
-                    type="number"
-                    min={1}
-                    value={pointsPerPurchase}
-                    onChange={(e) => setPointsPerPurchase(parseInt(e.target.value) || 10)}
-                    className="mb-4"
-                  />
-
-                  <div className="flex items-center gap-3 mb-4 mt-6">
-                    <Coins className="w-5 h-5 text-amber-500" />
-                    <h3 className="font-semibold text-gray-900">Seuil d'achat</h3>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-4">Montant d'achat pour gagner des points</p>
-                  <Input
-                    type="number"
-                    min={1}
-                    value={purchaseThreshold}
-                    onChange={(e) => setPurchaseThreshold(parseInt(e.target.value) || 1000)}
-                  />
-                </Card>
-
-                {/* Currency & Welcome Points */}
-                <Card className="p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Gift className="w-5 h-5 text-amber-500" />
-                    <h3 className="font-semibold text-gray-900">Points de bienvenue</h3>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-4">Points offerts à l'inscription</p>
-                  <Input
-                    type="number"
-                    min={0}
-                    value={welcomePoints}
-                    onChange={(e) => setWelcomePoints(parseInt(e.target.value) || 0)}
-                  />
-                </Card>
-
-                {/* Loyalty Card Image */}
-                <Card className="p-6 lg:col-span-2">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900">Image de la carte</h3>
-                      <p className="text-sm text-gray-600">Image personnalisée affichée sur la carte fidélité</p>
-                    </div>
-                    <Badge variant="outline" className="border-amber-200 text-amber-700">16:9</Badge>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {loyaltyCardPreview && (
-                      <div className="relative w-full aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                        <img src={loyaltyCardPreview} alt="Loyalty card preview" className="w-full h-full object-cover" />
-                      </div>
-                    )}
-
-                    <div className="border-2 border-dashed border-amber-300 rounded-lg p-6 text-center hover:border-amber-500 transition-colors bg-amber-50/50">
-                      <input
-                        type="file"
-                        id="loyalty-card-upload"
-                        accept="image/*"
-                        onChange={handleLoyaltyCardChange}
-                        className="hidden"
-                      />
-                      <label htmlFor="loyalty-card-upload" className="cursor-pointer">
-                        <Award className="w-12 h-12 text-amber-400 mx-auto mb-3" />
-                        <p className="text-sm text-gray-600 mb-1">
-                          <span className="text-amber-600 font-semibold">Télécharger une image</span>
-                        </p>
-                        <p className="text-xs text-gray-500">PNG, JPG (16:9) jusqu'à 5 Mo</p>
-                      </label>
-                    </div>
-                  </div>
-                </Card>
-
-                {/* Points Calculation Preview */}
-                <Card className="p-6 lg:col-span-2 bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
-                  <h3 className="font-semibold text-gray-900 mb-4">Exemple de calcul de points</h3>
-                  <div className="flex items-center justify-center gap-4 text-center">
-                    <div className="bg-white rounded-xl p-4 shadow-sm">
-                      <p className="text-2xl font-bold text-amber-600">{purchaseThreshold.toLocaleString()} {loyaltyCurrency}</p>
-                      <p className="text-sm text-gray-600">Montant d'achat</p>
-                    </div>
-                    <div className="text-2xl text-amber-500">=</div>
-                    <div className="bg-white rounded-xl p-4 shadow-sm">
-                      <p className="text-2xl font-bold text-amber-600">{pointsPerPurchase}</p>
-                      <p className="text-sm text-gray-600">Points gagnés</p>
-                    </div>
-                  </div>
-                  <p className="text-center text-sm text-gray-600 mt-4">
-                    Exemple : achat de {(purchaseThreshold * 5).toLocaleString()} {loyaltyCurrency} = {pointsPerPurchase * 5} points
-                  </p>
-                </Card>
+                <Save className="w-4 h-4 mr-2" />
+                Enregistrer les param\u00e8tres
               </>
             )}
-          </div>
-
-          {/* Save Loyalty Settings */}
-          <div className="flex justify-end gap-3 mt-6">
-            <Button
-              onClick={handleSaveLoyalty}
-              disabled={savingLoyalty}
-              className="bg-amber-500 hover:bg-amber-600"
-            >
-              {savingLoyalty ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Enregistrement...
-                </>
-              ) : (
-                <>
-                  <Check className="w-4 h-4 mr-2" />
-                  Enregistrer les paramètres
-                </>
-              )}
-            </Button>
-          </div>
+          </Button>
         </div>
       </div>
     </DashboardLayout>
