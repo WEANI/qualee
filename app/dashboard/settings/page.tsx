@@ -113,7 +113,7 @@ export default function SettingsPage() {
         .maybeSingle();
 
       setMerchant(merchantData);
-      if (merchantData?.google_review_link) setGoogleReviewLink(merchantData.google_review_link);
+      if (merchantData?.google_maps_url || merchantData?.google_review_link) setGoogleReviewLink(merchantData.google_maps_url || merchantData.google_review_link);
       if (merchantData?.tiktok_url) setTiktokUrl(merchantData.tiktok_url);
       if (merchantData?.instagram_url) setInstagramUrl(merchantData.instagram_url);
     };
@@ -143,6 +143,7 @@ export default function SettingsPage() {
         const { error } = await supabase
           .from('merchants')
           .update({
+            google_maps_url: googleReviewLink || null,
             google_review_link: googleReviewLink || null,
             tiktok_url: tiktokUrl || null,
             instagram_url: instagramUrl || null,

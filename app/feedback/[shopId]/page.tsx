@@ -291,13 +291,13 @@ export default function InternalFeedbackPage() {
               </Button>
 
               {/* Lien discret Google Review */}
-              {merchant?.google_review_link && (
+              {(merchant?.google_maps_url || merchant?.google_review_link) && (
                 <div className="mt-5 text-center">
                   <p className="text-gray-400 text-sm mb-1">
                     {t('internalFeedback.googleHint', 'Vous pouvez aussi partager votre avis sur Google')}
                   </p>
                   <a
-                    href={merchant.google_review_link}
+                    href={merchant.google_maps_url || merchant.google_review_link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm text-blue-500 hover:text-blue-600 transition-colors"
