@@ -107,7 +107,7 @@ export default function AccountPage() {
     }
 
     if (newPassword.length < 8) {
-      setMessage({ type: 'error', text: 'Le mot de passe doit contenir au moins 8 caract\u00e8res' });
+      setMessage({ type: 'error', text: 'Le mot de passe doit contenir au moins 8 caractères' });
       return;
     }
 
@@ -125,7 +125,7 @@ export default function AccountPage() {
 
       if (error) throw error;
 
-      setMessage({ type: 'success', text: 'Mot de passe modifi\u00e9 avec succ\u00e8s ! Vous devrez vous reconnecter.' });
+      setMessage({ type: 'success', text: 'Mot de passe modifié avec succès ! Vous devrez vous reconnecter.' });
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
@@ -165,7 +165,7 @@ export default function AccountPage() {
       if (error) throw error;
       router.push('/auth/login');
     } catch (error: any) {
-      setMessage({ type: 'error', text: error.message || 'Erreur lors de la d\u00e9connexion' });
+      setMessage({ type: 'error', text: error.message || 'Erreur lors de la déconnexion' });
     }
   };
 
@@ -180,7 +180,7 @@ export default function AccountPage() {
   }
 
   const tabs: { key: AccountTab; label: string; icon: typeof Shield }[] = [
-    { key: 'securite', label: 'S\u00e9curit\u00e9', icon: Shield },
+    { key: 'securite', label: 'Sécurité', icon: Shield },
     { key: 'password', label: 'Mot de passe', icon: KeyRound },
     { key: 'danger', label: 'Danger', icon: AlertTriangle },
   ];
@@ -205,7 +205,7 @@ export default function AccountPage() {
             <CircleUserRound className="w-7 h-7 text-violet-500" />
             Mon Compte
           </h1>
-          <p className="text-slate-600 mt-1">G\u00e9rez votre s\u00e9curit\u00e9 et vos param\u00e8tres de compte</p>
+          <p className="text-slate-600 mt-1">Gérez votre sécurité et vos paramètres de compte</p>
         </div>
 
         {message && (
@@ -265,7 +265,7 @@ export default function AccountPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-slate-900 text-sm sm:text-base">Adresse Email</h3>
-                      <p className="text-xs sm:text-sm text-slate-500">Email associ\u00e9 \u00e0 votre compte</p>
+                      <p className="text-xs sm:text-sm text-slate-500">Email associé à votre compte</p>
                     </div>
                   </div>
 
@@ -277,7 +277,7 @@ export default function AccountPage() {
                   <div className="flex items-center gap-2">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 border border-emerald-200">
                       <ShieldCheck className="w-3.5 h-3.5" />
-                      Email v\u00e9rifi\u00e9
+                      Email vérifié
                     </span>
                     <span className="text-xs text-slate-500">
                       le {new Date(user.email_confirmed_at || user.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
@@ -292,8 +292,8 @@ export default function AccountPage() {
                       <Shield className="w-5 h-5 text-teal-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-900 text-sm sm:text-base">Informations de S\u00e9curit\u00e9</h3>
-                      <p className="text-xs sm:text-sm text-slate-500">Statut de s\u00e9curit\u00e9 de votre compte</p>
+                      <h3 className="font-semibold text-slate-900 text-sm sm:text-base">Informations de Sécurité</h3>
+                      <p className="text-xs sm:text-sm text-slate-500">Statut de sécurité de votre compte</p>
                     </div>
                   </div>
 
@@ -301,7 +301,7 @@ export default function AccountPage() {
                     {/* Security Status Badge */}
                     <div className="flex items-center gap-2 p-3 bg-emerald-50 rounded-lg border border-emerald-200">
                       <ShieldCheck className="w-5 h-5 text-emerald-600 flex-shrink-0" />
-                      <span className="text-sm font-medium text-emerald-700">Compte s\u00e9curis\u00e9</span>
+                      <span className="text-sm font-medium text-emerald-700">Compte sécurisé</span>
                     </div>
 
                     {/* Info rows */}
@@ -309,7 +309,7 @@ export default function AccountPage() {
                       <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
                         <CalendarDays className="w-4 h-4 text-slate-400 flex-shrink-0" />
                         <div className="min-w-0">
-                          <p className="text-xs text-slate-500">Cr\u00e9\u00e9 le</p>
+                          <p className="text-xs text-slate-500">Créé le</p>
                           <p className="text-sm font-medium text-slate-900">
                             {new Date(user.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
                           </p>
@@ -319,7 +319,7 @@ export default function AccountPage() {
                       <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
                         <Clock className="w-4 h-4 text-slate-400 flex-shrink-0" />
                         <div className="min-w-0">
-                          <p className="text-xs text-slate-500">Derni\u00e8re connexion</p>
+                          <p className="text-xs text-slate-500">Dernière connexion</p>
                           <p className="text-sm font-medium text-slate-900">
                             {new Date(user.last_sign_in_at || user.created_at).toLocaleDateString('fr-FR', {
                               day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
@@ -333,7 +333,7 @@ export default function AccountPage() {
                       <Link2 className="w-4 h-4 text-slate-400 flex-shrink-0" />
                       <div className="min-w-0">
                         <p className="text-xs text-slate-500">Appareils actifs</p>
-                        <p className="text-sm font-medium text-slate-900">1 appareil connect\u00e9</p>
+                        <p className="text-sm font-medium text-slate-900">1 appareil connecté</p>
                       </div>
                     </div>
 
@@ -343,7 +343,7 @@ export default function AccountPage() {
                       className="w-full mt-2 text-amber-700 border-amber-300 hover:bg-amber-50"
                     >
                       <LogOut className="w-4 h-4 mr-2" />
-                      D\u00e9connecter tous les appareils
+                      Déconnecter tous les appareils
                     </Button>
                   </div>
                 </Card>
@@ -360,7 +360,7 @@ export default function AccountPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-slate-900 text-sm sm:text-base">Changer mon mot de passe</h3>
-                      <p className="text-xs sm:text-sm text-slate-500">Vous devrez vous reconnecter apr\u00e8s cette action</p>
+                      <p className="text-xs sm:text-sm text-slate-500">Vous devrez vous reconnecter après cette action</p>
                     </div>
                   </div>
 
@@ -375,7 +375,7 @@ export default function AccountPage() {
                           type={showCurrentPassword ? 'text' : 'password'}
                           value={currentPassword}
                           onChange={(e) => setCurrentPassword(e.target.value)}
-                          placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
+                          placeholder="••••••••"
                           className="text-base sm:text-sm pr-10"
                         />
                         <button
@@ -398,7 +398,7 @@ export default function AccountPage() {
                           type={showNewPassword ? 'text' : 'password'}
                           value={newPassword}
                           onChange={(e) => setNewPassword(e.target.value)}
-                          placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
+                          placeholder="••••••••"
                           className="text-base sm:text-sm pr-10"
                         />
                         <button
@@ -433,7 +433,7 @@ export default function AccountPage() {
                           </div>
 
                           <div className="space-y-1 pt-1">
-                            <PasswordCheck ok={passwordChecks.minLength} text={`${newPassword.length} caract\u00e8res (min: 8)`} />
+                            <PasswordCheck ok={passwordChecks.minLength} text={`${newPassword.length} caractères (min: 8)`} />
                             <PasswordCheck ok={passwordChecks.hasUppercase} text="Contient des majuscules" />
                             <PasswordCheck ok={passwordChecks.hasNumber} text="Contient des chiffres" />
                           </div>
@@ -451,7 +451,7 @@ export default function AccountPage() {
                           type={showConfirmPassword ? 'text' : 'password'}
                           value={confirmPassword}
                           onChange={(e) => setConfirmPassword(e.target.value)}
-                          placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
+                          placeholder="••••••••"
                           className="text-base sm:text-sm pr-10"
                         />
                         <button
@@ -519,7 +519,7 @@ export default function AccountPage() {
                     <h3 className="font-semibold text-red-900 text-sm sm:text-base">Zone de Danger</h3>
                   </div>
                   <p className="text-sm text-red-700">
-                    Les actions de cette section sont irr\u00e9versibles. Proc\u00e9dez avec prudence.
+                    Les actions de cette section sont irréversibles. Procédez avec prudence.
                   </p>
                 </div>
 
@@ -530,14 +530,14 @@ export default function AccountPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-red-900 text-sm sm:text-base">Supprimer mon compte</h3>
-                      <p className="text-xs sm:text-sm text-red-600">Toutes vos donn\u00e9es seront d\u00e9finitivement supprim\u00e9es</p>
+                      <p className="text-xs sm:text-sm text-red-600">Toutes vos données seront définitivement supprimées</p>
                     </div>
                   </div>
 
                   {!showDeleteConfirm ? (
                     <div className="bg-red-50/50 rounded-lg p-4 border border-red-100">
                       <p className="text-sm text-red-800 mb-4">
-                        Cette action supprimera d\u00e9finitivement votre compte, vos lots, vos avis clients, vos statistiques et toutes les donn\u00e9es associ\u00e9es.
+                        Cette action supprimera définitivement votre compte, vos lots, vos avis clients, vos statistiques et toutes les données associées.
                       </p>
                       <Button
                         variant="outline"
@@ -552,10 +552,10 @@ export default function AccountPage() {
                     <div className="p-4 bg-red-50 rounded-lg border border-red-300">
                       <div className="flex items-center gap-2 mb-4">
                         <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0" />
-                        <p className="font-semibold text-red-900 text-sm">\u00cates-vous absolument s\u00fbr ?</p>
+                        <p className="font-semibold text-red-900 text-sm">Êtes-vous absolument sûr ?</p>
                       </div>
                       <p className="text-sm text-red-700 mb-4">
-                        Cette action est <strong>irr\u00e9versible</strong>. Elle supprimera d\u00e9finitivement votre compte et toutes les donn\u00e9es associ\u00e9es.
+                        Cette action est <strong>irréversible</strong>. Elle supprimera définitivement votre compte et toutes les données associées.
                       </p>
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-red-800 mb-1">
@@ -593,7 +593,7 @@ export default function AccountPage() {
                           ) : (
                             <>
                               <Trash2 className="w-4 h-4 mr-2" />
-                              Supprimer d\u00e9finitivement
+                              Supprimer définitivement
                             </>
                           )}
                         </Button>

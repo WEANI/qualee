@@ -33,8 +33,8 @@ const TIMEZONES = [
 ];
 
 const LANGUAGES = [
-  { value: 'fr', label: 'Fran\u00e7ais', flag: '\ud83c\uddeb\ud83c\uddf7' },
-  { value: 'en', label: 'English', flag: '\ud83c\uddec\ud83c\udde7' },
+  { value: 'fr', label: 'Français', flag: '🇫🇷' },
+  { value: 'en', label: 'English', flag: '🇬🇧' },
 ];
 
 export default function SettingsPage() {
@@ -121,7 +121,7 @@ export default function SettingsPage() {
         if (Math.abs(aspectRatio - target) > 0.15) {
           setMessage({
             type: 'warning',
-            text: `Le ratio de l'image est ${(aspectRatio * 16 / 9).toFixed(2)}:16. Recommand\u00e9 : 9:16 (format vertical)`
+            text: `Le ratio de l'image est ${(aspectRatio * 16 / 9).toFixed(2)}:16. Recommandé : 9:16 (format vertical)`
           });
         }
       };
@@ -140,7 +140,7 @@ export default function SettingsPage() {
       .from('merchant-assets')
       .upload(fileName, file, { cacheControl: '3600', upsert: true });
 
-    if (uploadError) throw new Error(uploadError.message || 'Erreur de t\u00e9l\u00e9chargement');
+    if (uploadError) throw new Error(uploadError.message || 'Erreur de téléchargement');
 
     const { data: { publicUrl } } = supabase.storage
       .from('merchant-assets')
@@ -181,7 +181,7 @@ export default function SettingsPage() {
         if (error) throw error;
       }
 
-      setMessage({ type: 'success', text: 'Param\u00e8tres enregistr\u00e9s avec succ\u00e8s !' });
+      setMessage({ type: 'success', text: 'Paramètres enregistrés avec succès !' });
       setLogoFile(null);
       setBackgroundFile(null);
 
@@ -200,7 +200,7 @@ export default function SettingsPage() {
           sql: `-- Run this in your Supabase SQL Editor:\nINSERT INTO storage.buckets (id, name, public) VALUES ('merchant-assets', 'merchant-assets', true) ON CONFLICT (id) DO NOTHING;\n\nDROP POLICY IF EXISTS "Public Access" ON storage.objects;\nCREATE POLICY "Public Access" ON storage.objects FOR SELECT USING ( bucket_id = 'merchant-assets' );\n\nDROP POLICY IF EXISTS "Auth Upload" ON storage.objects;\nCREATE POLICY "Auth Upload" ON storage.objects FOR INSERT WITH CHECK ( bucket_id = 'merchant-assets' AND auth.role() = 'authenticated' );\n\nDROP POLICY IF EXISTS "Auth Update" ON storage.objects;\nCREATE POLICY "Auth Update" ON storage.objects FOR UPDATE USING ( bucket_id = 'merchant-assets' AND auth.role() = 'authenticated' );`
         });
       } else {
-        setMessage({ type: 'error', text: error.message || '\u00c9chec de l\'enregistrement' });
+        setMessage({ type: 'error', text: error.message || 'Échec de l\'enregistrement' });
       }
     } finally {
       setSaving(false);
@@ -234,8 +234,8 @@ export default function SettingsPage() {
       <div className="space-y-4 sm:space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Param\u00e8tres</h1>
-          <p className="text-slate-600 mt-1">Param\u00e8tres g\u00e9n\u00e9raux de l&apos;application</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Paramètres</h1>
+          <p className="text-slate-600 mt-1">Paramètres généraux de l&apos;application</p>
         </div>
 
         {message && (
@@ -275,7 +275,7 @@ export default function SettingsPage() {
               <Globe className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-semibold text-slate-900">Langue & R\u00e9gion</h2>
+              <h2 className="text-base sm:text-lg font-semibold text-slate-900">Langue & Région</h2>
               <p className="text-xs sm:text-sm text-slate-500">Configurez la langue et le fuseau horaire</p>
             </div>
           </div>
@@ -325,7 +325,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-semibold text-slate-900">Notifications</h2>
-              <p className="text-xs sm:text-sm text-slate-500">G\u00e9rez vos pr\u00e9f\u00e9rences de notifications</p>
+              <p className="text-xs sm:text-sm text-slate-500">Gérez vos préférences de notifications</p>
             </div>
           </div>
 
@@ -341,15 +341,15 @@ export default function SettingsPage() {
             <div className="flex items-center justify-between gap-4 p-3 sm:p-4 rounded-lg hover:bg-slate-50 transition-colors">
               <div className="min-w-0">
                 <p className="text-sm font-medium text-slate-900">Alertes nouveaux avis</p>
-                <p className="text-xs sm:text-sm text-slate-500">Soyez pr\u00e9venu quand un client laisse un avis</p>
+                <p className="text-xs sm:text-sm text-slate-500">Soyez prévenu quand un client laisse un avis</p>
               </div>
               <Toggle enabled={reviewAlerts} onChange={setReviewAlerts} />
             </div>
 
             <div className="flex items-center justify-between gap-4 p-3 sm:p-4 rounded-lg hover:bg-slate-50 transition-colors">
               <div className="min-w-0">
-                <p className="text-sm font-medium text-slate-900">R\u00e9sum\u00e9 hebdomadaire</p>
-                <p className="text-xs sm:text-sm text-slate-500">Recevez un r\u00e9sum\u00e9 hebdomadaire de performance</p>
+                <p className="text-sm font-medium text-slate-900">Résumé hebdomadaire</p>
+                <p className="text-xs sm:text-sm text-slate-500">Recevez un résumé hebdomadaire de performance</p>
               </div>
               <Toggle enabled={weeklySummary} onChange={setWeeklySummary} />
             </div>
@@ -389,7 +389,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-semibold text-slate-900">Personnalisation</h2>
-              <p className="text-xs sm:text-sm text-slate-500">Logo et image de fond de votre page d&apos;\u00e9valuation</p>
+              <p className="text-xs sm:text-sm text-slate-500">Logo et image de fond de votre page d&apos;évaluation</p>
             </div>
           </div>
 
@@ -398,7 +398,7 @@ export default function SettingsPage() {
             <div>
               <div className="flex items-center justify-between mb-3">
                 <p className="text-sm font-medium text-slate-700">Logo de l&apos;entreprise</p>
-                <Badge variant="outline" className="text-xs">Carr\u00e9</Badge>
+                <Badge variant="outline" className="text-xs">Carré</Badge>
               </div>
               {logoPreview && (
                 <div className="relative w-full h-32 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden mb-3">
@@ -409,8 +409,8 @@ export default function SettingsPage() {
                 <input type="file" id="logo-upload" accept="image/*" onChange={handleLogoChange} className="hidden" />
                 <label htmlFor="logo-upload" className="cursor-pointer">
                   <ImageIcon className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                  <p className="text-xs text-slate-600"><span className="text-violet-600 font-semibold">T\u00e9l\u00e9charger</span></p>
-                  <p className="text-xs text-slate-500">PNG, JPG jusqu&apos;\u00e0 5 Mo</p>
+                  <p className="text-xs text-slate-600"><span className="text-violet-600 font-semibold">Télécharger</span></p>
+                  <p className="text-xs text-slate-500">PNG, JPG jusqu&apos;à 5 Mo</p>
                 </label>
               </div>
             </div>
@@ -433,8 +433,8 @@ export default function SettingsPage() {
                 <input type="file" id="background-upload" accept="image/*" onChange={handleBackgroundChange} className="hidden" />
                 <label htmlFor="background-upload" className="cursor-pointer">
                   <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                  <p className="text-xs text-slate-600"><span className="text-violet-600 font-semibold">T\u00e9l\u00e9charger</span></p>
-                  <p className="text-xs text-slate-500">PNG, JPG (9:16) jusqu&apos;\u00e0 10 Mo</p>
+                  <p className="text-xs text-slate-600"><span className="text-violet-600 font-semibold">Télécharger</span></p>
+                  <p className="text-xs text-slate-500">PNG, JPG (9:16) jusqu&apos;à 10 Mo</p>
                 </label>
               </div>
             </div>
@@ -456,7 +456,7 @@ export default function SettingsPage() {
             ) : (
               <>
                 <Save className="w-4 h-4 mr-2" />
-                Enregistrer les param\u00e8tres
+                Enregistrer les paramètres
               </>
             )}
           </Button>

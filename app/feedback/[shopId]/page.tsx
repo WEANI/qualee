@@ -256,19 +256,20 @@ export default function InternalFeedbackPage() {
                 />
               </div>
 
-              {/* Link to Google reviews page */}
+              {/* Link to Google Review */}
               {merchant?.google_review_link && (
-                <p className="text-center mb-4" style={{ fontSize: '10px', color: '#888888' }}>
-                  Accéder à la page des{' '}
+                <p className="text-center mb-5">
+                  <span className="text-xs text-gray-400">
+                    {t('internalFeedback.googleHint', 'Vous pouvez aussi partager votre avis sur')}{' '}
+                  </span>
                   <a
                     href={merchant.google_review_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ textDecoration: 'underline', color: '#888888' }}
+                    className="text-xs text-blue-500 hover:text-blue-600 underline underline-offset-2 transition-colors"
                   >
-                    Avis
+                    Google
                   </a>
-                  .
                 </p>
               )}
 
