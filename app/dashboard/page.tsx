@@ -17,7 +17,9 @@ import {
   RotateCw,
   MessageSquare,
   ScanLine,
-  BarChart3
+  BarChart3,
+  Loader2,
+  LayoutDashboard,
 } from 'lucide-react';
 
 interface DashboardUser {
@@ -220,7 +222,7 @@ export default function DashboardPage() {
             </div>
           ) : (
             <>
-              <div className="w-16 h-16 border-4 border-slate-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" style={{ color: '#4361EE' }} />
               <p className="text-lg text-slate-600">Chargement...</p>
             </>
           )}
@@ -229,166 +231,236 @@ export default function DashboardPage() {
     );
   }
 
+  const kpiCards = [
+    {
+      label: 'Total avis',
+      value: stats.totalReviews,
+      icon: MessageSquare,
+      gradient: 'linear-gradient(135deg, #4361EE, #7209B7)',
+      bgTint: '#f0f0ff',
+      trend: stats.reviewsTrend,
+      trendLabel: stats.reviewsTrend !== 0 ? `${stats.reviewsTrend > 0 ? '+' : ''}${stats.reviewsTrend}%` : null,
+    },
+    {
+      label: 'Note moyenne',
+      value: stats.avgRating,
+      suffix: '/ 5.0',
+      icon: Star,
+      gradient: 'linear-gradient(135deg, #F59E0B, #EF4444)',
+      bgTint: '#FFF7ED',
+      trend: null,
+      trendLabel: stats.avgRating >= 4.5 ? 'Excellent' : null,
+    },
+    {
+      label: 'Total tours de roue',
+      value: stats.totalSpins,
+      icon: RotateCw,
+      gradient: 'linear-gradient(135deg, #7209B7, #F72585)',
+      bgTint: '#FAF5FF',
+      trend: null,
+      trendLabel: stats.totalSpins > 0 ? 'Actif' : null,
+    },
+    {
+      label: 'Recompenses utilisees',
+      value: stats.rewardsRedeemed,
+      icon: Gift,
+      gradient: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+      bgTint: '#F5F3FF',
+      trend: null,
+      trendLabel: stats.positiveRatio > 0 ? `${stats.positiveRatio}% positifs` : null,
+    },
+  ];
+
   return (
     <DashboardLayout merchant={merchant}>
-      <div className="space-y-8">
-        {/* Welcome Section */}
+      <style jsx global>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .dashboard-card {
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s ease;
+        }
+        .dashboard-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, #4361EE, #7209B7);
+          border-radius: 2px 2px 0 0;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.3s ease;
+        }
+        .dashboard-card:hover::before {
+          transform: scaleX(1);
+        }
+        .dashboard-card:hover {
+          border-color: #d1d5db;
+          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.12);
+          transform: translateY(-2px);
+        }
+        .kpi-card {
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s ease;
+          animation: fadeInUp 0.3s ease-out both;
+        }
+        .kpi-card:nth-child(1) { animation-delay: 0s; }
+        .kpi-card:nth-child(2) { animation-delay: 0.05s; }
+        .kpi-card:nth-child(3) { animation-delay: 0.1s; }
+        .kpi-card:nth-child(4) { animation-delay: 0.15s; }
+        .kpi-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 24px rgba(67, 97, 238, 0.18);
+        }
+        .kpi-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          border-radius: 2px 2px 0 0;
+          transition: transform 0.3s ease;
+        }
+        .quick-action {
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s ease;
+        }
+        .quick-action::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, #4361EE, #7209B7);
+          border-radius: 2px 2px 0 0;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.3s ease;
+        }
+        .quick-action:hover::before {
+          transform: scaleX(1);
+        }
+        .quick-action:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.12);
+        }
+      `}</style>
+
+      <div className="space-y-6 sm:space-y-8">
+        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900">
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
+              <LayoutDashboard className="w-7 h-7" style={{ color: '#4361EE' }} />
               Bonjour, {merchant.business_name || 'Commercant'}
-            </h2>
+            </h1>
             <p className="text-slate-500 mt-1">
               Voici un apercu de votre activite
             </p>
           </div>
           <div className="flex items-center gap-3">
             {currentDate && (
-              <span className="text-sm text-slate-500 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
+              <span
+                className="text-sm text-slate-500 px-4 py-2 rounded-xl border shadow-sm"
+                style={{ backgroundColor: '#f0f0ff', borderColor: '#e8e6ff' }}
+              >
                 {currentDate}
               </span>
             )}
           </div>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Total Reviews */}
-          <Card className="relative p-6 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden bg-gradient-to-br from-white to-blue-50/30">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute inset-[2px] bg-gradient-to-br from-white to-blue-50/30 rounded-[inherit]" />
-
-            <div className="relative z-10">
-              <div className="flex justify-between items-start mb-4">
-                <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-xl shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-300">
-                  <MessageSquare className="w-6 h-6" />
+        {/* KPI Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {kpiCards.map((kpi, idx) => {
+            const Icon = kpi.icon;
+            return (
+              <Card
+                key={idx}
+                className="kpi-card p-5 sm:p-6 border border-gray-200 rounded-xl bg-white"
+              >
+                <div className="flex justify-between items-start mb-4">
+                  <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center shadow-md"
+                    style={{ background: kpi.gradient }}
+                  >
+                    <Icon className="w-5 h-5 text-white" />
+                  </div>
+                  {kpi.trendLabel && (
+                    <Badge
+                      className="text-xs font-medium shadow-sm"
+                      style={{
+                        backgroundColor: kpi.bgTint,
+                        color: kpi.trend && kpi.trend < 0 ? '#DC2626' : '#4361EE',
+                        borderColor: kpi.trend && kpi.trend < 0 ? '#FECACA' : '#e8e6ff',
+                      }}
+                    >
+                      {kpi.trend !== null && kpi.trend !== 0 && (
+                        <TrendingUp className={`w-3 h-3 mr-1 ${kpi.trend < 0 ? 'rotate-180' : ''}`} />
+                      )}
+                      {kpi.trendLabel}
+                    </Badge>
+                  )}
                 </div>
-                {stats.reviewsTrend !== 0 && (
-                  <Badge className={`${stats.reviewsTrend > 0 ? 'bg-green-100 text-green-700 border-green-200' : 'bg-red-100 text-red-700 border-red-200'} shadow-sm`}>
-                    <TrendingUp className={`w-3 h-3 mr-1 ${stats.reviewsTrend < 0 ? 'rotate-180' : ''}`} />
-                    {stats.reviewsTrend > 0 ? '+' : ''}{stats.reviewsTrend}%
-                  </Badge>
-                )}
-              </div>
-              <div>
-                <p className="text-sm font-medium text-slate-500">Total avis</p>
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mt-1">{stats.totalReviews}</h3>
-              </div>
-            </div>
-          </Card>
-
-          {/* Average Rating */}
-          <Card className="relative p-6 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden bg-gradient-to-br from-white to-amber-50/30">
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute inset-[2px] bg-gradient-to-br from-white to-amber-50/30 rounded-[inherit]" />
-
-            <div className="relative z-10">
-              <div className="flex justify-between items-start mb-4">
-                <div className="relative">
-                  <svg className="w-14 h-14 -rotate-90">
-                    <circle cx="28" cy="28" r="24" fill="none" stroke="#fef3c7" strokeWidth="4"/>
-                    <circle
-                      cx="28" cy="28" r="24"
-                      fill="none"
-                      stroke="url(#ratingGradient)"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                      strokeDasharray={`${(stats.avgRating / 5) * 150.8} 150.8`}
-                      className="transition-all duration-1000"
-                    />
-                    <defs>
-                      <linearGradient id="ratingGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#f59e0b" />
-                        <stop offset="100%" stopColor="#22c55e" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Star className="w-5 h-5 text-amber-500" />
+                <div>
+                  <p className="text-sm font-medium text-slate-500">{kpi.label}</p>
+                  <div className="flex items-baseline gap-2 mt-1">
+                    <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">{kpi.value}</h3>
+                    {kpi.suffix && <span className="text-sm text-slate-400">{kpi.suffix}</span>}
                   </div>
                 </div>
-                {stats.avgRating >= 4.5 && (
-                  <Badge className="bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 border-amber-200 shadow-sm">
-                    Excellent
-                  </Badge>
-                )}
-              </div>
-              <div>
-                <p className="text-sm font-medium text-slate-500">Note moyenne</p>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <h3 className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">{stats.avgRating}</h3>
-                  <span className="text-sm text-slate-400">/ 5.0</span>
-                </div>
-              </div>
-            </div>
-          </Card>
-
-          {/* Total Spins */}
-          <Card className="relative p-6 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden bg-gradient-to-br from-white to-purple-50/30">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute inset-[2px] bg-gradient-to-br from-white to-purple-50/30 rounded-[inherit]" />
-
-            <div className="relative z-10">
-              <div className="flex justify-between items-start mb-4">
-                <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-xl shadow-lg shadow-purple-500/30 group-hover:animate-spin-slow transition-transform duration-300">
-                  <RotateCw className="w-6 h-6" />
-                </div>
-                {stats.totalSpins > 0 && (
-                  <Badge className="bg-purple-100 text-purple-700 border-purple-200 shadow-sm">
-                    Actif
-                  </Badge>
-                )}
-              </div>
-              <div>
-                <p className="text-sm font-medium text-slate-500">Total tours de roue</p>
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mt-1">{stats.totalSpins}</h3>
-              </div>
-            </div>
-          </Card>
-
-          {/* Prizes Redeemed */}
-          <Card className="relative p-6 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden bg-gradient-to-br from-white to-violet-50/30">
-            <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-violet-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute inset-[2px] bg-gradient-to-br from-white to-violet-50/30 rounded-[inherit]" />
-
-            <div className="relative z-10">
-              <div className="flex justify-between items-start mb-4">
-                <div className="p-3 bg-gradient-to-br from-violet-500 to-violet-600 text-white rounded-xl shadow-lg shadow-violet-500/30 group-hover:scale-110 transition-transform duration-300">
-                  <Gift className="w-6 h-6" />
-                </div>
-                {stats.positiveRatio > 0 && (
-                  <Badge className="bg-violet-100 text-emerald-700 border-emerald-200 shadow-sm">
-                    {stats.positiveRatio}% positifs
-                  </Badge>
-                )}
-              </div>
-              <div>
-                <p className="text-sm font-medium text-slate-500">Recompenses utilisees</p>
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-violet-600 to-violet-600 bg-clip-text text-transparent mt-1">{stats.rewardsRedeemed}</h3>
-              </div>
-            </div>
-          </Card>
+              </Card>
+            );
+          })}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Chart + Recent Activity */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Main Chart */}
-          <Card className="lg:col-span-2 p-6 border-slate-100 shadow-sm">
-            <div className="flex items-center justify-between mb-6">
+          <Card className="dashboard-card lg:col-span-2 p-5 sm:p-6 border border-gray-200 rounded-xl">
+            <div className="flex items-center gap-3 mb-5">
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: '#f0f0ff' }}
+              >
+                <BarChart3 className="w-5 h-5" style={{ color: '#4361EE' }} />
+              </div>
               <div>
-                <h3 className="text-lg font-bold text-slate-900">Activite</h3>
-                <p className="text-sm text-slate-500">Avis des 90 derniers jours</p>
+                <h2 className="text-base sm:text-lg font-semibold text-slate-900">Activite</h2>
+                <p className="text-xs sm:text-sm text-slate-500">Avis des 90 derniers jours</p>
               </div>
             </div>
             <ChartAreaInteractive data={chartData} />
           </Card>
 
           {/* Recent Activity Feed */}
-          <Card className="p-6 border-slate-100 shadow-sm">
-            <h3 className="text-lg font-bold text-slate-900 mb-6">Avis recents</h3>
-            <div className="space-y-6">
+          <Card className="dashboard-card p-5 sm:p-6 border border-gray-200 rounded-xl">
+            <div className="flex items-center gap-3 mb-5">
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: '#f0f0ff' }}
+              >
+                <MessageSquare className="w-5 h-5" style={{ color: '#4361EE' }} />
+              </div>
+              <h2 className="text-base sm:text-lg font-semibold text-slate-900">Avis recents</h2>
+            </div>
+            <div className="space-y-4">
               {recentActivity.length > 0 ? (
                 recentActivity.map((activity, idx) => (
-                  <div key={idx} className="flex gap-4">
+                  <div
+                    key={idx}
+                    className="flex gap-3 p-3 rounded-lg transition-colors duration-200 hover:bg-gray-50"
+                    style={{ borderBottom: idx < recentActivity.length - 1 ? '1px solid #f3f4f6' : 'none' }}
+                  >
                     <div className={`
                       flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold
                       ${activity.rating >= 4 ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}
@@ -400,11 +472,11 @@ export default function DashboardPage() {
                         <p className="text-sm font-medium text-slate-900 truncate">
                           {activity.customer_email || activity.customer_phone || 'Client anonyme'}
                         </p>
-                        <span className="text-xs text-slate-400 whitespace-nowrap">
+                        <span className="text-xs text-slate-400 whitespace-nowrap ml-2">
                           {new Date(activity.date).toLocaleDateString('fr-FR')}
                         </span>
                       </div>
-                      <p className="text-sm text-slate-600 mt-1 line-clamp-2">
+                      <p className="text-sm text-slate-500 mt-1 line-clamp-2">
                         {activity.comment || new Date(activity.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
                       </p>
                     </div>
@@ -418,8 +490,17 @@ export default function DashboardPage() {
 
               <Button
                 variant="outline"
-                className="w-full mt-4"
+                className="w-full mt-2 transition-all duration-200"
                 onClick={() => router.push('/dashboard/feedback')}
+                style={{ borderColor: '#e8e6ff', color: '#4361EE' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#f0f0ff';
+                  e.currentTarget.style.borderColor = '#4361EE';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.borderColor = '#e8e6ff';
+                }}
               >
                 Voir tous les avis
               </Button>
@@ -428,78 +509,68 @@ export default function DashboardPage() {
         </div>
 
         {/* Quick Actions & Link */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           {/* Quick Actions Grid */}
           <div>
-            <h3 className="text-lg font-bold text-slate-900 mb-4">Actions rapides</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+              <span className="w-1.5 h-5 rounded-full" style={{ backgroundColor: '#4361EE' }} />
+              Actions rapides
+            </h3>
             <div className="grid grid-cols-2 gap-4">
-              <button
-                onClick={() => router.push('/dashboard/scan')}
-                className="p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all text-left group"
-              >
-                <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                  <ScanLine className="w-5 h-5" />
-                </div>
-                <h4 className="font-semibold text-slate-900">Scanner</h4>
-                <p className="text-xs text-slate-500 mt-1">Valider une carte client</p>
-              </button>
-
-              <button
-                onClick={() => router.push('/dashboard/prizes')}
-                className="p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all text-left group"
-              >
-                <div className="w-10 h-10 bg-pink-50 text-pink-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-pink-600 group-hover:text-white transition-colors">
-                  <Gift className="w-5 h-5" />
-                </div>
-                <h4 className="font-semibold text-slate-900">Lots</h4>
-                <p className="text-xs text-slate-500 mt-1">Gerer vos recompenses</p>
-              </button>
-
-              <button
-                onClick={() => router.push('/dashboard/feedback')}
-                className="p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all text-left group"
-              >
-                <div className="w-10 h-10 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-amber-600 group-hover:text-white transition-colors">
-                  <Star className="w-5 h-5" />
-                </div>
-                <h4 className="font-semibold text-slate-900">Avis</h4>
-                <p className="text-xs text-slate-500 mt-1">Consulter les retours clients</p>
-              </button>
-
-              <button
-                onClick={() => router.push('/dashboard/analytics')}
-                className="p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all text-left group"
-              >
-                <div className="w-10 h-10 bg-teal-50 text-violet-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-violet-600 group-hover:text-white transition-colors">
-                  <BarChart3 className="w-5 h-5" />
-                </div>
-                <h4 className="font-semibold text-slate-900">Statistiques</h4>
-                <p className="text-xs text-slate-500 mt-1">Analyser vos performances</p>
-              </button>
+              {[
+                { href: '/dashboard/scan', icon: ScanLine, label: 'Scanner', desc: 'Valider une carte client', iconBg: '#f0f0ff', iconColor: '#4361EE' },
+                { href: '/dashboard/prizes', icon: Gift, label: 'Lots', desc: 'Gerer vos recompenses', iconBg: '#FDF2F8', iconColor: '#EC4899' },
+                { href: '/dashboard/feedback', icon: Star, label: 'Avis', desc: 'Consulter les retours clients', iconBg: '#FFF7ED', iconColor: '#F59E0B' },
+                { href: '/dashboard/analytics', icon: BarChart3, label: 'Statistiques', desc: 'Analyser vos performances', iconBg: '#F5F3FF', iconColor: '#8B5CF6' },
+              ].map((action) => {
+                const ActionIcon = action.icon;
+                return (
+                  <button
+                    key={action.href}
+                    onClick={() => router.push(action.href)}
+                    className="quick-action p-4 bg-white rounded-xl border border-gray-200 text-left group"
+                  >
+                    <div
+                      className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 transition-all duration-200"
+                      style={{ backgroundColor: action.iconBg }}
+                    >
+                      <ActionIcon className="w-5 h-5" style={{ color: action.iconColor }} />
+                    </div>
+                    <h4 className="font-semibold text-slate-900 text-sm">{action.label}</h4>
+                    <p className="text-xs text-slate-500 mt-1">{action.desc}</p>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           {/* Review Link Card */}
           <div>
-            <h3 className="text-lg font-bold text-slate-900 mb-4">Votre lien d'avis</h3>
-            <Card className="p-6 border-slate-100 shadow-sm bg-gradient-to-br from-slate-900 to-slate-800 text-white">
-              <div className="flex justify-between items-start mb-6">
+            <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+              <span className="w-1.5 h-5 rounded-full" style={{ backgroundColor: '#4361EE' }} />
+              Votre lien d&apos;avis
+            </h3>
+            <Card
+              className="p-5 sm:p-6 rounded-xl text-white border-0"
+              style={{ background: 'linear-gradient(135deg, #1e1b4b, #312e81, #4338ca)' }}
+            >
+              <div className="flex justify-between items-start mb-5">
                 <div>
                   <h4 className="text-lg font-semibold text-white">Lien public</h4>
-                  <p className="text-sm text-slate-400 mt-1">Partagez ce lien avec vos clients</p>
+                  <p className="text-sm text-indigo-300 mt-1">Partagez ce lien avec vos clients</p>
                 </div>
                 <div className="p-2 bg-white/10 rounded-lg">
                   <ArrowUpRight className="w-5 h-5 text-white" />
                 </div>
               </div>
 
-              <div className="bg-black/30 rounded-lg p-4 mb-6 border border-white/10">
+              <div className="bg-black/30 rounded-lg p-4 mb-5 border border-white/10">
                 <code className="text-sm font-mono text-emerald-400 break-all">
                   {process.env.NEXT_PUBLIC_APP_URL}/rate/{user.id}
                 </code>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3">
                 <Button
                   onClick={() => {
                     navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_APP_URL}/rate/${user.id}`);

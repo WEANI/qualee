@@ -57,6 +57,13 @@ const typeIcons: Record<RewardType, typeof Percent> = {
   cashback: DollarSign
 };
 
+const typeColors: Record<RewardType, { bg: string; text: string; lightBg: string }> = {
+  discount: { bg: '#dbeafe', text: '#2563eb', lightBg: '#eff6ff' },
+  product: { bg: '#d1fae5', text: '#059669', lightBg: '#ecfdf5' },
+  service: { bg: '#f0f0ff', text: '#4361EE', lightBg: '#f5f3ff' },
+  cashback: { bg: '#fef3c7', text: '#d97706', lightBg: '#fffbeb' },
+};
+
 export default function RewardsPage() {
   const { t } = useTranslation();
   const router = useRouter();
@@ -207,7 +214,7 @@ export default function RewardsPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin text-amber-500" />
+          <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#4361EE' }} />
         </div>
       </DashboardLayout>
     );
@@ -215,25 +222,72 @@ export default function RewardsPage() {
 
   return (
     <DashboardLayout merchant={merchant}>
-      <div className="space-y-8">
+      <style jsx global>{`
+        @keyframes fadeInReward {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .reward-animate {
+          animation: fadeInReward 0.3s ease-out;
+        }
+        .reward-card {
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s ease;
+        }
+        .reward-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, #4361EE, #7209B7);
+          border-radius: 2px 2px 0 0;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.3s ease;
+        }
+        .reward-card:hover::before {
+          transform: scaleX(1);
+        }
+        .reward-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.12);
+        }
+      `}</style>
+
+      <div className="space-y-4 sm:space-y-6 reward-animate">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-4">
             <Link href="/dashboard/loyalty">
-              <Button variant="ghost" size="sm" className="text-slate-600">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-slate-600 transition-all duration-200"
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f0f0ff'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
+              >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 {t('dashboard.common.back')}
               </Button>
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-3">
-                <Gift className="w-7 h-7 text-amber-500" />
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
+                <Gift className="w-7 h-7" style={{ color: '#4361EE' }} />
                 {t('loyalty.rewards.title')}
               </h1>
-              <p className="text-slate-600 mt-1">{t('loyalty.rewards.subtitle')}</p>
+              <p className="text-slate-500 mt-1">{t('loyalty.rewards.subtitle')}</p>
             </div>
           </div>
-          <Button onClick={openAddModal} className="bg-amber-500 hover:bg-amber-600">
+          <Button
+            onClick={openAddModal}
+            className="text-white transition-all duration-200"
+            style={{ backgroundColor: '#4361EE' }}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#3A0CA3'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#4361EE'; }}
+          >
             <Plus className="w-4 h-4 mr-2" />
             {t('loyalty.rewards.add')}
           </Button>
@@ -241,51 +295,51 @@ export default function RewardsPage() {
 
         {/* Rewards Grid */}
         {rewards.length === 0 ? (
-          <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
-            <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Gift className="w-8 h-8 text-amber-500" />
+          <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#f0f0ff' }}>
+              <Gift className="w-8 h-8" style={{ color: '#4361EE' }} />
             </div>
             <h3 className="text-lg font-medium text-slate-900 mb-2">
               {t('loyalty.rewards.noRewards')}
             </h3>
-            <p className="text-slate-600 mb-6">
+            <p className="text-slate-500 mb-6">
               {t('loyalty.rewards.noRewardsDesc')}
             </p>
-            <Button onClick={openAddModal} className="bg-amber-500 hover:bg-amber-600">
+            <Button
+              onClick={openAddModal}
+              className="text-white transition-all duration-200"
+              style={{ backgroundColor: '#4361EE' }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#3A0CA3'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#4361EE'; }}
+            >
               <Plus className="w-4 h-4 mr-2" />
               {t('loyalty.rewards.add')}
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {rewards.map((reward) => {
               const TypeIcon = typeIcons[reward.type as RewardType] || Gift;
+              const colors = typeColors[reward.type as RewardType] || typeColors.cashback;
               return (
                 <div
                   key={reward.id}
-                  className={`bg-white rounded-xl border ${reward.is_active ? 'border-slate-200' : 'border-slate-200 opacity-60'} overflow-hidden hover:shadow-md transition-shadow`}
+                  className={`reward-card bg-white rounded-xl border border-gray-200 ${!reward.is_active ? 'opacity-60' : ''}`}
                 >
-                  <div className="p-6">
+                  <div className="p-5 sm:p-6">
                     <div className="flex items-start justify-between mb-4">
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                        reward.type === 'discount' ? 'bg-blue-100' :
-                        reward.type === 'product' ? 'bg-green-100' :
-                        reward.type === 'service' ? 'bg-purple-100' :
-                        'bg-amber-100'
-                      }`}>
-                        <TypeIcon className={`w-6 h-6 ${
-                          reward.type === 'discount' ? 'text-blue-600' :
-                          reward.type === 'product' ? 'text-green-600' :
-                          reward.type === 'service' ? 'text-purple-600' :
-                          'text-amber-600'
-                        }`} />
+                      <div
+                        className="w-12 h-12 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: colors.bg }}
+                      >
+                        <TypeIcon className="w-6 h-6" style={{ color: colors.text }} />
                       </div>
                       <div className="flex items-center gap-1">
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => openEditModal(reward)}
-                          className="text-slate-400 hover:text-blue-600"
+                          className="text-slate-400 hover:text-blue-600 transition-colors"
                         >
                           <Edit2 className="w-4 h-4" />
                         </Button>
@@ -293,7 +347,7 @@ export default function RewardsPage() {
                           variant="ghost"
                           size="sm"
                           onClick={() => handleDelete(reward.id)}
-                          className="text-slate-400 hover:text-red-600"
+                          className="text-slate-400 hover:text-red-600 transition-colors"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
@@ -304,12 +358,12 @@ export default function RewardsPage() {
                       {reward.name}
                     </h3>
                     {reward.description && (
-                      <p className="text-sm text-slate-600 mb-4 line-clamp-2">
+                      <p className="text-sm text-slate-500 mb-4 line-clamp-2">
                         {reward.description}
                       </p>
                     )}
 
-                    <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                       <div className="flex items-center gap-2">
                         <Star className="w-4 h-4 text-amber-500" />
                         <span className="font-semibold text-slate-900">{reward.points_cost}</span>
@@ -321,30 +375,23 @@ export default function RewardsPage() {
                             {reward.quantity_available} {t('loyalty.rewards.quantity').toLowerCase()}
                           </span>
                         ) : (
-                          <span className="text-green-600">{t('loyalty.rewards.quantityUnlimited')}</span>
+                          <span className="text-emerald-600">{t('loyalty.rewards.quantityUnlimited')}</span>
                         )}
                       </div>
                     </div>
 
                     {!reward.is_active && (
-                      <div className="mt-3 px-3 py-1.5 bg-slate-100 rounded-lg text-center">
+                      <div className="mt-3 px-3 py-1.5 bg-gray-100 rounded-lg text-center border border-gray-200">
                         <span className="text-sm text-slate-600">Inactive</span>
                       </div>
                     )}
                   </div>
 
-                  <div className={`px-6 py-3 ${
-                    reward.type === 'discount' ? 'bg-blue-50' :
-                    reward.type === 'product' ? 'bg-green-50' :
-                    reward.type === 'service' ? 'bg-purple-50' :
-                    'bg-amber-50'
-                  }`}>
-                    <p className={`text-sm font-medium ${
-                      reward.type === 'discount' ? 'text-blue-700' :
-                      reward.type === 'product' ? 'text-green-700' :
-                      reward.type === 'service' ? 'text-purple-700' :
-                      'text-amber-700'
-                    }`}>
+                  <div
+                    className="px-5 sm:px-6 py-3 rounded-b-xl"
+                    style={{ backgroundColor: colors.lightBg }}
+                  >
+                    <p className="text-sm font-medium" style={{ color: colors.text }}>
                       {t(`loyalty.rewards.type${reward.type.charAt(0).toUpperCase() + reward.type.slice(1)}`)}: {reward.value}
                     </p>
                   </div>
@@ -358,20 +405,20 @@ export default function RewardsPage() {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+          <div className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border border-gray-200 shadow-xl">
+            <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
               <h2 className="text-lg font-semibold text-slate-900">
                 {editingReward ? t('loyalty.rewards.edit') : t('loyalty.rewards.add')}
               </h2>
               <button
                 onClick={() => setShowModal(false)}
-                className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 <X className="w-5 h-5 text-slate-500" />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-6">
+            <form onSubmit={handleSubmit} className="p-6 space-y-5">
               {error && (
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3 text-red-700">
                   <AlertCircle className="w-5 h-5 flex-shrink-0" />
@@ -380,50 +427,84 @@ export default function RewardsPage() {
               )}
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">
                   {t('loyalty.rewards.name')} *
                 </label>
-                <Input
+                <input
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   placeholder={t('loyalty.rewards.namePlaceholder')}
                   required
+                  className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
+                  style={{ borderColor: '#d1d5db' }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = '#4361EE';
+                    e.currentTarget.style.backgroundColor = '#f0f0ff';
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = '#d1d5db';
+                    e.currentTarget.style.backgroundColor = '#f9fafb';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">
                   {t('loyalty.rewards.description')}
                 </label>
                 <textarea
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   placeholder={t('loyalty.rewards.descriptionPlaceholder')}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
+                  style={{ borderColor: '#d1d5db' }}
                   rows={3}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = '#4361EE';
+                    e.currentTarget.style.backgroundColor = '#f0f0ff';
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = '#d1d5db';
+                    e.currentTarget.style.backgroundColor = '#f9fafb';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">
                   {t('loyalty.rewards.type')} *
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   {(['discount', 'product', 'service', 'cashback'] as RewardType[]).map((type) => {
                     const Icon = typeIcons[type];
+                    const colors = typeColors[type];
                     return (
                       <button
                         key={type}
                         type="button"
                         onClick={() => setForm({ ...form, type })}
-                        className={`p-3 rounded-lg border-2 transition-all flex items-center gap-3 ${
-                          form.type === type
-                            ? 'border-amber-500 bg-amber-50'
-                            : 'border-slate-200 hover:border-slate-300'
-                        }`}
+                        className="p-3 rounded-lg border-2 transition-all duration-200 flex items-center gap-3"
+                        style={{
+                          borderColor: form.type === type ? '#4361EE' : '#e5e7eb',
+                          backgroundColor: form.type === type ? '#f0f0ff' : 'transparent',
+                        }}
+                        onMouseEnter={(e) => {
+                          if (form.type !== type) {
+                            e.currentTarget.style.borderColor = '#c7d2fe';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (form.type !== type) {
+                            e.currentTarget.style.borderColor = '#e5e7eb';
+                          }
+                        }}
                       >
-                        <Icon className={`w-5 h-5 ${form.type === type ? 'text-amber-600' : 'text-slate-400'}`} />
-                        <span className={`text-sm font-medium ${form.type === type ? 'text-amber-700' : 'text-slate-600'}`}>
+                        <Icon className="w-5 h-5" style={{ color: form.type === type ? '#4361EE' : '#9ca3af' }} />
+                        <span className="text-sm font-medium" style={{ color: form.type === type ? '#4361EE' : '#4b5563' }}>
                           {t(`loyalty.rewards.type${type.charAt(0).toUpperCase() + type.slice(1)}`)}
                         </span>
                       </button>
@@ -433,41 +514,77 @@ export default function RewardsPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">
                   {t('loyalty.rewards.value')} *
                 </label>
-                <Input
+                <input
                   value={form.value}
                   onChange={(e) => setForm({ ...form, value: e.target.value })}
                   placeholder={t('loyalty.rewards.valuePlaceholder')}
                   required
+                  className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
+                  style={{ borderColor: '#d1d5db' }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = '#4361EE';
+                    e.currentTarget.style.backgroundColor = '#f0f0ff';
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = '#d1d5db';
+                    e.currentTarget.style.backgroundColor = '#f9fafb';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-1.5">
                     {t('loyalty.rewards.pointsCost')} *
                   </label>
-                  <Input
+                  <input
                     type="number"
                     min={1}
                     value={form.points_cost}
                     onChange={(e) => setForm({ ...form, points_cost: parseInt(e.target.value) || 0 })}
                     required
+                    className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
+                    style={{ borderColor: '#d1d5db' }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#4361EE';
+                      e.currentTarget.style.backgroundColor = '#f0f0ff';
+                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#d1d5db';
+                      e.currentTarget.style.backgroundColor = '#f9fafb';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-1.5">
                     {t('loyalty.rewards.quantity')}
                   </label>
-                  <Input
+                  <input
                     type="number"
                     min={0}
                     value={form.quantity_available ?? ''}
                     onChange={(e) => setForm({ ...form, quantity_available: e.target.value ? parseInt(e.target.value) : null })}
                     placeholder={t('loyalty.rewards.quantityUnlimited')}
+                    className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
+                    style={{ borderColor: '#d1d5db' }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#4361EE';
+                      e.currentTarget.style.backgroundColor = '#f0f0ff';
+                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#d1d5db';
+                      e.currentTarget.style.backgroundColor = '#f9fafb';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                   />
                 </div>
               </div>
@@ -476,9 +593,13 @@ export default function RewardsPage() {
                 <button
                   type="button"
                   onClick={() => setForm({ ...form, is_active: !form.is_active })}
-                  className={`w-12 h-6 rounded-full transition-colors ${form.is_active ? 'bg-amber-500' : 'bg-slate-300'}`}
+                  className="relative w-14 h-7 rounded-full transition-all duration-300 flex-shrink-0"
+                  style={{ backgroundColor: form.is_active ? '#4361EE' : '#d1d5db' }}
                 >
-                  <div className={`w-5 h-5 bg-white rounded-full shadow-sm transform transition-transform ${form.is_active ? 'translate-x-6' : 'translate-x-0.5'}`} />
+                  <div
+                    className="w-6 h-6 bg-white rounded-full shadow-sm transform transition-transform duration-300 absolute top-0.5"
+                    style={{ left: form.is_active ? '30px' : '2px' }}
+                  />
                 </button>
                 <span className="text-sm font-medium text-slate-700">
                   {t('loyalty.rewards.isActive')}
@@ -490,14 +611,17 @@ export default function RewardsPage() {
                   type="button"
                   variant="outline"
                   onClick={() => setShowModal(false)}
-                  className="flex-1"
+                  className="flex-1 transition-all duration-200"
                   disabled={saving}
                 >
                   {t('dashboard.common.cancel')}
                 </Button>
                 <Button
                   type="submit"
-                  className="flex-1 bg-amber-500 hover:bg-amber-600"
+                  className="flex-1 text-white transition-all duration-200"
+                  style={{ backgroundColor: '#4361EE' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#3A0CA3'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#4361EE'; }}
                   disabled={saving}
                 >
                   {saving ? (

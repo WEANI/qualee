@@ -7,7 +7,7 @@ import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Users, TrendingUp, Star, Search, Mail, Calendar, Filter, Phone, MessageCircle, X, ExternalLink } from 'lucide-react';
+import { Users, TrendingUp, Star, Search, Mail, Calendar, Filter, Phone, MessageCircle, X, ExternalLink, Loader2 } from 'lucide-react';
 
 interface Customer {
   user_token: string;
@@ -32,23 +32,23 @@ function CustomerDetailsModal({ customer, onClose }: CustomerDetailsModalProps) 
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden" style={{ animation: 'fadeInModal 0.3s ease-out' }}>
         {/* Header */}
-        <div className="bg-gradient-to-r from-violet-600 to-teal-700 text-white p-6">
+        <div className="text-white p-6" style={{ background: 'linear-gradient(135deg, #6366F1, #4F46E5)' }}>
           <div className="flex justify-between items-start">
             <div className="flex items-center gap-4">
               <div className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg ${
                 customer.email || customer.phone
-                  ? 'bg-white text-violet-600'
-                  : 'bg-violet-500 text-white'
-              }`}>
-                {customer.email ? customer.email[0].toUpperCase() : customer.phone ? '📱' : '?'}
+                  ? 'bg-white'
+                  : 'bg-indigo-400 text-white'
+              }`} style={customer.email || customer.phone ? { color: '#6366F1' } : {}}>
+                {customer.email ? customer.email[0].toUpperCase() : customer.phone ? '...' : '?'}
               </div>
               <div>
                 <h2 className="text-xl font-bold">
                   {customer.email || customer.phone || 'Client Anonyme'}
                 </h2>
-                <p className="text-teal-100 text-sm font-mono">
+                <p className="text-indigo-200 text-sm font-mono">
                   ID: {customer.user_token.substring(0, 12)}...
                 </p>
               </div>
@@ -124,7 +124,7 @@ function CustomerDetailsModal({ customer, onClose }: CustomerDetailsModalProps) 
             {customer.feedbacks.map((feedback, index) => (
               <div
                 key={feedback.id || index}
-                className="p-4 bg-slate-50 rounded-xl border border-slate-100"
+                className="p-4 bg-slate-50 rounded-xl border border-slate-100 transition-colors hover:bg-slate-100"
               >
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex items-center gap-2">
@@ -162,7 +162,11 @@ function CustomerDetailsModal({ customer, onClose }: CustomerDetailsModalProps) 
 
         {/* Footer */}
         <div className="p-4 bg-slate-50 border-t border-slate-200 flex justify-end">
-          <Button onClick={onClose} variant="outline">
+          <Button
+            onClick={onClose}
+            variant="outline"
+            className="border-gray-200 hover:bg-gray-100"
+          >
             Fermer
           </Button>
         </div>
@@ -283,77 +287,127 @@ export default function CustomersPage() {
 
   if (loading || !user || !merchant) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-slate-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg text-slate-600">Chargement de vos clients...</p>
+      <DashboardLayout merchant={merchant}>
+        <div className="flex items-center justify-center h-96">
+          <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#6366F1' }} />
         </div>
-      </div>
+      </DashboardLayout>
     );
   }
 
   return (
     <DashboardLayout merchant={merchant}>
-      <div className="space-y-8">
+      <style jsx global>{`
+        @keyframes fadeInCustomers {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInModal {
+          from { opacity: 0; transform: scale(0.95); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        .customers-fade-in {
+          animation: fadeInCustomers 0.3s ease-out;
+        }
+        .customer-card {
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s ease;
+        }
+        .customer-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, #6366F1, #EC4899);
+          border-radius: 2px 2px 0 0;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.3s ease;
+        }
+        .customer-card:hover::before {
+          transform: scaleX(1);
+        }
+        .customer-card:hover {
+          border-color: #d1d5db;
+          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.12);
+        }
+        .customer-input:focus {
+          border-color: #6366F1 !important;
+          background-color: #EEF2FF !important;
+          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+        }
+      `}</style>
+
+      <div className="space-y-4 sm:space-y-6 customers-fade-in">
+        {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Clients</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
+              <Users className="w-7 h-7" style={{ color: '#6366F1' }} />
+              Clients
+            </h1>
             <p className="text-slate-500 mt-1">Gérez votre base de données clients et leurs interactions</p>
           </div>
-          <div className="flex gap-3">
-            <Button variant="outline" className="gap-2">
-              <TrendingUp className="w-4 h-4" />
-              Exporter CSV
-            </Button>
-          </div>
+          <Button
+            variant="outline"
+            className="gap-2 border-gray-200 hover:bg-gray-50 transition-all duration-200"
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.color = '#6366F1'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
+          >
+            <TrendingUp className="w-4 h-4" />
+            Exporter CSV
+          </Button>
         </div>
 
         {/* Stats Row */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card className="p-6 border-slate-100 shadow-sm">
-            <div className="flex items-center gap-4 mb-2">
-              <div className="p-3 bg-teal-50 rounded-xl text-violet-600">
-                <Users className="w-6 h-6" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+          <Card className="customer-card p-4 sm:p-5 border border-gray-200 rounded-xl">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#EEF2FF' }}>
+                <Users className="w-5 h-5" style={{ color: '#6366F1' }} />
               </div>
               <div>
-                <p className="text-sm font-medium text-slate-500">Clients Totaux</p>
-                <h3 className="text-2xl font-bold text-slate-900">{totalCustomers}</h3>
+                <p className="text-xs sm:text-sm font-medium text-slate-500">Clients Totaux</p>
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900">{totalCustomers}</h3>
               </div>
             </div>
           </Card>
 
-          <Card className="p-6 border-slate-100 shadow-sm">
-            <div className="flex items-center gap-4 mb-2">
-              <div className="p-3 bg-violet-50 rounded-xl text-violet-600">
-                <Mail className="w-6 h-6" />
+          <Card className="customer-card p-4 sm:p-5 border border-gray-200 rounded-xl">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#EEF2FF' }}>
+                <Mail className="w-5 h-5" style={{ color: '#6366F1' }} />
               </div>
               <div>
-                <p className="text-sm font-medium text-slate-500">Emails Collectés</p>
-                <h3 className="text-2xl font-bold text-slate-900">{totalEmails}</h3>
+                <p className="text-xs sm:text-sm font-medium text-slate-500">Emails Collectés</p>
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900">{totalEmails}</h3>
               </div>
             </div>
           </Card>
 
-          <Card className="p-6 border-slate-100 shadow-sm">
-            <div className="flex items-center gap-4 mb-2">
-              <div className="p-3 bg-green-50 rounded-xl text-green-600">
-                <Phone className="w-6 h-6" />
+          <Card className="customer-card p-4 sm:p-5 border border-gray-200 rounded-xl">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-green-50">
+                <Phone className="w-5 h-5 text-green-600" />
               </div>
               <div>
-                <p className="text-sm font-medium text-slate-500">WhatsApp Collectés</p>
-                <h3 className="text-2xl font-bold text-slate-900">{totalPhones}</h3>
+                <p className="text-xs sm:text-sm font-medium text-slate-500">WhatsApp Collectés</p>
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900">{totalPhones}</h3>
               </div>
             </div>
           </Card>
 
-          <Card className="p-6 border-slate-100 shadow-sm">
-            <div className="flex items-center gap-4 mb-2">
-              <div className="p-3 bg-blue-50 rounded-xl text-blue-600">
-                <Star className="w-6 h-6" />
+          <Card className="customer-card p-4 sm:p-5 border border-gray-200 rounded-xl">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-amber-50">
+                <Star className="w-5 h-5 text-amber-500" />
               </div>
               <div>
-                <p className="text-sm font-medium text-slate-500">Avis Moyen/Client</p>
-                <h3 className="text-2xl font-bold text-slate-900">
+                <p className="text-xs sm:text-sm font-medium text-slate-500">Avis Moyen/Client</p>
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
                   {totalCustomers > 0
                     ? (([...webCustomers, ...whatsappCustomers].reduce((sum, c) => sum + c.total_reviews, 0)) / totalCustomers).toFixed(1)
                     : '0'
@@ -365,35 +419,79 @@ export default function CustomersPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 border-b border-slate-200">
+        <nav
+          role="tablist"
+          className="flex gap-1 border-b-2 overflow-x-auto pb-0 scrollbar-hide"
+          style={{ borderColor: '#e8e6ff' }}
+        >
           <button
+            role="tab"
+            aria-selected={activeTab === 'web'}
             onClick={() => { setActiveTab('web'); setSearchQuery(''); }}
-            className={`flex items-center gap-2 px-6 py-3 font-medium text-sm transition-all border-b-2 -mb-px ${
-              activeTab === 'web'
-                ? 'text-violet-600 border-violet-600 bg-teal-50/50'
-                : 'text-slate-500 border-transparent hover:text-slate-700 hover:bg-slate-50'
-            }`}
+            className="relative flex items-center gap-2 px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap transition-all duration-300 rounded-t-lg"
+            style={{
+              color: activeTab === 'web' ? '#6366F1' : '#6b7280',
+            }}
+            onMouseEnter={(e) => {
+              if (activeTab !== 'web') {
+                e.currentTarget.style.color = '#4F46E5';
+                e.currentTarget.style.backgroundColor = '#EEF2FF';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeTab !== 'web') {
+                e.currentTarget.style.color = '#6b7280';
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }
+            }}
           >
             <Mail className="w-4 h-4" />
-            Workflow Web
+            <span>Workflow Web</span>
             <Badge variant="secondary" className="ml-1">{webCustomers.length}</Badge>
+            <span
+              className="absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-300 origin-left"
+              style={{
+                backgroundColor: '#6366F1',
+                transform: activeTab === 'web' ? 'scaleX(1)' : 'scaleX(0)',
+              }}
+            />
           </button>
           <button
+            role="tab"
+            aria-selected={activeTab === 'whatsapp'}
             onClick={() => { setActiveTab('whatsapp'); setSearchQuery(''); }}
-            className={`flex items-center gap-2 px-6 py-3 font-medium text-sm transition-all border-b-2 -mb-px ${
-              activeTab === 'whatsapp'
-                ? 'text-green-600 border-green-600 bg-green-50/50'
-                : 'text-slate-500 border-transparent hover:text-slate-700 hover:bg-slate-50'
-            }`}
+            className="relative flex items-center gap-2 px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap transition-all duration-300 rounded-t-lg"
+            style={{
+              color: activeTab === 'whatsapp' ? '#10B981' : '#6b7280',
+            }}
+            onMouseEnter={(e) => {
+              if (activeTab !== 'whatsapp') {
+                e.currentTarget.style.color = '#059669';
+                e.currentTarget.style.backgroundColor = '#ECFDF5';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeTab !== 'whatsapp') {
+                e.currentTarget.style.color = '#6b7280';
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }
+            }}
           >
             <MessageCircle className="w-4 h-4" />
-            Workflow WhatsApp
+            <span>Workflow WhatsApp</span>
             <Badge variant="secondary" className="ml-1">{whatsappCustomers.length}</Badge>
+            <span
+              className="absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-300 origin-left"
+              style={{
+                backgroundColor: '#10B981',
+                transform: activeTab === 'whatsapp' ? 'scaleX(1)' : 'scaleX(0)',
+              }}
+            />
           </button>
-        </div>
+        </nav>
 
         {/* Search and Filter Bar */}
-        <Card className="p-4 border-slate-100 shadow-sm">
+        <Card className="customer-card p-4 border border-gray-200 rounded-xl">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -402,10 +500,11 @@ export default function CustomersPage() {
                 placeholder={activeTab === 'web' ? 'Rechercher par email...' : 'Rechercher par numéro WhatsApp...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
+                className="customer-input w-full pl-10 pr-4 py-2.5 bg-gray-50 border rounded-lg text-sm transition-all duration-200 focus:outline-none"
+                style={{ borderColor: '#d1d5db' }}
               />
             </div>
-            <Button variant="outline" className="gap-2 text-slate-600">
+            <Button variant="outline" className="gap-2 text-slate-600 border-gray-200 hover:bg-gray-50">
               <Filter className="w-4 h-4" />
               Filtres
             </Button>
@@ -413,44 +512,48 @@ export default function CustomersPage() {
         </Card>
 
         {/* Customer List Table */}
-        <Card className="border-slate-100 shadow-sm overflow-hidden">
+        <Card className="customer-card border border-gray-200 rounded-xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-slate-50 border-b border-slate-100">
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Client</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                <tr className="bg-gray-50 border-b-2" style={{ borderColor: '#F3F4F6' }}>
+                  <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Client</th>
+                  <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
                     {activeTab === 'web' ? 'Email' : 'WhatsApp'}
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Statut</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Note Moyenne</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Dernier Commentaire</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Dernière Visite</th>
-                  <th className="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
+                  <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Statut</th>
+                  <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Note Moyenne</th>
+                  <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden lg:table-cell">Dernier Commentaire</th>
+                  <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden sm:table-cell">Dernière Visite</th>
+                  <th className="px-4 sm:px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 bg-white">
                 {filteredCustomers.length > 0 ? (
                   filteredCustomers.map((customer) => (
-                    <tr key={customer.user_token} className="hover:bg-slate-50/50 transition-colors">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center gap-4">
+                    <tr key={customer.user_token} className="hover:bg-indigo-50/30 transition-colors duration-200">
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-3 sm:gap-4">
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-sm ${
                             activeTab === 'web'
                               ? customer.email
-                                ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white'
+                                ? 'text-white'
                                 : 'bg-slate-100 text-slate-500'
                               : customer.phone
-                                ? 'bg-gradient-to-br from-green-500 to-violet-600 text-white'
+                                ? 'text-white'
                                 : 'bg-slate-100 text-slate-500'
-                          }`}>
+                          }`} style={
+                            activeTab === 'web'
+                              ? customer.email ? { background: 'linear-gradient(135deg, #6366F1, #4F46E5)' } : {}
+                              : customer.phone ? { background: 'linear-gradient(135deg, #10B981, #059669)' } : {}
+                          }>
                             {activeTab === 'web'
                               ? (customer.email ? customer.email[0].toUpperCase() : '?')
-                              : (customer.phone ? '📱' : '?')
+                              : (customer.phone ? '...' : '?')
                             }
                           </div>
                           <div>
-                            <p className="font-medium text-slate-900">
+                            <p className="font-medium text-slate-900 text-sm">
                               {activeTab === 'web'
                                 ? (customer.email || 'Client Anonyme')
                                 : (customer.phone || 'Client Anonyme')
@@ -462,12 +565,13 @@ export default function CustomersPage() {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                         {activeTab === 'web' ? (
                           customer.email ? (
                             <div className="flex items-center gap-2 text-sm text-slate-600">
                               <Mail className="w-4 h-4 text-slate-400" />
-                              {customer.email}
+                              <span className="hidden sm:inline">{customer.email}</span>
+                              <span className="sm:hidden">{customer.email.substring(0, 15)}...</span>
                             </div>
                           ) : (
                             <span className="text-slate-400 text-sm">-</span>
@@ -483,9 +587,9 @@ export default function CustomersPage() {
                           )
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                         {customer.total_reviews > 1 ? (
-                          <Badge className="bg-purple-50 text-purple-700 hover:bg-purple-100 border-purple-100">
+                          <Badge className="text-white border-0" style={{ backgroundColor: '#6366F1' }}>
                             Habitué
                           </Badge>
                         ) : (
@@ -494,14 +598,14 @@ export default function CustomersPage() {
                           </Badge>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-1">
                           <span className="font-semibold text-slate-900">{customer.avg_rating.toFixed(1)}</span>
                           <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
                           <span className="text-xs text-slate-400 ml-1">({customer.total_reviews})</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 sm:px-6 py-4 hidden lg:table-cell">
                         {customer.feedbacks[0]?.comment ? (
                           <p className="text-sm text-slate-600 max-w-[200px] truncate" title={customer.feedbacks[0].comment}>
                             {customer.feedbacks[0].comment}
@@ -510,7 +614,7 @@ export default function CustomersPage() {
                           <span className="text-slate-400 text-sm italic">Pas de commentaire</span>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap hidden sm:table-cell">
                         <div className="flex items-center gap-2 text-sm text-slate-500">
                           <Calendar className="w-4 h-4" />
                           {new Date(customer.last_review).toLocaleDateString('fr-FR', {
@@ -520,11 +624,14 @@ export default function CustomersPage() {
                           })}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right">
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-right">
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-violet-600 hover:text-teal-700 hover:bg-teal-50"
+                          className="transition-colors duration-200"
+                          style={{ color: '#6366F1' }}
+                          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#EEF2FF'; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
                           onClick={() => setSelectedCustomer(customer)}
                         >
                           Détails

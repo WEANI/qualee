@@ -7,7 +7,7 @@ import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Html5QrcodeScanner } from 'html5-qrcode';
-import { CheckCircle2, XCircle, AlertCircle, RefreshCw, Award, Star, Coins } from 'lucide-react';
+import { CheckCircle2, XCircle, AlertCircle, RefreshCw, Award, Star, Coins, Loader2, ScanLine } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import type { LoyaltyClient } from '@/lib/types/database';
 import { useTranslation } from 'react-i18next';
@@ -35,7 +35,7 @@ export default function ScanPage() {
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) {
         router.push('/auth/login');
         return;
@@ -66,8 +66,8 @@ export default function ScanPage() {
       // Initialize scanner
       const scanner = new Html5QrcodeScanner(
         "reader",
-        { 
-          fps: 10, 
+        {
+          fps: 10,
           qrbox: { width: 250, height: 250 },
           aspectRatio: 1.0,
           showTorchButtonIfSupported: true
@@ -210,9 +210,8 @@ export default function ScanPage() {
 
   const verifyCoupon = async (data: string) => {
     setScanStatus('verifying');
-    
+
     // Extract code from URL or raw text
-    // Handles direct code (e.g., "ABC-1234") or URL (e.g., "https://.../coupon/...?code=ABC-1234")
     let codeToVerify = data;
     try {
       if (data.includes('code=')) {
@@ -262,9 +261,9 @@ export default function ScanPage() {
     try {
       const { error } = await supabase
         .from('coupons')
-        .update({ 
-          used: true, 
-          used_at: new Date().toISOString() 
+        .update({
+          used: true,
+          used_at: new Date().toISOString()
         })
         .eq('id', couponDetails.id);
 
@@ -289,7 +288,7 @@ export default function ScanPage() {
         body: JSON.stringify({
           merchantId: merchant.id,
           type: 'coupon_used',
-          title: '✅ Coupon utilisé',
+          title: 'Coupon utilisé',
           message: `Le coupon "${couponDetails.code}" pour "${couponDetails.prize_name}" a été validé.`,
           data: { couponCode: couponDetails.code, prizeName: couponDetails.prize_name },
         }),
@@ -302,34 +301,86 @@ export default function ScanPage() {
 
   if (!user || !merchant) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#7209B7] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg text-gray-600">Chargement...</p>
+      <DashboardLayout merchant={merchant}>
+        <div className="flex items-center justify-center h-96">
+          <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#6366F1' }} />
         </div>
-      </div>
+      </DashboardLayout>
     );
   }
 
   return (
     <DashboardLayout merchant={merchant}>
-      <div className="space-y-6 max-w-2xl mx-auto">
+      <style jsx global>{`
+        @keyframes fadeInScan {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInLeft {
+          from { opacity: 0; transform: translateX(-10px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        .scan-fade-in {
+          animation: fadeInScan 0.3s ease-out;
+        }
+        .scan-icon-enter {
+          animation: slideInLeft 0.3s ease-out;
+        }
+        .scan-card {
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s ease;
+        }
+        .scan-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, #6366F1, #EC4899);
+          border-radius: 2px 2px 0 0;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.3s ease;
+        }
+        .scan-card:hover::before {
+          transform: scaleX(1);
+        }
+        .scan-card:hover {
+          border-color: #d1d5db;
+          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.12);
+        }
+      `}</style>
+
+      <div className="space-y-4 sm:space-y-6 max-w-2xl mx-auto scan-fade-in">
+        {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Scanner de Coupon</h1>
-          <p className="text-gray-600">Scannez le QR code du client pour vérifier et valider son gain.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
+            <ScanLine className="w-7 h-7" style={{ color: '#6366F1' }} />
+            Scanner de Coupon
+          </h1>
+          <p className="text-slate-500 mt-1">Scannez le QR code du client pour vérifier et valider son gain.</p>
         </div>
 
-        <Card className="p-6">
+        <Card className="scan-card p-5 sm:p-6 border border-gray-200 rounded-xl">
           {scanStatus === 'idle' && (
             <div className="text-center py-12">
-              <div className="w-20 h-20 bg-teal-100 text-violet-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: '#EEF2FF' }}>
+                <svg className="w-10 h-10" style={{ color: '#6366F1' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Prêt à scanner</h3>
-              <p className="text-gray-500 mb-8">Assurez-vous d'avoir autorisé l'accès à la caméra.</p>
-              <Button onClick={startScanning} size="lg" className="bg-violet-600 hover:bg-teal-700">
+              <h3 className="text-lg font-semibold text-slate-900 mb-2">Prêt à scanner</h3>
+              <p className="text-slate-500 mb-8 text-sm">Assurez-vous d&apos;avoir autorisé l&apos;accès à la caméra.</p>
+              <Button
+                onClick={startScanning}
+                size="lg"
+                className="text-white transition-all duration-200"
+                style={{ backgroundColor: '#6366F1' }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#4F46E5'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(99, 102, 241, 0.3)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#6366F1'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+              >
                 Lancer le scan
               </Button>
             </div>
@@ -338,7 +389,7 @@ export default function ScanPage() {
           {scanStatus === 'scanning' && (
             <div className="w-full">
               <div id="reader" className="w-full overflow-hidden rounded-lg"></div>
-              <Button onClick={() => setScanStatus('idle')} variant="outline" className="w-full mt-4">
+              <Button onClick={() => setScanStatus('idle')} variant="outline" className="w-full mt-4 border-gray-200">
                 Annuler
               </Button>
             </div>
@@ -346,30 +397,37 @@ export default function ScanPage() {
 
           {scanStatus === 'verifying' && (
             <div className="text-center py-12">
-              <div className="w-16 h-16 border-4 border-violet-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-lg font-medium">Vérification du code...</p>
+              <Loader2 className="w-12 h-12 animate-spin mx-auto mb-4" style={{ color: '#6366F1' }} />
+              <p className="text-lg font-medium text-slate-900">Vérification du code...</p>
             </div>
           )}
 
           {scanStatus === 'valid' && couponDetails && (
             <div className="text-center py-8">
-              <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+              <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6" style={{ animation: 'fadeInScan 0.5s ease-out' }}>
                 <CheckCircle2 className="w-10 h-10" />
               </div>
-              <h2 className="text-2xl font-bold text-green-700 mb-2">Coupon Valide !</h2>
+              <h2 className="text-2xl font-bold text-emerald-700 mb-2">Coupon Valide !</h2>
               <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8 max-w-sm mx-auto">
-                <p className="text-sm text-gray-500 uppercase tracking-wide font-semibold mb-1">Prix à remettre</p>
-                <p className="text-3xl font-bold text-gray-900 mb-4">{couponDetails.prize_name}</p>
+                <p className="text-sm text-slate-500 uppercase tracking-wide font-semibold mb-1">Prix à remettre</p>
+                <p className="text-3xl font-bold text-slate-900 mb-4">{couponDetails.prize_name}</p>
                 <div className="border-t border-gray-200 pt-4">
-                  <p className="text-sm text-gray-600">Code: <span className="font-mono font-bold">{couponDetails.code}</span></p>
-                  <p className="text-xs text-gray-400 mt-1">Expire le: {new Date(couponDetails.expires_at).toLocaleDateString()}</p>
+                  <p className="text-sm text-slate-600">Code: <span className="font-mono font-bold">{couponDetails.code}</span></p>
+                  <p className="text-xs text-slate-400 mt-1">Expire le: {new Date(couponDetails.expires_at).toLocaleDateString()}</p>
                 </div>
               </div>
               <div className="flex gap-4 justify-center">
-                <Button onClick={() => setScanStatus('idle')} variant="outline">
+                <Button onClick={() => setScanStatus('idle')} variant="outline" className="border-gray-200">
                   Annuler
                 </Button>
-                <Button onClick={redeemCoupon} size="lg" className="bg-green-600 hover:bg-green-700 shadow-lg shadow-green-500/30">
+                <Button
+                  onClick={redeemCoupon}
+                  size="lg"
+                  className="text-white transition-all duration-200"
+                  style={{ backgroundColor: '#10B981' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#059669'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#10B981'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+                >
                   Valider la remise du prix
                 </Button>
               </div>
@@ -382,8 +440,14 @@ export default function ScanPage() {
                 <XCircle className="w-10 h-10" />
               </div>
               <h2 className="text-2xl font-bold text-red-700 mb-2">Coupon Invalide</h2>
-              <p className="text-gray-600 mb-8 max-w-xs mx-auto">{errorMessage}</p>
-              <Button onClick={startScanning} className="bg-gray-900 hover:bg-gray-800">
+              <p className="text-slate-600 mb-8 max-w-xs mx-auto">{errorMessage}</p>
+              <Button
+                onClick={startScanning}
+                className="text-white transition-all duration-200"
+                style={{ backgroundColor: '#6366F1' }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#4F46E5'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#6366F1'; }}
+              >
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Scanner un autre code
               </Button>
@@ -392,12 +456,19 @@ export default function ScanPage() {
 
           {scanStatus === 'redeemed' && (
             <div className="text-center py-12">
-              <div className="w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Gift className="w-10 h-10" />
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: '#EEF2FF' }}>
+                <Gift className="w-10 h-10" style={{ color: '#6366F1' }} />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Prix Validé !</h2>
-              <p className="text-gray-600 mb-8">Le coupon a été marqué comme utilisé avec succès.</p>
-              <Button onClick={startScanning} size="lg" className="bg-violet-600 hover:bg-teal-700">
+              <h2 className="text-2xl font-bold text-slate-900 mb-2">Prix Validé !</h2>
+              <p className="text-slate-600 mb-8">Le coupon a été marqué comme utilisé avec succès.</p>
+              <Button
+                onClick={startScanning}
+                size="lg"
+                className="text-white transition-all duration-200"
+                style={{ backgroundColor: '#6366F1' }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#4F46E5'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#6366F1'; e.currentTarget.style.transform = 'translateY(0)'; }}
+              >
                 Scanner un autre client
               </Button>
             </div>
@@ -415,7 +486,7 @@ export default function ScanPage() {
                     <h2 className="text-2xl font-bold text-amber-700 mb-2">{t('loyalty.scan.loyaltyCardDetected')}</h2>
                   </div>
 
-                  <div className="bg-gradient-to-r from-amber-500 to-orange-500 p-6 rounded-xl text-white mb-6">
+                  <div className="p-6 rounded-xl text-white mb-6" style={{ background: 'linear-gradient(135deg, #F59E0B, #D97706)' }}>
                     <div className="flex justify-between items-start mb-4">
                       <div>
                         <p className="text-amber-100 text-sm">{t('loyalty.scan.clientName')}</p>
@@ -434,7 +505,7 @@ export default function ScanPage() {
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
                         {t('loyalty.scan.enterAmount')} ({merchant?.loyalty_currency || 'THB'})
                       </label>
                       <Input
@@ -461,16 +532,19 @@ export default function ScanPage() {
                     )}
 
                     <div className="flex gap-3">
-                      <Button onClick={() => setScanStatus('idle')} variant="outline" className="flex-1">
+                      <Button onClick={() => setScanStatus('idle')} variant="outline" className="flex-1 border-gray-200">
                         {t('dashboard.common.cancel')}
                       </Button>
                       <Button
                         onClick={handleAddPoints}
                         disabled={addingPoints || pointsToAdd <= 0}
-                        className="flex-1 bg-amber-500 hover:bg-amber-600"
+                        className="flex-1 text-white"
+                        style={{ backgroundColor: '#F59E0B' }}
+                        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#D97706'; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#F59E0B'; }}
                       >
                         {addingPoints ? (
-                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          <Loader2 className="w-5 h-5 animate-spin" />
                         ) : (
                           <>
                             <Coins className="w-4 h-4 mr-2" />
@@ -483,19 +557,26 @@ export default function ScanPage() {
                 </>
               ) : (
                 <div className="text-center py-8">
-                  <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+                  <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
                     <CheckCircle2 className="w-10 h-10" />
                   </div>
-                  <h2 className="text-2xl font-bold text-green-700 mb-2">{t('loyalty.scan.pointsAdded')}</h2>
+                  <h2 className="text-2xl font-bold text-emerald-700 mb-2">{t('loyalty.scan.pointsAdded')}</h2>
                   <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6 max-w-sm mx-auto">
-                    <p className="text-sm text-gray-500 mb-2">{t('loyalty.scan.newBalance')}</p>
+                    <p className="text-sm text-slate-500 mb-2">{t('loyalty.scan.newBalance')}</p>
                     <div className="flex items-center justify-center gap-2">
                       <Star className="w-8 h-8 text-amber-500" />
-                      <span className="text-4xl font-bold text-gray-900">{loyaltyClient.points}</span>
+                      <span className="text-4xl font-bold text-slate-900">{loyaltyClient.points}</span>
                     </div>
-                    <p className="text-sm text-gray-600 mt-2">{loyaltyClient.name || 'Client'}</p>
+                    <p className="text-sm text-slate-600 mt-2">{loyaltyClient.name || 'Client'}</p>
                   </div>
-                  <Button onClick={startScanning} size="lg" className="bg-violet-600 hover:bg-teal-700">
+                  <Button
+                    onClick={startScanning}
+                    size="lg"
+                    className="text-white transition-all duration-200"
+                    style={{ backgroundColor: '#6366F1' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#4F46E5'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#6366F1'; e.currentTarget.style.transform = 'translateY(0)'; }}
+                  >
                     Scanner un autre client
                   </Button>
                 </div>
@@ -506,26 +587,37 @@ export default function ScanPage() {
 
         {/* Session History */}
         {sessionHistory.length > 0 && (
-          <Card className="p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Historique de la session</h3>
-            <div className="space-y-4">
+          <Card className="scan-card p-5 sm:p-6 border border-gray-200 rounded-xl">
+            <div className="flex items-center gap-3 mb-5">
+              <div
+                className="scan-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: '#EEF2FF' }}
+              >
+                <ScanLine className="w-5 h-5" style={{ color: '#6366F1' }} />
+              </div>
+              <div>
+                <h2 className="text-base sm:text-lg font-semibold text-slate-900">Historique de la session</h2>
+                <p className="text-xs sm:text-sm text-slate-500">{sessionHistory.length} scan(s) effectué(s)</p>
+              </div>
+            </div>
+            <div className="space-y-3">
               {sessionHistory.map((item, index) => (
-                <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100">
+                <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 transition-colors hover:bg-gray-100">
                   {item.type === 'loyalty' ? (
                     // Loyalty points entry
                     <>
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center">
+                        <div className="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center flex-shrink-0">
                           <Award className="w-5 h-5" />
                         </div>
                         <div>
-                          <p className="font-medium text-gray-900">{item.clientName}</p>
-                          <p className="text-sm text-gray-500 font-mono">{item.cardId}</p>
+                          <p className="font-medium text-slate-900">{item.clientName}</p>
+                          <p className="text-sm text-slate-500 font-mono">{item.cardId}</p>
                         </div>
                       </div>
                       <div className="text-right">
                         <p className="text-sm font-medium text-amber-600">+{item.pointsAdded} pts</p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-slate-400">
                           {new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </p>
                       </div>
@@ -534,17 +626,17 @@ export default function ScanPage() {
                     // Coupon entry
                     <>
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                        <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
                           <Gift className="w-5 h-5" />
                         </div>
                         <div>
-                          <p className="font-medium text-gray-900">{item.prize_name}</p>
-                          <p className="text-sm text-gray-500 font-mono">{item.code}</p>
+                          <p className="font-medium text-slate-900">{item.prize_name}</p>
+                          <p className="text-sm text-slate-500 font-mono">{item.code}</p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm font-medium text-green-600">Validé</p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-sm font-medium text-emerald-600">Validé</p>
+                        <p className="text-xs text-slate-400">
                           {new Date(item.used_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </p>
                       </div>
@@ -563,14 +655,14 @@ export default function ScanPage() {
 // Icon component helper
 function Gift({ className }: { className?: string }) {
   return (
-    <svg 
-      className={className} 
-      xmlns="http://www.w3.org/2000/svg" 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2" 
-      strokeLinecap="round" 
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
       strokeLinejoin="round"
     >
       <rect x="3" y="8" width="18" height="4" rx="1" />

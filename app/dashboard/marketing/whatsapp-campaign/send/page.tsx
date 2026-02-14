@@ -315,18 +315,72 @@ export default function SendCampaignPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg text-slate-600">{t('dashboard.common.loading')}</p>
+      <DashboardLayout merchant={merchant}>
+        <div className="flex items-center justify-center h-96">
+          <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#6366F1' }} />
         </div>
-      </div>
+      </DashboardLayout>
     );
   }
 
   return (
     <DashboardLayout merchant={merchant}>
-      <div className="space-y-6">
+      <style jsx global>{`
+        @keyframes fadeInSend {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInLeft {
+          from { opacity: 0; transform: translateX(-10px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        .send-fade-in {
+          animation: fadeInSend 0.3s ease-out;
+        }
+        .send-icon-enter {
+          animation: slideInLeft 0.3s ease-out;
+        }
+        .send-card {
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s ease;
+        }
+        .send-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, #6366F1, #EC4899);
+          border-radius: 2px 2px 0 0;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.3s ease;
+        }
+        .send-card:hover::before {
+          transform: scaleX(1);
+        }
+        .send-card:hover {
+          border-color: #d1d5db;
+          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.12);
+        }
+        .send-input:focus {
+          border-color: #6366F1 !important;
+          background-color: #EEF2FF !important;
+          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+          outline: none !important;
+        }
+        .send-stat-card {
+          transition: all 0.2s ease;
+        }
+        .send-stat-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.12);
+        }
+      `}</style>
+
+      <div className="space-y-4 sm:space-y-6 send-fade-in">
         {/* Header */}
         <div className="flex items-center gap-4">
           <Button
@@ -334,26 +388,34 @@ export default function SendCampaignPage() {
             size="sm"
             onClick={() => router.push('/dashboard/marketing/whatsapp-campaign')}
             className="gap-2"
+            onMouseEnter={(e) => { e.currentTarget.style.color = '#6366F1'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}
           >
             <ArrowLeft className="w-4 h-4" />
             {t('dashboard.common.back')}
           </Button>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold text-slate-900">{t('marketing.whatsappCampaign.selectRecipients')}</h1>
-            <p className="text-slate-500">{t('marketing.whatsappCampaign.selectRecipientsDesc')}</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
+              <Send className="w-7 h-7" style={{ color: '#6366F1' }} />
+              {t('marketing.whatsappCampaign.selectRecipients')}
+            </h1>
+            <p className="text-slate-500 mt-1">{t('marketing.whatsappCampaign.selectRecipientsDesc')}</p>
           </div>
         </div>
 
         {/* Campaign Summary */}
         {campaignData && (
-          <Card className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+          <Card className="send-card p-5 sm:p-6 border border-gray-200 rounded-xl" style={{ background: 'linear-gradient(135deg, #EEF2FF, #E0E7FF)' }}>
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <MessageCircle className="w-5 h-5 text-green-600" />
+              <div
+                className="send-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: '#6366F1' }}
+              >
+                <MessageCircle className="w-5 h-5 text-white" />
               </div>
               <div className="flex-1">
-                <p className="font-medium text-green-900">{campaignData.campaignName || t('marketing.whatsappCampaign.untitledCampaign')}</p>
-                <p className="text-sm text-green-700">{campaignData.cards?.length || 0} {t('marketing.whatsappCampaign.cards')}</p>
+                <p className="font-semibold text-slate-900">{campaignData.campaignName || t('marketing.whatsappCampaign.untitledCampaign')}</p>
+                <p className="text-sm text-slate-500">{campaignData.cards?.length || 0} {t('marketing.whatsappCampaign.cards')}</p>
               </div>
               <Button
                 variant="outline"
@@ -362,7 +424,9 @@ export default function SendCampaignPage() {
                   setShowTestModal(true);
                   setTestResults([]);
                 }}
-                className="gap-2 border-amber-300 text-amber-700 hover:bg-amber-50"
+                className="gap-2 border-gray-200"
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.color = '#6366F1'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
               >
                 <FlaskConical className="w-4 h-4" />
                 {t('marketing.whatsappCampaign.testSend')}
@@ -374,119 +438,136 @@ export default function SendCampaignPage() {
         {/* Test Send Modal */}
         {showTestModal && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <Card className="w-full max-w-md p-6 bg-white">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <FlaskConical className="w-5 h-5 text-amber-600" />
-                  <h3 className="text-lg font-semibold text-slate-900">{t('marketing.whatsappCampaign.testSend')}</h3>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowTestModal(false)}
-                  className="h-8 w-8 p-0"
-                >
-                  <X className="w-4 h-4" />
-                </Button>
-              </div>
-
-              <p className="text-sm text-slate-600 mb-4">{t('marketing.whatsappCampaign.testSendDesc')}</p>
-
-              {/* Test Numbers */}
-              <div className="space-y-3 mb-4">
-                {testNumbers.map((number, index) => (
-                  <div key={index} className="flex gap-2">
-                    <PhoneInputWithCountry
-                      value={number}
-                      onChange={(value) => updateTestNumber(index, value)}
-                      placeholder={t('marketing.whatsappCampaign.testNumberPlaceholder')}
-                      className="flex-1"
-                    />
-                    {testNumbers.length > 1 && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => removeTestNumber(index)}
-                        className="h-10 w-10 p-0 text-red-500 hover:bg-red-50"
-                      >
-                        <X className="w-4 h-4" />
-                      </Button>
-                    )}
+            <Card className="w-full max-w-md bg-white rounded-xl overflow-hidden">
+              <div className="p-4 sm:p-5" style={{ background: 'linear-gradient(135deg, #6366F1, #4F46E5)' }}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+                      <FlaskConical className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{t('marketing.whatsappCampaign.testSend')}</h3>
+                      <p className="text-sm text-white/70">{t('marketing.whatsappCampaign.testSendDesc')}</p>
+                    </div>
                   </div>
-                ))}
-
-                {testNumbers.length < 2 && (
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
-                    onClick={addTestNumber}
-                    className="w-full gap-2 border-dashed"
+                    onClick={() => setShowTestModal(false)}
+                    className="h-8 w-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
                   >
-                    <Plus className="w-4 h-4" />
-                    {t('marketing.whatsappCampaign.addTestNumber')}
+                    <X className="w-4 h-4" />
                   </Button>
-                )}
+                </div>
               </div>
 
-              {/* Test Results */}
-              {testResults.length > 0 && (
-                <div className="mb-4 space-y-2">
-                  {testResults.map((result, i) => (
-                    <div
-                      key={i}
-                      className={`flex items-center gap-2 p-2 rounded-lg text-sm ${
-                        result.success ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
-                      }`}
-                    >
-                      {result.success ? (
-                        <CheckCircle className="w-4 h-4 text-green-600" />
-                      ) : (
-                        <XCircle className="w-4 h-4 text-red-600" />
+              <div className="p-5 sm:p-6">
+                {/* Test Numbers */}
+                <div className="space-y-3 mb-4">
+                  {testNumbers.map((number, index) => (
+                    <div key={index} className="flex gap-2">
+                      <PhoneInputWithCountry
+                        value={number}
+                        onChange={(value) => updateTestNumber(index, value)}
+                        placeholder={t('marketing.whatsappCampaign.testNumberPlaceholder')}
+                        className="flex-1"
+                      />
+                      {testNumbers.length > 1 && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeTestNumber(index)}
+                          className="h-10 w-10 p-0 text-red-500 hover:bg-red-50"
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
                       )}
-                      <span className="font-medium">{result.phone}</span>
-                      {result.error && <span className="text-xs">- {result.error}</span>}
                     </div>
                   ))}
-                </div>
-              )}
 
-              {/* Actions */}
-              <div className="flex gap-3">
-                <Button
-                  variant="outline"
-                  onClick={() => setShowTestModal(false)}
-                  className="flex-1"
-                >
-                  {t('dashboard.common.close')}
-                </Button>
-                <Button
-                  onClick={sendTestCampaign}
-                  disabled={isTestSending || testNumbers.every(n => !n.trim())}
-                  className="flex-1 bg-amber-600 hover:bg-amber-700 text-white gap-2"
-                >
-                  {isTestSending ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      {t('marketing.whatsappCampaign.sendingInProgress')}
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4" />
-                      {t('marketing.whatsappCampaign.sendTest')}
-                    </>
+                  {testNumbers.length < 2 && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={addTestNumber}
+                      className="w-full gap-2 border-dashed border-gray-200"
+                      onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.color = '#6366F1'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
+                    >
+                      <Plus className="w-4 h-4" />
+                      {t('marketing.whatsappCampaign.addTestNumber')}
+                    </Button>
                   )}
-                </Button>
+                </div>
+
+                {/* Test Results */}
+                {testResults.length > 0 && (
+                  <div className="mb-4 space-y-2">
+                    {testResults.map((result, i) => (
+                      <div
+                        key={i}
+                        className={`flex items-center gap-2 p-3 rounded-lg text-sm ${
+                          result.success ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'
+                        }`}
+                      >
+                        {result.success ? (
+                          <CheckCircle className="w-4 h-4 text-green-600" />
+                        ) : (
+                          <XCircle className="w-4 h-4 text-red-600" />
+                        )}
+                        <span className="font-medium">{result.phone}</span>
+                        {result.error && <span className="text-xs">- {result.error}</span>}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Actions */}
+                <div className="flex gap-3">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowTestModal(false)}
+                    className="flex-1 border-gray-200"
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.color = '#6366F1'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
+                  >
+                    {t('dashboard.common.close')}
+                  </Button>
+                  <Button
+                    onClick={sendTestCampaign}
+                    disabled={isTestSending || testNumbers.every(n => !n.trim())}
+                    className="flex-1 text-white gap-2"
+                    style={{ backgroundColor: '#6366F1' }}
+                    onMouseEnter={(e) => { if (!e.currentTarget.disabled) { e.currentTarget.style.backgroundColor = '#4F46E5'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(99, 102, 241, 0.3)'; } }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#6366F1'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+                  >
+                    {isTestSending ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        {t('marketing.whatsappCampaign.sendingInProgress')}
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        {t('marketing.whatsappCampaign.sendTest')}
+                      </>
+                    )}
+                  </Button>
+                </div>
               </div>
             </Card>
           </div>
         )}
 
         {/* Stats and Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card className="p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <Card className="send-stat-card p-4 sm:p-5 border border-gray-200 rounded-xl">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-teal-50 rounded-lg">
-                <Users className="w-5 h-5 text-teal-600" />
+              <div
+                className="send-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: '#EEF2FF' }}
+              >
+                <Users className="w-5 h-5" style={{ color: '#6366F1' }} />
               </div>
               <div>
                 <p className="text-2xl font-bold text-slate-900">{customers.length}</p>
@@ -495,10 +576,13 @@ export default function SendCampaignPage() {
             </div>
           </Card>
 
-          <Card className="p-4">
+          <Card className="send-stat-card p-4 sm:p-5 border border-gray-200 rounded-xl">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-50 rounded-lg">
-                <Check className="w-5 h-5 text-green-600" />
+              <div
+                className="send-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: '#ECFDF5' }}
+              >
+                <Check className="w-5 h-5" style={{ color: '#10B981' }} />
               </div>
               <div>
                 <p className="text-2xl font-bold text-slate-900">{selectedCustomers.size}</p>
@@ -507,10 +591,13 @@ export default function SendCampaignPage() {
             </div>
           </Card>
 
-          <Card className="p-4">
+          <Card className="send-stat-card p-4 sm:p-5 border border-gray-200 rounded-xl">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-amber-50 rounded-lg">
-                <Star className="w-5 h-5 text-amber-600" />
+              <div
+                className="send-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: '#FFFBEB' }}
+              >
+                <Star className="w-5 h-5" style={{ color: '#F59E0B' }} />
               </div>
               <div>
                 <p className="text-2xl font-bold text-slate-900">
@@ -521,11 +608,14 @@ export default function SendCampaignPage() {
             </div>
           </Card>
 
-          <Card className="p-4">
+          <Card className="send-stat-card p-4 sm:p-5 border border-gray-200 rounded-xl">
             <Button
               onClick={sendCampaign}
               disabled={selectedCustomers.size === 0 || isSending || !campaignData}
-              className="w-full h-full bg-green-600 hover:bg-green-700 text-white gap-2"
+              className="w-full h-full text-white gap-2 transition-all duration-200"
+              style={{ backgroundColor: '#6366F1' }}
+              onMouseEnter={(e) => { if (!e.currentTarget.disabled) { e.currentTarget.style.backgroundColor = '#4F46E5'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(99, 102, 241, 0.3)'; } }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#6366F1'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
             >
               {isSending ? (
                 <>
@@ -544,42 +634,71 @@ export default function SendCampaignPage() {
 
         {/* Send Progress */}
         {isSending && (
-          <Card className="p-4">
-            <div className="flex items-center gap-4 mb-3">
-              <Loader2 className="w-5 h-5 text-green-600 animate-spin" />
-              <p className="font-medium text-slate-900">{t('marketing.whatsappCampaign.sendingInProgress')}</p>
-            </div>
-            <div className="w-full bg-slate-200 rounded-full h-3">
+          <Card className="send-card p-5 sm:p-6 border border-gray-200 rounded-xl">
+            <div className="flex items-center gap-3 mb-4">
               <div
-                className="bg-green-600 h-3 rounded-full transition-all duration-300"
-                style={{ width: `${sendProgress}%` }}
+                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: '#EEF2FF' }}
+              >
+                <Loader2 className="w-5 h-5 animate-spin" style={{ color: '#6366F1' }} />
+              </div>
+              <div>
+                <p className="font-semibold text-slate-900">{t('marketing.whatsappCampaign.sendingInProgress')}</p>
+                <p className="text-sm text-slate-500">
+                  {sendResults.length} / {selectedCustomers.size} {t('marketing.whatsappCampaign.messagesSent')}
+                </p>
+              </div>
+            </div>
+            <div className="w-full bg-gray-100 rounded-full h-3">
+              <div
+                className="h-3 rounded-full transition-all duration-300"
+                style={{ width: `${sendProgress}%`, background: 'linear-gradient(90deg, #6366F1, #4F46E5)' }}
               />
             </div>
-            <p className="text-sm text-slate-500 mt-2">
-              {sendResults.length} / {selectedCustomers.size} {t('marketing.whatsappCampaign.messagesSent')}
-            </p>
           </Card>
         )}
 
         {/* Results */}
         {showResults && (
-          <Card className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-slate-900">{t('marketing.whatsappCampaign.sendResults')}</h3>
-              <Button variant="outline" size="sm" onClick={() => setShowResults(false)}>
+          <Card className="send-card p-5 sm:p-6 border border-gray-200 rounded-xl">
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center gap-3">
+                <div
+                  className="send-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                  style={{ backgroundColor: '#EEF2FF' }}
+                >
+                  <CheckCircle className="w-5 h-5" style={{ color: '#6366F1' }} />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-semibold text-slate-900">{t('marketing.whatsappCampaign.sendResults')}</h3>
+                  <p className="text-xs sm:text-sm text-slate-500">Résumé de la campagne envoyée</p>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowResults(false)}
+                className="border-gray-200"
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.color = '#6366F1'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
+              >
                 {t('dashboard.common.close')}
               </Button>
             </div>
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="p-4 bg-green-50 rounded-lg flex items-center gap-3">
-                <CheckCircle className="w-8 h-8 text-green-600" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div className="p-4 bg-green-50 rounded-xl flex items-center gap-3 border border-green-200">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#10B981' }}>
+                  <CheckCircle className="w-5 h-5 text-white" />
+                </div>
                 <div>
                   <p className="text-2xl font-bold text-green-900">{successCount}</p>
                   <p className="text-sm text-green-700">{t('marketing.whatsappCampaign.successfullySent')}</p>
                 </div>
               </div>
-              <div className="p-4 bg-red-50 rounded-lg flex items-center gap-3">
-                <XCircle className="w-8 h-8 text-red-600" />
+              <div className="p-4 bg-red-50 rounded-xl flex items-center gap-3 border border-red-200">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#EF4444' }}>
+                  <XCircle className="w-5 h-5 text-white" />
+                </div>
                 <div>
                   <p className="text-2xl font-bold text-red-900">{failureCount}</p>
                   <p className="text-sm text-red-700">{t('marketing.whatsappCampaign.failed')}</p>
@@ -587,7 +706,7 @@ export default function SendCampaignPage() {
               </div>
             </div>
             {failureCount > 0 && (
-              <div className="border border-red-200 rounded-lg p-3 bg-red-50 max-h-40 overflow-y-auto">
+              <div className="border border-red-200 rounded-xl p-4 bg-red-50 max-h-40 overflow-y-auto">
                 <p className="text-sm font-medium text-red-800 mb-2">{t('marketing.whatsappCampaign.failedNumbers')}:</p>
                 {sendResults.filter(r => !r.success).map((result, i) => (
                   <p key={i} className="text-xs text-red-700">
@@ -600,7 +719,19 @@ export default function SendCampaignPage() {
         )}
 
         {/* Search and Quick Actions */}
-        <Card className="p-4">
+        <Card className="send-card p-5 sm:p-6 border border-gray-200 rounded-xl">
+          <div className="flex items-center gap-3 mb-5">
+            <div
+              className="send-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: '#EEF2FF' }}
+            >
+              <Search className="w-5 h-5" style={{ color: '#6366F1' }} />
+            </div>
+            <div>
+              <h2 className="text-base sm:text-lg font-semibold text-slate-900">Filtrer les destinataires</h2>
+              <p className="text-xs sm:text-sm text-slate-500">Recherchez et sélectionnez vos contacts</p>
+            </div>
+          </div>
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -609,18 +740,32 @@ export default function SendCampaignPage() {
                 placeholder={t('marketing.whatsappCampaign.searchByPhone')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="send-input w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm transition-all duration-200"
               />
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" size="sm" onClick={toggleSelectAll} className="gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={toggleSelectAll}
+                className="gap-2 border-gray-200"
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.color = '#6366F1'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
+              >
                 <Check className="w-4 h-4" />
                 {selectedCustomers.size === filteredCustomers.length
                   ? t('marketing.whatsappCampaign.deselectAll')
                   : t('marketing.whatsappCampaign.selectAll')}
               </Button>
-              <Button variant="outline" size="sm" onClick={selectPositiveOnly} className="gap-2">
-                <Star className="w-4 h-4 text-amber-500" />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={selectPositiveOnly}
+                className="gap-2 border-gray-200"
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#F59E0B'; e.currentTarget.style.color = '#F59E0B'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
+              >
+                <Star className="w-4 h-4" style={{ color: '#F59E0B' }} />
                 {t('marketing.whatsappCampaign.selectPositive')}
               </Button>
             </div>
@@ -628,17 +773,18 @@ export default function SendCampaignPage() {
         </Card>
 
         {/* Customer List */}
-        <Card className="overflow-hidden">
+        <Card className="send-card overflow-hidden border border-gray-200 rounded-xl">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-slate-50 border-b border-slate-100">
+                <tr className="border-b-2" style={{ borderColor: '#F3F4F6', backgroundColor: '#FAFAFA' }}>
                   <th className="px-4 py-3 text-left">
                     <input
                       type="checkbox"
                       checked={selectedCustomers.size === filteredCustomers.length && filteredCustomers.length > 0}
                       onChange={toggleSelectAll}
-                      className="w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
+                      className="w-4 h-4 rounded border-slate-300"
+                      style={{ accentColor: '#6366F1' }}
                     />
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">{t('marketing.whatsappCampaign.phoneNumber')}</th>
@@ -652,9 +798,10 @@ export default function SendCampaignPage() {
                   filteredCustomers.map((customer) => (
                     <tr
                       key={customer.phone}
-                      className={`hover:bg-slate-50 cursor-pointer transition-colors ${
-                        selectedCustomers.has(customer.phone) ? 'bg-teal-50' : ''
+                      className={`cursor-pointer transition-all duration-200 ${
+                        selectedCustomers.has(customer.phone) ? '' : 'hover:bg-slate-50'
                       }`}
+                      style={selectedCustomers.has(customer.phone) ? { backgroundColor: 'rgba(99, 102, 241, 0.05)' } : {}}
                       onClick={() => toggleCustomer(customer.phone)}
                     >
                       <td className="px-4 py-3">
@@ -663,12 +810,13 @@ export default function SendCampaignPage() {
                           checked={selectedCustomers.has(customer.phone)}
                           onChange={() => toggleCustomer(customer.phone)}
                           onClick={(e) => e.stopPropagation()}
-                          className="w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
+                          className="w-4 h-4 rounded border-slate-300"
+                          style={{ accentColor: '#6366F1' }}
                         />
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
-                          <Phone className="w-4 h-4 text-green-500" />
+                          <Phone className="w-4 h-4" style={{ color: '#10B981' }} />
                           <span className="font-medium text-slate-900">{customer.phone}</span>
                         </div>
                       </td>
@@ -679,7 +827,7 @@ export default function SendCampaignPage() {
                         </div>
                       </td>
                       <td className="px-4 py-3">
-                        <Badge variant="secondary">{customer.total_reviews}</Badge>
+                        <Badge className="text-white border-0 text-xs" style={{ backgroundColor: '#6366F1' }}>{customer.total_reviews}</Badge>
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2 text-sm text-slate-500">
@@ -692,9 +840,11 @@ export default function SendCampaignPage() {
                 ) : (
                   <tr>
                     <td colSpan={5} className="px-4 py-12 text-center text-slate-500">
-                      <Users className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+                      <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#EEF2FF' }}>
+                        <Users className="w-8 h-8" style={{ color: '#C7D2FE' }} />
+                      </div>
                       <p className="text-lg font-medium text-slate-900">{t('marketing.whatsappCampaign.noContacts')}</p>
-                      <p className="text-sm">{t('marketing.whatsappCampaign.noContactsDesc')}</p>
+                      <p className="text-sm text-slate-400 mt-1">{t('marketing.whatsappCampaign.noContactsDesc')}</p>
                     </td>
                   </tr>
                 )}
