@@ -256,23 +256,6 @@ export default function InternalFeedbackPage() {
                 />
               </div>
 
-              {/* Link to Google Review */}
-              {merchant?.google_review_link && (
-                <p className="text-center mb-5">
-                  <span className="text-xs text-gray-400">
-                    {t('internalFeedback.googleHint', 'Vous pouvez aussi partager votre avis sur')}{' '}
-                  </span>
-                  <a
-                    href={merchant.google_review_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-blue-500 hover:text-blue-600 underline underline-offset-2 transition-colors"
-                  >
-                    Google
-                  </a>
-                </p>
-              )}
-
               {/* Reward Hint */}
               <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4 mb-6">
                 <div className="flex items-start gap-3">
@@ -306,6 +289,23 @@ export default function InternalFeedbackPage() {
                   </>
                 )}
               </Button>
+
+              {/* Lien discret Google Review */}
+              {merchant?.google_review_link && (
+                <div className="mt-5 text-center">
+                  <p className="text-gray-400 text-sm mb-1">
+                    {t('internalFeedback.googleHint', 'Vous pouvez aussi partager votre avis sur Google')}
+                  </p>
+                  <a
+                    href={merchant.google_review_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-blue-500 hover:text-blue-600 transition-colors"
+                  >
+                    {t('internalFeedback.googleLink', 'Laisser un avis sur Google')} →
+                  </a>
+                </div>
+              )}
 
             </>
           ) : (
