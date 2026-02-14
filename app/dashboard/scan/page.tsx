@@ -457,7 +457,7 @@ export default function ScanPage() {
           {scanStatus === 'redeemed' && (
             <div className="text-center py-12">
               <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: '#EEF2FF' }}>
-                <Gift className="w-10 h-10" style={{ color: '#6366F1' }} />
+                <Gift className="w-10 h-10 text-[#6366F1]" />
               </div>
               <h2 className="text-2xl font-bold text-slate-900 mb-2">Prix Validé !</h2>
               <p className="text-slate-600 mb-8">Le coupon a été marqué comme utilisé avec succès.</p>
