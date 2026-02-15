@@ -177,7 +177,7 @@ export default function SettingsPage() {
       type="button"
       onClick={() => onChange(!enabled)}
       className="relative w-12 h-6 rounded-full transition-all duration-300 flex-shrink-0"
-      style={{ backgroundColor: enabled ? '#4361EE' : '#d1d5db' }}
+      style={{ backgroundColor: enabled ? '#0D9488' : '#d1d5db' }}
     >
       <div
         className="w-5 h-5 bg-white rounded-full shadow-sm transform transition-transform duration-300 absolute top-0.5"
@@ -190,7 +190,7 @@ export default function SettingsPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#4361EE' }} />
+          <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
         </div>
       </DashboardLayout>
     );
@@ -231,7 +231,7 @@ export default function SettingsPage() {
           left: 0;
           right: 0;
           height: 3px;
-          background: linear-gradient(90deg, #4361EE, #7209B7);
+          background: linear-gradient(90deg, #0D9488, #10B981);
           border-radius: 2px 2px 0 0;
           transform: scaleX(0);
           transform-origin: left;
@@ -242,7 +242,7 @@ export default function SettingsPage() {
         }
         .settings-card:hover {
           border-color: #d1d5db;
-          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.12);
+          box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
         }
       `}</style>
 
@@ -250,7 +250,7 @@ export default function SettingsPage() {
         {/* Header */}
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-            <Settings className="w-7 h-7" style={{ color: '#4361EE' }} />
+            <Settings className="w-7 h-7 text-teal-600" />
             Paramètres
           </h1>
           <p className="text-slate-500 mt-1">Configurez les paramètres de votre application</p>
@@ -282,7 +282,7 @@ export default function SettingsPage() {
         <nav
           role="tablist"
           className="flex gap-1 border-b-2 overflow-x-auto pb-0 scrollbar-hide"
-          style={{ borderColor: '#e8e6ff' }}
+          style={{ borderColor: '#ccfbf1' }}
         >
           {tabs.map(tab => (
             <button
@@ -292,13 +292,13 @@ export default function SettingsPage() {
               onClick={() => { setActiveTab(tab.key); setMessage(null); }}
               className="relative flex items-center gap-2 px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap transition-all duration-300 rounded-t-lg"
               style={{
-                color: activeTab === tab.key ? '#4361EE' : '#6b7280',
+                color: activeTab === tab.key ? '#0D9488' : '#6b7280',
                 backgroundColor: activeTab === tab.key ? 'transparent' : 'transparent',
               }}
               onMouseEnter={(e) => {
                 if (activeTab !== tab.key) {
-                  e.currentTarget.style.color = '#3A0CA3';
-                  e.currentTarget.style.backgroundColor = '#f0f0ff';
+                  e.currentTarget.style.color = '#0F766E';
+                  e.currentTarget.style.backgroundColor = '#f0fdfa';
                 }
               }}
               onMouseLeave={(e) => {
@@ -314,7 +314,7 @@ export default function SettingsPage() {
               <span
                 className="absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-300 origin-left"
                 style={{
-                  backgroundColor: '#4361EE',
+                  backgroundColor: '#0D9488',
                   transform: activeTab === tab.key ? 'scaleX(1)' : 'scaleX(0)',
                 }}
               />
@@ -334,9 +334,9 @@ export default function SettingsPage() {
                 <div className="flex items-center gap-3 mb-5">
                   <div
                     className="settings-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#f0f0ff' }}
+                    style={{ backgroundColor: '#f0fdfa' }}
                   >
-                    <Globe className="w-5 h-5" style={{ color: '#4361EE' }} />
+                    <Globe className="w-5 h-5 text-teal-600" />
                   </div>
                   <div>
                     <h2 className="text-base sm:text-lg font-semibold text-slate-900">Langue & Région</h2>
@@ -353,9 +353,9 @@ export default function SettingsPage() {
                       className="px-4 py-2.5 border rounded-lg text-sm bg-gray-50 transition-all duration-200 w-full sm:w-auto focus:outline-none"
                       style={{ borderColor: '#d1d5db' }}
                       onFocus={(e) => {
-                        e.currentTarget.style.borderColor = '#4361EE';
-                        e.currentTarget.style.backgroundColor = '#f0f0ff';
-                        e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                        e.currentTarget.style.borderColor = '#0D9488';
+                        e.currentTarget.style.backgroundColor = '#f0fdfa';
+                        e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                       }}
                       onBlur={(e) => {
                         e.currentTarget.style.borderColor = '#d1d5db';
@@ -378,9 +378,9 @@ export default function SettingsPage() {
                         className="px-3 py-2.5 border rounded-lg text-sm bg-gray-50 transition-all duration-200 w-full sm:w-auto sm:min-w-[280px] focus:outline-none"
                         style={{ borderColor: '#d1d5db' }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = '#4361EE';
-                          e.currentTarget.style.backgroundColor = '#f0f0ff';
-                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                          e.currentTarget.style.borderColor = '#0D9488';
+                          e.currentTarget.style.backgroundColor = '#f0fdfa';
+                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                         }}
                         onBlur={(e) => {
                           e.currentTarget.style.borderColor = '#d1d5db';
@@ -402,9 +402,9 @@ export default function SettingsPage() {
                 <div className="flex items-center gap-3 mb-5">
                   <div
                     className="settings-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#f0f0ff' }}
+                    style={{ backgroundColor: '#f0fdfa' }}
                   >
-                    <Bell className="w-5 h-5" style={{ color: '#4361EE' }} />
+                    <Bell className="w-5 h-5 text-teal-600" />
                   </div>
                   <div>
                     <h2 className="text-base sm:text-lg font-semibold text-slate-900">Notifications</h2>
@@ -438,9 +438,9 @@ export default function SettingsPage() {
                 <div className="flex items-center gap-3 mb-5">
                   <div
                     className="settings-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#f0f0ff' }}
+                    style={{ backgroundColor: '#f0fdfa' }}
                   >
-                    <Shield className="w-5 h-5" style={{ color: '#4361EE' }} />
+                    <Shield className="w-5 h-5 text-teal-600" />
                   </div>
                   <div>
                     <h2 className="text-base sm:text-lg font-semibold text-slate-900">Compte</h2>
@@ -467,9 +467,9 @@ export default function SettingsPage() {
                   onClick={handleSave}
                   disabled={saving}
                   className="w-full sm:w-auto text-white"
-                  style={{ backgroundColor: '#4361EE' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#3A0CA3'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#4361EE'; }}
+                  style={{ backgroundColor: '#0D9488' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; }}
                 >
                   {saving ? (
                     <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Enregistrement...</>
@@ -489,9 +489,9 @@ export default function SettingsPage() {
                 <div className="flex items-center gap-3 mb-5">
                   <div
                     className="settings-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#f0f0ff' }}
+                    style={{ backgroundColor: '#f0fdfa' }}
                   >
-                    <Link2 className="w-5 h-5" style={{ color: '#4361EE' }} />
+                    <Link2 className="w-5 h-5 text-teal-600" />
                   </div>
                   <div>
                     <h2 className="text-base sm:text-lg font-semibold text-slate-900">Liens de Redirection</h2>
@@ -520,9 +520,9 @@ export default function SettingsPage() {
                         className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                         style={{ borderColor: '#d1d5db' }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = '#4361EE';
-                          e.currentTarget.style.backgroundColor = '#f0f0ff';
-                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                          e.currentTarget.style.borderColor = '#0D9488';
+                          e.currentTarget.style.backgroundColor = '#f0fdfa';
+                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                         }}
                         onBlur={(e) => {
                           e.currentTarget.style.borderColor = '#d1d5db';
@@ -557,9 +557,9 @@ export default function SettingsPage() {
                         className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                         style={{ borderColor: '#d1d5db' }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = '#4361EE';
-                          e.currentTarget.style.backgroundColor = '#f0f0ff';
-                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                          e.currentTarget.style.borderColor = '#0D9488';
+                          e.currentTarget.style.backgroundColor = '#f0fdfa';
+                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                         }}
                         onBlur={(e) => {
                           e.currentTarget.style.borderColor = '#d1d5db';
@@ -605,9 +605,9 @@ export default function SettingsPage() {
                         className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                         style={{ borderColor: '#d1d5db' }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = '#4361EE';
-                          e.currentTarget.style.backgroundColor = '#f0f0ff';
-                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                          e.currentTarget.style.borderColor = '#0D9488';
+                          e.currentTarget.style.backgroundColor = '#f0fdfa';
+                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                         }}
                         onBlur={(e) => {
                           e.currentTarget.style.borderColor = '#d1d5db';
@@ -631,9 +631,9 @@ export default function SettingsPage() {
                   onClick={handleSave}
                   disabled={saving}
                   className="w-full sm:w-auto text-white"
-                  style={{ backgroundColor: '#4361EE' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#3A0CA3'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#4361EE'; }}
+                  style={{ backgroundColor: '#0D9488' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; }}
                 >
                   {saving ? (
                     <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Enregistrement...</>
@@ -653,9 +653,9 @@ export default function SettingsPage() {
                 <div className="flex items-center gap-3 mb-5">
                   <div
                     className="settings-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#f0f0ff' }}
+                    style={{ backgroundColor: '#f0fdfa' }}
                   >
-                    <Clock className="w-5 h-5" style={{ color: '#4361EE' }} />
+                    <Clock className="w-5 h-5 text-teal-600" />
                   </div>
                   <div>
                     <h2 className="text-base sm:text-lg font-semibold text-slate-900">Horaires d&apos;ouverture</h2>
@@ -694,8 +694,8 @@ export default function SettingsPage() {
                             className="px-3 py-2 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                             style={{ borderColor: '#d1d5db' }}
                             onFocus={(e) => {
-                              e.currentTarget.style.borderColor = '#4361EE';
-                              e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                              e.currentTarget.style.borderColor = '#0D9488';
+                              e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                             }}
                             onBlur={(e) => {
                               e.currentTarget.style.borderColor = '#d1d5db';
@@ -710,8 +710,8 @@ export default function SettingsPage() {
                             className="px-3 py-2 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                             style={{ borderColor: '#d1d5db' }}
                             onFocus={(e) => {
-                              e.currentTarget.style.borderColor = '#4361EE';
-                              e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                              e.currentTarget.style.borderColor = '#0D9488';
+                              e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                             }}
                             onBlur={(e) => {
                               e.currentTarget.style.borderColor = '#d1d5db';
@@ -735,9 +735,9 @@ export default function SettingsPage() {
                   onClick={handleSave}
                   disabled={saving}
                   className="w-full sm:w-auto text-white"
-                  style={{ backgroundColor: '#4361EE' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#3A0CA3'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#4361EE'; }}
+                  style={{ backgroundColor: '#0D9488' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; }}
                 >
                   {saving ? (
                     <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Enregistrement...</>

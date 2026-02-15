@@ -120,7 +120,7 @@ export default function PrizesPage() {
       });
 
     if (uploadError) {
-      throw new Error(uploadError.message || 'Échec du téléchargement de l\'image');
+      throw new Error(uploadError.message || 'Echec du telechargement de l\'image');
     }
 
     const { data: { publicUrl } } = supabase.storage
@@ -185,7 +185,7 @@ export default function PrizesPage() {
       setImagePreview('');
       fetchPrizes(user.id);
     } catch (error: any) {
-      alert(error.message || 'Échec de la sauvegarde du prix');
+      alert(error.message || 'Echec de la sauvegarde du prix');
     } finally {
       setLoading(false);
       setUploading(false);
@@ -214,7 +214,7 @@ export default function PrizesPage() {
   };
 
   const handleDelete = async (prizeId: string) => {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer ce prix ?')) return;
+    if (!confirm('Etes-vous sur de vouloir supprimer ce prix ?')) return;
 
     await supabase.from('prizes').delete().eq('id', prizeId);
     fetchPrizes(user.id);
@@ -304,18 +304,18 @@ export default function PrizesPage() {
   }, [unluckyQuantity, retryQuantity, prizeQuantities, wheelBgColor, segmentColors, user]);
 
   const getChanceDescription = (prob: number) => {
-    if (prob >= 50) return { text: 'Très fréquent', color: 'text-green-600', bg: 'bg-green-50' };
-    if (prob >= 25) return { text: 'Fréquent', color: 'text-blue-600', bg: 'bg-blue-50' };
+    if (prob >= 50) return { text: 'Tres frequent', color: 'text-green-600', bg: 'bg-green-50' };
+    if (prob >= 25) return { text: 'Frequent', color: 'text-blue-600', bg: 'bg-blue-50' };
     if (prob >= 10) return { text: 'Moyen', color: 'text-yellow-600', bg: 'bg-yellow-50' };
     if (prob >= 5) return { text: 'Rare', color: 'text-orange-600', bg: 'bg-orange-50' };
-    return { text: 'Très rare', color: 'text-red-600', bg: 'bg-red-50' };
+    return { text: 'Tres rare', color: 'text-red-600', bg: 'bg-red-50' };
   };
 
   if (!user || !merchant) {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#6366F1' }} />
+          <Loader2 className="w-8 h-8 animate-spin text-teal-500" />
         </div>
       </DashboardLayout>
     );
@@ -338,43 +338,6 @@ export default function PrizesPage() {
         .prize-icon-enter {
           animation: slideInLeft 0.3s ease-out;
         }
-        .prize-card {
-          position: relative;
-          overflow: hidden;
-          transition: all 0.3s ease;
-        }
-        .prize-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 3px;
-          background: linear-gradient(90deg, #6366F1, #EC4899);
-          border-radius: 2px 2px 0 0;
-          transform: scaleX(0);
-          transform-origin: left;
-          transition: transform 0.3s ease;
-        }
-        .prize-card:hover::before {
-          transform: scaleX(1);
-        }
-        .prize-card:hover {
-          border-color: #d1d5db;
-          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.12);
-        }
-        .prize-item-card {
-          transition: all 0.3s ease;
-        }
-        .prize-item-card:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
-        }
-        .prize-input:focus {
-          border-color: #6366F1 !important;
-          background-color: #EEF2FF !important;
-          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
-        }
       `}</style>
 
       <div className="space-y-4 sm:space-y-6 prize-fade-in">
@@ -384,10 +347,10 @@ export default function PrizesPage() {
             <div className="flex items-start gap-3">
               <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-amber-800">Mise à jour de la base de données requise</h3>
+                <h3 className="font-semibold text-amber-800">Mise a jour de la base de donnees requise</h3>
                 <p className="text-sm text-amber-700 mt-1">
-                  Les colonnes pour les probabilités spéciales manquent dans la base de données.
-                  Veuillez exécuter la commande SQL suivante dans votre tableau de bord Supabase :
+                  Les colonnes pour les probabilites speciales manquent dans la base de donnees.
+                  Veuillez executer la commande SQL suivante dans votre tableau de bord Supabase :
                 </p>
                 <pre className="mt-2 bg-amber-100 p-2 rounded text-xs overflow-x-auto text-amber-900 border border-amber-200">
                   ALTER TABLE merchants ADD COLUMN IF NOT EXISTS unlucky_probability INTEGER DEFAULT 20;{'\n'}
@@ -402,17 +365,16 @@ export default function PrizesPage() {
         <div className="flex flex-col lg:flex-row justify-between items-start gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-              <Gift className="w-7 h-7" style={{ color: '#6366F1' }} />
+              <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center">
+                <Gift className="w-5 h-5 text-teal-600" />
+              </div>
               Gestion des Prix
             </h1>
-            <p className="text-slate-500 mt-1">Configurez vos prix et leurs probabilités pour la roue</p>
+            <p className="text-slate-500 mt-1">Configurez vos prix et leurs probabilites pour la roue</p>
           </div>
           <Button
             onClick={() => showForm ? handleCancel() : setShowForm(true)}
-            className="gap-2 text-white"
-            style={{ backgroundColor: showForm ? '#EF4444' : '#6366F1' }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = showForm ? '#DC2626' : '#4F46E5'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = showForm ? '#EF4444' : '#6366F1'; e.currentTarget.style.transform = 'translateY(0)'; }}
+            className={`gap-2 text-white ${showForm ? 'bg-red-500 hover:bg-red-600' : 'bg-teal-600 hover:bg-teal-700'}`}
           >
             {showForm ? (
               <>
@@ -429,209 +391,205 @@ export default function PrizesPage() {
         </div>
 
         {/* Segment Counter Card */}
-        <Card className="prize-card p-4 sm:p-6 border border-gray-200 rounded-xl">
-          <div className="flex items-center gap-3 mb-5">
-            <div
-              className="prize-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: '#EEF2FF' }}
-            >
-              <Info className="w-5 h-5" style={{ color: '#6366F1' }} />
+        <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <div className="p-4 sm:p-6">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="prize-icon-enter w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
+                <Info className="w-5 h-5 text-teal-600" />
+              </div>
+              <div>
+                <h2 className="text-base sm:text-lg font-semibold text-slate-900">Composition de la Roue</h2>
+                <p className="text-xs sm:text-sm text-slate-500">Gerez les segments de votre roue de la chance</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-base sm:text-lg font-semibold text-slate-900">Composition de la Roue</h2>
-              <p className="text-xs sm:text-sm text-slate-500">Gérez les segments de votre roue de la chance</p>
-            </div>
-          </div>
 
-          <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4">
-            <div className="bg-white rounded-lg p-2 sm:p-4 border border-gray-200">
-              <p className="text-xs sm:text-sm text-slate-500 mb-1">Segments utilisés</p>
-              <p className="text-xl sm:text-3xl font-bold" style={{ color: '#6366F1' }}>{totalSegments}/{MAX_SEGMENTS}</p>
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4">
+              <div className="bg-white rounded-lg p-2 sm:p-4 border border-gray-200">
+                <p className="text-xs sm:text-sm text-slate-500 mb-1">Segments utilises</p>
+                <p className="text-xl sm:text-3xl font-bold text-teal-600">{totalSegments}/{MAX_SEGMENTS}</p>
+              </div>
+              <div className={`rounded-lg p-2 sm:p-4 border ${
+                remainingSegments === 0 ? 'bg-emerald-50 border-emerald-200' :
+                remainingSegments > 0 ? 'bg-amber-50 border-amber-200' :
+                'bg-red-50 border-red-200'
+              }`}>
+                <p className="text-xs sm:text-sm text-slate-500 mb-1">Restants</p>
+                <p className={`text-xl sm:text-3xl font-bold ${
+                  remainingSegments === 0 ? 'text-emerald-600' :
+                  remainingSegments > 0 ? 'text-amber-600' :
+                  'text-red-600'
+                }`}>{remainingSegments}</p>
+              </div>
+              <div className="bg-white rounded-lg p-2 sm:p-4 border border-gray-200">
+                <p className="text-xs sm:text-sm text-slate-500 mb-1">Prix</p>
+                <p className="text-xl sm:text-3xl font-bold text-slate-900">{prizes.length}</p>
+              </div>
             </div>
-            <div className={`rounded-lg p-2 sm:p-4 border ${
-              remainingSegments === 0 ? 'bg-emerald-50 border-emerald-200' :
-              remainingSegments > 0 ? 'bg-amber-50 border-amber-200' :
-              'bg-red-50 border-red-200'
-            }`}>
-              <p className="text-xs sm:text-sm text-slate-500 mb-1">Restants</p>
-              <p className={`text-xl sm:text-3xl font-bold ${
-                remainingSegments === 0 ? 'text-emerald-600' :
-                remainingSegments > 0 ? 'text-amber-600' :
-                'text-red-600'
-              }`}>{remainingSegments}</p>
-            </div>
-            <div className="bg-white rounded-lg p-2 sm:p-4 border border-gray-200">
-              <p className="text-xs sm:text-sm text-slate-500 mb-1">Prix</p>
-              <p className="text-xl sm:text-3xl font-bold text-slate-900">{prizes.length}</p>
-            </div>
-          </div>
 
-          {/* How it works */}
-          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-            <div className="text-sm text-slate-600 space-y-1.5">
-              <p>La roue peut contenir <strong>maximum {MAX_SEGMENTS} segments</strong>. Ajoutez des segments pour chaque prix avec les boutons <strong>+/-</strong>.</p>
-              <p>Plus un prix a de segments, plus il a de chances d&apos;être gagné.</p>
+            {/* How it works */}
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <div className="text-sm text-slate-600 space-y-1.5">
+                <p>La roue peut contenir <strong>maximum {MAX_SEGMENTS} segments</strong>. Ajoutez des segments pour chaque prix avec les boutons <strong>+/-</strong>.</p>
+                <p>Plus un prix a de segments, plus il a de chances d&apos;etre gagne.</p>
+              </div>
             </div>
-          </div>
 
-          {totalSegments === 0 && (
-            <div className="mt-4 flex items-center gap-2 text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3">
-              <AlertCircle className="w-5 h-5 flex-shrink-0" />
-              <span className="font-medium text-sm">
-                Ajoutez des segments à la roue pour la configurer !
-              </span>
-            </div>
-          )}
-        </Card>
+            {totalSegments === 0 && (
+              <div className="mt-4 flex items-center gap-2 text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3">
+                <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                <span className="font-medium text-sm">
+                  Ajoutez des segments a la roue pour la configurer !
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
 
         {/* Prize Form */}
         {showForm && (
-          <Card className="prize-card prize-fade-in p-5 sm:p-6 border border-gray-200 rounded-xl">
-            <div className="flex items-center gap-3 mb-5">
-              <div
-                className="prize-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: '#EEF2FF' }}
-              >
-                {editingId ? (
-                  <Pencil className="w-5 h-5" style={{ color: '#6366F1' }} />
-                ) : (
-                  <Plus className="w-5 h-5" style={{ color: '#6366F1' }} />
-                )}
-              </div>
-              <div>
-                <h2 className="text-base sm:text-lg font-semibold text-slate-900">
-                  {editingId ? 'Modifier le Prix' : 'Ajouter un Nouveau Prix'}
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-500">
-                  {editingId ? 'Modifiez les détails de votre prix' : 'Configurez un nouveau prix pour la roue'}
-                </p>
-              </div>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Prize Image Upload */}
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Photo du Prix
-                </label>
-                {imagePreview ? (
-                  <div className="relative w-full h-48 bg-gray-100 rounded-xl overflow-hidden border border-gray-200">
-                    <img src={imagePreview} alt="Prize preview" className="w-full h-full object-cover" />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setImageFile(null);
-                        setImagePreview('');
-                      }}
-                      className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                ) : (
-                  <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-indigo-400 transition-colors">
-                    <input
-                      type="file"
-                      id="prize-image"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      className="hidden"
-                    />
-                    <label htmlFor="prize-image" className="cursor-pointer">
-                      <ImageIcon className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                      <p className="text-sm text-gray-600 mb-1">
-                        <span style={{ color: '#6366F1' }} className="font-semibold">Cliquez pour uploader</span> ou glissez-déposez
-                      </p>
-                      <p className="text-xs text-gray-500">PNG, JPG jusqu&apos;à 5MB</p>
-                    </label>
-                  </div>
-                )}
-              </div>
-
-              <Input
-                label="Nom du Prix"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="Réduction de 10%"
-                required
-              />
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Description
-                </label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Obtenez 10% de réduction sur votre prochain achat"
-                  className="prize-input w-full px-4 py-2.5 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
-                  style={{ borderColor: '#d1d5db' }}
-                  rows={3}
-                />
-              </div>
-
-              {/* Probability Slider */}
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <label className="block text-sm font-medium text-slate-700">
-                    Probabilité de Gain
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold" style={{ color: '#6366F1' }}>{formData.probability}%</span>
-                    <span className={`text-xs px-2 py-1 rounded-full ${getChanceDescription(formData.probability).bg} ${getChanceDescription(formData.probability).color} font-medium`}>
-                      {getChanceDescription(formData.probability).text}
-                    </span>
-                  </div>
+          <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white prize-fade-in">
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            <div className="p-5 sm:p-6">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="prize-icon-enter w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
+                  {editingId ? (
+                    <Pencil className="w-5 h-5 text-teal-600" />
+                  ) : (
+                    <Plus className="w-5 h-5 text-teal-600" />
+                  )}
                 </div>
-
-                <input
-                  type="range"
-                  min="1"
-                  max="100"
-                  step="1"
-                  value={formData.probability}
-                  onChange={(e) => setFormData({ ...formData, probability: parseFloat(e.target.value) })}
-                  className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                  style={{ accentColor: '#6366F1' }}
-                />
-
-                <div className="flex justify-between text-xs text-gray-500 mt-2">
-                  <span>1% (Très rare)</span>
-                  <span>50% (Moyen)</span>
-                  <span>100% (Garanti)</span>
-                </div>
-
-                <div className="mt-3 p-3 rounded-lg" style={{ backgroundColor: '#EEF2FF', border: '1px solid #C7D2FE' }}>
-                  <p className="text-sm" style={{ color: '#4338CA' }}>
-                    <strong>1 chance sur {Math.round(100 / formData.probability)}</strong> de gagner ce prix
-                    {formData.probability >= 10 && ` (environ tous les ${Math.round(100 / formData.probability)} tours)`}
+                <div>
+                  <h2 className="text-base sm:text-lg font-semibold text-slate-900">
+                    {editingId ? 'Modifier le Prix' : 'Ajouter un Nouveau Prix'}
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-500">
+                    {editingId ? 'Modifiez les details de votre prix' : 'Configurez un nouveau prix pour la roue'}
                   </p>
                 </div>
               </div>
 
-              <Button
-                type="submit"
-                disabled={loading || uploading}
-                className="w-full text-white font-bold py-6 rounded-xl transition-all duration-200"
-                style={{ backgroundColor: '#6366F1' }}
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#4F46E5'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 20px rgba(99, 102, 241, 0.3)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#6366F1'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
-              >
-                {uploading ? 'Upload en cours...' : loading ? 'Sauvegarde...' : (editingId ? 'Mettre à jour le Prix' : 'Créer le Prix')}
-              </Button>
-            </form>
-          </Card>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                {/* Prize Image Upload */}
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Photo du Prix
+                  </label>
+                  {imagePreview ? (
+                    <div className="relative w-full h-48 bg-gray-100 rounded-xl overflow-hidden border border-gray-200">
+                      <img src={imagePreview} alt="Prize preview" className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setImageFile(null);
+                          setImagePreview('');
+                        }}
+                        className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="border-2 border-dashed border-teal-300 rounded-xl p-8 text-center hover:border-teal-400 transition-colors bg-teal-50/30">
+                      <input
+                        type="file"
+                        id="prize-image"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="hidden"
+                      />
+                      <label htmlFor="prize-image" className="cursor-pointer">
+                        <ImageIcon className="w-12 h-12 text-teal-300 mx-auto mb-3" />
+                        <p className="text-sm text-gray-600 mb-1">
+                          <span className="font-semibold text-teal-600">Cliquez pour uploader</span> ou glissez-deposez
+                        </p>
+                        <p className="text-xs text-gray-500">PNG, JPG jusqu&apos;a 5MB</p>
+                      </label>
+                    </div>
+                  )}
+                </div>
+
+                <Input
+                  label="Nom du Prix"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="Reduction de 10%"
+                  required
+                />
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Description
+                  </label>
+                  <textarea
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    placeholder="Obtenez 10% de reduction sur votre prochain achat"
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                    rows={3}
+                  />
+                </div>
+
+                {/* Probability Slider */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <label className="block text-sm font-medium text-slate-700">
+                      Probabilite de Gain
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl font-bold text-teal-600">{formData.probability}%</span>
+                      <span className={`text-xs px-2 py-1 rounded-full ${getChanceDescription(formData.probability).bg} ${getChanceDescription(formData.probability).color} font-medium`}>
+                        {getChanceDescription(formData.probability).text}
+                      </span>
+                    </div>
+                  </div>
+
+                  <input
+                    type="range"
+                    min="1"
+                    max="100"
+                    step="1"
+                    value={formData.probability}
+                    onChange={(e) => setFormData({ ...formData, probability: parseFloat(e.target.value) })}
+                    className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                    style={{ accentColor: '#0D9488' }}
+                  />
+
+                  <div className="flex justify-between text-xs text-gray-500 mt-2">
+                    <span>1% (Tres rare)</span>
+                    <span>50% (Moyen)</span>
+                    <span>100% (Garanti)</span>
+                  </div>
+
+                  <div className="mt-3 p-3 rounded-lg bg-teal-50 border border-teal-200">
+                    <p className="text-sm text-teal-700">
+                      <strong>1 chance sur {Math.round(100 / formData.probability)}</strong> de gagner ce prix
+                      {formData.probability >= 10 && ` (environ tous les ${Math.round(100 / formData.probability)} tours)`}
+                    </p>
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={loading || uploading}
+                  className="w-full text-white font-bold py-6 rounded-xl transition-all duration-200 bg-teal-600 hover:bg-teal-700"
+                >
+                  {uploading ? 'Upload en cours...' : loading ? 'Sauvegarde...' : (editingId ? 'Mettre a jour le Prix' : 'Creer le Prix')}
+                </Button>
+              </form>
+            </div>
+          </div>
         )}
 
         {/* Special Segments Section */}
-        <Card className="prize-card p-5 sm:p-6 border border-gray-200 rounded-xl bg-slate-900">
+        <Card className="p-5 sm:p-6 border border-gray-200 rounded-xl bg-slate-900">
           <div className="flex items-center gap-3 mb-5">
             <div className="prize-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-red-600/20">
               <Lock className="w-5 h-5 text-red-400" />
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-semibold text-white">Segments Spéciaux (Permanents)</h2>
-              <p className="text-xs sm:text-sm text-gray-400">Ces segments sont toujours présents sur la roue</p>
+              <h2 className="text-base sm:text-lg font-semibold text-white">Segments Speciaux (Permanents)</h2>
+              <p className="text-xs sm:text-sm text-gray-400">Ces segments sont toujours presents sur la roue</p>
             </div>
           </div>
 
@@ -644,7 +602,7 @@ export default function PrizesPage() {
                 </div>
                 <div>
                   <h4 className="text-lg font-bold text-red-400">#PERDU#</h4>
-                  <p className="text-gray-400 text-xs">Éliminatoire - Fin du jeu</p>
+                  <p className="text-gray-400 text-xs">Eliminatoire - Fin du jeu</p>
                 </div>
               </div>
 
@@ -675,7 +633,7 @@ export default function PrizesPage() {
 
               <div className="bg-red-900/30 border border-red-500/30 rounded-lg p-3">
                 <p className="text-xs text-red-300">
-                  Si la roue s&apos;arrête sur ce segment, le joueur perd et ne peut plus rejouer.
+                  Si la roue s&apos;arrete sur ce segment, le joueur perd et ne peut plus rejouer.
                 </p>
               </div>
             </div>
@@ -688,7 +646,7 @@ export default function PrizesPage() {
                 </div>
                 <div>
                   <h4 className="text-lg font-bold text-yellow-400">#REESSAYER#</h4>
-                  <p className="text-gray-400 text-xs">Tour supplémentaire gratuit</p>
+                  <p className="text-gray-400 text-xs">Tour supplementaire gratuit</p>
                 </div>
               </div>
 
@@ -719,7 +677,7 @@ export default function PrizesPage() {
 
               <div className="bg-yellow-900/30 border border-yellow-500/30 rounded-lg p-3">
                 <p className="text-xs text-yellow-300">
-                  Si la roue s&apos;arrête sur ce segment, le joueur peut tourner à nouveau !
+                  Si la roue s&apos;arrete sur ce segment, le joueur peut tourner a nouveau !
                 </p>
               </div>
             </div>
@@ -727,20 +685,20 @@ export default function PrizesPage() {
         </Card>
 
         {/* Wheel Appearance Configuration */}
-        <Card className="prize-card p-4 sm:p-6 border border-gray-200 rounded-xl" style={{ background: 'linear-gradient(135deg, #312E81, #4338CA)' }}>
+        <Card className="p-4 sm:p-6 border border-gray-200 rounded-xl" style={{ background: 'linear-gradient(135deg, #134e4a, #0f766e)' }}>
           <div className="flex items-center gap-3 mb-4 sm:mb-6">
             <div className="prize-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-amber-400/20">
               <Palette className="w-5 h-5 text-amber-300" />
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-semibold text-white">Apparence de la Roue</h2>
-              <p className="text-xs sm:text-sm text-indigo-200">Choisissez un thème pour votre roue</p>
+              <p className="text-xs sm:text-sm text-teal-200">Choisissez un theme pour votre roue</p>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs sm:text-sm font-medium text-indigo-200 mb-3">
-              Thèmes prédéfinis
+            <label className="block text-xs sm:text-sm font-medium text-teal-200 mb-3">
+              Themes predefinis
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-2 sm:gap-3">
                 <button
@@ -823,61 +781,61 @@ export default function PrizesPage() {
         </Card>
 
         {/* Wheel Preview Section */}
-        <Card className="prize-card p-5 sm:p-6 border border-gray-200 rounded-xl">
-          <div className="flex items-center gap-3 mb-5">
-            <div
-              className="prize-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: '#EEF2FF' }}
-            >
-              <TrendingUp className="w-5 h-5" style={{ color: '#6366F1' }} />
+        <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <div className="p-5 sm:p-6">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="prize-icon-enter w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
+                <TrendingUp className="w-5 h-5 text-teal-600" />
+              </div>
+              <div>
+                <h2 className="text-base sm:text-lg font-semibold text-slate-900">Apercu de la Roue</h2>
+                <p className="text-xs sm:text-sm text-slate-500">Visualisez votre roue avec tous les segments configures</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-base sm:text-lg font-semibold text-slate-900">Aperçu de la Roue</h2>
-              <p className="text-xs sm:text-sm text-slate-500">Visualisez votre roue avec tous les segments configurés</p>
-            </div>
-          </div>
 
-          <div className="flex flex-col lg:flex-row items-center gap-8">
-            <div className="flex-shrink-0">
-              <WheelPreview
-                prizeQuantities={prizeQuantitiesArray}
-                unluckyQuantity={unluckyQuantity}
-                retryQuantity={retryQuantity}
-                size={320}
-                maxSegments={MAX_SEGMENTS}
-                segmentColors={segmentColors}
-              />
-            </div>
-            <div className="flex-1 text-center lg:text-left">
-              <div className="grid grid-cols-2 gap-3 text-sm">
-                <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-                  <p className="text-slate-500">Segments totaux</p>
-                  <p className="text-2xl font-bold" style={{ color: '#6366F1' }}>{totalSegments}/{MAX_SEGMENTS}</p>
-                </div>
-                <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-                  <p className="text-slate-500">Prix sur la roue</p>
-                  <p className="text-2xl font-bold text-blue-600">{totalPrizeSegments}</p>
-                </div>
+            <div className="flex flex-col lg:flex-row items-center gap-8">
+              <div className="flex-shrink-0">
+                <WheelPreview
+                  prizeQuantities={prizeQuantitiesArray}
+                  unluckyQuantity={unluckyQuantity}
+                  retryQuantity={retryQuantity}
+                  size={320}
+                  maxSegments={MAX_SEGMENTS}
+                  segmentColors={segmentColors}
+                />
               </div>
-              <div className="mt-4 flex flex-wrap gap-2 justify-center lg:justify-start">
-                <span className="inline-flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">
-                  <span className="w-2 h-2 bg-red-600 rounded-full"></span>
-                  #PERDU# x {unluckyQuantity}
-                </span>
-                <span className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">
-                  <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
-                  #RÉESSAYER# x {retryQuantity}
-                </span>
+              <div className="flex-1 text-center lg:text-left">
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                    <p className="text-slate-500">Segments totaux</p>
+                    <p className="text-2xl font-bold text-teal-600">{totalSegments}/{MAX_SEGMENTS}</p>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                    <p className="text-slate-500">Prix sur la roue</p>
+                    <p className="text-2xl font-bold text-teal-600">{totalPrizeSegments}</p>
+                  </div>
+                </div>
+                <div className="mt-4 flex flex-wrap gap-2 justify-center lg:justify-start">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">
+                    <span className="w-2 h-2 bg-red-600 rounded-full"></span>
+                    #PERDU# x {unluckyQuantity}
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">
+                    <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                    #REESSAYER# x {retryQuantity}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-        </Card>
+        </div>
 
         {/* Merchant Prizes Grid */}
         <div>
           <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-            <Gift className="w-5 h-5" style={{ color: '#6366F1' }} />
-            Vos Prix Personnalisés
+            <Gift className="w-5 h-5 text-teal-600" />
+            Vos Prix Personnalises
             <span className="text-sm font-normal text-slate-500">({prizes.length} prix)</span>
           </h3>
         </div>
@@ -886,30 +844,27 @@ export default function PrizesPage() {
           {prizes.map((prize) => {
             const quantity = prizeQuantities[prize.id] || 0;
             return (
-              <Card key={prize.id} className={`prize-item-card overflow-hidden border rounded-xl ${quantity > 0 ? 'border-indigo-300 bg-indigo-50/30' : 'border-gray-200 hover:border-indigo-200'}`}>
+              <div key={prize.id} className={`group relative overflow-hidden border rounded-xl transition-all duration-300 hover:shadow-md bg-white ${quantity > 0 ? 'border-teal-300 bg-teal-50/30' : 'border-gray-200 hover:border-gray-300'}`}>
+                <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
                 {/* Prize Image */}
                 {prize.image_url ? (
-                  <div className="relative h-40" style={{ background: 'linear-gradient(135deg, #EEF2FF, #E0E7FF)' }}>
+                  <div className="relative h-40 bg-gradient-to-br from-teal-50 to-emerald-50">
                     <img
                       src={prize.image_url}
                       alt={prize.name}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute top-3 right-3">
-                      <div className={`px-3 py-1.5 rounded-full font-bold text-sm shadow-lg ${quantity > 0 ? 'text-white' : 'bg-gray-200 text-gray-600'}`}
-                        style={quantity > 0 ? { backgroundColor: '#6366F1' } : {}}
-                      >
+                      <div className={`px-3 py-1.5 rounded-full font-bold text-sm shadow-lg ${quantity > 0 ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-600'}`}>
                         x {quantity}
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="h-40 flex items-center justify-center relative" style={{ background: 'linear-gradient(135deg, #EEF2FF, #E0E7FF)' }}>
-                    <Gift className="w-12 h-12 text-indigo-300" />
+                  <div className="h-40 flex items-center justify-center relative bg-gradient-to-br from-teal-50 to-emerald-50">
+                    <Gift className="w-12 h-12 text-teal-300" />
                     <div className="absolute top-3 right-3">
-                      <div className={`px-3 py-1.5 rounded-full font-bold text-sm shadow-lg ${quantity > 0 ? 'text-white' : 'bg-gray-200 text-gray-600'}`}
-                        style={quantity > 0 ? { backgroundColor: '#6366F1' } : {}}
-                      >
+                      <div className={`px-3 py-1.5 rounded-full font-bold text-sm shadow-lg ${quantity > 0 ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-600'}`}>
                         x {quantity}
                       </div>
                     </div>
@@ -933,19 +888,17 @@ export default function PrizesPage() {
                         disabled={quantity <= 0}
                         variant="outline"
                         size="sm"
-                        className="w-9 h-9 rounded-full disabled:opacity-50"
-                        style={{ borderColor: '#C7D2FE', color: '#6366F1' }}
+                        className="w-9 h-9 rounded-full disabled:opacity-50 border-teal-300 text-teal-600 hover:bg-teal-50"
                       >
                         -
                       </Button>
-                      <span className="text-2xl font-bold w-10 text-center" style={{ color: '#6366F1' }}>{quantity}</span>
+                      <span className="text-2xl font-bold w-10 text-center text-teal-600">{quantity}</span>
                       <Button
                         onClick={() => updatePrizeQuantity(prize.id, 1)}
                         disabled={totalSegments >= MAX_SEGMENTS}
                         variant="outline"
                         size="sm"
-                        className="w-9 h-9 rounded-full disabled:opacity-50"
-                        style={{ borderColor: '#C7D2FE', color: '#6366F1' }}
+                        className="w-9 h-9 rounded-full disabled:opacity-50 border-teal-300 text-teal-600 hover:bg-teal-50"
                       >
                         +
                       </Button>
@@ -972,33 +925,33 @@ export default function PrizesPage() {
                     </Button>
                   </div>
                 </div>
-              </Card>
+              </div>
             );
           })}
         </div>
 
         {prizes.length === 0 && !showForm && (
-          <Card className="prize-card p-12 border border-gray-200 rounded-xl bg-gray-50">
-            <div className="text-center">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#EEF2FF' }}>
-                <Gift className="w-10 h-10" style={{ color: '#6366F1' }} />
+          <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-gray-50">
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            <div className="p-12">
+              <div className="text-center">
+                <div className="w-20 h-20 rounded-full bg-teal-50 flex items-center justify-center mx-auto mb-4">
+                  <Gift className="w-10 h-10 text-teal-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">Aucun prix configure</h3>
+                <p className="text-slate-500 mb-6 max-w-md mx-auto">
+                  Ajoutez votre premier prix pour commencer a configurer votre roue de la chance !
+                </p>
+                <Button
+                  onClick={() => setShowForm(true)}
+                  className="gap-2 text-white bg-teal-600 hover:bg-teal-700"
+                >
+                  <Plus className="w-4 h-4" />
+                  Ajouter mon Premier Prix
+                </Button>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">Aucun prix configuré</h3>
-              <p className="text-slate-500 mb-6 max-w-md mx-auto">
-                Ajoutez votre premier prix pour commencer à configurer votre roue de la chance !
-              </p>
-              <Button
-                onClick={() => setShowForm(true)}
-                className="gap-2 text-white"
-                style={{ backgroundColor: '#6366F1' }}
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#4F46E5'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#6366F1'; }}
-              >
-                <Plus className="w-4 h-4" />
-                Ajouter mon Premier Prix
-              </Button>
             </div>
-          </Card>
+          </div>
         )}
       </div>
     </DashboardLayout>

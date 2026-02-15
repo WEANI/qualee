@@ -50,22 +50,50 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
     router.push('/');
   };
 
-  const navigation = [
-    { name: 'Tableau de bord', href: '/dashboard', icon: LayoutDashboard },
-    { name: 'Mon Compte', href: '/dashboard/account', icon: CircleUserRound },
-    { name: 'Mon Profil', href: '/dashboard/profile', icon: UserCircle },
-    { name: 'QR Code', href: '/dashboard/qr', icon: QrCode },
-    { name: 'Scanner', href: '/dashboard/scan', icon: ScanLine },
-    { name: 'Strategie', href: '/dashboard/strategy', icon: Target },
-    { name: 'Lots & Prix', href: '/dashboard/prizes', icon: Gift },
-    { name: 'Programme fidelite', href: '/dashboard/loyalty', icon: Award },
-    { name: 'Avis clients', href: '/dashboard/feedback', icon: MessageSquare },
-    { name: 'Statistiques', href: '/dashboard/analytics', icon: BarChart3 },
-    { name: 'Clients', href: '/dashboard/customers', icon: Users },
-    { name: 'Abonnement', href: '/dashboard/billing', icon: CreditCard },
-    { name: 'Parametres', href: '/dashboard/settings', icon: Settings },
-    { name: 'Campagne WhatsApp', href: '/dashboard/marketing/whatsapp-campaign', icon: Send },
+  const navigationSections = [
+    {
+      label: 'PRINCIPAL',
+      items: [
+        { name: 'Tableau de bord', href: '/dashboard', icon: LayoutDashboard },
+      ],
+    },
+    {
+      label: 'OPERATIONS',
+      items: [
+        { name: 'Scanner', href: '/dashboard/scan', icon: ScanLine },
+        { name: 'QR Code', href: '/dashboard/qr', icon: QrCode },
+      ],
+    },
+    {
+      label: 'ENGAGEMENT',
+      items: [
+        { name: 'Lots & Prix', href: '/dashboard/prizes', icon: Gift },
+        { name: 'Programme fidelite', href: '/dashboard/loyalty', icon: Award },
+        { name: 'Strategie', href: '/dashboard/strategy', icon: Target },
+        { name: 'Avis clients', href: '/dashboard/feedback', icon: MessageSquare },
+        { name: 'Campagne WhatsApp', href: '/dashboard/marketing/whatsapp-campaign', icon: Send },
+      ],
+    },
+    {
+      label: 'ANALYTICS',
+      items: [
+        { name: 'Statistiques', href: '/dashboard/analytics', icon: BarChart3 },
+        { name: 'Clients', href: '/dashboard/customers', icon: Users },
+      ],
+    },
+    {
+      label: 'MON COMPTE',
+      items: [
+        { name: 'Mon Profil', href: '/dashboard/profile', icon: UserCircle },
+        { name: 'Mon Compte', href: '/dashboard/account', icon: CircleUserRound },
+        { name: 'Abonnement', href: '/dashboard/billing', icon: CreditCard },
+        { name: 'Parametres', href: '/dashboard/settings', icon: Settings },
+      ],
+    },
   ];
+
+  // Flat list for top bar title lookup
+  const allNavItems = navigationSections.flatMap(s => s.items);
 
   // Multi-store navigation - masque pour l'instant
   // const multiStoreNavigation = [
@@ -78,16 +106,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-violet-50/20 relative">
-      {/* Subtle background pattern */}
-      <div className="fixed inset-0 opacity-[0.015] pointer-events-none" style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-      }} />
-
-      {/* Decorative gradient orbs */}
-      <div className="fixed top-20 right-20 w-96 h-96 bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="fixed bottom-20 left-20 w-80 h-80 bg-pink-500/5 rounded-full blur-3xl pointer-events-none" />
-
+    <div className="min-h-screen bg-gray-50 relative">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div
@@ -122,9 +141,9 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
 
           {/* Merchant Info */}
           {merchant && (
-            <div className="px-6 py-6 border-b border-slate-800/50 bg-[#0F172A]/50">
+            <div className="px-6 py-5 border-b border-slate-800/50 bg-[#0F172A]/50">
               <div className="flex items-center gap-4 p-3 rounded-xl bg-slate-800/50 border border-slate-700/50">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#7209B7] to-[#3A0CA3] rounded-lg flex items-center justify-center shadow-lg shadow-violet-900/20">
+                <div className="w-10 h-10 bg-gradient-to-br from-teal-600 to-emerald-600 rounded-lg flex items-center justify-center shadow-lg shadow-teal-900/20">
                   <Store className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -132,7 +151,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                     {merchant.business_name || merchant.name}
                   </p>
                   <p className="text-xs text-slate-400 capitalize flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#EB1E99] animate-pulse"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                     Plan {merchant.subscription_tier || 'Gratuit'}
                   </p>
                 </div>
@@ -141,33 +160,41 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
           )}
 
           {/* Navigation */}
-          <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800">
-            <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Menu principal</p>
-            {navigation.map((item) => {
-              const isActive = item.href === '/dashboard'
-                ? pathname === '/dashboard'
-                : pathname === item.href || pathname.startsWith(item.href + '/');
-              const Icon = item.icon;
+          <nav className="flex-1 px-4 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800">
+            {navigationSections.map((section, sectionIdx) => (
+              <div key={section.label}>
+                <p className={`text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-500 px-4 mb-2 ${sectionIdx === 0 ? 'mt-2' : 'mt-4'}`}>
+                  {section.label}
+                </p>
+                <div className="space-y-0.5">
+                  {section.items.map((item) => {
+                    const isActive = item.href === '/dashboard'
+                      ? pathname === '/dashboard'
+                      : pathname === item.href || pathname.startsWith(item.href + '/');
+                    const Icon = item.icon;
 
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setSidebarOpen(false)}
-                  className={`
-                    group flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
-                    ${isActive
-                      ? 'bg-gradient-to-r from-[#7209B7] to-[#3A0CA3] text-white shadow-lg shadow-violet-900/20 border border-violet-500/20'
-                      : 'text-white hover:bg-slate-800/50'
-                    }
-                  `}
-                >
-                  <Icon className={`w-5 h-5 transition-colors ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`} />
-                  {item.name}
-                  {isActive && <ChevronRight className="w-4 h-4 ml-auto text-white/50" />}
-                </Link>
-              );
-            })}
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setSidebarOpen(false)}
+                        className={`
+                          group flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200
+                          ${isActive
+                            ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-lg shadow-teal-900/20 border border-teal-500/20'
+                            : 'text-white hover:bg-slate-800/50'
+                          }
+                        `}
+                      >
+                        <Icon className={`w-[18px] h-[18px] transition-colors ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`} />
+                        {item.name}
+                        {isActive && <ChevronRight className="w-4 h-4 ml-auto text-white/50" />}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
 
             {/* Multi-Store Section - masque pour l'instant */}
             {/*
@@ -187,14 +214,14 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                   href={item.href}
                   onClick={() => setSidebarOpen(false)}
                   className={`
-                    group flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
+                    group flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200
                     ${isActive
                       ? 'bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white shadow-lg shadow-orange-900/20 border border-orange-500/20'
                       : 'text-white hover:bg-slate-800/50'
                     }
                   `}
                 >
-                  <Icon className={`w-5 h-5 transition-colors ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`} />
+                  <Icon className={`w-[18px] h-[18px] transition-colors ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`} />
                   {item.name}
                   {isActive && <ChevronRight className="w-4 h-4 ml-auto text-white/50" />}
                 </Link>
@@ -232,7 +259,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
 
               <div className="flex flex-col">
                 <h1 className="text-xl font-bold text-slate-900">
-                  {navigation.find(item =>
+                  {allNavItems.find(item =>
                     item.href === pathname || (item.href !== '/dashboard' && pathname.startsWith(item.href + '/'))
                   )?.name || 'Tableau de bord'}
                 </h1>
@@ -244,10 +271,10 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
 
             <div className="flex items-center gap-3">
               {/* <StoreSwitcher /> Multi-store - masque pour l'instant */}
-              <div className="h-9 px-4 rounded-full bg-violet-50 text-violet-700 border border-violet-100 flex items-center gap-2 text-sm font-medium hidden sm:flex">
+              <div className="h-9 px-4 rounded-full bg-teal-50 text-teal-700 border border-teal-100 flex items-center gap-2 text-sm font-medium hidden sm:flex">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#EB1E99] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#EB1E99]"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                 </span>
                 En ligne
               </div>

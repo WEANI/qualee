@@ -149,9 +149,9 @@ export default function StrategyPage() {
 
   // Input focus/blur helpers
   const inputFocusStyle = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
-    e.currentTarget.style.borderColor = '#4361EE';
-    e.currentTarget.style.backgroundColor = '#f0f0ff';
-    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+    e.currentTarget.style.borderColor = '#0D9488';
+    e.currentTarget.style.backgroundColor = '#f0fdfa';
+    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
   };
   const inputBlurStyle = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
     e.currentTarget.style.borderColor = '#d1d5db';
@@ -163,7 +163,7 @@ export default function StrategyPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#4361EE' }} />
+          <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
         </div>
       </DashboardLayout>
     );
@@ -192,7 +192,7 @@ export default function StrategyPage() {
           left: 0;
           right: 0;
           height: 3px;
-          background: linear-gradient(90deg, #4361EE, #7209B7);
+          background: linear-gradient(90deg, #0D9488, #10B981);
           border-radius: 2px 2px 0 0;
           transform: scaleX(0);
           transform-origin: left;
@@ -203,7 +203,7 @@ export default function StrategyPage() {
         }
         .strategy-card:hover {
           border-color: #d1d5db;
-          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.12);
+          box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
         }
         .strategy-icon-enter {
           animation: slideInLeft 0.3s ease-out;
@@ -216,8 +216,8 @@ export default function StrategyPage() {
         }
         .day-card:hover {
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.12);
-          border-color: #4361EE !important;
+          box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
+          border-color: #0D9488 !important;
         }
       `}</style>
 
@@ -225,7 +225,7 @@ export default function StrategyPage() {
         {/* Header */}
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-            <Compass className="w-7 h-7" style={{ color: '#4361EE' }} />
+            <Compass className="w-7 h-7 text-teal-600" />
             Strategie de Redirection
           </h1>
           <p className="text-slate-500 mt-1">Configurez vos liens et planifiez automatiquement vos redirections sur 7 jours</p>
@@ -254,9 +254,9 @@ export default function StrategyPage() {
           <div className="flex items-center gap-3 mb-5">
             <div
               className="strategy-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: '#f0f0ff' }}
+              style={{ backgroundColor: '#f0fdfa' }}
             >
-              <Globe className="w-5 h-5" style={{ color: '#4361EE' }} />
+              <Globe className="w-5 h-5 text-teal-600" />
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-semibold text-slate-900">Mode de Workflow</h2>
@@ -271,8 +271,8 @@ export default function StrategyPage() {
               onClick={() => setWorkflowMode('web')}
               className="p-4 rounded-xl border-2 text-left transition-all duration-200"
               style={{
-                borderColor: workflowMode === 'web' ? '#4361EE' : '#e5e7eb',
-                backgroundColor: workflowMode === 'web' ? '#f0f0ff' : 'white',
+                borderColor: workflowMode === 'web' ? '#0D9488' : '#e5e7eb',
+                backgroundColor: workflowMode === 'web' ? '#f0fdfa' : 'white',
               }}
               onMouseEnter={(e) => {
                 if (workflowMode !== 'web') {
@@ -290,7 +290,7 @@ export default function StrategyPage() {
               <div className="flex items-center gap-3 mb-2">
                 <div
                   className="w-10 h-10 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: workflowMode === 'web' ? '#4361EE' : '#e5e7eb' }}
+                  style={{ backgroundColor: workflowMode === 'web' ? '#0D9488' : '#e5e7eb' }}
                 >
                   <Globe className={`w-5 h-5 ${workflowMode === 'web' ? 'text-white' : 'text-gray-500'}`} />
                 </div>
@@ -299,7 +299,7 @@ export default function StrategyPage() {
                   <p className="text-xs text-slate-500">Workflow actuel</p>
                 </div>
                 {workflowMode === 'web' && (
-                  <Check className="w-5 h-5 ml-auto" style={{ color: '#4361EE' }} />
+                  <Check className="w-5 h-5 ml-auto text-teal-600" />
                 )}
               </div>
               <p className="text-sm text-slate-500">
@@ -384,8 +384,8 @@ export default function StrategyPage() {
                 </p>
               </div>
 
-              <div className="p-3 rounded-lg" style={{ backgroundColor: '#f0f0ff', border: '1px solid #e8e6ff' }}>
-                <p className="text-sm" style={{ color: '#4361EE' }}>
+              <div className="p-3 rounded-lg" style={{ backgroundColor: '#f0fdfa', border: '1px solid #ccfbf1' }}>
+                <p className="text-sm text-teal-600">
                   <strong>Fonctionnement :</strong> Le client entre son numero WhatsApp au lieu de son email.
                   Apres l&apos;avis, il recoit un message WhatsApp avec 2 boutons : <strong>Tourner la Roue</strong> et <strong>Ma Carte Fidelite</strong>.
                 </p>
@@ -399,9 +399,9 @@ export default function StrategyPage() {
           <div className="flex items-center gap-3 mb-5">
             <div
               className="strategy-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: '#f0f0ff' }}
+              style={{ backgroundColor: '#f0fdfa' }}
             >
-              <Palette className="w-5 h-5" style={{ color: '#4361EE' }} />
+              <Palette className="w-5 h-5 text-teal-600" />
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-semibold text-slate-900">Couleur de Fond du Logo</h2>
@@ -419,7 +419,7 @@ export default function StrategyPage() {
                   onChange={(e) => setLogoBackgroundColor(e.target.value)}
                   className="w-12 h-12 rounded-lg cursor-pointer border-2 transition-colors duration-200"
                   style={{ borderColor: '#d1d5db' }}
-                  onFocus={(e) => { (e.currentTarget as any).style.borderColor = '#4361EE'; }}
+                  onFocus={(e) => { (e.currentTarget as any).style.borderColor = '#0D9488'; }}
                   onBlur={(e) => { (e.currentTarget as any).style.borderColor = '#d1d5db'; }}
                 />
                 <input
@@ -468,9 +468,9 @@ export default function StrategyPage() {
                 onClick={() => setLogoBackgroundColor(preset.value)}
                 className="px-3 py-1.5 text-xs rounded-full border transition-all duration-200"
                 style={{
-                  backgroundColor: logoBackgroundColor === preset.value ? '#f0f0ff' : 'white',
-                  borderColor: logoBackgroundColor === preset.value ? '#4361EE' : '#e5e7eb',
-                  color: logoBackgroundColor === preset.value ? '#4361EE' : '#6b7280',
+                  backgroundColor: logoBackgroundColor === preset.value ? '#f0fdfa' : 'white',
+                  borderColor: logoBackgroundColor === preset.value ? '#0D9488' : '#e5e7eb',
+                  color: logoBackgroundColor === preset.value ? '#0D9488' : '#6b7280',
                 }}
                 onMouseEnter={(e) => {
                   if (logoBackgroundColor !== preset.value) {
@@ -496,9 +496,9 @@ export default function StrategyPage() {
           <div className="flex items-center gap-3 mb-5">
             <div
               className="strategy-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: '#f0f0ff' }}
+              style={{ backgroundColor: '#f0fdfa' }}
             >
-              <MapPin className="w-5 h-5" style={{ color: '#4361EE' }} />
+              <MapPin className="w-5 h-5 text-teal-600" />
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-semibold text-slate-900">Liens de Redirection</h2>
@@ -586,9 +586,9 @@ export default function StrategyPage() {
           <div className="flex items-center gap-3 mb-5">
             <div
               className="strategy-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: '#f0f0ff' }}
+              style={{ backgroundColor: '#f0fdfa' }}
             >
-              <Calendar className="w-5 h-5" style={{ color: '#4361EE' }} />
+              <Calendar className="w-5 h-5 text-teal-600" />
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-semibold text-slate-900">Planification Automatique (7 jours)</h2>
@@ -610,8 +610,8 @@ export default function StrategyPage() {
                   key={index}
                   className="day-card border-2 rounded-xl p-4"
                   style={{
-                    borderColor: isToday ? '#4361EE' : '#e5e7eb',
-                    backgroundColor: isToday ? '#f0f0ff' : 'white',
+                    borderColor: isToday ? '#0D9488' : '#e5e7eb',
+                    backgroundColor: isToday ? '#f0fdfa' : 'white',
                   }}
                 >
                   <div className="flex items-center justify-between mb-3">
@@ -620,7 +620,7 @@ export default function StrategyPage() {
                       {isToday && (
                         <span
                           className="text-xs px-2 py-0.5 rounded-full font-medium"
-                          style={{ backgroundColor: '#4361EE', color: 'white' }}
+                          style={{ backgroundColor: '#0D9488', color: 'white' }}
                         >
                           Aujourd&apos;hui
                         </span>
@@ -650,8 +650,8 @@ export default function StrategyPage() {
             })}
           </div>
 
-          <div className="mt-5 p-3 rounded-lg" style={{ backgroundColor: '#f0f0ff', border: '1px solid #e8e6ff' }}>
-            <p className="text-sm" style={{ color: '#4361EE' }}>
+          <div className="mt-5 p-3 rounded-lg" style={{ backgroundColor: '#f0fdfa', border: '1px solid #ccfbf1' }}>
+            <p className="text-sm text-teal-600">
               <strong>Astuce :</strong> Le systeme detecte automatiquement le jour de la semaine et redirige vos clients
               vers la plateforme configuree. Par exemple, si vous configurez &quot;TikTok&quot; pour le vendredi, tous les clients
               qui notent 4-5 etoiles le vendredi seront rediriges vers votre TikTok !
@@ -663,14 +663,14 @@ export default function StrategyPage() {
         {currentDayIndex !== null && (
           <Card
             className="strategy-card p-5 sm:p-6 border rounded-xl"
-            style={{ borderColor: '#e8e6ff', background: 'linear-gradient(135deg, #f0f0ff, #EFF6FF)' }}
+            style={{ borderColor: '#ccfbf1', background: 'linear-gradient(135deg, #f0fdfa, #EFF6FF)' }}
           >
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-1">Aujourd&apos;hui ({DAYS[currentDayIndex]})</h3>
                 <p className="text-sm text-slate-500">
                   Les clients seront rediriges vers :
-                  <span className="font-bold ml-1" style={{ color: '#4361EE' }}>
+                  <span className="font-bold ml-1 text-teal-600">
                     {getPlatformInfo(weeklySchedule[currentDayIndex]).label}
                   </span>
                 </p>
@@ -691,9 +691,9 @@ export default function StrategyPage() {
             className="transition-all duration-200"
             style={{ borderColor: '#e5e7eb', color: '#6b7280' }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = '#4361EE';
-              e.currentTarget.style.color = '#4361EE';
-              e.currentTarget.style.backgroundColor = '#f0f0ff';
+              e.currentTarget.style.borderColor = '#0D9488';
+              e.currentTarget.style.color = '#0D9488';
+              e.currentTarget.style.backgroundColor = '#f0fdfa';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.borderColor = '#e5e7eb';
@@ -723,9 +723,9 @@ export default function StrategyPage() {
             onClick={handleSave}
             disabled={loading}
             className="w-full sm:w-auto text-white"
-            style={{ backgroundColor: '#4361EE' }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#3A0CA3'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#4361EE'; }}
+            style={{ backgroundColor: '#0D9488' }}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; }}
           >
             {loading ? (
               <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Sauvegarde...</>

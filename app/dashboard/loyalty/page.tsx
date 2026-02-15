@@ -308,7 +308,7 @@ export default function LoyaltyPage() {
       type="button"
       onClick={() => onChange(!enabled)}
       className="relative w-14 h-7 rounded-full transition-all duration-300 flex-shrink-0"
-      style={{ backgroundColor: enabled ? '#4361EE' : '#d1d5db' }}
+      style={{ backgroundColor: enabled ? '#0D9488' : '#d1d5db' }}
     >
       <div
         className="w-6 h-6 bg-white rounded-full shadow-sm transform transition-transform duration-300 absolute top-0.5"
@@ -323,7 +323,7 @@ export default function LoyaltyPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#4361EE' }} />
+          <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
         </div>
       </DashboardLayout>
     );
@@ -375,7 +375,7 @@ export default function LoyaltyPage() {
     >
       <div className="flex items-center gap-1.5">
         {children}
-        <ArrowUpDown className={`w-3.5 h-3.5 ${sortField === field ? 'text-violet-500' : 'text-slate-300'}`} style={sortField === field ? { color: '#4361EE' } : {}} />
+        <ArrowUpDown className={`w-3.5 h-3.5 ${sortField === field ? 'text-teal-600' : 'text-slate-300'}`} />
       </div>
     </th>
   );
@@ -409,7 +409,7 @@ export default function LoyaltyPage() {
           left: 0;
           right: 0;
           height: 3px;
-          background: linear-gradient(90deg, #4361EE, #7209B7);
+          background: linear-gradient(90deg, #0D9488, #10B981);
           border-radius: 2px 2px 0 0;
           transform: scaleX(0);
           transform-origin: left;
@@ -420,14 +420,14 @@ export default function LoyaltyPage() {
         }
         .loyalty-card:hover {
           border-color: #d1d5db;
-          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.12);
+          box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
         }
         .stat-card {
           transition: all 0.3s ease;
         }
         .stat-card:hover {
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.12);
+          box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
         }
       `}</style>
 
@@ -436,7 +436,7 @@ export default function LoyaltyPage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-              <Award className="w-7 h-7" style={{ color: '#4361EE' }} />
+              <Award className="w-7 h-7 text-teal-600" />
               Programme Fidélité
             </h1>
             <p className="text-slate-500 mt-1">Gérez votre programme de fidélité</p>
@@ -445,8 +445,8 @@ export default function LoyaltyPage() {
             <Button
               variant="outline"
               className="transition-all duration-200"
-              style={{ borderColor: '#c7d2fe', color: '#4361EE' }}
-              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f0f0ff'; }}
+              style={{ borderColor: '#ccfbf1', color: '#0D9488' }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f0fdfa'; }}
               onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
             >
               <Gift className="w-4 h-4 mr-2" />
@@ -459,7 +459,7 @@ export default function LoyaltyPage() {
         <nav
           role="tablist"
           className="flex gap-1 border-b-2 overflow-x-auto pb-0 scrollbar-hide"
-          style={{ borderColor: '#e8e6ff' }}
+          style={{ borderColor: '#ccfbf1' }}
         >
           {tabs.map(tab => (
             <button
@@ -469,13 +469,13 @@ export default function LoyaltyPage() {
               onClick={() => setActiveTab(tab.key)}
               className="relative flex items-center gap-2 px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap transition-all duration-300 rounded-t-lg"
               style={{
-                color: activeTab === tab.key ? '#4361EE' : '#6b7280',
+                color: activeTab === tab.key ? '#0D9488' : '#6b7280',
                 backgroundColor: 'transparent',
               }}
               onMouseEnter={(e) => {
                 if (activeTab !== tab.key) {
-                  e.currentTarget.style.color = '#3A0CA3';
-                  e.currentTarget.style.backgroundColor = '#f0f0ff';
+                  e.currentTarget.style.color = '#0F766E';
+                  e.currentTarget.style.backgroundColor = '#f0fdfa';
                 }
               }}
               onMouseLeave={(e) => {
@@ -490,7 +490,7 @@ export default function LoyaltyPage() {
               <span
                 className="absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-300 origin-left"
                 style={{
-                  backgroundColor: '#4361EE',
+                  backgroundColor: '#0D9488',
                   transform: activeTab === tab.key ? 'scaleX(1)' : 'scaleX(0)',
                 }}
               />
@@ -523,9 +523,9 @@ export default function LoyaltyPage() {
                   <div className="flex items-center gap-3 sm:gap-4 min-w-0">
                     <div
                       className="loyalty-icon-enter w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ backgroundColor: loyaltyEnabled ? '#f0f0ff' : '#f3f4f6' }}
+                      style={{ backgroundColor: loyaltyEnabled ? '#f0fdfa' : '#f3f4f6' }}
                     >
-                      <Star className={`w-5 h-5 sm:w-6 sm:h-6`} style={{ color: loyaltyEnabled ? '#4361EE' : '#9ca3af' }} />
+                      <Star className={`w-5 h-5 sm:w-6 sm:h-6 ${loyaltyEnabled ? 'text-teal-600' : 'text-gray-400'}`} />
                     </div>
                     <div className="min-w-0">
                       <h3 className="font-semibold text-slate-900 text-sm sm:text-base">Programme fidélité activé</h3>
@@ -543,9 +543,9 @@ export default function LoyaltyPage() {
                     <div className="flex items-center gap-3 mb-5">
                       <div
                         className="loyalty-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{ backgroundColor: '#f0f0ff' }}
+                        style={{ backgroundColor: '#f0fdfa' }}
                       >
-                        <Coins className="w-5 h-5" style={{ color: '#4361EE' }} />
+                        <Coins className="w-5 h-5 text-teal-600" />
                       </div>
                       <div>
                         <h3 className="font-semibold text-slate-900 text-sm sm:text-base">Calcul des Points</h3>
@@ -565,9 +565,9 @@ export default function LoyaltyPage() {
                           className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                           style={{ borderColor: '#d1d5db' }}
                           onFocus={(e) => {
-                            e.currentTarget.style.borderColor = '#4361EE';
-                            e.currentTarget.style.backgroundColor = '#f0f0ff';
-                            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                            e.currentTarget.style.borderColor = '#0D9488';
+                            e.currentTarget.style.backgroundColor = '#f0fdfa';
+                            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                           }}
                           onBlur={(e) => {
                             e.currentTarget.style.borderColor = '#d1d5db';
@@ -588,9 +588,9 @@ export default function LoyaltyPage() {
                           className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                           style={{ borderColor: '#d1d5db' }}
                           onFocus={(e) => {
-                            e.currentTarget.style.borderColor = '#4361EE';
-                            e.currentTarget.style.backgroundColor = '#f0f0ff';
-                            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                            e.currentTarget.style.borderColor = '#0D9488';
+                            e.currentTarget.style.backgroundColor = '#f0fdfa';
+                            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                           }}
                           onBlur={(e) => {
                             e.currentTarget.style.borderColor = '#d1d5db';
@@ -625,9 +625,9 @@ export default function LoyaltyPage() {
                           className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                           style={{ borderColor: '#d1d5db' }}
                           onFocus={(e) => {
-                            e.currentTarget.style.borderColor = '#4361EE';
-                            e.currentTarget.style.backgroundColor = '#f0f0ff';
-                            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                            e.currentTarget.style.borderColor = '#0D9488';
+                            e.currentTarget.style.backgroundColor = '#f0fdfa';
+                            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                           }}
                           onBlur={(e) => {
                             e.currentTarget.style.borderColor = '#d1d5db';
@@ -653,9 +653,9 @@ export default function LoyaltyPage() {
                           className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                           style={{ borderColor: '#d1d5db' }}
                           onFocus={(e) => {
-                            e.currentTarget.style.borderColor = '#4361EE';
-                            e.currentTarget.style.backgroundColor = '#f0f0ff';
-                            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                            e.currentTarget.style.borderColor = '#0D9488';
+                            e.currentTarget.style.backgroundColor = '#f0fdfa';
+                            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                           }}
                           onBlur={(e) => {
                             e.currentTarget.style.borderColor = '#d1d5db';
@@ -682,7 +682,7 @@ export default function LoyaltyPage() {
                           <p className="text-xs sm:text-sm text-slate-500">Image personnalisée affichée sur la carte fidélité</p>
                         </div>
                       </div>
-                      <Badge variant="outline" className="flex-shrink-0" style={{ borderColor: '#c7d2fe', color: '#4361EE' }}>16:9</Badge>
+                      <Badge variant="outline" className="flex-shrink-0" style={{ borderColor: '#ccfbf1', color: '#0D9488' }}>16:9</Badge>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                       {loyaltyCardPreview && (
@@ -692,9 +692,9 @@ export default function LoyaltyPage() {
                       )}
                       <div
                         className="border-2 border-dashed rounded-lg p-4 sm:p-6 text-center transition-colors bg-gray-50/50"
-                        style={{ borderColor: '#c7d2fe' }}
-                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#4361EE'; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#c7d2fe'; }}
+                        style={{ borderColor: '#ccfbf1' }}
+                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#0D9488'; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#ccfbf1'; }}
                       >
                         <input
                           type="file"
@@ -704,9 +704,9 @@ export default function LoyaltyPage() {
                           className="hidden"
                         />
                         <label htmlFor="loyalty-card-upload" className="cursor-pointer">
-                          <Upload className="w-8 h-8 sm:w-10 sm:h-10 mx-auto mb-2 sm:mb-3" style={{ color: '#4361EE' }} />
+                          <Upload className="w-8 h-8 sm:w-10 sm:h-10 mx-auto mb-2 sm:mb-3 text-teal-600" />
                           <p className="text-sm text-slate-600 mb-1">
-                            <span className="font-semibold" style={{ color: '#4361EE' }}>Télécharger une image</span>
+                            <span className="font-semibold text-teal-600">Télécharger une image</span>
                           </p>
                           <p className="text-xs text-slate-500">PNG, JPG (16:9) jusqu&apos;à 5 Mo</p>
                         </label>
@@ -731,9 +731,9 @@ export default function LoyaltyPage() {
                   onClick={handleSaveConfig}
                   disabled={savingConfig}
                   className="w-full sm:w-auto text-white transition-all duration-200"
-                  style={{ backgroundColor: '#4361EE' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#3A0CA3'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#4361EE'; }}
+                  style={{ backgroundColor: '#0D9488' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; }}
                 >
                   {savingConfig ? (
                     <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Enregistrement...</>
@@ -754,7 +754,7 @@ export default function LoyaltyPage() {
                   { icon: Users, label: 'Clients fidélité', value: stats?.total_clients || 0, bg: '#dbeafe', iconColor: '#2563eb' },
                   { icon: Star, label: 'Points distribués', value: stats?.total_points_issued?.toLocaleString() || 0, bg: '#fef3c7', iconColor: '#d97706' },
                   { icon: Gift, label: 'Récompenses', value: stats?.total_rewards_redeemed || 0, bg: '#d1fae5', iconColor: '#059669' },
-                  { icon: CreditCard, label: 'Cartes actives', value: stats?.active_clients || 0, bg: '#f0f0ff', iconColor: '#4361EE' },
+                  { icon: CreditCard, label: 'Cartes actives', value: stats?.active_clients || 0, bg: '#f0fdfa', iconColor: '#0D9488' },
                 ].map((stat, i) => {
                   const Icon = stat.icon;
                   return (
@@ -777,10 +777,10 @@ export default function LoyaltyPage() {
               </div>
 
               {/* Interactive Simulator */}
-              <Card className="loyalty-card p-5 sm:p-6 border border-gray-200 rounded-xl" style={{ background: 'linear-gradient(to bottom right, #f0f0ff, #dbeafe)' }}>
+              <Card className="loyalty-card p-5 sm:p-6 border border-gray-200 rounded-xl" style={{ background: 'linear-gradient(to bottom right, #f0fdfa, #dbeafe)' }}>
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm flex-shrink-0">
-                    <Calculator className="w-5 h-5" style={{ color: '#4361EE' }} />
+                    <Calculator className="w-5 h-5 text-teal-600" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-slate-900 text-sm sm:text-base">Simulateur de Points</h3>
@@ -791,7 +791,7 @@ export default function LoyaltyPage() {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Montant : <span className="font-bold" style={{ color: '#4361EE' }}>{simulatorAmount.toLocaleString()} {loyaltyCurrency}</span>
+                      Montant : <span className="font-bold text-teal-600">{simulatorAmount.toLocaleString()} {loyaltyCurrency}</span>
                     </label>
                     <input
                       type="range"
@@ -801,7 +801,7 @@ export default function LoyaltyPage() {
                       value={simulatorAmount}
                       onChange={(e) => setSimulatorAmount(parseInt(e.target.value))}
                       className="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer"
-                      style={{ accentColor: '#4361EE' }}
+                      style={{ accentColor: '#0D9488' }}
                     />
                     <div className="flex justify-between text-xs text-slate-400 mt-1">
                       <span>0</span>
@@ -811,14 +811,14 @@ export default function LoyaltyPage() {
 
                   <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-4">
                     <div className="bg-white rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center shadow-sm border border-gray-100">
-                      <p className="text-lg sm:text-2xl font-bold" style={{ color: '#4361EE' }}>{simulatedPoints}</p>
+                      <p className="text-lg sm:text-2xl font-bold text-teal-600">{simulatedPoints}</p>
                       <p className="text-[10px] sm:text-xs text-slate-500 mt-0.5 sm:mt-1">Points gagnés</p>
                     </div>
                     <div className="bg-white rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center shadow-sm border border-gray-100">
                       <p className="text-lg sm:text-2xl font-bold text-emerald-600">+{welcomePoints}</p>
                       <p className="text-[10px] sm:text-xs text-slate-500 mt-0.5 sm:mt-1">Bonus bienvenue</p>
                     </div>
-                    <div className="bg-white rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center shadow-sm border-2" style={{ borderColor: '#c7d2fe' }}>
+                    <div className="bg-white rounded-lg sm:rounded-xl p-2.5 sm:p-4 text-center shadow-sm border-2" style={{ borderColor: '#ccfbf1' }}>
                       <p className="text-lg sm:text-2xl font-bold text-slate-900">{simulatedPoints + welcomePoints}</p>
                       <p className="text-[10px] sm:text-xs text-slate-500 mt-0.5 sm:mt-1">Total</p>
                     </div>
@@ -831,9 +831,9 @@ export default function LoyaltyPage() {
                 <div className="flex items-center gap-3 mb-5">
                   <div
                     className="loyalty-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#f0f0ff' }}
+                    style={{ backgroundColor: '#f0fdfa' }}
                   >
-                    <BarChart3 className="w-5 h-5" style={{ color: '#4361EE' }} />
+                    <BarChart3 className="w-5 h-5 text-teal-600" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-slate-900 text-sm sm:text-base">Exemple de calcul de points</h3>
@@ -842,12 +842,12 @@ export default function LoyaltyPage() {
                 </div>
                 <div className="flex items-center justify-center gap-2 sm:gap-4 text-center">
                   <div className="bg-gray-50 rounded-lg sm:rounded-xl p-3 sm:p-4 flex-1 sm:flex-initial border border-gray-200">
-                    <p className="text-base sm:text-xl font-bold" style={{ color: '#4361EE' }}>{purchaseThreshold.toLocaleString()} {loyaltyCurrency}</p>
+                    <p className="text-base sm:text-xl font-bold text-teal-600">{purchaseThreshold.toLocaleString()} {loyaltyCurrency}</p>
                     <p className="text-xs sm:text-sm text-slate-600">Montant</p>
                   </div>
-                  <div className="text-xl sm:text-2xl flex-shrink-0" style={{ color: '#4361EE' }}>=</div>
+                  <div className="text-xl sm:text-2xl flex-shrink-0 text-teal-600">=</div>
                   <div className="bg-gray-50 rounded-lg sm:rounded-xl p-3 sm:p-4 flex-1 sm:flex-initial border border-gray-200">
-                    <p className="text-base sm:text-xl font-bold" style={{ color: '#4361EE' }}>{pointsPerPurchase}</p>
+                    <p className="text-base sm:text-xl font-bold text-teal-600">{pointsPerPurchase}</p>
                     <p className="text-xs sm:text-sm text-slate-600">Points</p>
                   </div>
                 </div>
@@ -872,9 +872,9 @@ export default function LoyaltyPage() {
                     className="w-full pl-10 px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                     style={{ borderColor: '#d1d5db' }}
                     onFocus={(e) => {
-                      e.currentTarget.style.borderColor = '#4361EE';
-                      e.currentTarget.style.backgroundColor = '#f0f0ff';
-                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                      e.currentTarget.style.borderColor = '#0D9488';
+                      e.currentTarget.style.backgroundColor = '#f0fdfa';
+                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                     }}
                     onBlur={(e) => {
                       e.currentTarget.style.borderColor = '#d1d5db';
@@ -889,9 +889,9 @@ export default function LoyaltyPage() {
                   className="px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none w-full sm:w-auto"
                   style={{ borderColor: '#d1d5db' }}
                   onFocus={(e) => {
-                    e.currentTarget.style.borderColor = '#4361EE';
-                    e.currentTarget.style.backgroundColor = '#f0f0ff';
-                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                    e.currentTarget.style.borderColor = '#0D9488';
+                    e.currentTarget.style.backgroundColor = '#f0fdfa';
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                   }}
                   onBlur={(e) => {
                     e.currentTarget.style.borderColor = '#d1d5db';
@@ -909,8 +909,8 @@ export default function LoyaltyPage() {
               {/* Table / Mobile Cards */}
               {processedClients.length === 0 ? (
                 <div className="p-8 sm:p-12 text-center">
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#f0f0ff' }}>
-                    <Users className="w-7 h-7 sm:w-8 sm:h-8" style={{ color: '#4361EE' }} />
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#f0fdfa' }}>
+                    <Users className="w-7 h-7 sm:w-8 sm:h-8 text-teal-600" />
                   </div>
                   <h3 className="text-base sm:text-lg font-medium text-slate-900 mb-2">Aucun client trouvé</h3>
                   <p className="text-sm text-slate-500">
@@ -938,7 +938,7 @@ export default function LoyaltyPage() {
                         {paginatedClients.map((client) => (
                           <tr key={client.id} className="hover:bg-gray-50 transition-colors">
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="font-mono text-sm px-2 py-1 rounded" style={{ backgroundColor: '#f0f0ff', color: '#4361EE' }}>
+                              <span className="font-mono text-sm px-2 py-1 rounded" style={{ backgroundColor: '#f0fdfa', color: '#0D9488' }}>
                                 {client.card_id}
                               </span>
                             </td>
@@ -1002,7 +1002,7 @@ export default function LoyaltyPage() {
                         </div>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <span className="font-mono text-xs px-2 py-1 rounded" style={{ backgroundColor: '#f0f0ff', color: '#4361EE' }}>
+                            <span className="font-mono text-xs px-2 py-1 rounded" style={{ backgroundColor: '#f0fdfa', color: '#0D9488' }}>
                               {client.card_id}
                             </span>
                             <div className="flex items-center gap-1">
@@ -1054,12 +1054,12 @@ export default function LoyaltyPage() {
                             className="w-8 h-8 rounded-lg text-sm font-medium transition-all duration-200"
                             style={
                               currentPage === page
-                                ? { backgroundColor: '#4361EE', color: 'white' }
+                                ? { backgroundColor: '#0D9488', color: 'white' }
                                 : { color: '#4b5563' }
                             }
                             onMouseEnter={(e) => {
                               if (currentPage !== page) {
-                                e.currentTarget.style.backgroundColor = '#f0f0ff';
+                                e.currentTarget.style.backgroundColor = '#f0fdfa';
                               }
                             }}
                             onMouseLeave={(e) => {

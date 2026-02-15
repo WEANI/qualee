@@ -173,7 +173,7 @@ export default function AccountPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#4361EE' }} />
+          <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
         </div>
       </DashboardLayout>
     );
@@ -225,7 +225,7 @@ export default function AccountPage() {
           left: 0;
           right: 0;
           height: 3px;
-          background: linear-gradient(90deg, #4361EE, #7209B7);
+          background: linear-gradient(90deg, #0D9488, #10B981);
           border-radius: 2px 2px 0 0;
           transform: scaleX(0);
           transform-origin: left;
@@ -236,7 +236,7 @@ export default function AccountPage() {
         }
         .account-card:hover {
           border-color: #d1d5db;
-          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.12);
+          box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
         }
         .danger-card {
           position: relative;
@@ -269,7 +269,7 @@ export default function AccountPage() {
         {/* Header */}
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-            <CircleUserRound className="w-7 h-7" style={{ color: '#4361EE' }} />
+            <CircleUserRound className="w-7 h-7 text-teal-600" />
             Mon Compte
           </h1>
           <p className="text-slate-500 mt-1">Gérez votre sécurité et vos paramètres de compte</p>
@@ -297,7 +297,7 @@ export default function AccountPage() {
         <nav
           role="tablist"
           className="flex gap-1 border-b-2 overflow-x-auto pb-0 scrollbar-hide"
-          style={{ borderColor: '#e8e6ff' }}
+          style={{ borderColor: '#ccfbf1' }}
         >
           {tabs.map(tab => (
             <button
@@ -308,14 +308,14 @@ export default function AccountPage() {
               className="relative flex items-center gap-2 px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap transition-all duration-300 rounded-t-lg"
               style={{
                 color: activeTab === tab.key
-                  ? tab.key === 'danger' ? '#dc2626' : '#4361EE'
+                  ? tab.key === 'danger' ? '#dc2626' : '#0D9488'
                   : '#6b7280',
                 backgroundColor: 'transparent',
               }}
               onMouseEnter={(e) => {
                 if (activeTab !== tab.key) {
-                  e.currentTarget.style.color = tab.key === 'danger' ? '#b91c1c' : '#3A0CA3';
-                  e.currentTarget.style.backgroundColor = tab.key === 'danger' ? '#fef2f2' : '#f0f0ff';
+                  e.currentTarget.style.color = tab.key === 'danger' ? '#b91c1c' : '#0F766E';
+                  e.currentTarget.style.backgroundColor = tab.key === 'danger' ? '#fef2f2' : '#f0fdfa';
                 }
               }}
               onMouseLeave={(e) => {
@@ -331,7 +331,7 @@ export default function AccountPage() {
               <span
                 className="absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-300 origin-left"
                 style={{
-                  backgroundColor: tab.key === 'danger' ? '#dc2626' : '#4361EE',
+                  backgroundColor: tab.key === 'danger' ? '#dc2626' : '#0D9488',
                   transform: activeTab === tab.key ? 'scaleX(1)' : 'scaleX(0)',
                 }}
               />
@@ -351,9 +351,9 @@ export default function AccountPage() {
                 <div className="flex items-center gap-3 mb-5">
                   <div
                     className="account-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#f0f0ff' }}
+                    style={{ backgroundColor: '#f0fdfa' }}
                   >
-                    <Mail className="w-5 h-5" style={{ color: '#4361EE' }} />
+                    <Mail className="w-5 h-5 text-teal-600" />
                   </div>
                   <div>
                     <h2 className="text-base sm:text-lg font-semibold text-slate-900">Adresse Email</h2>
@@ -384,9 +384,9 @@ export default function AccountPage() {
                 <div className="flex items-center gap-3 mb-5">
                   <div
                     className="account-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#f0f0ff' }}
+                    style={{ backgroundColor: '#f0fdfa' }}
                   >
-                    <Shield className="w-5 h-5" style={{ color: '#4361EE' }} />
+                    <Shield className="w-5 h-5 text-teal-600" />
                   </div>
                   <div>
                     <h2 className="text-base sm:text-lg font-semibold text-slate-900">Informations de Sécurité</h2>
@@ -477,9 +477,9 @@ export default function AccountPage() {
                         className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none pr-10"
                         style={{ borderColor: '#d1d5db' }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = '#4361EE';
-                          e.currentTarget.style.backgroundColor = '#f0f0ff';
-                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                          e.currentTarget.style.borderColor = '#0D9488';
+                          e.currentTarget.style.backgroundColor = '#f0fdfa';
+                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                         }}
                         onBlur={(e) => {
                           e.currentTarget.style.borderColor = '#d1d5db';
@@ -511,9 +511,9 @@ export default function AccountPage() {
                         className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none pr-10"
                         style={{ borderColor: '#d1d5db' }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = '#4361EE';
-                          e.currentTarget.style.backgroundColor = '#f0f0ff';
-                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                          e.currentTarget.style.borderColor = '#0D9488';
+                          e.currentTarget.style.backgroundColor = '#f0fdfa';
+                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                         }}
                         onBlur={(e) => {
                           e.currentTarget.style.borderColor = '#d1d5db';
@@ -574,9 +574,9 @@ export default function AccountPage() {
                         className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none pr-10"
                         style={{ borderColor: '#d1d5db' }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = '#4361EE';
-                          e.currentTarget.style.backgroundColor = '#f0f0ff';
-                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(67, 97, 238, 0.15)';
+                          e.currentTarget.style.borderColor = '#0D9488';
+                          e.currentTarget.style.backgroundColor = '#f0fdfa';
+                          e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
                         }}
                         onBlur={(e) => {
                           e.currentTarget.style.borderColor = '#d1d5db';
@@ -622,9 +622,9 @@ export default function AccountPage() {
                     onClick={handleChangePassword}
                     disabled={changingPassword || !newPassword || !confirmPassword || newPassword !== confirmPassword || newPassword.length < 8}
                     className="flex-1 sm:flex-initial text-white transition-all duration-200"
-                    style={{ backgroundColor: '#4361EE' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#3A0CA3'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#4361EE'; }}
+                    style={{ backgroundColor: '#0D9488' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; }}
                   >
                     {changingPassword ? (
                       <>

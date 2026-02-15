@@ -222,7 +222,7 @@ export default function DashboardPage() {
             </div>
           ) : (
             <>
-              <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" style={{ color: '#4361EE' }} />
+              <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-teal-600" />
               <p className="text-lg text-slate-600">Chargement...</p>
             </>
           )}
@@ -236,8 +236,6 @@ export default function DashboardPage() {
       label: 'Total avis',
       value: stats.totalReviews,
       icon: MessageSquare,
-      gradient: 'linear-gradient(135deg, #4361EE, #7209B7)',
-      bgTint: '#f0f0ff',
       trend: stats.reviewsTrend,
       trendLabel: stats.reviewsTrend !== 0 ? `${stats.reviewsTrend > 0 ? '+' : ''}${stats.reviewsTrend}%` : null,
     },
@@ -246,8 +244,6 @@ export default function DashboardPage() {
       value: stats.avgRating,
       suffix: '/ 5.0',
       icon: Star,
-      gradient: 'linear-gradient(135deg, #F59E0B, #EF4444)',
-      bgTint: '#FFF7ED',
       trend: null,
       trendLabel: stats.avgRating >= 4.5 ? 'Excellent' : null,
     },
@@ -255,8 +251,6 @@ export default function DashboardPage() {
       label: 'Total tours de roue',
       value: stats.totalSpins,
       icon: RotateCw,
-      gradient: 'linear-gradient(135deg, #7209B7, #F72585)',
-      bgTint: '#FAF5FF',
       trend: null,
       trendLabel: stats.totalSpins > 0 ? 'Actif' : null,
     },
@@ -264,8 +258,6 @@ export default function DashboardPage() {
       label: 'Recompenses utilisees',
       value: stats.rewardsRedeemed,
       icon: Gift,
-      gradient: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
-      bgTint: '#F5F3FF',
       trend: null,
       trendLabel: stats.positiveRatio > 0 ? `${stats.positiveRatio}% positifs` : null,
     },
@@ -273,94 +265,14 @@ export default function DashboardPage() {
 
   return (
     <DashboardLayout merchant={merchant}>
-      <style jsx global>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .dashboard-card {
-          position: relative;
-          overflow: hidden;
-          transition: all 0.3s ease;
-        }
-        .dashboard-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 3px;
-          background: linear-gradient(90deg, #4361EE, #7209B7);
-          border-radius: 2px 2px 0 0;
-          transform: scaleX(0);
-          transform-origin: left;
-          transition: transform 0.3s ease;
-        }
-        .dashboard-card:hover::before {
-          transform: scaleX(1);
-        }
-        .dashboard-card:hover {
-          border-color: #d1d5db;
-          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.12);
-          transform: translateY(-2px);
-        }
-        .kpi-card {
-          position: relative;
-          overflow: hidden;
-          transition: all 0.3s ease;
-          animation: fadeInUp 0.3s ease-out both;
-        }
-        .kpi-card:nth-child(1) { animation-delay: 0s; }
-        .kpi-card:nth-child(2) { animation-delay: 0.05s; }
-        .kpi-card:nth-child(3) { animation-delay: 0.1s; }
-        .kpi-card:nth-child(4) { animation-delay: 0.15s; }
-        .kpi-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 8px 24px rgba(67, 97, 238, 0.18);
-        }
-        .kpi-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 3px;
-          border-radius: 2px 2px 0 0;
-          transition: transform 0.3s ease;
-        }
-        .quick-action {
-          position: relative;
-          overflow: hidden;
-          transition: all 0.3s ease;
-        }
-        .quick-action::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 3px;
-          background: linear-gradient(90deg, #4361EE, #7209B7);
-          border-radius: 2px 2px 0 0;
-          transform: scaleX(0);
-          transform-origin: left;
-          transition: transform 0.3s ease;
-        }
-        .quick-action:hover::before {
-          transform: scaleX(1);
-        }
-        .quick-action:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.12);
-        }
-      `}</style>
-
       <div className="space-y-6 sm:space-y-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-              <LayoutDashboard className="w-7 h-7" style={{ color: '#4361EE' }} />
+              <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center">
+                <LayoutDashboard className="w-5 h-5 text-teal-600" />
+              </div>
               Bonjour, {merchant.business_name || 'Commercant'}
             </h1>
             <p className="text-slate-500 mt-1">
@@ -369,10 +281,7 @@ export default function DashboardPage() {
           </div>
           <div className="flex items-center gap-3">
             {currentDate && (
-              <span
-                className="text-sm text-slate-500 px-4 py-2 rounded-xl border shadow-sm"
-                style={{ backgroundColor: '#f0f0ff', borderColor: '#e8e6ff' }}
-              >
+              <span className="text-sm text-slate-500 px-4 py-2 rounded-xl border border-gray-200 shadow-sm bg-white">
                 {currentDate}
               </span>
             )}
@@ -384,41 +293,40 @@ export default function DashboardPage() {
           {kpiCards.map((kpi, idx) => {
             const Icon = kpi.icon;
             return (
-              <Card
+              <div
                 key={idx}
-                className="kpi-card p-5 sm:p-6 border border-gray-200 rounded-xl bg-white"
+                className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white"
               >
-                <div className="flex justify-between items-start mb-4">
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center shadow-md"
-                    style={{ background: kpi.gradient }}
-                  >
-                    <Icon className="w-5 h-5 text-white" />
+                <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                <div className="p-5 sm:p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-teal-600" />
+                    </div>
+                    {kpi.trendLabel && (
+                      <Badge
+                        className={`text-xs font-medium shadow-sm border ${
+                          kpi.trend && kpi.trend < 0
+                            ? 'bg-red-50 text-red-600 border-red-200'
+                            : 'bg-teal-50 text-teal-700 border-teal-200'
+                        }`}
+                      >
+                        {kpi.trend !== null && kpi.trend !== 0 && (
+                          <TrendingUp className={`w-3 h-3 mr-1 ${kpi.trend < 0 ? 'rotate-180' : ''}`} />
+                        )}
+                        {kpi.trendLabel}
+                      </Badge>
+                    )}
                   </div>
-                  {kpi.trendLabel && (
-                    <Badge
-                      className="text-xs font-medium shadow-sm"
-                      style={{
-                        backgroundColor: kpi.bgTint,
-                        color: kpi.trend && kpi.trend < 0 ? '#DC2626' : '#4361EE',
-                        borderColor: kpi.trend && kpi.trend < 0 ? '#FECACA' : '#e8e6ff',
-                      }}
-                    >
-                      {kpi.trend !== null && kpi.trend !== 0 && (
-                        <TrendingUp className={`w-3 h-3 mr-1 ${kpi.trend < 0 ? 'rotate-180' : ''}`} />
-                      )}
-                      {kpi.trendLabel}
-                    </Badge>
-                  )}
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-slate-500">{kpi.label}</p>
-                  <div className="flex items-baseline gap-2 mt-1">
-                    <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">{kpi.value}</h3>
-                    {kpi.suffix && <span className="text-sm text-slate-400">{kpi.suffix}</span>}
+                  <div>
+                    <p className="text-sm font-medium text-slate-500">{kpi.label}</p>
+                    <div className="flex items-baseline gap-2 mt-1">
+                      <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">{kpi.value}</h3>
+                      {kpi.suffix && <span className="text-sm text-slate-400">{kpi.suffix}</span>}
+                    </div>
                   </div>
                 </div>
-              </Card>
+              </div>
             );
           })}
         </div>
@@ -426,86 +334,78 @@ export default function DashboardPage() {
         {/* Chart + Recent Activity */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Main Chart */}
-          <Card className="dashboard-card lg:col-span-2 p-5 sm:p-6 border border-gray-200 rounded-xl">
-            <div className="flex items-center gap-3 mb-5">
-              <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: '#f0f0ff' }}
-              >
-                <BarChart3 className="w-5 h-5" style={{ color: '#4361EE' }} />
+          <div className="group relative lg:col-span-2 border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
+            <div className="p-5 sm:p-6">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
+                  <BarChart3 className="w-5 h-5 text-teal-600" />
+                </div>
+                <div>
+                  <h2 className="text-base sm:text-lg font-semibold text-slate-900">Activite</h2>
+                  <p className="text-xs sm:text-sm text-slate-500">Avis des 90 derniers jours</p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-base sm:text-lg font-semibold text-slate-900">Activite</h2>
-                <p className="text-xs sm:text-sm text-slate-500">Avis des 90 derniers jours</p>
-              </div>
+              <ChartAreaInteractive data={chartData} />
             </div>
-            <ChartAreaInteractive data={chartData} />
-          </Card>
+          </div>
 
           {/* Recent Activity Feed */}
-          <Card className="dashboard-card p-5 sm:p-6 border border-gray-200 rounded-xl">
-            <div className="flex items-center gap-3 mb-5">
-              <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: '#f0f0ff' }}
-              >
-                <MessageSquare className="w-5 h-5" style={{ color: '#4361EE' }} />
-              </div>
-              <h2 className="text-base sm:text-lg font-semibold text-slate-900">Avis recents</h2>
-            </div>
-            <div className="space-y-4">
-              {recentActivity.length > 0 ? (
-                recentActivity.map((activity, idx) => (
-                  <div
-                    key={idx}
-                    className="flex gap-3 p-3 rounded-lg transition-colors duration-200 hover:bg-gray-50"
-                    style={{ borderBottom: idx < recentActivity.length - 1 ? '1px solid #f3f4f6' : 'none' }}
-                  >
-                    <div className={`
-                      flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold
-                      ${activity.rating >= 4 ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}
-                    `}>
-                      {activity.rating}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex justify-between items-start">
-                        <p className="text-sm font-medium text-slate-900 truncate">
-                          {activity.customer_email || activity.customer_phone || 'Client anonyme'}
-                        </p>
-                        <span className="text-xs text-slate-400 whitespace-nowrap ml-2">
-                          {new Date(activity.date).toLocaleDateString('fr-FR')}
-                        </span>
-                      </div>
-                      <p className="text-sm text-slate-500 mt-1 line-clamp-2">
-                        {activity.comment || new Date(activity.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
-                      </p>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-center py-8 text-slate-500 text-sm">
-                  Aucun avis pour le moment
+          <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
+            <div className="p-5 sm:p-6">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
+                  <MessageSquare className="w-5 h-5 text-teal-600" />
                 </div>
-              )}
+                <h2 className="text-base sm:text-lg font-semibold text-slate-900">Avis recents</h2>
+              </div>
+              <div className="space-y-4">
+                {recentActivity.length > 0 ? (
+                  recentActivity.map((activity, idx) => (
+                    <div
+                      key={idx}
+                      className={`flex gap-3 p-3 rounded-lg transition-colors duration-200 hover:bg-gray-50 ${
+                        idx < recentActivity.length - 1 ? 'border-b border-gray-100' : ''
+                      }`}
+                    >
+                      <div className={`
+                        flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold
+                        ${activity.rating >= 4 ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}
+                      `}>
+                        {activity.rating}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex justify-between items-start">
+                          <p className="text-sm font-medium text-slate-900 truncate">
+                            {activity.customer_email || activity.customer_phone || 'Client anonyme'}
+                          </p>
+                          <span className="text-xs text-slate-400 whitespace-nowrap ml-2">
+                            {new Date(activity.date).toLocaleDateString('fr-FR')}
+                          </span>
+                        </div>
+                        <p className="text-sm text-slate-500 mt-1 line-clamp-2">
+                          {activity.comment || new Date(activity.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-8 text-slate-500 text-sm">
+                    Aucun avis pour le moment
+                  </div>
+                )}
 
-              <Button
-                variant="outline"
-                className="w-full mt-2 transition-all duration-200"
-                onClick={() => router.push('/dashboard/feedback')}
-                style={{ borderColor: '#e8e6ff', color: '#4361EE' }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#f0f0ff';
-                  e.currentTarget.style.borderColor = '#4361EE';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.borderColor = '#e8e6ff';
-                }}
-              >
-                Voir tous les avis
-              </Button>
+                <Button
+                  variant="outline"
+                  className="w-full mt-2 transition-all duration-200 border-teal-200 text-teal-700 hover:bg-teal-50 hover:border-teal-300"
+                  onClick={() => router.push('/dashboard/feedback')}
+                >
+                  Voir tous les avis
+                </Button>
+              </div>
             </div>
-          </Card>
+          </div>
         </div>
 
         {/* Quick Actions & Link */}
@@ -513,31 +413,31 @@ export default function DashboardPage() {
           {/* Quick Actions Grid */}
           <div>
             <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-              <span className="w-1.5 h-5 rounded-full" style={{ backgroundColor: '#4361EE' }} />
+              <span className="w-1.5 h-5 rounded-full bg-teal-600" />
               Actions rapides
             </h3>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { href: '/dashboard/scan', icon: ScanLine, label: 'Scanner', desc: 'Valider une carte client', iconBg: '#f0f0ff', iconColor: '#4361EE' },
-                { href: '/dashboard/prizes', icon: Gift, label: 'Lots', desc: 'Gerer vos recompenses', iconBg: '#FDF2F8', iconColor: '#EC4899' },
-                { href: '/dashboard/feedback', icon: Star, label: 'Avis', desc: 'Consulter les retours clients', iconBg: '#FFF7ED', iconColor: '#F59E0B' },
-                { href: '/dashboard/analytics', icon: BarChart3, label: 'Statistiques', desc: 'Analyser vos performances', iconBg: '#F5F3FF', iconColor: '#8B5CF6' },
+                { href: '/dashboard/scan', icon: ScanLine, label: 'Scanner', desc: 'Valider une carte client' },
+                { href: '/dashboard/prizes', icon: Gift, label: 'Lots', desc: 'Gerer vos recompenses' },
+                { href: '/dashboard/feedback', icon: Star, label: 'Avis', desc: 'Consulter les retours clients' },
+                { href: '/dashboard/analytics', icon: BarChart3, label: 'Statistiques', desc: 'Analyser vos performances' },
               ].map((action) => {
                 const ActionIcon = action.icon;
                 return (
                   <button
                     key={action.href}
                     onClick={() => router.push(action.href)}
-                    className="quick-action p-4 bg-white rounded-xl border border-gray-200 text-left group"
+                    className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white text-left"
                   >
-                    <div
-                      className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 transition-all duration-200"
-                      style={{ backgroundColor: action.iconBg }}
-                    >
-                      <ActionIcon className="w-5 h-5" style={{ color: action.iconColor }} />
+                    <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                    <div className="p-4">
+                      <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center mb-3">
+                        <ActionIcon className="w-5 h-5 text-teal-600" />
+                      </div>
+                      <h4 className="font-semibold text-slate-900 text-sm">{action.label}</h4>
+                      <p className="text-xs text-slate-500 mt-1">{action.desc}</p>
                     </div>
-                    <h4 className="font-semibold text-slate-900 text-sm">{action.label}</h4>
-                    <p className="text-xs text-slate-500 mt-1">{action.desc}</p>
                   </button>
                 );
               })}
@@ -547,50 +447,50 @@ export default function DashboardPage() {
           {/* Review Link Card */}
           <div>
             <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-              <span className="w-1.5 h-5 rounded-full" style={{ backgroundColor: '#4361EE' }} />
+              <span className="w-1.5 h-5 rounded-full bg-teal-600" />
               Votre lien d&apos;avis
             </h3>
-            <Card
-              className="p-5 sm:p-6 rounded-xl text-white border-0"
-              style={{ background: 'linear-gradient(135deg, #1e1b4b, #312e81, #4338ca)' }}
-            >
-              <div className="flex justify-between items-start mb-5">
-                <div>
-                  <h4 className="text-lg font-semibold text-white">Lien public</h4>
-                  <p className="text-sm text-indigo-300 mt-1">Partagez ce lien avec vos clients</p>
+            <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-gradient-to-br from-[#0F172A] to-[#1e293b]">
+              <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
+              <div className="p-5 sm:p-6">
+                <div className="flex justify-between items-start mb-5">
+                  <div>
+                    <h4 className="text-lg font-semibold text-white">Lien public</h4>
+                    <p className="text-sm text-slate-400 mt-1">Partagez ce lien avec vos clients</p>
+                  </div>
+                  <div className="p-2 bg-teal-500/20 rounded-lg">
+                    <ArrowUpRight className="w-5 h-5 text-teal-400" />
+                  </div>
                 </div>
-                <div className="p-2 bg-white/10 rounded-lg">
-                  <ArrowUpRight className="w-5 h-5 text-white" />
+
+                <div className="bg-black/30 rounded-lg p-4 mb-5 border border-white/10">
+                  <code className="text-sm font-mono text-emerald-400 break-all">
+                    {process.env.NEXT_PUBLIC_APP_URL}/rate/{user.id}
+                  </code>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <Button
+                    onClick={() => {
+                      navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_APP_URL}/rate/${user.id}`);
+                      alert('Lien copie !');
+                    }}
+                    className="bg-teal-600 text-white hover:bg-teal-700 border-0"
+                  >
+                    <Copy className="w-4 h-4 mr-2" />
+                    Copier
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => router.push('/dashboard/qr')}
+                    className="border-white/20 text-white hover:bg-white/10 bg-transparent"
+                  >
+                    <ScanLine className="w-4 h-4 mr-2" />
+                    QR Code
+                  </Button>
                 </div>
               </div>
-
-              <div className="bg-black/30 rounded-lg p-4 mb-5 border border-white/10">
-                <code className="text-sm font-mono text-emerald-400 break-all">
-                  {process.env.NEXT_PUBLIC_APP_URL}/rate/{user.id}
-                </code>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <Button
-                  onClick={() => {
-                    navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_APP_URL}/rate/${user.id}`);
-                    alert('Lien copie !');
-                  }}
-                  className="bg-white text-slate-900 hover:bg-slate-100 border-0"
-                >
-                  <Copy className="w-4 h-4 mr-2" />
-                  Copier
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => router.push('/dashboard/qr')}
-                  className="border-white/20 text-white hover:bg-white/10 bg-transparent"
-                >
-                  <ScanLine className="w-4 h-4 mr-2" />
-                  QR Code
-                </Button>
-              </div>
-            </Card>
+            </div>
           </div>
         </div>
       </div>

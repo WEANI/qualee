@@ -317,7 +317,7 @@ export default function SendCampaignPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#6366F1' }} />
+          <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
         </div>
       </DashboardLayout>
     );
@@ -352,7 +352,7 @@ export default function SendCampaignPage() {
           left: 0;
           right: 0;
           height: 3px;
-          background: linear-gradient(90deg, #6366F1, #EC4899);
+          background: linear-gradient(90deg, #0D9488, #10B981);
           border-radius: 2px 2px 0 0;
           transform: scaleX(0);
           transform-origin: left;
@@ -363,12 +363,12 @@ export default function SendCampaignPage() {
         }
         .send-card:hover {
           border-color: #d1d5db;
-          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.12);
+          box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
         }
         .send-input:focus {
-          border-color: #6366F1 !important;
-          background-color: #EEF2FF !important;
-          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+          border-color: #0D9488 !important;
+          background-color: #f0fdfa !important;
+          box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15) !important;
           outline: none !important;
         }
         .send-stat-card {
@@ -376,7 +376,7 @@ export default function SendCampaignPage() {
         }
         .send-stat-card:hover {
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.12);
+          box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
         }
       `}</style>
 
@@ -388,7 +388,7 @@ export default function SendCampaignPage() {
             size="sm"
             onClick={() => router.push('/dashboard/marketing/whatsapp-campaign')}
             className="gap-2"
-            onMouseEnter={(e) => { e.currentTarget.style.color = '#6366F1'; }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = '#0D9488'; }}
             onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}
           >
             <ArrowLeft className="w-4 h-4" />
@@ -396,7 +396,7 @@ export default function SendCampaignPage() {
           </Button>
           <div className="flex-1">
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-              <Send className="w-7 h-7" style={{ color: '#6366F1' }} />
+              <Send className="w-7 h-7 text-teal-600" />
               {t('marketing.whatsappCampaign.selectRecipients')}
             </h1>
             <p className="text-slate-500 mt-1">{t('marketing.whatsappCampaign.selectRecipientsDesc')}</p>
@@ -405,11 +405,11 @@ export default function SendCampaignPage() {
 
         {/* Campaign Summary */}
         {campaignData && (
-          <Card className="send-card p-5 sm:p-6 border border-gray-200 rounded-xl" style={{ background: 'linear-gradient(135deg, #EEF2FF, #E0E7FF)' }}>
+          <Card className="send-card p-5 sm:p-6 border border-gray-200 rounded-xl" style={{ background: 'linear-gradient(135deg, #f0fdfa, #ccfbf1)' }}>
             <div className="flex items-center gap-3">
               <div
                 className="send-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: '#6366F1' }}
+                style={{ backgroundColor: '#0D9488' }}
               >
                 <MessageCircle className="w-5 h-5 text-white" />
               </div>
@@ -425,7 +425,7 @@ export default function SendCampaignPage() {
                   setTestResults([]);
                 }}
                 className="gap-2 border-gray-200"
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.color = '#6366F1'; }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#0D9488'; e.currentTarget.style.color = '#0D9488'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
               >
                 <FlaskConical className="w-4 h-4" />
@@ -439,7 +439,7 @@ export default function SendCampaignPage() {
         {showTestModal && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
             <Card className="w-full max-w-md bg-white rounded-xl overflow-hidden">
-              <div className="p-4 sm:p-5" style={{ background: 'linear-gradient(135deg, #6366F1, #4F46E5)' }}>
+              <div className="p-4 sm:p-5" style={{ background: 'linear-gradient(135deg, #0D9488, #0F766E)' }}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
@@ -491,7 +491,7 @@ export default function SendCampaignPage() {
                       size="sm"
                       onClick={addTestNumber}
                       className="w-full gap-2 border-dashed border-gray-200"
-                      onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.color = '#6366F1'; }}
+                      onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#0D9488'; e.currentTarget.style.color = '#0D9488'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
                     >
                       <Plus className="w-4 h-4" />
@@ -528,7 +528,7 @@ export default function SendCampaignPage() {
                     variant="outline"
                     onClick={() => setShowTestModal(false)}
                     className="flex-1 border-gray-200"
-                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.color = '#6366F1'; }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#0D9488'; e.currentTarget.style.color = '#0D9488'; }}
                     onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
                   >
                     {t('dashboard.common.close')}
@@ -537,9 +537,9 @@ export default function SendCampaignPage() {
                     onClick={sendTestCampaign}
                     disabled={isTestSending || testNumbers.every(n => !n.trim())}
                     className="flex-1 text-white gap-2"
-                    style={{ backgroundColor: '#6366F1' }}
-                    onMouseEnter={(e) => { if (!e.currentTarget.disabled) { e.currentTarget.style.backgroundColor = '#4F46E5'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(99, 102, 241, 0.3)'; } }}
-                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#6366F1'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+                    style={{ backgroundColor: '#0D9488' }}
+                    onMouseEnter={(e) => { if (!e.currentTarget.disabled) { e.currentTarget.style.backgroundColor = '#0F766E'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(13, 148, 136, 0.3)'; } }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
                   >
                     {isTestSending ? (
                       <>
@@ -565,9 +565,9 @@ export default function SendCampaignPage() {
             <div className="flex items-center gap-3">
               <div
                 className="send-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: '#EEF2FF' }}
+                style={{ backgroundColor: '#f0fdfa' }}
               >
-                <Users className="w-5 h-5" style={{ color: '#6366F1' }} />
+                <Users className="w-5 h-5 text-teal-600" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-slate-900">{customers.length}</p>
@@ -613,9 +613,9 @@ export default function SendCampaignPage() {
               onClick={sendCampaign}
               disabled={selectedCustomers.size === 0 || isSending || !campaignData}
               className="w-full h-full text-white gap-2 transition-all duration-200"
-              style={{ backgroundColor: '#6366F1' }}
-              onMouseEnter={(e) => { if (!e.currentTarget.disabled) { e.currentTarget.style.backgroundColor = '#4F46E5'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(99, 102, 241, 0.3)'; } }}
-              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#6366F1'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+              style={{ backgroundColor: '#0D9488' }}
+              onMouseEnter={(e) => { if (!e.currentTarget.disabled) { e.currentTarget.style.backgroundColor = '#0F766E'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(13, 148, 136, 0.3)'; } }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
             >
               {isSending ? (
                 <>
@@ -638,9 +638,9 @@ export default function SendCampaignPage() {
             <div className="flex items-center gap-3 mb-4">
               <div
                 className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: '#EEF2FF' }}
+                style={{ backgroundColor: '#f0fdfa' }}
               >
-                <Loader2 className="w-5 h-5 animate-spin" style={{ color: '#6366F1' }} />
+                <Loader2 className="w-5 h-5 animate-spin text-teal-600" />
               </div>
               <div>
                 <p className="font-semibold text-slate-900">{t('marketing.whatsappCampaign.sendingInProgress')}</p>
@@ -652,7 +652,7 @@ export default function SendCampaignPage() {
             <div className="w-full bg-gray-100 rounded-full h-3">
               <div
                 className="h-3 rounded-full transition-all duration-300"
-                style={{ width: `${sendProgress}%`, background: 'linear-gradient(90deg, #6366F1, #4F46E5)' }}
+                style={{ width: `${sendProgress}%`, background: 'linear-gradient(90deg, #0D9488, #0F766E)' }}
               />
             </div>
           </Card>
@@ -665,9 +665,9 @@ export default function SendCampaignPage() {
               <div className="flex items-center gap-3">
                 <div
                   className="send-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: '#EEF2FF' }}
+                  style={{ backgroundColor: '#f0fdfa' }}
                 >
-                  <CheckCircle className="w-5 h-5" style={{ color: '#6366F1' }} />
+                  <CheckCircle className="w-5 h-5 text-teal-600" />
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-semibold text-slate-900">{t('marketing.whatsappCampaign.sendResults')}</h3>
@@ -679,7 +679,7 @@ export default function SendCampaignPage() {
                 size="sm"
                 onClick={() => setShowResults(false)}
                 className="border-gray-200"
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.color = '#6366F1'; }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#0D9488'; e.currentTarget.style.color = '#0D9488'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
               >
                 {t('dashboard.common.close')}
@@ -723,9 +723,9 @@ export default function SendCampaignPage() {
           <div className="flex items-center gap-3 mb-5">
             <div
               className="send-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: '#EEF2FF' }}
+              style={{ backgroundColor: '#f0fdfa' }}
             >
-              <Search className="w-5 h-5" style={{ color: '#6366F1' }} />
+              <Search className="w-5 h-5 text-teal-600" />
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-semibold text-slate-900">Filtrer les destinataires</h2>
@@ -749,7 +749,7 @@ export default function SendCampaignPage() {
                 size="sm"
                 onClick={toggleSelectAll}
                 className="gap-2 border-gray-200"
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.color = '#6366F1'; }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#0D9488'; e.currentTarget.style.color = '#0D9488'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
               >
                 <Check className="w-4 h-4" />
@@ -784,7 +784,7 @@ export default function SendCampaignPage() {
                       checked={selectedCustomers.size === filteredCustomers.length && filteredCustomers.length > 0}
                       onChange={toggleSelectAll}
                       className="w-4 h-4 rounded border-slate-300"
-                      style={{ accentColor: '#6366F1' }}
+                      style={{ accentColor: '#0D9488' }}
                     />
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">{t('marketing.whatsappCampaign.phoneNumber')}</th>
@@ -801,7 +801,7 @@ export default function SendCampaignPage() {
                       className={`cursor-pointer transition-all duration-200 ${
                         selectedCustomers.has(customer.phone) ? '' : 'hover:bg-slate-50'
                       }`}
-                      style={selectedCustomers.has(customer.phone) ? { backgroundColor: 'rgba(99, 102, 241, 0.05)' } : {}}
+                      style={selectedCustomers.has(customer.phone) ? { backgroundColor: 'rgba(13, 148, 136, 0.05)' } : {}}
                       onClick={() => toggleCustomer(customer.phone)}
                     >
                       <td className="px-4 py-3">
@@ -811,7 +811,7 @@ export default function SendCampaignPage() {
                           onChange={() => toggleCustomer(customer.phone)}
                           onClick={(e) => e.stopPropagation()}
                           className="w-4 h-4 rounded border-slate-300"
-                          style={{ accentColor: '#6366F1' }}
+                          style={{ accentColor: '#0D9488' }}
                         />
                       </td>
                       <td className="px-4 py-3">
@@ -827,7 +827,7 @@ export default function SendCampaignPage() {
                         </div>
                       </td>
                       <td className="px-4 py-3">
-                        <Badge className="text-white border-0 text-xs" style={{ backgroundColor: '#6366F1' }}>{customer.total_reviews}</Badge>
+                        <Badge className="text-white border-0 text-xs" style={{ backgroundColor: '#0D9488' }}>{customer.total_reviews}</Badge>
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2 text-sm text-slate-500">
@@ -840,7 +840,7 @@ export default function SendCampaignPage() {
                 ) : (
                   <tr>
                     <td colSpan={5} className="px-4 py-12 text-center text-slate-500">
-                      <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#EEF2FF' }}>
+                      <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#f0fdfa' }}>
                         <Users className="w-8 h-8" style={{ color: '#C7D2FE' }} />
                       </div>
                       <p className="text-lg font-medium text-slate-900">{t('marketing.whatsappCampaign.noContacts')}</p>

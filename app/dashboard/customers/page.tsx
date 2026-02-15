@@ -34,21 +34,21 @@ function CustomerDetailsModal({ customer, onClose }: CustomerDetailsModalProps) 
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden" style={{ animation: 'fadeInModal 0.3s ease-out' }}>
         {/* Header */}
-        <div className="text-white p-6" style={{ background: 'linear-gradient(135deg, #6366F1, #4F46E5)' }}>
+        <div className="text-white p-6" style={{ background: 'linear-gradient(135deg, #0D9488, #0F766E)' }}>
           <div className="flex justify-between items-start">
             <div className="flex items-center gap-4">
               <div className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg ${
                 customer.email || customer.phone
                   ? 'bg-white'
-                  : 'bg-indigo-400 text-white'
-              }`} style={customer.email || customer.phone ? { color: '#6366F1' } : {}}>
+                  : 'bg-teal-400 text-white'
+              }`} style={customer.email || customer.phone ? { color: '#0D9488' } : {}}>
                 {customer.email ? customer.email[0].toUpperCase() : customer.phone ? '...' : '?'}
               </div>
               <div>
                 <h2 className="text-xl font-bold">
                   {customer.email || customer.phone || 'Client Anonyme'}
                 </h2>
-                <p className="text-indigo-200 text-sm font-mono">
+                <p className="text-teal-200 text-sm font-mono">
                   ID: {customer.user_token.substring(0, 12)}...
                 </p>
               </div>
@@ -289,7 +289,7 @@ export default function CustomersPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#6366F1' }} />
+          <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
         </div>
       </DashboardLayout>
     );
@@ -321,7 +321,7 @@ export default function CustomersPage() {
           left: 0;
           right: 0;
           height: 3px;
-          background: linear-gradient(90deg, #6366F1, #EC4899);
+          background: linear-gradient(90deg, #0D9488, #10B981);
           border-radius: 2px 2px 0 0;
           transform: scaleX(0);
           transform-origin: left;
@@ -332,12 +332,12 @@ export default function CustomersPage() {
         }
         .customer-card:hover {
           border-color: #d1d5db;
-          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.12);
+          box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
         }
         .customer-input:focus {
-          border-color: #6366F1 !important;
-          background-color: #EEF2FF !important;
-          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+          border-color: #0D9488 !important;
+          background-color: #f0fdfa !important;
+          box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15) !important;
         }
       `}</style>
 
@@ -346,7 +346,7 @@ export default function CustomersPage() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-              <Users className="w-7 h-7" style={{ color: '#6366F1' }} />
+              <Users className="w-7 h-7 text-teal-600" />
               Clients
             </h1>
             <p className="text-slate-500 mt-1">Gérez votre base de données clients et leurs interactions</p>
@@ -354,7 +354,7 @@ export default function CustomersPage() {
           <Button
             variant="outline"
             className="gap-2 border-gray-200 hover:bg-gray-50 transition-all duration-200"
-            onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.color = '#6366F1'; }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#0D9488'; e.currentTarget.style.color = '#0D9488'; }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
           >
             <TrendingUp className="w-4 h-4" />
@@ -366,8 +366,8 @@ export default function CustomersPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           <Card className="customer-card p-4 sm:p-5 border border-gray-200 rounded-xl">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#EEF2FF' }}>
-                <Users className="w-5 h-5" style={{ color: '#6366F1' }} />
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#f0fdfa' }}>
+                <Users className="w-5 h-5 text-teal-600" />
               </div>
               <div>
                 <p className="text-xs sm:text-sm font-medium text-slate-500">Clients Totaux</p>
@@ -378,8 +378,8 @@ export default function CustomersPage() {
 
           <Card className="customer-card p-4 sm:p-5 border border-gray-200 rounded-xl">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#EEF2FF' }}>
-                <Mail className="w-5 h-5" style={{ color: '#6366F1' }} />
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#f0fdfa' }}>
+                <Mail className="w-5 h-5 text-teal-600" />
               </div>
               <div>
                 <p className="text-xs sm:text-sm font-medium text-slate-500">Emails Collectés</p>
@@ -422,7 +422,7 @@ export default function CustomersPage() {
         <nav
           role="tablist"
           className="flex gap-1 border-b-2 overflow-x-auto pb-0 scrollbar-hide"
-          style={{ borderColor: '#e8e6ff' }}
+          style={{ borderColor: '#ccfbf1' }}
         >
           <button
             role="tab"
@@ -430,12 +430,12 @@ export default function CustomersPage() {
             onClick={() => { setActiveTab('web'); setSearchQuery(''); }}
             className="relative flex items-center gap-2 px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap transition-all duration-300 rounded-t-lg"
             style={{
-              color: activeTab === 'web' ? '#6366F1' : '#6b7280',
+              color: activeTab === 'web' ? '#0D9488' : '#6b7280',
             }}
             onMouseEnter={(e) => {
               if (activeTab !== 'web') {
-                e.currentTarget.style.color = '#4F46E5';
-                e.currentTarget.style.backgroundColor = '#EEF2FF';
+                e.currentTarget.style.color = '#0F766E';
+                e.currentTarget.style.backgroundColor = '#f0fdfa';
               }
             }}
             onMouseLeave={(e) => {
@@ -451,7 +451,7 @@ export default function CustomersPage() {
             <span
               className="absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-300 origin-left"
               style={{
-                backgroundColor: '#6366F1',
+                backgroundColor: '#0D9488',
                 transform: activeTab === 'web' ? 'scaleX(1)' : 'scaleX(0)',
               }}
             />
@@ -531,7 +531,7 @@ export default function CustomersPage() {
               <tbody className="divide-y divide-slate-100 bg-white">
                 {filteredCustomers.length > 0 ? (
                   filteredCustomers.map((customer) => (
-                    <tr key={customer.user_token} className="hover:bg-indigo-50/30 transition-colors duration-200">
+                    <tr key={customer.user_token} className="hover:bg-teal-50/30 transition-colors duration-200">
                       <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-3 sm:gap-4">
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-sm ${
@@ -544,7 +544,7 @@ export default function CustomersPage() {
                                 : 'bg-slate-100 text-slate-500'
                           }`} style={
                             activeTab === 'web'
-                              ? customer.email ? { background: 'linear-gradient(135deg, #6366F1, #4F46E5)' } : {}
+                              ? customer.email ? { background: 'linear-gradient(135deg, #0D9488, #0F766E)' } : {}
                               : customer.phone ? { background: 'linear-gradient(135deg, #10B981, #059669)' } : {}
                           }>
                             {activeTab === 'web'
@@ -589,7 +589,7 @@ export default function CustomersPage() {
                       </td>
                       <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                         {customer.total_reviews > 1 ? (
-                          <Badge className="text-white border-0" style={{ backgroundColor: '#6366F1' }}>
+                          <Badge className="text-white border-0" style={{ backgroundColor: '#0D9488' }}>
                             Habitué
                           </Badge>
                         ) : (
@@ -628,9 +628,8 @@ export default function CustomersPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="transition-colors duration-200"
-                          style={{ color: '#6366F1' }}
-                          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#EEF2FF'; }}
+                          className="transition-colors duration-200 text-teal-600"
+                          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f0fdfa'; }}
                           onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
                           onClick={() => setSelectedCustomer(customer)}
                         >

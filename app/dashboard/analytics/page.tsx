@@ -165,7 +165,7 @@ export default function AnalyticsPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#4361EE' }} />
+          <Loader2 className="w-8 h-8 animate-spin text-teal-500" />
         </div>
       </DashboardLayout>
     );
@@ -176,7 +176,6 @@ export default function AnalyticsPage() {
       label: 'Total Avis',
       value: stats.totalReviews,
       icon: BarChart3,
-      gradient: 'linear-gradient(135deg, #4361EE, #7209B7)',
       trend: reviewsTrend,
       trendLabel: `${reviewsTrend.isPositive ? '+' : '-'}${reviewsTrend.value}% ce mois`,
     },
@@ -184,7 +183,6 @@ export default function AnalyticsPage() {
       label: 'Avis Positifs (4-5)',
       value: stats.positiveReviews,
       icon: ThumbsUp,
-      gradient: 'linear-gradient(135deg, #16a34a, #15803d)',
       trend: positiveTrend,
       trendLabel: `${positiveTrend.isPositive ? '+' : '-'}${positiveTrend.value}% ce mois`,
     },
@@ -192,7 +190,6 @@ export default function AnalyticsPage() {
       label: 'Avis Negatifs (1-3)',
       value: stats.negativeReviews,
       icon: ThumbsDown,
-      gradient: 'linear-gradient(135deg, #dc2626, #b91c1c)',
       trend: { value: stats.totalReviews > 0 ? Math.round((stats.negativeReviews / stats.totalReviews) * 100) : 0, isPositive: false },
       trendLabel: `${stats.totalReviews > 0 ? Math.round((stats.negativeReviews / stats.totalReviews) * 100) : 0}% du total`,
     },
@@ -201,7 +198,6 @@ export default function AnalyticsPage() {
       value: stats.avgRating,
       suffix: '/ 5',
       icon: Star,
-      gradient: 'linear-gradient(135deg, #F59E0B, #D97706)',
       trend: { value: 0, isPositive: true },
       trendLabel: 'Sur 5 etoiles',
     },
@@ -209,350 +205,278 @@ export default function AnalyticsPage() {
 
   return (
     <DashboardLayout merchant={merchant}>
-      <style jsx global>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideInLeft {
-          from { opacity: 0; transform: translateX(-10px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        .analytics-card {
-          position: relative;
-          overflow: hidden;
-          transition: all 0.3s ease;
-        }
-        .analytics-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 3px;
-          background: linear-gradient(90deg, #4361EE, #7209B7);
-          border-radius: 2px 2px 0 0;
-          transform: scaleX(0);
-          transform-origin: left;
-          transition: transform 0.3s ease;
-        }
-        .analytics-card:hover::before {
-          transform: scaleX(1);
-        }
-        .analytics-card:hover {
-          border-color: #d1d5db;
-          box-shadow: 0 4px 12px rgba(67, 97, 238, 0.12);
-        }
-        .kpi-analytics {
-          position: relative;
-          overflow: hidden;
-          transition: all 0.3s ease;
-          animation: fadeInUp 0.3s ease-out both;
-        }
-        .kpi-analytics:nth-child(1) { animation-delay: 0s; }
-        .kpi-analytics:nth-child(2) { animation-delay: 0.05s; }
-        .kpi-analytics:nth-child(3) { animation-delay: 0.1s; }
-        .kpi-analytics:nth-child(4) { animation-delay: 0.15s; }
-        .kpi-analytics:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 8px 24px rgba(67, 97, 238, 0.18);
-        }
-        .analytics-icon-enter {
-          animation: slideInLeft 0.3s ease-out;
-        }
-        .analytics-content {
-          animation: fadeInUp 0.3s ease-out;
-        }
-      `}</style>
-
-      <div className="space-y-4 sm:space-y-6 analytics-content">
+      <div className="space-y-4 sm:space-y-6">
         {/* Header */}
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-            <BarChart3 className="w-7 h-7" style={{ color: '#4361EE' }} />
+            <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center">
+              <BarChart3 className="w-5 h-5 text-teal-600" />
+            </div>
             Analytics
           </h1>
           <p className="text-slate-500 mt-1">Analyses detaillees de la performance de votre etablissement</p>
         </div>
 
-        {/* Key Metrics */}
+        {/* Key Metrics - KPI Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {kpiCards.map((kpi, idx) => {
             const Icon = kpi.icon;
             return (
-              <Card
+              <div
                 key={idx}
-                className="kpi-analytics p-5 sm:p-6 border border-gray-200 rounded-xl bg-white"
+                className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white"
               >
-                <div className="flex justify-between items-start mb-4">
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center shadow-md"
-                    style={{ background: kpi.gradient }}
-                  >
-                    <Icon className="w-5 h-5 text-white" />
+                <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                <div className="p-5 sm:p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-teal-600" />
+                    </div>
+                    <div className="flex items-center gap-1">
+                      {kpi.trend.isPositive ? (
+                        <TrendingUp className="w-4 h-4 text-emerald-500" />
+                      ) : (
+                        <TrendingDown className="w-4 h-4 text-red-500" />
+                      )}
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1">
-                    {kpi.trend.isPositive ? (
-                      <TrendingUp className="w-4 h-4" style={{ color: '#4361EE' }} />
-                    ) : (
-                      <TrendingDown className="w-4 h-4 text-red-500" />
-                    )}
+                  <p className="text-sm font-medium text-slate-500 mb-1">{kpi.label}</p>
+                  <div className="flex items-baseline gap-2">
+                    <p className="text-2xl sm:text-3xl font-bold text-slate-900">{kpi.value}</p>
+                    {kpi.suffix && <span className="text-sm text-slate-400">{kpi.suffix}</span>}
                   </div>
+                  <p className={`text-xs mt-2 ${kpi.trend.isPositive ? 'text-emerald-500' : 'text-red-500'}`}>
+                    {kpi.trendLabel}
+                  </p>
                 </div>
-                <p className="text-sm font-medium text-slate-500 mb-1">{kpi.label}</p>
-                <div className="flex items-baseline gap-2">
-                  <p className="text-2xl sm:text-3xl font-bold text-slate-900">{kpi.value}</p>
-                  {kpi.suffix && <span className="text-sm text-slate-400">{kpi.suffix}</span>}
-                </div>
-                <p
-                  className="text-xs mt-2"
-                  style={{ color: kpi.trend.isPositive ? '#4361EE' : '#dc2626' }}
-                >
-                  {kpi.trendLabel}
-                </p>
-              </Card>
+              </div>
             );
           })}
         </div>
 
         {/* Chart */}
-        <Card className="analytics-card p-5 sm:p-6 border border-gray-200 rounded-xl">
-          <div className="flex items-center gap-3 mb-5">
-            <div
-              className="analytics-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: '#f0f0ff' }}
-            >
-              <BarChart3 className="w-5 h-5" style={{ color: '#4361EE' }} />
+        <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <div className="p-5 sm:p-6">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
+                <BarChart3 className="w-5 h-5 text-teal-600" />
+              </div>
+              <div>
+                <h2 className="text-base sm:text-lg font-semibold text-slate-900">Evolution des Avis</h2>
+                <p className="text-xs sm:text-sm text-slate-500">Tendances des 90 derniers jours</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-base sm:text-lg font-semibold text-slate-900">Evolution des Avis</h2>
-              <p className="text-xs sm:text-sm text-slate-500">Tendances des 90 derniers jours</p>
-            </div>
+            <ChartAreaInteractive data={chartData} />
           </div>
-          <ChartAreaInteractive data={chartData} />
-        </Card>
+        </div>
 
         {/* Review Distribution and Conversion Metrics */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Rating Distribution */}
-          <Card className="analytics-card p-5 sm:p-6 border border-gray-200 rounded-xl">
-            <div className="flex items-center gap-3 mb-5">
-              <div
-                className="analytics-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: '#FFF7ED' }}
-              >
-                <Star className="w-5 h-5 text-amber-500" />
+          <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            <div className="p-5 sm:p-6">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center flex-shrink-0">
+                  <Star className="w-5 h-5 text-amber-500" />
+                </div>
+                <div>
+                  <h2 className="text-base sm:text-lg font-semibold text-slate-900">Distribution des Notes</h2>
+                  <p className="text-xs sm:text-sm text-slate-500">{stats.totalReviews} avis au total</p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-base sm:text-lg font-semibold text-slate-900">Distribution des Notes</h2>
-                <p className="text-xs sm:text-sm text-slate-500">{stats.totalReviews} avis au total</p>
-              </div>
-            </div>
 
-            <div className="space-y-3">
-              {[5, 4, 3, 2, 1].map((rating) => {
-                const count = ratingDistribution[rating] || 0;
-                const percentage = stats.totalReviews > 0 ? (count / stats.totalReviews) * 100 : 0;
-                const barColor = rating >= 4 ? '#4361EE' : rating === 3 ? '#F59E0B' : '#dc2626';
-                return (
-                  <div
-                    key={rating}
-                    className="flex items-center gap-3 py-1.5 px-2 rounded-lg transition-colors duration-200 hover:bg-gray-50"
-                  >
-                    <div className="flex items-center gap-1 w-16">
-                      <span className="text-sm font-medium text-slate-700">{rating}</span>
-                      <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+              <div className="space-y-3">
+                {[5, 4, 3, 2, 1].map((rating) => {
+                  const count = ratingDistribution[rating] || 0;
+                  const percentage = stats.totalReviews > 0 ? (count / stats.totalReviews) * 100 : 0;
+                  return (
+                    <div
+                      key={rating}
+                      className="flex items-center gap-3 py-1.5 px-2 rounded-lg transition-colors duration-200 hover:bg-gray-50"
+                    >
+                      <div className="flex items-center gap-1 w-16">
+                        <span className="text-sm font-medium text-slate-700">{rating}</span>
+                        <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                      </div>
+                      <div className="flex-1 h-3 bg-gray-100 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all duration-700 ${
+                            rating >= 4 ? 'bg-teal-500' : rating === 3 ? 'bg-amber-400' : 'bg-red-500'
+                          }`}
+                          style={{ width: `${percentage}%` }}
+                        />
+                      </div>
+                      <span className="text-sm font-semibold text-slate-700 w-8 text-right">{count}</span>
+                      <span className="text-xs text-slate-400 w-12 text-right">({Math.round(percentage)}%)</span>
                     </div>
-                    <div className="flex-1 h-3 bg-gray-100 rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full transition-all duration-700"
-                        style={{ width: `${percentage}%`, backgroundColor: barColor }}
-                      />
-                    </div>
-                    <span className="text-sm font-semibold text-slate-700 w-8 text-right">{count}</span>
-                    <span className="text-xs text-slate-400 w-12 text-right">({Math.round(percentage)}%)</span>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
-          </Card>
+          </div>
 
           {/* Conversion Metrics */}
-          <Card className="analytics-card p-5 sm:p-6 border border-gray-200 rounded-xl">
-            <div className="flex items-center gap-3 mb-5">
-              <div
-                className="analytics-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: '#f0f0ff' }}
-              >
-                <BarChart3 className="w-5 h-5" style={{ color: '#4361EE' }} />
+          <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            <div className="p-5 sm:p-6">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
+                  <BarChart3 className="w-5 h-5 text-teal-600" />
+                </div>
+                <div>
+                  <h2 className="text-base sm:text-lg font-semibold text-slate-900">Metriques de Conversion</h2>
+                  <p className="text-xs sm:text-sm text-slate-500">Indicateurs cles de performance</p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-base sm:text-lg font-semibold text-slate-900">Metriques de Conversion</h2>
-                <p className="text-xs sm:text-sm text-slate-500">Indicateurs cles de performance</p>
-              </div>
-            </div>
 
-            <div className="space-y-3">
-              {[
-                {
-                  label: 'Taux de Satisfaction',
-                  value: `${stats.conversionRate}%`,
-                  icon: TrendingUp,
-                  iconColor: '#4361EE',
-                  iconBg: '#f0f0ff',
-                },
-                {
-                  label: 'Total Tours de Roue',
-                  value: stats.totalSpins,
-                  icon: Gift,
-                  iconColor: '#7209B7',
-                  iconBg: '#FAF5FF',
-                },
-                {
-                  label: 'Avis ce mois',
-                  value: stats.thisMonthReviews,
-                  icon: Calendar,
-                  iconColor: '#4361EE',
-                  iconBg: '#f0f0ff',
-                },
-              ].map((metric, idx) => {
-                const MetricIcon = metric.icon;
-                return (
-                  <div
-                    key={idx}
-                    className="flex items-center justify-between p-4 rounded-xl border transition-all duration-200 hover:bg-gray-50"
-                    style={{ backgroundColor: '#f9fafb', borderColor: '#f3f4f6' }}
-                  >
-                    <div>
-                      <p className="text-sm text-slate-500">{metric.label}</p>
-                      <p className="text-xl sm:text-2xl font-bold text-slate-900">{metric.value}</p>
-                    </div>
+              <div className="space-y-3">
+                {[
+                  {
+                    label: 'Taux de Satisfaction',
+                    value: `${stats.conversionRate}%`,
+                    icon: TrendingUp,
+                    iconClass: 'bg-teal-50 text-teal-600',
+                  },
+                  {
+                    label: 'Total Tours de Roue',
+                    value: stats.totalSpins,
+                    icon: Gift,
+                    iconClass: 'bg-teal-50 text-teal-600',
+                  },
+                  {
+                    label: 'Avis ce mois',
+                    value: stats.thisMonthReviews,
+                    icon: Calendar,
+                    iconClass: 'bg-teal-50 text-teal-600',
+                  },
+                ].map((metric, idx) => {
+                  const MetricIcon = metric.icon;
+                  return (
                     <div
-                      className="w-10 h-10 rounded-lg flex items-center justify-center"
-                      style={{ backgroundColor: metric.iconBg }}
+                      key={idx}
+                      className="flex items-center justify-between p-4 rounded-xl border border-gray-100 bg-gray-50 transition-all duration-200 hover:bg-gray-100/50"
                     >
-                      <MetricIcon className="w-5 h-5" style={{ color: metric.iconColor }} />
+                      <div>
+                        <p className="text-sm text-slate-500">{metric.label}</p>
+                        <p className="text-xl sm:text-2xl font-bold text-slate-900">{metric.value}</p>
+                      </div>
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${metric.iconClass}`}>
+                        <MetricIcon className="w-5 h-5" />
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
-          </Card>
+          </div>
         </div>
 
         {/* Recent Reviews Analysis Table */}
-        <Card className="analytics-card p-5 sm:p-6 border border-gray-200 rounded-xl">
-          <div className="flex items-center gap-3 mb-5">
-            <div
-              className="analytics-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: '#f0f0ff' }}
-            >
-              <MessageSquare className="w-5 h-5" style={{ color: '#4361EE' }} />
+        <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <div className="p-5 sm:p-6">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
+                <MessageSquare className="w-5 h-5 text-teal-600" />
+              </div>
+              <div>
+                <h2 className="text-base sm:text-lg font-semibold text-slate-900">Analyse des Avis Recents</h2>
+                <p className="text-xs sm:text-sm text-slate-500">Les 10 derniers avis recus</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-base sm:text-lg font-semibold text-slate-900">Analyse des Avis Recents</h2>
-              <p className="text-xs sm:text-sm text-slate-500">Les 10 derniers avis recus</p>
-            </div>
-          </div>
 
-          <div className="overflow-x-auto rounded-lg border" style={{ borderColor: '#f3f4f6' }}>
-            <table className="w-full">
-              <thead>
-                <tr style={{ backgroundColor: '#f9fafb', borderBottom: '2px solid #f3f4f6' }}>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Date</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Client</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Note</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Sentiment</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Commentaire</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y" style={{ borderColor: '#f3f4f6' }}>
-                {feedbackData.length > 0 ? (
-                  feedbackData.slice(0, 10).map((feedback) => (
-                    <tr
-                      key={feedback.id}
-                      className="transition-colors duration-200 hover:bg-gray-50"
-                    >
-                      <td className="px-4 py-3.5 whitespace-nowrap">
-                        <div className="flex items-center gap-2 text-sm text-slate-600">
-                          <Calendar className="w-4 h-4 text-slate-400" />
-                          {new Date(feedback.created_at).toLocaleDateString('fr-FR', {
-                            day: 'numeric',
-                            month: 'short',
-                            year: 'numeric'
-                          })}
-                        </div>
-                      </td>
-                      <td className="px-4 py-3.5 whitespace-nowrap">
-                        <span className="text-sm text-slate-700">
-                          {feedback.customer_email || feedback.customer_phone || 'Anonyme'}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3.5 whitespace-nowrap">
-                        <div className="flex items-center gap-0.5">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <Star
-                              key={star}
-                              className={`w-4 h-4 ${
-                                star <= feedback.rating
-                                  ? 'text-amber-400 fill-amber-400'
-                                  : 'text-gray-200'
-                              }`}
-                            />
-                          ))}
-                        </div>
-                      </td>
-                      <td className="px-4 py-3.5 whitespace-nowrap">
-                        {feedback.is_positive ? (
-                          <span
-                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium"
-                            style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}
-                          >
-                            <ThumbsUp className="w-3 h-3" />
-                            Positif
+            <div className="overflow-x-auto rounded-lg border border-gray-100">
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-gray-50 border-b-2 border-gray-100">
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Date</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Client</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Note</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Sentiment</th>
+                    <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Commentaire</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {feedbackData.length > 0 ? (
+                    feedbackData.slice(0, 10).map((feedback) => (
+                      <tr
+                        key={feedback.id}
+                        className="transition-colors duration-200 hover:bg-gray-50"
+                      >
+                        <td className="px-4 py-3.5 whitespace-nowrap">
+                          <div className="flex items-center gap-2 text-sm text-slate-600">
+                            <Calendar className="w-4 h-4 text-slate-400" />
+                            {new Date(feedback.created_at).toLocaleDateString('fr-FR', {
+                              day: 'numeric',
+                              month: 'short',
+                              year: 'numeric'
+                            })}
+                          </div>
+                        </td>
+                        <td className="px-4 py-3.5 whitespace-nowrap">
+                          <span className="text-sm text-slate-700">
+                            {feedback.customer_email || feedback.customer_phone || 'Anonyme'}
                           </span>
-                        ) : (
-                          <span
-                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium"
-                            style={{ backgroundColor: '#fef2f2', color: '#dc2626' }}
-                          >
-                            <ThumbsDown className="w-3 h-3" />
-                            Negatif
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3.5">
-                        <p className="text-sm text-slate-600 truncate max-w-xs">
-                          {feedback.comment || <span className="text-slate-400 italic">Pas de commentaire</span>}
-                        </p>
+                        </td>
+                        <td className="px-4 py-3.5 whitespace-nowrap">
+                          <div className="flex items-center gap-0.5">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <Star
+                                key={star}
+                                className={`w-4 h-4 ${
+                                  star <= feedback.rating
+                                    ? 'text-amber-400 fill-amber-400'
+                                    : 'text-gray-200'
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        </td>
+                        <td className="px-4 py-3.5 whitespace-nowrap">
+                          {feedback.is_positive ? (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-600">
+                              <ThumbsUp className="w-3 h-3" />
+                              Positif
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 text-red-600">
+                              <ThumbsDown className="w-3 h-3" />
+                              Negatif
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3.5">
+                          <p className="text-sm text-slate-600 truncate max-w-xs">
+                            {feedback.comment || <span className="text-slate-400 italic">Pas de commentaire</span>}
+                          </p>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={5} className="px-4 py-12 text-center">
+                        <div className="w-14 h-14 rounded-xl bg-teal-50 flex items-center justify-center mx-auto mb-3">
+                          <MessageSquare className="w-7 h-7 text-teal-600" />
+                        </div>
+                        <p className="text-lg font-semibold text-slate-900 mb-1">Aucun avis pour le moment</p>
+                        <p className="text-sm text-slate-500">Les avis de vos clients apparaitront ici.</p>
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={5} className="px-4 py-12 text-center">
-                      <div
-                        className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-3"
-                        style={{ backgroundColor: '#f0f0ff' }}
-                      >
-                        <MessageSquare className="w-7 h-7" style={{ color: '#4361EE' }} />
-                      </div>
-                      <p className="text-lg font-semibold text-slate-900 mb-1">Aucun avis pour le moment</p>
-                      <p className="text-sm text-slate-500">Les avis de vos clients apparaitront ici.</p>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-          {feedbackData.length > 10 && (
-            <div className="mt-4 pt-4 text-center" style={{ borderTop: '1px solid #f3f4f6' }}>
-              <p className="text-sm text-slate-500">
-                Affichage des 10 derniers avis sur <span className="font-semibold text-slate-900">{feedbackData.length}</span> au total
-              </p>
+                  )}
+                </tbody>
+              </table>
             </div>
-          )}
-        </Card>
+            {feedbackData.length > 10 && (
+              <div className="mt-4 pt-4 text-center border-t border-gray-100">
+                <p className="text-sm text-slate-500">
+                  Affichage des 10 derniers avis sur <span className="font-semibold text-slate-900">{feedbackData.length}</span> au total
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </DashboardLayout>
   );
