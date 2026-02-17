@@ -126,13 +126,13 @@ export default function ProfilePage() {
     }
   };
 
-  const inputClassName = "w-full px-4 py-3 border border-gray-300 rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 focus:bg-teal-50/30";
+  const inputClassName = "w-full px-4 py-3 border border-gray-300 rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 focus:bg-pink-50/30";
 
   if (!user || !merchant) {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-pink-600" />
         </div>
       </DashboardLayout>
     );
@@ -161,7 +161,7 @@ export default function ProfilePage() {
         {/* Header */}
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-            <User className="w-7 h-7 text-teal-600" />
+            <User className="w-7 h-7 text-pink-600" />
             Mon Profil
           </h1>
           <p className="text-slate-500 mt-1">Gérez les informations de votre entreprise</p>
@@ -170,16 +170,16 @@ export default function ProfilePage() {
         {/* Message */}
         {message && (
           <Card className={`p-3 sm:p-4 ${
-            message.type === 'success' ? 'bg-emerald-50 border-emerald-200' : 'bg-red-50 border-red-200'
+            message.type === 'success' ? 'bg-violet-50 border-violet-200' : 'bg-red-50 border-red-200'
           }`}>
             <div className="flex items-center gap-2">
               {message.type === 'success' ? (
-                <Check className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+                <Check className="w-5 h-5 text-violet-600 flex-shrink-0" />
               ) : (
                 <X className="w-5 h-5 text-red-600 flex-shrink-0" />
               )}
               <p className={`font-medium text-sm ${
-                message.type === 'success' ? 'text-emerald-700' : 'text-red-700'
+                message.type === 'success' ? 'text-violet-700' : 'text-red-700'
               }`}>{message.text}</p>
             </div>
           </Card>
@@ -188,11 +188,11 @@ export default function ProfilePage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           {/* Informations personnelles */}
           <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             <div className="p-5">
               <div className="flex items-center gap-3 mb-5">
-                <div className="profile-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-teal-50">
-                  <User className="w-5 h-5 text-teal-600" />
+                <div className="profile-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-pink-50">
+                  <User className="w-5 h-5 text-pink-600" />
                 </div>
                 <div>
                   <h2 className="text-base sm:text-lg font-semibold text-slate-900">Gérant</h2>
@@ -247,11 +247,11 @@ export default function ProfilePage() {
 
           {/* Informations entreprise */}
           <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             <div className="p-5">
               <div className="flex items-center gap-3 mb-5">
-                <div className="profile-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-teal-50">
-                  <Building2 className="w-5 h-5 text-teal-600" />
+                <div className="profile-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-pink-50">
+                  <Building2 className="w-5 h-5 text-pink-600" />
                 </div>
                 <div>
                   <h2 className="text-base sm:text-lg font-semibold text-slate-900">Informations du shop</h2>
@@ -321,11 +321,11 @@ export default function ProfilePage() {
 
           {/* Adresse */}
           <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white lg:col-span-2">
-            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             <div className="p-5">
               <div className="flex items-center gap-3 mb-5">
-                <div className="profile-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-teal-50">
-                  <MapPin className="w-5 h-5 text-teal-600" />
+                <div className="profile-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-pink-50">
+                  <MapPin className="w-5 h-5 text-pink-600" />
                 </div>
                 <div>
                   <h2 className="text-base sm:text-lg font-semibold text-slate-900">Adresse du shop</h2>
@@ -381,7 +381,7 @@ export default function ProfilePage() {
                   <select
                     value={formData.country}
                     onChange={(e) => handleChange('country', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 focus:bg-teal-50/30"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 focus:bg-pink-50/30"
                   >
                     <option value="France">France</option>
                     <option value="Belgique">Belgique</option>
@@ -431,7 +431,7 @@ export default function ProfilePage() {
           <Button
             onClick={handleSave}
             disabled={saving}
-            className="w-full sm:w-auto bg-teal-600 hover:bg-teal-700 text-white transition-all duration-200"
+            className="w-full sm:w-auto bg-pink-600 hover:bg-pink-700 text-white transition-all duration-200"
           >
             {saving ? (
               <>

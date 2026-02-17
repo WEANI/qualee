@@ -60,7 +60,7 @@ const typeIcons: Record<RewardType, typeof Percent> = {
 const typeColors: Record<RewardType, { bg: string; text: string; lightBg: string }> = {
   discount: { bg: '#dbeafe', text: '#2563eb', lightBg: '#eff6ff' },
   product: { bg: '#d1fae5', text: '#059669', lightBg: '#ecfdf5' },
-  service: { bg: '#f0fdfa', text: '#0D9488', lightBg: '#f0fdfa' },
+  service: { bg: '#FDF2F8', text: '#DB2777', lightBg: '#FDF2F8' },
   cashback: { bg: '#fef3c7', text: '#d97706', lightBg: '#fffbeb' },
 };
 
@@ -214,7 +214,7 @@ export default function RewardsPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-pink-600" />
         </div>
       </DashboardLayout>
     );
@@ -242,7 +242,7 @@ export default function RewardsPage() {
           left: 0;
           right: 0;
           height: 3px;
-          background: linear-gradient(90deg, #0D9488, #10B981);
+          background: linear-gradient(90deg, #DB2777, #8B5CF6);
           border-radius: 2px 2px 0 0;
           transform: scaleX(0);
           transform-origin: left;
@@ -253,7 +253,7 @@ export default function RewardsPage() {
         }
         .reward-card:hover {
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
+          box-shadow: 0 4px 12px rgba(219, 39, 119, 0.12);
         }
       `}</style>
 
@@ -266,7 +266,7 @@ export default function RewardsPage() {
                 variant="ghost"
                 size="sm"
                 className="text-slate-600 transition-all duration-200"
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f0fdfa'; }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#FDF2F8'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -275,7 +275,7 @@ export default function RewardsPage() {
             </Link>
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-                <Gift className="w-7 h-7 text-teal-600" />
+                <Gift className="w-7 h-7 text-pink-600" />
                 {t('loyalty.rewards.title')}
               </h1>
               <p className="text-slate-500 mt-1">{t('loyalty.rewards.subtitle')}</p>
@@ -284,9 +284,9 @@ export default function RewardsPage() {
           <Button
             onClick={openAddModal}
             className="text-white transition-all duration-200"
-            style={{ backgroundColor: '#0D9488' }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; }}
+            style={{ backgroundColor: '#DB2777' }}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#BE185D'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#DB2777'; }}
           >
             <Plus className="w-4 h-4 mr-2" />
             {t('loyalty.rewards.add')}
@@ -296,8 +296,8 @@ export default function RewardsPage() {
         {/* Rewards Grid */}
         {rewards.length === 0 ? (
           <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
-            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#f0fdfa' }}>
-              <Gift className="w-8 h-8 text-teal-600" />
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#FDF2F8' }}>
+              <Gift className="w-8 h-8 text-pink-600" />
             </div>
             <h3 className="text-lg font-medium text-slate-900 mb-2">
               {t('loyalty.rewards.noRewards')}
@@ -308,9 +308,9 @@ export default function RewardsPage() {
             <Button
               onClick={openAddModal}
               className="text-white transition-all duration-200"
-              style={{ backgroundColor: '#0D9488' }}
-              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; }}
+              style={{ backgroundColor: '#DB2777' }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#BE185D'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#DB2777'; }}
             >
               <Plus className="w-4 h-4 mr-2" />
               {t('loyalty.rewards.add')}
@@ -375,7 +375,7 @@ export default function RewardsPage() {
                             {reward.quantity_available} {t('loyalty.rewards.quantity').toLowerCase()}
                           </span>
                         ) : (
-                          <span className="text-emerald-600">{t('loyalty.rewards.quantityUnlimited')}</span>
+                          <span className="text-violet-600">{t('loyalty.rewards.quantityUnlimited')}</span>
                         )}
                       </div>
                     </div>
@@ -438,9 +438,9 @@ export default function RewardsPage() {
                   className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                   style={{ borderColor: '#d1d5db' }}
                   onFocus={(e) => {
-                    e.currentTarget.style.borderColor = '#0D9488';
-                    e.currentTarget.style.backgroundColor = '#f0fdfa';
-                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
+                    e.currentTarget.style.borderColor = '#DB2777';
+                    e.currentTarget.style.backgroundColor = '#FDF2F8';
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(219, 39, 119, 0.15)';
                   }}
                   onBlur={(e) => {
                     e.currentTarget.style.borderColor = '#d1d5db';
@@ -462,9 +462,9 @@ export default function RewardsPage() {
                   style={{ borderColor: '#d1d5db' }}
                   rows={3}
                   onFocus={(e) => {
-                    e.currentTarget.style.borderColor = '#0D9488';
-                    e.currentTarget.style.backgroundColor = '#f0fdfa';
-                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
+                    e.currentTarget.style.borderColor = '#DB2777';
+                    e.currentTarget.style.backgroundColor = '#FDF2F8';
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(219, 39, 119, 0.15)';
                   }}
                   onBlur={(e) => {
                     e.currentTarget.style.borderColor = '#d1d5db';
@@ -489,12 +489,12 @@ export default function RewardsPage() {
                         onClick={() => setForm({ ...form, type })}
                         className="p-3 rounded-lg border-2 transition-all duration-200 flex items-center gap-3"
                         style={{
-                          borderColor: form.type === type ? '#0D9488' : '#e5e7eb',
-                          backgroundColor: form.type === type ? '#f0fdfa' : 'transparent',
+                          borderColor: form.type === type ? '#DB2777' : '#e5e7eb',
+                          backgroundColor: form.type === type ? '#FDF2F8' : 'transparent',
                         }}
                         onMouseEnter={(e) => {
                           if (form.type !== type) {
-                            e.currentTarget.style.borderColor = '#ccfbf1';
+                            e.currentTarget.style.borderColor = '#FCE7F3';
                           }
                         }}
                         onMouseLeave={(e) => {
@@ -503,8 +503,8 @@ export default function RewardsPage() {
                           }
                         }}
                       >
-                        <Icon className="w-5 h-5" style={{ color: form.type === type ? '#0D9488' : '#9ca3af' }} />
-                        <span className="text-sm font-medium" style={{ color: form.type === type ? '#0D9488' : '#4b5563' }}>
+                        <Icon className="w-5 h-5" style={{ color: form.type === type ? '#DB2777' : '#9ca3af' }} />
+                        <span className="text-sm font-medium" style={{ color: form.type === type ? '#DB2777' : '#4b5563' }}>
                           {t(`loyalty.rewards.type${type.charAt(0).toUpperCase() + type.slice(1)}`)}
                         </span>
                       </button>
@@ -525,9 +525,9 @@ export default function RewardsPage() {
                   className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                   style={{ borderColor: '#d1d5db' }}
                   onFocus={(e) => {
-                    e.currentTarget.style.borderColor = '#0D9488';
-                    e.currentTarget.style.backgroundColor = '#f0fdfa';
-                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
+                    e.currentTarget.style.borderColor = '#DB2777';
+                    e.currentTarget.style.backgroundColor = '#FDF2F8';
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(219, 39, 119, 0.15)';
                   }}
                   onBlur={(e) => {
                     e.currentTarget.style.borderColor = '#d1d5db';
@@ -551,9 +551,9 @@ export default function RewardsPage() {
                     className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                     style={{ borderColor: '#d1d5db' }}
                     onFocus={(e) => {
-                      e.currentTarget.style.borderColor = '#0D9488';
-                      e.currentTarget.style.backgroundColor = '#f0fdfa';
-                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
+                      e.currentTarget.style.borderColor = '#DB2777';
+                      e.currentTarget.style.backgroundColor = '#FDF2F8';
+                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(219, 39, 119, 0.15)';
                     }}
                     onBlur={(e) => {
                       e.currentTarget.style.borderColor = '#d1d5db';
@@ -576,9 +576,9 @@ export default function RewardsPage() {
                     className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
                     style={{ borderColor: '#d1d5db' }}
                     onFocus={(e) => {
-                      e.currentTarget.style.borderColor = '#0D9488';
-                      e.currentTarget.style.backgroundColor = '#f0fdfa';
-                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
+                      e.currentTarget.style.borderColor = '#DB2777';
+                      e.currentTarget.style.backgroundColor = '#FDF2F8';
+                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(219, 39, 119, 0.15)';
                     }}
                     onBlur={(e) => {
                       e.currentTarget.style.borderColor = '#d1d5db';
@@ -594,7 +594,7 @@ export default function RewardsPage() {
                   type="button"
                   onClick={() => setForm({ ...form, is_active: !form.is_active })}
                   className="relative w-14 h-7 rounded-full transition-all duration-300 flex-shrink-0"
-                  style={{ backgroundColor: form.is_active ? '#0D9488' : '#d1d5db' }}
+                  style={{ backgroundColor: form.is_active ? '#DB2777' : '#d1d5db' }}
                 >
                   <div
                     className="w-6 h-6 bg-white rounded-full shadow-sm transform transition-transform duration-300 absolute top-0.5"
@@ -619,9 +619,9 @@ export default function RewardsPage() {
                 <Button
                   type="submit"
                   className="flex-1 text-white transition-all duration-200"
-                  style={{ backgroundColor: '#0D9488' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; }}
+                  style={{ backgroundColor: '#DB2777' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#BE185D'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#DB2777'; }}
                   disabled={saving}
                 >
                   {saving ? (

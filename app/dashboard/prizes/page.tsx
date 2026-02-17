@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/atoms/Input';
 import { Prize } from '@/lib/types/database';
-import { Plus, Trash2, AlertCircle, Upload, Image as ImageIcon, Info, Percent, TrendingUp, Pencil, X, Ban, RefreshCw, Lock, Palette, Gift, Loader2, Save } from 'lucide-react';
+import { Plus, Trash2, AlertCircle, Upload, Image as ImageIcon, Info, Percent, TrendingUp, Pencil, X, Ban, RefreshCw, Lock, Palette, Gift, Loader2, Save, Settings } from 'lucide-react';
 import { WheelPreview, PrizeWithQuantity } from '@/components/dashboard/WheelPreview';
 
 // Special segment types that are always present on the wheel
@@ -40,6 +40,7 @@ export default function PrizesPage() {
   const [imagePreview, setImagePreview] = useState<string>('');
   const [uploading, setUploading] = useState(false);
   const [migrationNeeded, setMigrationNeeded] = useState(false);
+  const [activeTab, setActiveTab] = useState<'prizes' | 'config'>('prizes');
 
   // Wheel appearance configuration
   const [wheelBgColor, setWheelBgColor] = useState('#4a4a52');
@@ -315,7 +316,7 @@ export default function PrizesPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin text-teal-500" />
+          <Loader2 className="w-8 h-8 animate-spin text-pink-500" />
         </div>
       </DashboardLayout>
     );
@@ -365,8 +366,8 @@ export default function PrizesPage() {
         <div className="flex flex-col lg:flex-row justify-between items-start gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-              <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center">
-                <Gift className="w-5 h-5 text-teal-600" />
+              <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center">
+                <Gift className="w-5 h-5 text-pink-600" />
               </div>
               Gestion des Prix
             </h1>
@@ -374,7 +375,7 @@ export default function PrizesPage() {
           </div>
           <Button
             onClick={() => showForm ? handleCancel() : setShowForm(true)}
-            className={`gap-2 text-white ${showForm ? 'bg-red-500 hover:bg-red-600' : 'bg-teal-600 hover:bg-teal-700'}`}
+            className={`gap-2 text-white ${showForm ? 'bg-red-500 hover:bg-red-600' : 'bg-pink-600 hover:bg-pink-700'}`}
           >
             {showForm ? (
               <>
@@ -390,13 +391,40 @@ export default function PrizesPage() {
           </Button>
         </div>
 
+        {/* Tab Navigation */}
+        <div className="flex gap-1 bg-gray-100 p-1 rounded-xl">
+          <button
+            onClick={() => setActiveTab('prizes')}
+            className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 ${
+              activeTab === 'prizes'
+                ? 'bg-white text-pink-600 shadow-sm border border-gray-200'
+                : 'text-slate-500 hover:text-slate-700 hover:bg-gray-50'
+            }`}
+          >
+            <Gift className="w-4 h-4" />
+            Prix & Probabilites
+          </button>
+          <button
+            onClick={() => setActiveTab('config')}
+            className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 ${
+              activeTab === 'config'
+                ? 'bg-white text-pink-600 shadow-sm border border-gray-200'
+                : 'text-slate-500 hover:text-slate-700 hover:bg-gray-50'
+            }`}
+          >
+            <Settings className="w-4 h-4" />
+            Configuration & Apercu
+          </button>
+        </div>
+
+        {activeTab === 'prizes' && (<>
         {/* Segment Counter Card */}
         <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           <div className="p-4 sm:p-6">
             <div className="flex items-center gap-3 mb-5">
-              <div className="prize-icon-enter w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
-                <Info className="w-5 h-5 text-teal-600" />
+              <div className="prize-icon-enter w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center flex-shrink-0">
+                <Info className="w-5 h-5 text-pink-600" />
               </div>
               <div>
                 <h2 className="text-base sm:text-lg font-semibold text-slate-900">Composition de la Roue</h2>
@@ -407,16 +435,16 @@ export default function PrizesPage() {
             <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4">
               <div className="bg-white rounded-lg p-2 sm:p-4 border border-gray-200">
                 <p className="text-xs sm:text-sm text-slate-500 mb-1">Segments utilises</p>
-                <p className="text-xl sm:text-3xl font-bold text-teal-600">{totalSegments}/{MAX_SEGMENTS}</p>
+                <p className="text-xl sm:text-3xl font-bold text-pink-600">{totalSegments}/{MAX_SEGMENTS}</p>
               </div>
               <div className={`rounded-lg p-2 sm:p-4 border ${
-                remainingSegments === 0 ? 'bg-emerald-50 border-emerald-200' :
+                remainingSegments === 0 ? 'bg-violet-50 border-violet-200' :
                 remainingSegments > 0 ? 'bg-amber-50 border-amber-200' :
                 'bg-red-50 border-red-200'
               }`}>
                 <p className="text-xs sm:text-sm text-slate-500 mb-1">Restants</p>
                 <p className={`text-xl sm:text-3xl font-bold ${
-                  remainingSegments === 0 ? 'text-emerald-600' :
+                  remainingSegments === 0 ? 'text-violet-600' :
                   remainingSegments > 0 ? 'text-amber-600' :
                   'text-red-600'
                 }`}>{remainingSegments}</p>
@@ -449,14 +477,14 @@ export default function PrizesPage() {
         {/* Prize Form */}
         {showForm && (
           <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white prize-fade-in">
-            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             <div className="p-5 sm:p-6">
               <div className="flex items-center gap-3 mb-5">
-                <div className="prize-icon-enter w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
+                <div className="prize-icon-enter w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center flex-shrink-0">
                   {editingId ? (
-                    <Pencil className="w-5 h-5 text-teal-600" />
+                    <Pencil className="w-5 h-5 text-pink-600" />
                   ) : (
-                    <Plus className="w-5 h-5 text-teal-600" />
+                    <Plus className="w-5 h-5 text-pink-600" />
                   )}
                 </div>
                 <div>
@@ -490,7 +518,7 @@ export default function PrizesPage() {
                       </button>
                     </div>
                   ) : (
-                    <div className="border-2 border-dashed border-teal-300 rounded-xl p-8 text-center hover:border-teal-400 transition-colors bg-teal-50/30">
+                    <div className="border-2 border-dashed border-pink-300 rounded-xl p-8 text-center hover:border-pink-400 transition-colors bg-pink-50/30">
                       <input
                         type="file"
                         id="prize-image"
@@ -499,9 +527,9 @@ export default function PrizesPage() {
                         className="hidden"
                       />
                       <label htmlFor="prize-image" className="cursor-pointer">
-                        <ImageIcon className="w-12 h-12 text-teal-300 mx-auto mb-3" />
+                        <ImageIcon className="w-12 h-12 text-pink-300 mx-auto mb-3" />
                         <p className="text-sm text-gray-600 mb-1">
-                          <span className="font-semibold text-teal-600">Cliquez pour uploader</span> ou glissez-deposez
+                          <span className="font-semibold text-pink-600">Cliquez pour uploader</span> ou glissez-deposez
                         </p>
                         <p className="text-xs text-gray-500">PNG, JPG jusqu&apos;a 5MB</p>
                       </label>
@@ -525,7 +553,7 @@ export default function PrizesPage() {
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     placeholder="Obtenez 10% de reduction sur votre prochain achat"
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500"
                     rows={3}
                   />
                 </div>
@@ -537,7 +565,7 @@ export default function PrizesPage() {
                       Probabilite de Gain
                     </label>
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl font-bold text-teal-600">{formData.probability}%</span>
+                      <span className="text-2xl font-bold text-pink-600">{formData.probability}%</span>
                       <span className={`text-xs px-2 py-1 rounded-full ${getChanceDescription(formData.probability).bg} ${getChanceDescription(formData.probability).color} font-medium`}>
                         {getChanceDescription(formData.probability).text}
                       </span>
@@ -552,7 +580,7 @@ export default function PrizesPage() {
                     value={formData.probability}
                     onChange={(e) => setFormData({ ...formData, probability: parseFloat(e.target.value) })}
                     className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                    style={{ accentColor: '#0D9488' }}
+                    style={{ accentColor: '#DB2777' }}
                   />
 
                   <div className="flex justify-between text-xs text-gray-500 mt-2">
@@ -561,8 +589,8 @@ export default function PrizesPage() {
                     <span>100% (Garanti)</span>
                   </div>
 
-                  <div className="mt-3 p-3 rounded-lg bg-teal-50 border border-teal-200">
-                    <p className="text-sm text-teal-700">
+                  <div className="mt-3 p-3 rounded-lg bg-pink-50 border border-pink-200">
+                    <p className="text-sm text-pink-700">
                       <strong>1 chance sur {Math.round(100 / formData.probability)}</strong> de gagner ce prix
                       {formData.probability >= 10 && ` (environ tous les ${Math.round(100 / formData.probability)} tours)`}
                     </p>
@@ -572,7 +600,7 @@ export default function PrizesPage() {
                 <Button
                   type="submit"
                   disabled={loading || uploading}
-                  className="w-full text-white font-bold py-6 rounded-xl transition-all duration-200 bg-teal-600 hover:bg-teal-700"
+                  className="w-full text-white font-bold py-6 rounded-xl transition-all duration-200 bg-pink-600 hover:bg-pink-700"
                 >
                   {uploading ? 'Upload en cours...' : loading ? 'Sauvegarde...' : (editingId ? 'Mettre a jour le Prix' : 'Creer le Prix')}
                 </Button>
@@ -581,6 +609,131 @@ export default function PrizesPage() {
           </div>
         )}
 
+        {/* Merchant Prizes Grid */}
+        <div>
+          <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <Gift className="w-5 h-5 text-pink-600" />
+            Vos Prix Personnalises
+            <span className="text-sm font-normal text-slate-500">({prizes.length} prix)</span>
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {prizes.map((prize) => {
+            const quantity = prizeQuantities[prize.id] || 0;
+            return (
+              <div key={prize.id} className={`group relative overflow-hidden border rounded-xl transition-all duration-300 hover:shadow-md bg-white ${quantity > 0 ? 'border-pink-300 bg-pink-50/30' : 'border-gray-200 hover:border-gray-300'}`}>
+                <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
+                {/* Prize Image */}
+                {prize.image_url ? (
+                  <div className="relative h-40 bg-gradient-to-br from-pink-50 to-violet-50">
+                    <img
+                      src={prize.image_url}
+                      alt={prize.name}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-3 right-3">
+                      <div className={`px-3 py-1.5 rounded-full font-bold text-sm shadow-lg ${quantity > 0 ? 'bg-pink-600 text-white' : 'bg-gray-200 text-gray-600'}`}>
+                        x {quantity}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="h-40 flex items-center justify-center relative bg-gradient-to-br from-pink-50 to-violet-50">
+                    <Gift className="w-12 h-12 text-pink-300" />
+                    <div className="absolute top-3 right-3">
+                      <div className={`px-3 py-1.5 rounded-full font-bold text-sm shadow-lg ${quantity > 0 ? 'bg-pink-600 text-white' : 'bg-gray-200 text-gray-600'}`}>
+                        x {quantity}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="p-4">
+                  <div className="mb-3">
+                    <h3 className="text-lg font-bold text-slate-900 mb-1">{prize.name}</h3>
+                    {prize.description && (
+                      <p className="text-slate-500 text-xs line-clamp-1">{prize.description}</p>
+                    )}
+                  </div>
+
+                  {/* Quantity Controls */}
+                  <div className="mb-4">
+                    <label className="text-xs font-medium text-slate-500 block mb-2">Segments sur la roue</label>
+                    <div className="flex items-center justify-center gap-3">
+                      <Button
+                        onClick={() => updatePrizeQuantity(prize.id, -1)}
+                        disabled={quantity <= 0}
+                        variant="outline"
+                        size="sm"
+                        className="w-9 h-9 rounded-full disabled:opacity-50 border-pink-300 text-pink-600 hover:bg-pink-50"
+                      >
+                        -
+                      </Button>
+                      <span className="text-2xl font-bold w-10 text-center text-pink-600">{quantity}</span>
+                      <Button
+                        onClick={() => updatePrizeQuantity(prize.id, 1)}
+                        disabled={totalSegments >= MAX_SEGMENTS}
+                        variant="outline"
+                        size="sm"
+                        className="w-9 h-9 rounded-full disabled:opacity-50 border-pink-300 text-pink-600 hover:bg-pink-50"
+                      >
+                        +
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={() => handleEdit(prize)}
+                      variant="outline"
+                      size="sm"
+                      className="flex-1 text-slate-600 border-gray-200 hover:bg-gray-50 gap-1"
+                    >
+                      <Pencil className="w-3 h-3" />
+                      Modifier
+                    </Button>
+                    <Button
+                      onClick={() => handleDelete(prize.id)}
+                      variant="outline"
+                      size="sm"
+                      className="text-red-600 border-red-200 hover:bg-red-50"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {prizes.length === 0 && !showForm && (
+          <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-gray-50">
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            <div className="p-12">
+              <div className="text-center">
+                <div className="w-20 h-20 rounded-full bg-pink-50 flex items-center justify-center mx-auto mb-4">
+                  <Gift className="w-10 h-10 text-pink-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">Aucun prix configure</h3>
+                <p className="text-slate-500 mb-6 max-w-md mx-auto">
+                  Ajoutez votre premier prix pour commencer a configurer votre roue de la chance !
+                </p>
+                <Button
+                  onClick={() => setShowForm(true)}
+                  className="gap-2 text-white bg-pink-600 hover:bg-pink-700"
+                >
+                  <Plus className="w-4 h-4" />
+                  Ajouter mon Premier Prix
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+        </>)}
+
+        {activeTab === 'config' && (<>
         {/* Special Segments Section */}
         <Card className="p-5 sm:p-6 border border-gray-200 rounded-xl bg-slate-900">
           <div className="flex items-center gap-3 mb-5">
@@ -685,19 +838,19 @@ export default function PrizesPage() {
         </Card>
 
         {/* Wheel Appearance Configuration */}
-        <Card className="p-4 sm:p-6 border border-gray-200 rounded-xl" style={{ background: 'linear-gradient(135deg, #134e4a, #0f766e)' }}>
+        <Card className="p-4 sm:p-6 border border-gray-200 rounded-xl" style={{ background: 'linear-gradient(135deg, #831843, #BE185D)' }}>
           <div className="flex items-center gap-3 mb-4 sm:mb-6">
             <div className="prize-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-amber-400/20">
               <Palette className="w-5 h-5 text-amber-300" />
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-semibold text-white">Apparence de la Roue</h2>
-              <p className="text-xs sm:text-sm text-teal-200">Choisissez un theme pour votre roue</p>
+              <p className="text-xs sm:text-sm text-pink-200">Choisissez un theme pour votre roue</p>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs sm:text-sm font-medium text-teal-200 mb-3">
+            <label className="block text-xs sm:text-sm font-medium text-pink-200 mb-3">
               Themes predefinis
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-2 sm:gap-3">
@@ -727,7 +880,7 @@ export default function PrizesPage() {
                     { color: '#2E7D32', textColor: '#ffffff' },
                     { color: '#66BB6A', textColor: '#1a1a1a' },
                   ])}
-                  className="px-3 py-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-400 text-white text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
+                  className="px-3 py-2 rounded-lg bg-gradient-to-r from-green-500 to-violet-400 text-white text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
                 >
                   Vert Nature
                 </button>
@@ -782,11 +935,11 @@ export default function PrizesPage() {
 
         {/* Wheel Preview Section */}
         <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           <div className="p-5 sm:p-6">
             <div className="flex items-center gap-3 mb-5">
-              <div className="prize-icon-enter w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
-                <TrendingUp className="w-5 h-5 text-teal-600" />
+              <div className="prize-icon-enter w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center flex-shrink-0">
+                <TrendingUp className="w-5 h-5 text-pink-600" />
               </div>
               <div>
                 <h2 className="text-base sm:text-lg font-semibold text-slate-900">Apercu de la Roue</h2>
@@ -809,11 +962,11 @@ export default function PrizesPage() {
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
                     <p className="text-slate-500">Segments totaux</p>
-                    <p className="text-2xl font-bold text-teal-600">{totalSegments}/{MAX_SEGMENTS}</p>
+                    <p className="text-2xl font-bold text-pink-600">{totalSegments}/{MAX_SEGMENTS}</p>
                   </div>
                   <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
                     <p className="text-slate-500">Prix sur la roue</p>
-                    <p className="text-2xl font-bold text-teal-600">{totalPrizeSegments}</p>
+                    <p className="text-2xl font-bold text-pink-600">{totalPrizeSegments}</p>
                   </div>
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2 justify-center lg:justify-start">
@@ -831,128 +984,40 @@ export default function PrizesPage() {
           </div>
         </div>
 
-        {/* Merchant Prizes Grid */}
-        <div>
-          <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-            <Gift className="w-5 h-5 text-teal-600" />
-            Vos Prix Personnalises
-            <span className="text-sm font-normal text-slate-500">({prizes.length} prix)</span>
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {prizes.map((prize) => {
-            const quantity = prizeQuantities[prize.id] || 0;
-            return (
-              <div key={prize.id} className={`group relative overflow-hidden border rounded-xl transition-all duration-300 hover:shadow-md bg-white ${quantity > 0 ? 'border-teal-300 bg-teal-50/30' : 'border-gray-200 hover:border-gray-300'}`}>
-                <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
-                {/* Prize Image */}
-                {prize.image_url ? (
-                  <div className="relative h-40 bg-gradient-to-br from-teal-50 to-emerald-50">
-                    <img
-                      src={prize.image_url}
-                      alt={prize.name}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute top-3 right-3">
-                      <div className={`px-3 py-1.5 rounded-full font-bold text-sm shadow-lg ${quantity > 0 ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-600'}`}>
-                        x {quantity}
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="h-40 flex items-center justify-center relative bg-gradient-to-br from-teal-50 to-emerald-50">
-                    <Gift className="w-12 h-12 text-teal-300" />
-                    <div className="absolute top-3 right-3">
-                      <div className={`px-3 py-1.5 rounded-full font-bold text-sm shadow-lg ${quantity > 0 ? 'bg-teal-600 text-white' : 'bg-gray-200 text-gray-600'}`}>
-                        x {quantity}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                <div className="p-4">
-                  <div className="mb-3">
-                    <h3 className="text-lg font-bold text-slate-900 mb-1">{prize.name}</h3>
-                    {prize.description && (
-                      <p className="text-slate-500 text-xs line-clamp-1">{prize.description}</p>
-                    )}
-                  </div>
-
-                  {/* Quantity Controls */}
-                  <div className="mb-4">
-                    <label className="text-xs font-medium text-slate-500 block mb-2">Segments sur la roue</label>
-                    <div className="flex items-center justify-center gap-3">
-                      <Button
-                        onClick={() => updatePrizeQuantity(prize.id, -1)}
-                        disabled={quantity <= 0}
-                        variant="outline"
-                        size="sm"
-                        className="w-9 h-9 rounded-full disabled:opacity-50 border-teal-300 text-teal-600 hover:bg-teal-50"
-                      >
-                        -
-                      </Button>
-                      <span className="text-2xl font-bold w-10 text-center text-teal-600">{quantity}</span>
-                      <Button
-                        onClick={() => updatePrizeQuantity(prize.id, 1)}
-                        disabled={totalSegments >= MAX_SEGMENTS}
-                        variant="outline"
-                        size="sm"
-                        className="w-9 h-9 rounded-full disabled:opacity-50 border-teal-300 text-teal-600 hover:bg-teal-50"
-                      >
-                        +
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <Button
-                      onClick={() => handleEdit(prize)}
-                      variant="outline"
-                      size="sm"
-                      className="flex-1 text-slate-600 border-gray-200 hover:bg-gray-50 gap-1"
-                    >
-                      <Pencil className="w-3 h-3" />
-                      Modifier
-                    </Button>
-                    <Button
-                      onClick={() => handleDelete(prize.id)}
-                      variant="outline"
-                      size="sm"
-                      className="text-red-600 border-red-200 hover:bg-red-50"
-                    >
-                      <Trash2 className="w-3 h-3" />
-                    </Button>
-                  </div>
-                </div>
+        {/* Config Summary */}
+        <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <div className="p-5 sm:p-6">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="prize-icon-enter w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center flex-shrink-0">
+                <Info className="w-5 h-5 text-violet-600" />
               </div>
-            );
-          })}
-        </div>
-
-        {prizes.length === 0 && !showForm && (
-          <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-gray-50">
-            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-            <div className="p-12">
-              <div className="text-center">
-                <div className="w-20 h-20 rounded-full bg-teal-50 flex items-center justify-center mx-auto mb-4">
-                  <Gift className="w-10 h-10 text-teal-600" />
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">Aucun prix configure</h3>
-                <p className="text-slate-500 mb-6 max-w-md mx-auto">
-                  Ajoutez votre premier prix pour commencer a configurer votre roue de la chance !
-                </p>
-                <Button
-                  onClick={() => setShowForm(true)}
-                  className="gap-2 text-white bg-teal-600 hover:bg-teal-700"
-                >
-                  <Plus className="w-4 h-4" />
-                  Ajouter mon Premier Prix
-                </Button>
+              <div>
+                <h2 className="text-base sm:text-lg font-semibold text-slate-900">Resume de Configuration</h2>
+                <p className="text-xs sm:text-sm text-slate-500">Etat actuel de votre roue</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="bg-pink-50 rounded-lg p-3 border border-pink-200 text-center">
+                <p className="text-xs text-slate-500 mb-1">Segments</p>
+                <p className="text-xl font-bold text-pink-600">{totalSegments}/{MAX_SEGMENTS}</p>
+              </div>
+              <div className="bg-violet-50 rounded-lg p-3 border border-violet-200 text-center">
+                <p className="text-xs text-slate-500 mb-1">Prix actifs</p>
+                <p className="text-xl font-bold text-violet-600">{totalPrizeSegments}</p>
+              </div>
+              <div className="bg-red-50 rounded-lg p-3 border border-red-200 text-center">
+                <p className="text-xs text-slate-500 mb-1">#PERDU#</p>
+                <p className="text-xl font-bold text-red-600">{unluckyQuantity}</p>
+              </div>
+              <div className="bg-yellow-50 rounded-lg p-3 border border-yellow-200 text-center">
+                <p className="text-xs text-slate-500 mb-1">#REESSAYER#</p>
+                <p className="text-xl font-bold text-yellow-600">{retryQuantity}</p>
               </div>
             </div>
           </div>
-        )}
+        </div>
+        </>)}
       </div>
     </DashboardLayout>
   );

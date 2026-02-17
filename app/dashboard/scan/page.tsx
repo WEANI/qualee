@@ -303,7 +303,7 @@ export default function ScanPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-pink-600" />
         </div>
       </DashboardLayout>
     );
@@ -338,7 +338,7 @@ export default function ScanPage() {
           left: 0;
           right: 0;
           height: 3px;
-          background: linear-gradient(90deg, #0D9488, #10B981);
+          background: linear-gradient(90deg, #DB2777, #8B5CF6);
           border-radius: 2px 2px 0 0;
           transform: scaleX(0);
           transform-origin: left;
@@ -349,7 +349,7 @@ export default function ScanPage() {
         }
         .scan-card:hover {
           border-color: #d1d5db;
-          box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
+          box-shadow: 0 4px 12px rgba(219, 39, 119, 0.12);
         }
       `}</style>
 
@@ -357,7 +357,7 @@ export default function ScanPage() {
         {/* Header */}
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-            <ScanLine className="w-7 h-7 text-teal-600" />
+            <ScanLine className="w-7 h-7 text-pink-600" />
             Scanner de Coupon
           </h1>
           <p className="text-slate-500 mt-1">Scannez le QR code du client pour vérifier et valider son gain.</p>
@@ -366,8 +366,8 @@ export default function ScanPage() {
         <Card className="scan-card p-5 sm:p-6 border border-gray-200 rounded-xl">
           {scanStatus === 'idle' && (
             <div className="text-center py-12">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: '#f0fdfa' }}>
-                <svg className="w-10 h-10 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: '#FDF2F8' }}>
+                <svg className="w-10 h-10 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
                 </svg>
               </div>
@@ -377,9 +377,9 @@ export default function ScanPage() {
                 onClick={startScanning}
                 size="lg"
                 className="text-white transition-all duration-200"
-                style={{ backgroundColor: '#0D9488' }}
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(13, 148, 136, 0.3)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+                style={{ backgroundColor: '#DB2777' }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#BE185D'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(219, 39, 119, 0.3)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#DB2777'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
               >
                 Lancer le scan
               </Button>
@@ -397,17 +397,17 @@ export default function ScanPage() {
 
           {scanStatus === 'verifying' && (
             <div className="text-center py-12">
-              <Loader2 className="w-12 h-12 animate-spin mx-auto mb-4 text-teal-600" />
+              <Loader2 className="w-12 h-12 animate-spin mx-auto mb-4 text-pink-600" />
               <p className="text-lg font-medium text-slate-900">Vérification du code...</p>
             </div>
           )}
 
           {scanStatus === 'valid' && couponDetails && (
             <div className="text-center py-8">
-              <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6" style={{ animation: 'fadeInScan 0.5s ease-out' }}>
+              <div className="w-20 h-20 bg-violet-100 text-violet-600 rounded-full flex items-center justify-center mx-auto mb-6" style={{ animation: 'fadeInScan 0.5s ease-out' }}>
                 <CheckCircle2 className="w-10 h-10" />
               </div>
-              <h2 className="text-2xl font-bold text-emerald-700 mb-2">Coupon Valide !</h2>
+              <h2 className="text-2xl font-bold text-violet-700 mb-2">Coupon Valide !</h2>
               <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8 max-w-sm mx-auto">
                 <p className="text-sm text-slate-500 uppercase tracking-wide font-semibold mb-1">Prix à remettre</p>
                 <p className="text-3xl font-bold text-slate-900 mb-4">{couponDetails.prize_name}</p>
@@ -424,9 +424,9 @@ export default function ScanPage() {
                   onClick={redeemCoupon}
                   size="lg"
                   className="text-white transition-all duration-200"
-                  style={{ backgroundColor: '#10B981' }}
+                  style={{ backgroundColor: '#8B5CF6' }}
                   onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#059669'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#10B981'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#8B5CF6'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
                 >
                   Valider la remise du prix
                 </Button>
@@ -444,9 +444,9 @@ export default function ScanPage() {
               <Button
                 onClick={startScanning}
                 className="text-white transition-all duration-200"
-                style={{ backgroundColor: '#0D9488' }}
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; }}
+                style={{ backgroundColor: '#DB2777' }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#BE185D'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#DB2777'; }}
               >
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Scanner un autre code
@@ -456,8 +456,8 @@ export default function ScanPage() {
 
           {scanStatus === 'redeemed' && (
             <div className="text-center py-12">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: '#f0fdfa' }}>
-                <Gift className="w-10 h-10 text-[#0D9488]" />
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: '#FDF2F8' }}>
+                <Gift className="w-10 h-10 text-[#DB2777]" />
               </div>
               <h2 className="text-2xl font-bold text-slate-900 mb-2">Prix Validé !</h2>
               <p className="text-slate-600 mb-8">Le coupon a été marqué comme utilisé avec succès.</p>
@@ -465,9 +465,9 @@ export default function ScanPage() {
                 onClick={startScanning}
                 size="lg"
                 className="text-white transition-all duration-200"
-                style={{ backgroundColor: '#0D9488' }}
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; e.currentTarget.style.transform = 'translateY(0)'; }}
+                style={{ backgroundColor: '#DB2777' }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#BE185D'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#DB2777'; e.currentTarget.style.transform = 'translateY(0)'; }}
               >
                 Scanner un autre client
               </Button>
@@ -557,10 +557,10 @@ export default function ScanPage() {
                 </>
               ) : (
                 <div className="text-center py-8">
-                  <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <div className="w-20 h-20 bg-violet-100 text-violet-600 rounded-full flex items-center justify-center mx-auto mb-6">
                     <CheckCircle2 className="w-10 h-10" />
                   </div>
-                  <h2 className="text-2xl font-bold text-emerald-700 mb-2">{t('loyalty.scan.pointsAdded')}</h2>
+                  <h2 className="text-2xl font-bold text-violet-700 mb-2">{t('loyalty.scan.pointsAdded')}</h2>
                   <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6 max-w-sm mx-auto">
                     <p className="text-sm text-slate-500 mb-2">{t('loyalty.scan.newBalance')}</p>
                     <div className="flex items-center justify-center gap-2">
@@ -573,9 +573,9 @@ export default function ScanPage() {
                     onClick={startScanning}
                     size="lg"
                     className="text-white transition-all duration-200"
-                    style={{ backgroundColor: '#0D9488' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; e.currentTarget.style.transform = 'translateY(0)'; }}
+                    style={{ backgroundColor: '#DB2777' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#BE185D'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#DB2777'; e.currentTarget.style.transform = 'translateY(0)'; }}
                   >
                     Scanner un autre client
                   </Button>
@@ -591,9 +591,9 @@ export default function ScanPage() {
             <div className="flex items-center gap-3 mb-5">
               <div
                 className="scan-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: '#f0fdfa' }}
+                style={{ backgroundColor: '#FDF2F8' }}
               >
-                <ScanLine className="w-5 h-5 text-teal-600" />
+                <ScanLine className="w-5 h-5 text-pink-600" />
               </div>
               <div>
                 <h2 className="text-base sm:text-lg font-semibold text-slate-900">Historique de la session</h2>
@@ -626,7 +626,7 @@ export default function ScanPage() {
                     // Coupon entry
                     <>
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <div className="w-10 h-10 bg-violet-100 text-violet-600 rounded-full flex items-center justify-center flex-shrink-0">
                           <Gift className="w-5 h-5" />
                         </div>
                         <div>
@@ -635,7 +635,7 @@ export default function ScanPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm font-medium text-emerald-600">Validé</p>
+                        <p className="text-sm font-medium text-violet-600">Validé</p>
                         <p className="text-xs text-slate-400">
                           {new Date(item.used_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </p>

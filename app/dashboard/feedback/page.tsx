@@ -78,15 +78,15 @@ export default function FeedbackPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin text-teal-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-pink-600" />
         </div>
       </DashboardLayout>
     );
   }
 
   const filterButtons = [
-    { key: 'all' as const, label: 'Tous', count: feedback.length, icon: MessageSquare, activeClass: 'bg-teal-600 text-white border-teal-600', hoverBorder: 'border-teal-400' },
-    { key: 'positive' as const, label: 'Positifs', count: feedback.filter(f => f.is_positive).length, icon: ThumbsUp, activeClass: 'bg-emerald-600 text-white border-emerald-600', hoverBorder: 'border-emerald-400' },
+    { key: 'all' as const, label: 'Tous', count: feedback.length, icon: MessageSquare, activeClass: 'bg-pink-600 text-white border-pink-600', hoverBorder: 'border-pink-400' },
+    { key: 'positive' as const, label: 'Positifs', count: feedback.filter(f => f.is_positive).length, icon: ThumbsUp, activeClass: 'bg-violet-600 text-white border-violet-600', hoverBorder: 'border-violet-400' },
     { key: 'negative' as const, label: 'Négatifs', count: feedback.filter(f => !f.is_positive).length, icon: ThumbsDown, activeClass: 'bg-red-600 text-white border-red-600', hoverBorder: 'border-red-400' },
   ];
 
@@ -96,8 +96,8 @@ export default function FeedbackPage() {
         {/* Header */}
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center">
-              <MessageSquare className="w-5 h-5 text-teal-600" />
+            <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center">
+              <MessageSquare className="w-5 h-5 text-pink-600" />
             </div>
             Avis clients
           </h1>
@@ -140,17 +140,17 @@ export default function FeedbackPage() {
               key={f.id}
               className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white"
             >
-              <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+              <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
               <div className="p-5 sm:p-6">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4">
                   <div className="flex items-center gap-3">
                     <div
                       className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                        f.is_positive ? 'bg-emerald-50' : 'bg-red-50'
+                        f.is_positive ? 'bg-violet-50' : 'bg-red-50'
                       }`}
                     >
                       {f.is_positive ? (
-                        <ThumbsUp className="w-5 h-5 text-emerald-600" />
+                        <ThumbsUp className="w-5 h-5 text-violet-600" />
                       ) : (
                         <ThumbsDown className="w-5 h-5 text-red-600" />
                       )}
@@ -174,7 +174,7 @@ export default function FeedbackPage() {
                       <Badge
                         className={`text-xs ${
                           f.is_positive
-                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                            ? 'bg-violet-50 text-violet-700 border-violet-200'
                             : 'bg-red-50 text-red-700 border-red-200'
                         }`}
                       >
@@ -215,11 +215,11 @@ export default function FeedbackPage() {
         {/* Empty State */}
         {filteredFeedback.length === 0 && (
           <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             <div className="p-8 sm:p-12">
               <div className="text-center">
-                <div className="w-16 h-16 rounded-xl bg-teal-50 flex items-center justify-center mx-auto mb-4">
-                  <MessageSquare className="w-8 h-8 text-teal-600" />
+                <div className="w-16 h-16 rounded-xl bg-pink-50 flex items-center justify-center mx-auto mb-4">
+                  <MessageSquare className="w-8 h-8 text-pink-600" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Aucun avis pour le moment</h3>
                 <p className="text-slate-500 mb-6">
@@ -230,7 +230,7 @@ export default function FeedbackPage() {
                 </p>
                 <Button
                   onClick={() => router.push('/dashboard/qr')}
-                  className="gap-2 bg-teal-600 hover:bg-teal-700 text-white"
+                  className="gap-2 bg-pink-600 hover:bg-pink-700 text-white"
                 >
                   Voir le QR Code
                 </Button>

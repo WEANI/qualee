@@ -222,7 +222,7 @@ export default function DashboardPage() {
             </div>
           ) : (
             <>
-              <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-teal-600" />
+              <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-pink-600" />
               <p className="text-lg text-slate-600">Chargement...</p>
             </>
           )}
@@ -270,8 +270,8 @@ export default function DashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-              <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center">
-                <LayoutDashboard className="w-5 h-5 text-teal-600" />
+              <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center">
+                <LayoutDashboard className="w-5 h-5 text-pink-600" />
               </div>
               Bonjour, {merchant.business_name || 'Commercant'}
             </h1>
@@ -297,18 +297,18 @@ export default function DashboardPage() {
                 key={idx}
                 className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white"
               >
-                <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                 <div className="p-5 sm:p-6">
                   <div className="flex justify-between items-start mb-4">
-                    <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center">
-                      <Icon className="w-5 h-5 text-teal-600" />
+                    <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-pink-600" />
                     </div>
                     {kpi.trendLabel && (
                       <Badge
                         className={`text-xs font-medium shadow-sm border ${
                           kpi.trend && kpi.trend < 0
                             ? 'bg-red-50 text-red-600 border-red-200'
-                            : 'bg-teal-50 text-teal-700 border-teal-200'
+                            : 'bg-pink-50 text-pink-700 border-pink-200'
                         }`}
                       >
                         {kpi.trend !== null && kpi.trend !== 0 && (
@@ -335,11 +335,11 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Main Chart */}
           <div className="group relative lg:col-span-2 border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
             <div className="p-5 sm:p-6">
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
-                  <BarChart3 className="w-5 h-5 text-teal-600" />
+                <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center flex-shrink-0">
+                  <BarChart3 className="w-5 h-5 text-pink-600" />
                 </div>
                 <div>
                   <h2 className="text-base sm:text-lg font-semibold text-slate-900">Activite</h2>
@@ -352,11 +352,11 @@ export default function DashboardPage() {
 
           {/* Recent Activity Feed */}
           <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
             <div className="p-5 sm:p-6">
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center flex-shrink-0">
-                  <MessageSquare className="w-5 h-5 text-teal-600" />
+                <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center flex-shrink-0">
+                  <MessageSquare className="w-5 h-5 text-pink-600" />
                 </div>
                 <h2 className="text-base sm:text-lg font-semibold text-slate-900">Avis recents</h2>
               </div>
@@ -371,7 +371,7 @@ export default function DashboardPage() {
                     >
                       <div className={`
                         flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold
-                        ${activity.rating >= 4 ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}
+                        ${activity.rating >= 4 ? 'bg-violet-100 text-violet-700' : 'bg-amber-100 text-amber-700'}
                       `}>
                         {activity.rating}
                       </div>
@@ -398,7 +398,7 @@ export default function DashboardPage() {
 
                 <Button
                   variant="outline"
-                  className="w-full mt-2 transition-all duration-200 border-teal-200 text-teal-700 hover:bg-teal-50 hover:border-teal-300"
+                  className="w-full mt-2 transition-all duration-200 border-pink-200 text-pink-700 hover:bg-pink-50 hover:border-pink-300"
                   onClick={() => router.push('/dashboard/feedback')}
                 >
                   Voir tous les avis
@@ -413,7 +413,7 @@ export default function DashboardPage() {
           {/* Quick Actions Grid */}
           <div>
             <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-              <span className="w-1.5 h-5 rounded-full bg-teal-600" />
+              <span className="w-1.5 h-5 rounded-full bg-pink-600" />
               Actions rapides
             </h3>
             <div className="grid grid-cols-2 gap-4">
@@ -430,10 +430,10 @@ export default function DashboardPage() {
                     onClick={() => router.push(action.href)}
                     className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white text-left"
                   >
-                    <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                    <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                     <div className="p-4">
-                      <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center mb-3">
-                        <ActionIcon className="w-5 h-5 text-teal-600" />
+                      <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center mb-3">
+                        <ActionIcon className="w-5 h-5 text-pink-600" />
                       </div>
                       <h4 className="font-semibold text-slate-900 text-sm">{action.label}</h4>
                       <p className="text-xs text-slate-500 mt-1">{action.desc}</p>
@@ -447,24 +447,24 @@ export default function DashboardPage() {
           {/* Review Link Card */}
           <div>
             <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-              <span className="w-1.5 h-5 rounded-full bg-teal-600" />
+              <span className="w-1.5 h-5 rounded-full bg-pink-600" />
               Votre lien d&apos;avis
             </h3>
             <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-gradient-to-br from-[#0F172A] to-[#1e293b]">
-              <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-teal-500 to-emerald-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
+              <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
               <div className="p-5 sm:p-6">
                 <div className="flex justify-between items-start mb-5">
                   <div>
                     <h4 className="text-lg font-semibold text-white">Lien public</h4>
                     <p className="text-sm text-slate-400 mt-1">Partagez ce lien avec vos clients</p>
                   </div>
-                  <div className="p-2 bg-teal-500/20 rounded-lg">
-                    <ArrowUpRight className="w-5 h-5 text-teal-400" />
+                  <div className="p-2 bg-pink-500/20 rounded-lg">
+                    <ArrowUpRight className="w-5 h-5 text-pink-400" />
                   </div>
                 </div>
 
                 <div className="bg-black/30 rounded-lg p-4 mb-5 border border-white/10">
-                  <code className="text-sm font-mono text-emerald-400 break-all">
+                  <code className="text-sm font-mono text-violet-400 break-all">
                     {process.env.NEXT_PUBLIC_APP_URL}/rate/{user.id}
                   </code>
                 </div>
@@ -475,7 +475,7 @@ export default function DashboardPage() {
                       navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_APP_URL}/rate/${user.id}`);
                       alert('Lien copie !');
                     }}
-                    className="bg-teal-600 text-white hover:bg-teal-700 border-0"
+                    className="bg-pink-600 text-white hover:bg-pink-700 border-0"
                   >
                     <Copy className="w-4 h-4 mr-2" />
                     Copier
