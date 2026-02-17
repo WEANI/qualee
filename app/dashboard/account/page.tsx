@@ -26,7 +26,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 
-type AccountTab = 'securite' | 'password' | 'danger';
+type AccountTab = 'informations' | 'securite';
 
 export default function AccountPage() {
   const router = useRouter();
@@ -35,7 +35,7 @@ export default function AccountPage() {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   // Tab state
-  const [activeTab, setActiveTab] = useState<AccountTab>('securite');
+  const [activeTab, setActiveTab] = useState<AccountTab>('informations');
 
   // Password form
   const [currentPassword, setCurrentPassword] = useState('');
@@ -180,9 +180,8 @@ export default function AccountPage() {
   }
 
   const tabs: { key: AccountTab; label: string; icon: typeof Shield; emoji: string }[] = [
+    { key: 'informations', label: 'Informations', icon: Mail, emoji: '📋' },
     { key: 'securite', label: 'Sécurité', icon: Shield, emoji: '🛡️' },
-    { key: 'password', label: 'Mot de passe', icon: KeyRound, emoji: '🔑' },
-    { key: 'danger', label: 'Danger', icon: AlertTriangle, emoji: '⚠️' },
   ];
 
   const PasswordCheck = ({ ok, text }: { ok: boolean; text: string }) => (
@@ -307,15 +306,13 @@ export default function AccountPage() {
               onClick={() => { setActiveTab(tab.key); setMessage(null); }}
               className="relative flex items-center gap-2 px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap transition-all duration-300 rounded-t-lg"
               style={{
-                color: activeTab === tab.key
-                  ? tab.key === 'danger' ? '#dc2626' : '#0D9488'
-                  : '#6b7280',
+                color: activeTab === tab.key ? '#0D9488' : '#6b7280',
                 backgroundColor: 'transparent',
               }}
               onMouseEnter={(e) => {
                 if (activeTab !== tab.key) {
-                  e.currentTarget.style.color = tab.key === 'danger' ? '#b91c1c' : '#0F766E';
-                  e.currentTarget.style.backgroundColor = tab.key === 'danger' ? '#fef2f2' : '#f0fdfa';
+                  e.currentTarget.style.color = '#0F766E';
+                  e.currentTarget.style.backgroundColor = '#f0fdfa';
                 }
               }}
               onMouseLeave={(e) => {
@@ -331,7 +328,7 @@ export default function AccountPage() {
               <span
                 className="absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-300 origin-left"
                 style={{
-                  backgroundColor: tab.key === 'danger' ? '#dc2626' : '#0D9488',
+                  backgroundColor: '#0D9488',
                   transform: activeTab === tab.key ? 'scaleX(1)' : 'scaleX(0)',
                 }}
               />
@@ -342,8 +339,8 @@ export default function AccountPage() {
         {/* Tab Content */}
         <div className="tab-content-enter" key={activeTab}>
 
-          {/* ===== TAB: SECURITE ===== */}
-          {activeTab === 'securite' && (
+          {/* ===== TAB: INFORMATIONS ===== */}
+          {activeTab === 'informations' && (
             <div className="space-y-5">
 
               {/* Adresse Email */}
@@ -379,75 +376,7 @@ export default function AccountPage() {
                 </div>
               </Card>
 
-              {/* Informations de Sécurité */}
-              <Card className="account-card p-5 sm:p-6 border border-gray-200 rounded-xl">
-                <div className="flex items-center gap-3 mb-5">
-                  <div
-                    className="account-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#f0fdfa' }}
-                  >
-                    <Shield className="w-5 h-5 text-teal-600" />
-                  </div>
-                  <div>
-                    <h2 className="text-base sm:text-lg font-semibold text-slate-900">Informations de Sécurité</h2>
-                    <p className="text-xs sm:text-sm text-slate-500">Statut de sécurité de votre compte</p>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 p-3 bg-emerald-50 rounded-lg border border-emerald-200">
-                    <ShieldCheck className="w-5 h-5 text-emerald-600 flex-shrink-0" />
-                    <span className="text-sm font-medium text-emerald-700">Compte sécurisé</span>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200 transition-colors duration-200 hover:bg-gray-100">
-                      <CalendarDays className="w-4 h-4 text-slate-400 flex-shrink-0" />
-                      <div className="min-w-0">
-                        <p className="text-xs text-slate-500">Créé le</p>
-                        <p className="text-sm font-medium text-slate-900">
-                          {new Date(user.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200 transition-colors duration-200 hover:bg-gray-100">
-                      <Clock className="w-4 h-4 text-slate-400 flex-shrink-0" />
-                      <div className="min-w-0">
-                        <p className="text-xs text-slate-500">Dernière connexion</p>
-                        <p className="text-sm font-medium text-slate-900">
-                          {new Date(user.last_sign_in_at || user.created_at).toLocaleDateString('fr-FR', {
-                            day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
-                          })}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200 transition-colors duration-200 hover:bg-gray-100">
-                    <Link2 className="w-4 h-4 text-slate-400 flex-shrink-0" />
-                    <div className="min-w-0">
-                      <p className="text-xs text-slate-500">Appareils actifs</p>
-                      <p className="text-sm font-medium text-slate-900">1 appareil connecté</p>
-                    </div>
-                  </div>
-
-                  <Button
-                    variant="outline"
-                    onClick={handleSignOutAllDevices}
-                    className="w-full mt-2 text-amber-700 border-amber-300 hover:bg-amber-50 transition-all duration-200"
-                  >
-                    <LogOut className="w-4 h-4 mr-2" />
-                    Déconnecter tous les appareils
-                  </Button>
-                </div>
-              </Card>
-            </div>
-          )}
-
-          {/* ===== TAB: MOT DE PASSE ===== */}
-          {activeTab === 'password' && (
-            <div className="space-y-5">
+              {/* Changer mon mot de passe */}
               <Card className="account-card p-5 sm:p-6 border border-gray-200 rounded-xl">
                 <div className="flex items-center gap-3 mb-5">
                   <div
@@ -643,9 +572,75 @@ export default function AccountPage() {
             </div>
           )}
 
-          {/* ===== TAB: DANGER ===== */}
-          {activeTab === 'danger' && (
+          {/* ===== TAB: SECURITE ===== */}
+          {activeTab === 'securite' && (
             <div className="space-y-5">
+
+              {/* Informations de Sécurité */}
+              <Card className="account-card p-5 sm:p-6 border border-gray-200 rounded-xl">
+                <div className="flex items-center gap-3 mb-5">
+                  <div
+                    className="account-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: '#f0fdfa' }}
+                  >
+                    <Shield className="w-5 h-5 text-teal-600" />
+                  </div>
+                  <div>
+                    <h2 className="text-base sm:text-lg font-semibold text-slate-900">Informations de Sécurité</h2>
+                    <p className="text-xs sm:text-sm text-slate-500">Statut de sécurité de votre compte</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 p-3 bg-emerald-50 rounded-lg border border-emerald-200">
+                    <ShieldCheck className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+                    <span className="text-sm font-medium text-emerald-700">Compte sécurisé</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200 transition-colors duration-200 hover:bg-gray-100">
+                      <CalendarDays className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                      <div className="min-w-0">
+                        <p className="text-xs text-slate-500">Créé le</p>
+                        <p className="text-sm font-medium text-slate-900">
+                          {new Date(user.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200 transition-colors duration-200 hover:bg-gray-100">
+                      <Clock className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                      <div className="min-w-0">
+                        <p className="text-xs text-slate-500">Dernière connexion</p>
+                        <p className="text-sm font-medium text-slate-900">
+                          {new Date(user.last_sign_in_at || user.created_at).toLocaleDateString('fr-FR', {
+                            day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                          })}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200 transition-colors duration-200 hover:bg-gray-100">
+                    <Link2 className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                    <div className="min-w-0">
+                      <p className="text-xs text-slate-500">Appareils actifs</p>
+                      <p className="text-sm font-medium text-slate-900">1 appareil connecté</p>
+                    </div>
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    onClick={handleSignOutAllDevices}
+                    className="w-full mt-2 text-amber-700 border-amber-300 hover:bg-amber-50 transition-all duration-200"
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Déconnecter tous les appareils
+                  </Button>
+                </div>
+              </Card>
+
+              {/* Zone de Danger */}
               <div className="p-4 bg-red-50 rounded-xl border border-red-200">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0" />
@@ -656,6 +651,7 @@ export default function AccountPage() {
                 </p>
               </div>
 
+              {/* Supprimer mon compte */}
               <Card className="danger-card p-5 sm:p-6 border border-red-200 rounded-xl">
                 <div className="flex items-center gap-3 mb-5">
                   <div

@@ -267,7 +267,7 @@ export default function InternalFeedbackPage() {
                       {t('internalFeedback.rewardTitle', 'Un cadeau vous attend !')}
                     </p>
                     <p className="text-xs text-amber-700 leading-relaxed">
-                      {t('internalFeedback.rewardMessage', 'Après votre commentaire, vous pourrez tourner la roue et gagner une surprise !')}
+                      {t('internalFeedback.rewardMessage', 'Après votre commentaire, tournez la roue et découvrez votre surprise.')}
                     </p>
                   </div>
                   <Sparkles className="w-5 h-5 text-yellow-500 flex-shrink-0 animate-pulse" />

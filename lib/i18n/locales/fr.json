@@ -20,7 +20,7 @@
   },
   "social": {
     "title": "Partagez votre expérience",
-    "subtitle": "Partagez votre avis positif avec d'autres clients",
+    "subtitle": "Et recevez votre carte de fidélité sur votre téléphone",
     "googleReview": "Laisser un avis Google",
     "followInstagram": "Suivez-nous sur Instagram",
     "followTikTok": "Suivez-nous sur TikTok"
@@ -48,7 +48,7 @@
     "buttonActiveIn": "Le bouton sera actif dans {{seconds}} seconde(s)",
     "clickToSpinAndWin": "Cliquez pour tourner la roue et gagner !",
     "whatsappHintTitle": "🎁 Une surprise vous attend !",
-    "whatsappHintMessage": "Pendant que vous donnez votre avis, nous préparons votre roue des cadeaux. Vous recevrez un WhatsApp avec votre lien exclusif pour tenter de gagner !"
+    "whatsappHintMessage": "Laissez votre avis et tournez la roue pour tenter de gagner un cadeau !"
   },
   "wheel": {
     "title": "Tournez pour gagner!",
@@ -171,7 +171,7 @@
     "phoneRequired": "Le numéro de téléphone est obligatoire",
     "phoneInvalid": "Format invalide (ex: +33612345678)",
     "phonePlaceholder": "+33612345678",
-    "phoneHint": "Nous vous enverrons le lien de la roue par WhatsApp"
+    "phoneHint": "Vous recevrez le lien vers la roue par WhatsApp"
   },
   "whatsapp": {
     "sending": "Envoi du message WhatsApp...",

@@ -20,7 +20,7 @@
   },
   "social": {
     "title": "Share your experience",
-    "subtitle": "Share your positive feedback with other customers",
+    "subtitle": "And receive your loyalty card on your phone",
     "googleReview": "Leave a Google Review",
     "followInstagram": "Follow us on Instagram",
     "followTikTok": "Follow us on TikTok"
@@ -48,7 +48,7 @@
     "buttonActiveIn": "Button will be active in {{seconds}} second(s)",
     "clickToSpinAndWin": "Click to spin the wheel and win!",
     "whatsappHintTitle": "🎁 A surprise awaits you!",
-    "whatsappHintMessage": "While you leave your review, we're preparing your gift wheel. You'll receive a WhatsApp with your exclusive link to try your luck!"
+    "whatsappHintMessage": "Leave your review and spin the wheel to try to win a gift!"
   },
   "wheel": {
     "title": "Spin to Win!",
@@ -171,7 +171,7 @@
     "phoneRequired": "Phone number is required",
     "phoneInvalid": "Invalid format (e.g. +33612345678)",
     "phonePlaceholder": "+33612345678",
-    "phoneHint": "We'll send the wheel link via WhatsApp"
+    "phoneHint": "You will receive the wheel link via WhatsApp"
   },
   "whatsapp": {
     "sending": "Sending WhatsApp message...",

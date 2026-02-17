@@ -21,7 +21,7 @@ import {
   Clock,
 } from 'lucide-react';
 
-type SettingsTab = 'general' | 'links' | 'planning';
+type SettingsTab = 'general' | 'links';
 
 const TIMEZONES = [
   { value: 'Africa/Libreville', label: 'Africa/Libreville (UTC+1)' },
@@ -199,7 +199,6 @@ export default function SettingsPage() {
   const tabs: { key: SettingsTab; label: string; icon: typeof Settings; emoji: string }[] = [
     { key: 'general', label: 'Général', icon: Settings, emoji: '⚙️' },
     { key: 'links', label: 'Liens', icon: Link2, emoji: '🔗' },
-    { key: 'planning', label: 'Planification', icon: CalendarDays, emoji: '📅' },
   ];
 
   return (
@@ -645,109 +644,7 @@ export default function SettingsPage() {
             </div>
           )}
 
-          {/* ===== TAB: PLANIFICATION ===== */}
-          {activeTab === 'planning' && (
-            <div className="space-y-5">
 
-              <Card className="settings-card p-5 sm:p-6 border border-gray-200 rounded-xl">
-                <div className="flex items-center gap-3 mb-5">
-                  <div
-                    className="settings-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#f0fdfa' }}
-                  >
-                    <Clock className="w-5 h-5 text-teal-600" />
-                  </div>
-                  <div>
-                    <h2 className="text-base sm:text-lg font-semibold text-slate-900">Horaires d&apos;ouverture</h2>
-                    <p className="text-xs sm:text-sm text-slate-500">Configurez vos horaires pour chaque jour de la semaine</p>
-                  </div>
-                </div>
-
-                <div className="space-y-0">
-                  {DAYS.map((day, i) => (
-                    <div
-                      key={day}
-                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 py-3.5 px-3 rounded-lg transition-colors duration-200 hover:bg-gray-50"
-                      style={{ borderBottom: i < 6 ? '1px solid #f3f4f6' : 'none' }}
-                    >
-                      <div className="flex items-center gap-3 min-w-[120px]">
-                        <span className="text-sm font-medium text-slate-800 w-24">{day}</span>
-                        <button
-                          type="button"
-                          onClick={() => updateScheduleDay(i, 'closed', !schedule[i].closed)}
-                          className="text-xs px-2.5 py-1 rounded-full font-medium transition-all duration-200"
-                          style={{
-                            backgroundColor: schedule[i].closed ? '#fee2e2' : '#dcfce7',
-                            color: schedule[i].closed ? '#dc2626' : '#16a34a',
-                          }}
-                        >
-                          {schedule[i].closed ? 'Fermé' : 'Ouvert'}
-                        </button>
-                      </div>
-
-                      {!schedule[i].closed && (
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="time"
-                            value={schedule[i].open}
-                            onChange={(e) => updateScheduleDay(i, 'open', e.target.value)}
-                            className="px-3 py-2 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
-                            style={{ borderColor: '#d1d5db' }}
-                            onFocus={(e) => {
-                              e.currentTarget.style.borderColor = '#0D9488';
-                              e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
-                            }}
-                            onBlur={(e) => {
-                              e.currentTarget.style.borderColor = '#d1d5db';
-                              e.currentTarget.style.boxShadow = 'none';
-                            }}
-                          />
-                          <span className="text-slate-400 text-sm">-</span>
-                          <input
-                            type="time"
-                            value={schedule[i].close}
-                            onChange={(e) => updateScheduleDay(i, 'close', e.target.value)}
-                            className="px-3 py-2 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none"
-                            style={{ borderColor: '#d1d5db' }}
-                            onFocus={(e) => {
-                              e.currentTarget.style.borderColor = '#0D9488';
-                              e.currentTarget.style.boxShadow = '0 0 0 3px rgba(13, 148, 136, 0.15)';
-                            }}
-                            onBlur={(e) => {
-                              e.currentTarget.style.borderColor = '#d1d5db';
-                              e.currentTarget.style.boxShadow = 'none';
-                            }}
-                          />
-                        </div>
-                      )}
-
-                      {schedule[i].closed && (
-                        <div className="text-sm text-slate-400 italic">Aucun horaire</div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </Card>
-
-              {/* Save Planning */}
-              <div className="flex justify-end">
-                <Button
-                  onClick={handleSave}
-                  disabled={saving}
-                  className="w-full sm:w-auto text-white"
-                  style={{ backgroundColor: '#0D9488' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0F766E'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#0D9488'; }}
-                >
-                  {saving ? (
-                    <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Enregistrement...</>
-                  ) : (
-                    <><Save className="w-4 h-4 mr-2" />Enregistrer les horaires</>
-                  )}
-                </Button>
-              </div>
-            </div>
-          )}
 
         </div>
       </div>

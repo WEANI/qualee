@@ -416,21 +416,6 @@ export default function RatingPage() {
                 {loading ? t('common.loading') : t('common.submit')}
               </Button>
 
-              {/* Link to Google reviews page */}
-              {(merchant?.google_maps_url || merchant?.google_review_link) && (
-                <p className="text-center mt-6" style={{ fontSize: '10px', color: '#888888' }}>
-                  Accéder à la page des{' '}
-                  <a
-                    href={merchant.google_maps_url || merchant.google_review_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ textDecoration: 'underline', color: '#888888' }}
-                  >
-                    Avis
-                  </a>
-                  .
-                </p>
-              )}
             </div>
           ) : (
             <div className="space-y-5">
@@ -501,21 +486,6 @@ export default function RatingPage() {
                 {loading ? t('common.loading') : t('common.submit')}
               </Button>
 
-              {/* Link to Google reviews page */}
-              {(merchant?.google_maps_url || merchant?.google_review_link) && (
-                <p className="text-center mt-6" style={{ fontSize: '10px', color: '#888888' }}>
-                  Accéder à la page des{' '}
-                  <a
-                    href={merchant.google_maps_url || merchant.google_review_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ textDecoration: 'underline', color: '#888888' }}
-                  >
-                    Avis
-                  </a>
-                  .
-                </p>
-              )}
             </div>
           )}
         </div>

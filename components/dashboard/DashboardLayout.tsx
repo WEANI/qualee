@@ -263,21 +263,11 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
                     item.href === pathname || (item.href !== '/dashboard' && pathname.startsWith(item.href + '/'))
                   )?.name || 'Tableau de bord'}
                 </h1>
-                <p className="text-sm text-slate-500 hidden sm:block">
-                  En ligne
-                </p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
               {/* <StoreSwitcher /> Multi-store - masque pour l'instant */}
-              <div className="h-9 px-4 rounded-full bg-teal-50 text-teal-700 border border-teal-100 flex items-center gap-2 text-sm font-medium hidden sm:flex">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-                </span>
-                En ligne
-              </div>
               {merchant && <NotificationDropdown merchantId={merchant.id} />}
               <button
                 onClick={handleSignOut}
