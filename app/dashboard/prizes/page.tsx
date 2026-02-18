@@ -316,7 +316,7 @@ export default function PrizesPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin text-pink-500" />
+          <Loader2 className="w-8 h-8 animate-spin text-violet-500" />
         </div>
       </DashboardLayout>
     );
@@ -366,8 +366,8 @@ export default function PrizesPage() {
         <div className="flex flex-col lg:flex-row justify-between items-start gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-              <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center">
-                <Gift className="w-5 h-5 text-pink-600" />
+              <div className="w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center">
+                <Gift className="w-5 h-5 text-violet-600" />
               </div>
               Gestion des Prix
             </h1>
@@ -375,7 +375,7 @@ export default function PrizesPage() {
           </div>
           <Button
             onClick={() => showForm ? handleCancel() : setShowForm(true)}
-            className={`gap-2 text-white ${showForm ? 'bg-red-500 hover:bg-red-600' : 'bg-pink-600 hover:bg-pink-700'}`}
+            className={`gap-2 text-white ${showForm ? 'bg-red-500 hover:bg-red-600' : 'bg-violet-600 hover:bg-violet-700'}`}
           >
             {showForm ? (
               <>
@@ -397,7 +397,7 @@ export default function PrizesPage() {
             onClick={() => setActiveTab('prizes')}
             className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 ${
               activeTab === 'prizes'
-                ? 'bg-white text-pink-600 shadow-sm border border-gray-200'
+                ? 'bg-white text-violet-600 shadow-sm border border-gray-200'
                 : 'text-slate-500 hover:text-slate-700 hover:bg-gray-50'
             }`}
           >
@@ -408,7 +408,7 @@ export default function PrizesPage() {
             onClick={() => setActiveTab('config')}
             className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 ${
               activeTab === 'config'
-                ? 'bg-white text-pink-600 shadow-sm border border-gray-200'
+                ? 'bg-white text-violet-600 shadow-sm border border-gray-200'
                 : 'text-slate-500 hover:text-slate-700 hover:bg-gray-50'
             }`}
           >
@@ -420,11 +420,11 @@ export default function PrizesPage() {
         {activeTab === 'prizes' && (<>
         {/* Segment Counter Card */}
         <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           <div className="p-4 sm:p-6">
             <div className="flex items-center gap-3 mb-5">
-              <div className="prize-icon-enter w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center flex-shrink-0">
-                <Info className="w-5 h-5 text-pink-600" />
+              <div className="prize-icon-enter w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center flex-shrink-0">
+                <Info className="w-5 h-5 text-violet-600" />
               </div>
               <div>
                 <h2 className="text-base sm:text-lg font-semibold text-slate-900">Composition de la Roue</h2>
@@ -435,16 +435,16 @@ export default function PrizesPage() {
             <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4">
               <div className="bg-white rounded-lg p-2 sm:p-4 border border-gray-200">
                 <p className="text-xs sm:text-sm text-slate-500 mb-1">Segments utilises</p>
-                <p className="text-xl sm:text-3xl font-bold text-pink-600">{totalSegments}/{MAX_SEGMENTS}</p>
+                <p className="text-xl sm:text-3xl font-bold text-violet-600">{totalSegments}/{MAX_SEGMENTS}</p>
               </div>
               <div className={`rounded-lg p-2 sm:p-4 border ${
-                remainingSegments === 0 ? 'bg-violet-50 border-violet-200' :
+                remainingSegments === 0 ? 'bg-indigo-50 border-indigo-200' :
                 remainingSegments > 0 ? 'bg-amber-50 border-amber-200' :
                 'bg-red-50 border-red-200'
               }`}>
                 <p className="text-xs sm:text-sm text-slate-500 mb-1">Restants</p>
                 <p className={`text-xl sm:text-3xl font-bold ${
-                  remainingSegments === 0 ? 'text-violet-600' :
+                  remainingSegments === 0 ? 'text-indigo-600' :
                   remainingSegments > 0 ? 'text-amber-600' :
                   'text-red-600'
                 }`}>{remainingSegments}</p>
@@ -477,14 +477,14 @@ export default function PrizesPage() {
         {/* Prize Form */}
         {showForm && (
           <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white prize-fade-in">
-            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             <div className="p-5 sm:p-6">
               <div className="flex items-center gap-3 mb-5">
-                <div className="prize-icon-enter w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center flex-shrink-0">
+                <div className="prize-icon-enter w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center flex-shrink-0">
                   {editingId ? (
-                    <Pencil className="w-5 h-5 text-pink-600" />
+                    <Pencil className="w-5 h-5 text-violet-600" />
                   ) : (
-                    <Plus className="w-5 h-5 text-pink-600" />
+                    <Plus className="w-5 h-5 text-violet-600" />
                   )}
                 </div>
                 <div>
@@ -518,7 +518,7 @@ export default function PrizesPage() {
                       </button>
                     </div>
                   ) : (
-                    <div className="border-2 border-dashed border-pink-300 rounded-xl p-8 text-center hover:border-pink-400 transition-colors bg-pink-50/30">
+                    <div className="border-2 border-dashed border-violet-300 rounded-xl p-8 text-center hover:border-violet-400 transition-colors bg-violet-50/30">
                       <input
                         type="file"
                         id="prize-image"
@@ -527,9 +527,9 @@ export default function PrizesPage() {
                         className="hidden"
                       />
                       <label htmlFor="prize-image" className="cursor-pointer">
-                        <ImageIcon className="w-12 h-12 text-pink-300 mx-auto mb-3" />
+                        <ImageIcon className="w-12 h-12 text-violet-300 mx-auto mb-3" />
                         <p className="text-sm text-gray-600 mb-1">
-                          <span className="font-semibold text-pink-600">Cliquez pour uploader</span> ou glissez-deposez
+                          <span className="font-semibold text-violet-600">Cliquez pour uploader</span> ou glissez-deposez
                         </p>
                         <p className="text-xs text-gray-500">PNG, JPG jusqu&apos;a 5MB</p>
                       </label>
@@ -553,7 +553,7 @@ export default function PrizesPage() {
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     placeholder="Obtenez 10% de reduction sur votre prochain achat"
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500"
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500"
                     rows={3}
                   />
                 </div>
@@ -565,7 +565,7 @@ export default function PrizesPage() {
                       Probabilite de Gain
                     </label>
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl font-bold text-pink-600">{formData.probability}%</span>
+                      <span className="text-2xl font-bold text-violet-600">{formData.probability}%</span>
                       <span className={`text-xs px-2 py-1 rounded-full ${getChanceDescription(formData.probability).bg} ${getChanceDescription(formData.probability).color} font-medium`}>
                         {getChanceDescription(formData.probability).text}
                       </span>
@@ -580,7 +580,7 @@ export default function PrizesPage() {
                     value={formData.probability}
                     onChange={(e) => setFormData({ ...formData, probability: parseFloat(e.target.value) })}
                     className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                    style={{ accentColor: '#DB2777' }}
+                    style={{ accentColor: '#7209B7' }}
                   />
 
                   <div className="flex justify-between text-xs text-gray-500 mt-2">
@@ -589,8 +589,8 @@ export default function PrizesPage() {
                     <span>100% (Garanti)</span>
                   </div>
 
-                  <div className="mt-3 p-3 rounded-lg bg-pink-50 border border-pink-200">
-                    <p className="text-sm text-pink-700">
+                  <div className="mt-3 p-3 rounded-lg bg-violet-50 border border-violet-200">
+                    <p className="text-sm text-violet-700">
                       <strong>1 chance sur {Math.round(100 / formData.probability)}</strong> de gagner ce prix
                       {formData.probability >= 10 && ` (environ tous les ${Math.round(100 / formData.probability)} tours)`}
                     </p>
@@ -600,7 +600,7 @@ export default function PrizesPage() {
                 <Button
                   type="submit"
                   disabled={loading || uploading}
-                  className="w-full text-white font-bold py-6 rounded-xl transition-all duration-200 bg-pink-600 hover:bg-pink-700"
+                  className="w-full text-white font-bold py-6 rounded-xl transition-all duration-200 bg-violet-600 hover:bg-violet-700"
                 >
                   {uploading ? 'Upload en cours...' : loading ? 'Sauvegarde...' : (editingId ? 'Mettre a jour le Prix' : 'Creer le Prix')}
                 </Button>
@@ -612,7 +612,7 @@ export default function PrizesPage() {
         {/* Merchant Prizes Grid */}
         <div>
           <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-            <Gift className="w-5 h-5 text-pink-600" />
+            <Gift className="w-5 h-5 text-violet-600" />
             Vos Prix Personnalises
             <span className="text-sm font-normal text-slate-500">({prizes.length} prix)</span>
           </h3>
@@ -622,27 +622,27 @@ export default function PrizesPage() {
           {prizes.map((prize) => {
             const quantity = prizeQuantities[prize.id] || 0;
             return (
-              <div key={prize.id} className={`group relative overflow-hidden border rounded-xl transition-all duration-300 hover:shadow-md bg-white ${quantity > 0 ? 'border-pink-300 bg-pink-50/30' : 'border-gray-200 hover:border-gray-300'}`}>
-                <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
+              <div key={prize.id} className={`group relative overflow-hidden border rounded-xl transition-all duration-300 hover:shadow-md bg-white ${quantity > 0 ? 'border-violet-300 bg-violet-50/30' : 'border-gray-200 hover:border-gray-300'}`}>
+                <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left z-10" />
                 {/* Prize Image */}
                 {prize.image_url ? (
-                  <div className="relative h-40 bg-gradient-to-br from-pink-50 to-violet-50">
+                  <div className="relative h-40 bg-gradient-to-br from-violet-50 to-indigo-50">
                     <img
                       src={prize.image_url}
                       alt={prize.name}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute top-3 right-3">
-                      <div className={`px-3 py-1.5 rounded-full font-bold text-sm shadow-lg ${quantity > 0 ? 'bg-pink-600 text-white' : 'bg-gray-200 text-gray-600'}`}>
+                      <div className={`px-3 py-1.5 rounded-full font-bold text-sm shadow-lg ${quantity > 0 ? 'bg-violet-600 text-white' : 'bg-gray-200 text-gray-600'}`}>
                         x {quantity}
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="h-40 flex items-center justify-center relative bg-gradient-to-br from-pink-50 to-violet-50">
-                    <Gift className="w-12 h-12 text-pink-300" />
+                  <div className="h-40 flex items-center justify-center relative bg-gradient-to-br from-violet-50 to-indigo-50">
+                    <Gift className="w-12 h-12 text-violet-300" />
                     <div className="absolute top-3 right-3">
-                      <div className={`px-3 py-1.5 rounded-full font-bold text-sm shadow-lg ${quantity > 0 ? 'bg-pink-600 text-white' : 'bg-gray-200 text-gray-600'}`}>
+                      <div className={`px-3 py-1.5 rounded-full font-bold text-sm shadow-lg ${quantity > 0 ? 'bg-violet-600 text-white' : 'bg-gray-200 text-gray-600'}`}>
                         x {quantity}
                       </div>
                     </div>
@@ -666,17 +666,17 @@ export default function PrizesPage() {
                         disabled={quantity <= 0}
                         variant="outline"
                         size="sm"
-                        className="w-9 h-9 rounded-full disabled:opacity-50 border-pink-300 text-pink-600 hover:bg-pink-50"
+                        className="w-9 h-9 rounded-full disabled:opacity-50 border-violet-300 text-violet-600 hover:bg-violet-50"
                       >
                         -
                       </Button>
-                      <span className="text-2xl font-bold w-10 text-center text-pink-600">{quantity}</span>
+                      <span className="text-2xl font-bold w-10 text-center text-violet-600">{quantity}</span>
                       <Button
                         onClick={() => updatePrizeQuantity(prize.id, 1)}
                         disabled={totalSegments >= MAX_SEGMENTS}
                         variant="outline"
                         size="sm"
-                        className="w-9 h-9 rounded-full disabled:opacity-50 border-pink-300 text-pink-600 hover:bg-pink-50"
+                        className="w-9 h-9 rounded-full disabled:opacity-50 border-violet-300 text-violet-600 hover:bg-violet-50"
                       >
                         +
                       </Button>
@@ -710,11 +710,11 @@ export default function PrizesPage() {
 
         {prizes.length === 0 && !showForm && (
           <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-gray-50">
-            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             <div className="p-12">
               <div className="text-center">
-                <div className="w-20 h-20 rounded-full bg-pink-50 flex items-center justify-center mx-auto mb-4">
-                  <Gift className="w-10 h-10 text-pink-600" />
+                <div className="w-20 h-20 rounded-full bg-violet-50 flex items-center justify-center mx-auto mb-4">
+                  <Gift className="w-10 h-10 text-violet-600" />
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 mb-2">Aucun prix configure</h3>
                 <p className="text-slate-500 mb-6 max-w-md mx-auto">
@@ -722,7 +722,7 @@ export default function PrizesPage() {
                 </p>
                 <Button
                   onClick={() => setShowForm(true)}
-                  className="gap-2 text-white bg-pink-600 hover:bg-pink-700"
+                  className="gap-2 text-white bg-violet-600 hover:bg-violet-700"
                 >
                   <Plus className="w-4 h-4" />
                   Ajouter mon Premier Prix
@@ -838,19 +838,19 @@ export default function PrizesPage() {
         </Card>
 
         {/* Wheel Appearance Configuration */}
-        <Card className="p-4 sm:p-6 border border-gray-200 rounded-xl" style={{ background: 'linear-gradient(135deg, #831843, #BE185D)' }}>
+        <Card className="p-4 sm:p-6 border border-gray-200 rounded-xl" style={{ background: 'linear-gradient(135deg, #4C1D95, #5B0892)' }}>
           <div className="flex items-center gap-3 mb-4 sm:mb-6">
             <div className="prize-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-amber-400/20">
               <Palette className="w-5 h-5 text-amber-300" />
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-semibold text-white">Apparence de la Roue</h2>
-              <p className="text-xs sm:text-sm text-pink-200">Choisissez un theme pour votre roue</p>
+              <p className="text-xs sm:text-sm text-violet-200">Choisissez un theme pour votre roue</p>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs sm:text-sm font-medium text-pink-200 mb-3">
+            <label className="block text-xs sm:text-sm font-medium text-violet-200 mb-3">
               Themes predefinis
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-2 sm:gap-3">
@@ -865,7 +865,7 @@ export default function PrizesPage() {
                     { color: '#D4548A', textColor: '#ffffff' },
                     { color: '#D4A574', textColor: '#ffffff' },
                   ])}
-                  className="px-3 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-orange-400 text-white text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
+                  className="px-3 py-2 rounded-lg bg-gradient-to-r from-violet-500 to-orange-400 text-white text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
                 >
                   Rose/Corail
                 </button>
@@ -880,7 +880,7 @@ export default function PrizesPage() {
                     { color: '#2E7D32', textColor: '#ffffff' },
                     { color: '#66BB6A', textColor: '#1a1a1a' },
                   ])}
-                  className="px-3 py-2 rounded-lg bg-gradient-to-r from-green-500 to-violet-400 text-white text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
+                  className="px-3 py-2 rounded-lg bg-gradient-to-r from-green-500 to-indigo-400 text-white text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
                 >
                   Vert Nature
                 </button>
@@ -895,7 +895,7 @@ export default function PrizesPage() {
                     { color: '#5B21B6', textColor: '#ffffff' },
                     { color: '#C4B5FD', textColor: '#1a1a1a' },
                   ])}
-                  className="px-3 py-2 rounded-lg bg-gradient-to-r from-violet-500 to-purple-400 text-white text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
+                  className="px-3 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-400 text-white text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
                 >
                   Violet Royal
                 </button>
@@ -935,11 +935,11 @@ export default function PrizesPage() {
 
         {/* Wheel Preview Section */}
         <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           <div className="p-5 sm:p-6">
             <div className="flex items-center gap-3 mb-5">
-              <div className="prize-icon-enter w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center flex-shrink-0">
-                <TrendingUp className="w-5 h-5 text-pink-600" />
+              <div className="prize-icon-enter w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center flex-shrink-0">
+                <TrendingUp className="w-5 h-5 text-violet-600" />
               </div>
               <div>
                 <h2 className="text-base sm:text-lg font-semibold text-slate-900">Apercu de la Roue</h2>
@@ -962,11 +962,11 @@ export default function PrizesPage() {
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
                     <p className="text-slate-500">Segments totaux</p>
-                    <p className="text-2xl font-bold text-pink-600">{totalSegments}/{MAX_SEGMENTS}</p>
+                    <p className="text-2xl font-bold text-violet-600">{totalSegments}/{MAX_SEGMENTS}</p>
                   </div>
                   <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
                     <p className="text-slate-500">Prix sur la roue</p>
-                    <p className="text-2xl font-bold text-pink-600">{totalPrizeSegments}</p>
+                    <p className="text-2xl font-bold text-violet-600">{totalPrizeSegments}</p>
                   </div>
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2 justify-center lg:justify-start">
@@ -986,11 +986,11 @@ export default function PrizesPage() {
 
         {/* Config Summary */}
         <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           <div className="p-5 sm:p-6">
             <div className="flex items-center gap-3 mb-5">
-              <div className="prize-icon-enter w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center flex-shrink-0">
-                <Info className="w-5 h-5 text-violet-600" />
+              <div className="prize-icon-enter w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center flex-shrink-0">
+                <Info className="w-5 h-5 text-indigo-600" />
               </div>
               <div>
                 <h2 className="text-base sm:text-lg font-semibold text-slate-900">Resume de Configuration</h2>
@@ -998,13 +998,13 @@ export default function PrizesPage() {
               </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="bg-pink-50 rounded-lg p-3 border border-pink-200 text-center">
-                <p className="text-xs text-slate-500 mb-1">Segments</p>
-                <p className="text-xl font-bold text-pink-600">{totalSegments}/{MAX_SEGMENTS}</p>
-              </div>
               <div className="bg-violet-50 rounded-lg p-3 border border-violet-200 text-center">
+                <p className="text-xs text-slate-500 mb-1">Segments</p>
+                <p className="text-xl font-bold text-violet-600">{totalSegments}/{MAX_SEGMENTS}</p>
+              </div>
+              <div className="bg-indigo-50 rounded-lg p-3 border border-indigo-200 text-center">
                 <p className="text-xs text-slate-500 mb-1">Prix actifs</p>
-                <p className="text-xl font-bold text-violet-600">{totalPrizeSegments}</p>
+                <p className="text-xl font-bold text-indigo-600">{totalPrizeSegments}</p>
               </div>
               <div className="bg-red-50 rounded-lg p-3 border border-red-200 text-center">
                 <p className="text-xs text-slate-500 mb-1">#PERDU#</p>

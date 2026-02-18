@@ -56,7 +56,7 @@ export default function MultiStorePage() {
     share_prizes: true,
     share_rewards: true,
     allow_cross_store_redemption: true,
-    primary_color: '#8B5CF6',
+    primary_color: '#1800AD',
     secondary_color: '#EB1E99'
   });
 
@@ -165,7 +165,7 @@ export default function MultiStorePage() {
         share_prizes: true,
         share_rewards: true,
         allow_cross_store_redemption: true,
-        primary_color: '#8B5CF6',
+        primary_color: '#1800AD',
         secondary_color: '#EB1E99'
       });
     } catch (err: any) {
@@ -450,12 +450,12 @@ export default function MultiStorePage() {
                   share_prizes: true,
                   share_rewards: true,
                   allow_cross_store_redemption: true,
-                  primary_color: '#8B5CF6',
+                  primary_color: '#1800AD',
                   secondary_color: '#EB1E99'
                 });
                 setViewMode('new-org');
               }}
-              className="bg-gradient-to-r from-[#8B5CF6] to-[#BE185D]"
+              className="bg-gradient-to-r from-[#1800AD] to-[#5B0892]"
             >
               <Plus className="w-4 h-4 mr-2" />
               Nouvelle Organisation
@@ -481,7 +481,7 @@ export default function MultiStorePage() {
                 });
                 setViewMode('new-store');
               }}
-              className="bg-gradient-to-r from-[#8B5CF6] to-[#BE185D]"
+              className="bg-gradient-to-r from-[#1800AD] to-[#5B0892]"
             >
               <Plus className="w-4 h-4 mr-2" />
               Nouveau Magasin
@@ -513,7 +513,7 @@ export default function MultiStorePage() {
                 </p>
                 <Button
                   onClick={() => setViewMode('new-org')}
-                  className="bg-gradient-to-r from-[#8B5CF6] to-[#BE185D]"
+                  className="bg-gradient-to-r from-[#1800AD] to-[#5B0892]"
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Creer une Organisation
@@ -643,7 +643,7 @@ export default function MultiStorePage() {
                 <Button
                   onClick={handleUpdateOrganization}
                   disabled={saving}
-                  className="bg-gradient-to-r from-[#8B5CF6] to-[#BE185D]"
+                  className="bg-gradient-to-r from-[#1800AD] to-[#5B0892]"
                 >
                   {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
                   Enregistrer
@@ -881,7 +881,7 @@ export default function MultiStorePage() {
               <Button
                 onClick={handleUpdateStore}
                 disabled={saving}
-                className="bg-gradient-to-r from-[#8B5CF6] to-[#BE185D]"
+                className="bg-gradient-to-r from-[#1800AD] to-[#5B0892]"
               >
                 {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
                 Enregistrer
@@ -987,7 +987,7 @@ export default function MultiStorePage() {
               <Button
                 onClick={handleCreateOrganization}
                 disabled={saving || !orgForm.name.trim()}
-                className="bg-gradient-to-r from-[#8B5CF6] to-[#BE185D]"
+                className="bg-gradient-to-r from-[#1800AD] to-[#5B0892]"
               >
                 {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Plus className="w-4 h-4 mr-2" />}
                 Creer l'Organisation
@@ -1097,7 +1097,7 @@ export default function MultiStorePage() {
               <Button
                 onClick={handleCreateStore}
                 disabled={saving || !storeForm.name.trim()}
-                className="bg-gradient-to-r from-[#8B5CF6] to-[#BE185D]"
+                className="bg-gradient-to-r from-[#1800AD] to-[#5B0892]"
               >
                 {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Plus className="w-4 h-4 mr-2" />}
                 Creer le Magasin

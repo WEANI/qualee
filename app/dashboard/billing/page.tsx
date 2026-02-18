@@ -41,7 +41,7 @@ export default function BillingPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin text-pink-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-violet-600" />
         </div>
       </DashboardLayout>
     );
@@ -53,8 +53,8 @@ export default function BillingPage() {
         {/* Header */}
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center">
-              <CreditCard className="w-5 h-5 text-pink-600" />
+            <div className="w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center">
+              <CreditCard className="w-5 h-5 text-violet-600" />
             </div>
             Facturation & Abonnement
           </h1>
@@ -62,25 +62,25 @@ export default function BillingPage() {
         </div>
 
         {/* Current Plan */}
-        <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-gradient-to-br from-pink-50 to-violet-50">
-          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+        <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-gradient-to-br from-violet-50 to-indigo-50">
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           <div className="p-5 sm:p-6">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-lg bg-pink-600 flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 rounded-lg bg-violet-600 flex items-center justify-center flex-shrink-0">
                 <Zap className="w-5 h-5 text-white" />
               </div>
               <div className="flex-1">
                 <h2 className="text-base sm:text-lg font-semibold text-slate-900">Plan actuel</h2>
                 <p className="text-xs sm:text-sm text-slate-500">Votre abonnement en cours</p>
               </div>
-              <Button className="bg-pink-600 hover:bg-pink-700 text-white transition-all duration-200">
+              <Button className="bg-violet-600 hover:bg-violet-700 text-white transition-all duration-200">
                 <ArrowUpRight className="w-4 h-4 mr-2" />
                 Mettre à niveau
               </Button>
             </div>
 
             <div className="mb-5">
-              <Badge className="bg-pink-600 text-white border-0 text-xs">
+              <Badge className="bg-violet-600 text-white border-0 text-xs">
                 Plan actuel
               </Badge>
               <h3 className="text-2xl font-bold text-slate-900 mt-2 capitalize">
@@ -92,14 +92,14 @@ export default function BillingPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               <div className="bg-white rounded-lg p-4 border border-gray-200 transition-all duration-200 hover:shadow-sm">
                 <div className="flex items-center gap-2 mb-2">
-                  <Check className="w-4 h-4 text-violet-500" />
+                  <Check className="w-4 h-4 text-indigo-500" />
                   <p className="text-sm text-slate-500">Avis mensuels</p>
                 </div>
                 <p className="text-xl sm:text-2xl font-bold text-slate-900">Illimité</p>
               </div>
               <div className="bg-white rounded-lg p-4 border border-gray-200 transition-all duration-200 hover:shadow-sm">
                 <div className="flex items-center gap-2 mb-2">
-                  <QrCode className="w-4 h-4 text-pink-600" />
+                  <QrCode className="w-4 h-4 text-violet-600" />
                   <p className="text-sm text-slate-500">QR Codes</p>
                 </div>
                 <p className="text-xl sm:text-2xl font-bold text-slate-900">1</p>
@@ -117,11 +117,11 @@ export default function BillingPage() {
 
         {/* Payment Method */}
         <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           <div className="p-5 sm:p-6">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center flex-shrink-0">
-                <CreditCard className="w-5 h-5 text-pink-600" />
+              <div className="w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center flex-shrink-0">
+                <CreditCard className="w-5 h-5 text-violet-600" />
               </div>
               <div>
                 <h2 className="text-base sm:text-lg font-semibold text-slate-900">Moyen de paiement</h2>
@@ -131,7 +131,7 @@ export default function BillingPage() {
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-pink-600 to-violet-600 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center">
                   <CreditCard className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -141,7 +141,7 @@ export default function BillingPage() {
               </div>
               <Button
                 variant="outline"
-                className="border-gray-200 hover:border-pink-500 hover:text-pink-600 transition-all duration-200"
+                className="border-gray-200 hover:border-violet-500 hover:text-violet-600 transition-all duration-200"
               >
                 Ajouter une carte
               </Button>
@@ -151,11 +151,11 @@ export default function BillingPage() {
 
         {/* Billing History */}
         <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           <div className="p-5 sm:p-6">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center flex-shrink-0">
-                <Calendar className="w-5 h-5 text-pink-600" />
+              <div className="w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center flex-shrink-0">
+                <Calendar className="w-5 h-5 text-violet-600" />
               </div>
               <div className="flex-1">
                 <h2 className="text-base sm:text-lg font-semibold text-slate-900">Historique de facturation</h2>
@@ -168,8 +168,8 @@ export default function BillingPage() {
             </div>
 
             <div className="text-center py-12">
-              <div className="w-16 h-16 rounded-full bg-pink-50 flex items-center justify-center mx-auto mb-4">
-                <Calendar className="w-8 h-8 text-pink-200" />
+              <div className="w-16 h-16 rounded-full bg-violet-50 flex items-center justify-center mx-auto mb-4">
+                <Calendar className="w-8 h-8 text-violet-200" />
               </div>
               <p className="text-slate-500 font-medium">Aucun historique de facturation</p>
               <p className="text-sm text-slate-400 mt-1">Vos factures apparaîtront ici</p>

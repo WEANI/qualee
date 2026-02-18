@@ -96,7 +96,7 @@ export default function AccountPage() {
   }, [passwordChecks, newPassword]);
 
   const strengthLabel = passwordStrength <= 1 ? 'Faible' : passwordStrength <= 2 ? 'Moyen' : passwordStrength <= 3 ? 'Bon' : 'Fort';
-  const strengthColor = passwordStrength <= 1 ? 'bg-red-500' : passwordStrength <= 2 ? 'bg-amber-500' : passwordStrength <= 3 ? 'bg-blue-500' : 'bg-violet-500';
+  const strengthColor = passwordStrength <= 1 ? 'bg-red-500' : passwordStrength <= 2 ? 'bg-amber-500' : passwordStrength <= 3 ? 'bg-blue-500' : 'bg-indigo-500';
 
   const handleChangePassword = async () => {
     setMessage(null);
@@ -173,7 +173,7 @@ export default function AccountPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin text-pink-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-violet-600" />
         </div>
       </DashboardLayout>
     );
@@ -187,11 +187,11 @@ export default function AccountPage() {
   const PasswordCheck = ({ ok, text }: { ok: boolean; text: string }) => (
     <div className="flex items-center gap-2 text-sm">
       {ok ? (
-        <Check className="w-4 h-4 text-violet-500 flex-shrink-0" />
+        <Check className="w-4 h-4 text-indigo-500 flex-shrink-0" />
       ) : (
         <X className="w-4 h-4 text-red-400 flex-shrink-0" />
       )}
-      <span className={ok ? 'text-violet-700' : 'text-slate-500'}>{text}</span>
+      <span className={ok ? 'text-indigo-700' : 'text-slate-500'}>{text}</span>
     </div>
   );
 
@@ -224,7 +224,7 @@ export default function AccountPage() {
           left: 0;
           right: 0;
           height: 3px;
-          background: linear-gradient(90deg, #DB2777, #8B5CF6);
+          background: linear-gradient(90deg, #7209B7, #1800AD);
           border-radius: 2px 2px 0 0;
           transform: scaleX(0);
           transform-origin: left;
@@ -268,7 +268,7 @@ export default function AccountPage() {
         {/* Header */}
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-            <CircleUserRound className="w-7 h-7 text-pink-600" />
+            <CircleUserRound className="w-7 h-7 text-violet-600" />
             Mon Compte
           </h1>
           <p className="text-slate-500 mt-1">Gérez votre sécurité et vos paramètres de compte</p>
@@ -277,16 +277,16 @@ export default function AccountPage() {
         {/* Message */}
         {message && (
           <Card className={`p-3 sm:p-4 ${
-            message.type === 'success' ? 'bg-violet-50 border-violet-200' : 'bg-red-50 border-red-200'
+            message.type === 'success' ? 'bg-indigo-50 border-indigo-200' : 'bg-red-50 border-red-200'
           }`}>
             <div className="flex items-center gap-2">
               {message.type === 'success' ? (
-                <Check className="w-5 h-5 text-violet-600 flex-shrink-0" />
+                <Check className="w-5 h-5 text-indigo-600 flex-shrink-0" />
               ) : (
                 <X className="w-5 h-5 text-red-600 flex-shrink-0" />
               )}
               <p className={`font-medium text-sm ${
-                message.type === 'success' ? 'text-violet-700' : 'text-red-700'
+                message.type === 'success' ? 'text-indigo-700' : 'text-red-700'
               }`}>{message.text}</p>
             </div>
           </Card>
@@ -296,7 +296,7 @@ export default function AccountPage() {
         <nav
           role="tablist"
           className="flex gap-1 border-b-2 overflow-x-auto pb-0 scrollbar-hide"
-          style={{ borderColor: '#FCE7F3' }}
+          style={{ borderColor: '#EDE9FE' }}
         >
           {tabs.map(tab => (
             <button
@@ -306,13 +306,13 @@ export default function AccountPage() {
               onClick={() => { setActiveTab(tab.key); setMessage(null); }}
               className="relative flex items-center gap-2 px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap transition-all duration-300 rounded-t-lg"
               style={{
-                color: activeTab === tab.key ? '#DB2777' : '#6b7280',
+                color: activeTab === tab.key ? '#7209B7' : '#6b7280',
                 backgroundColor: 'transparent',
               }}
               onMouseEnter={(e) => {
                 if (activeTab !== tab.key) {
-                  e.currentTarget.style.color = '#BE185D';
-                  e.currentTarget.style.backgroundColor = '#FDF2F8';
+                  e.currentTarget.style.color = '#5B0892';
+                  e.currentTarget.style.backgroundColor = '#F5F3FF';
                 }
               }}
               onMouseLeave={(e) => {
@@ -328,7 +328,7 @@ export default function AccountPage() {
               <span
                 className="absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-300 origin-left"
                 style={{
-                  backgroundColor: '#DB2777',
+                  backgroundColor: '#7209B7',
                   transform: activeTab === tab.key ? 'scaleX(1)' : 'scaleX(0)',
                 }}
               />
@@ -348,9 +348,9 @@ export default function AccountPage() {
                 <div className="flex items-center gap-3 mb-5">
                   <div
                     className="account-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#FDF2F8' }}
+                    style={{ backgroundColor: '#F5F3FF' }}
                   >
-                    <Mail className="w-5 h-5 text-pink-600" />
+                    <Mail className="w-5 h-5 text-violet-600" />
                   </div>
                   <div>
                     <h2 className="text-base sm:text-lg font-semibold text-slate-900">Adresse Email</h2>
@@ -365,7 +365,7 @@ export default function AccountPage() {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-violet-100 text-violet-700 border border-violet-200">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700 border border-indigo-200">
                       <ShieldCheck className="w-3.5 h-3.5" />
                       Email vérifié
                     </span>
@@ -406,8 +406,8 @@ export default function AccountPage() {
                         className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none pr-10"
                         style={{ borderColor: '#d1d5db' }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = '#DB2777';
-                          e.currentTarget.style.backgroundColor = '#FDF2F8';
+                          e.currentTarget.style.borderColor = '#7209B7';
+                          e.currentTarget.style.backgroundColor = '#F5F3FF';
                           e.currentTarget.style.boxShadow = '0 0 0 3px rgba(219, 39, 119, 0.15)';
                         }}
                         onBlur={(e) => {
@@ -440,8 +440,8 @@ export default function AccountPage() {
                         className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none pr-10"
                         style={{ borderColor: '#d1d5db' }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = '#DB2777';
-                          e.currentTarget.style.backgroundColor = '#FDF2F8';
+                          e.currentTarget.style.borderColor = '#7209B7';
+                          e.currentTarget.style.backgroundColor = '#F5F3FF';
                           e.currentTarget.style.boxShadow = '0 0 0 3px rgba(219, 39, 119, 0.15)';
                         }}
                         onBlur={(e) => {
@@ -469,7 +469,7 @@ export default function AccountPage() {
                               passwordStrength <= 1 ? 'text-red-600' :
                               passwordStrength <= 2 ? 'text-amber-600' :
                               passwordStrength <= 3 ? 'text-blue-600' :
-                              'text-violet-600'
+                              'text-indigo-600'
                             }`}>{strengthLabel}</span>
                           </div>
                           <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
@@ -503,8 +503,8 @@ export default function AccountPage() {
                         className="w-full px-4 py-3 border rounded-lg text-sm bg-gray-50 transition-all duration-200 focus:outline-none pr-10"
                         style={{ borderColor: '#d1d5db' }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = '#DB2777';
-                          e.currentTarget.style.backgroundColor = '#FDF2F8';
+                          e.currentTarget.style.borderColor = '#7209B7';
+                          e.currentTarget.style.backgroundColor = '#F5F3FF';
                           e.currentTarget.style.boxShadow = '0 0 0 3px rgba(219, 39, 119, 0.15)';
                         }}
                         onBlur={(e) => {
@@ -551,9 +551,9 @@ export default function AccountPage() {
                     onClick={handleChangePassword}
                     disabled={changingPassword || !newPassword || !confirmPassword || newPassword !== confirmPassword || newPassword.length < 8}
                     className="flex-1 sm:flex-initial text-white transition-all duration-200"
-                    style={{ backgroundColor: '#DB2777' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#BE185D'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#DB2777'; }}
+                    style={{ backgroundColor: '#7209B7' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#5B0892'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#7209B7'; }}
                   >
                     {changingPassword ? (
                       <>
@@ -581,9 +581,9 @@ export default function AccountPage() {
                 <div className="flex items-center gap-3 mb-5">
                   <div
                     className="account-icon-enter w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#FDF2F8' }}
+                    style={{ backgroundColor: '#F5F3FF' }}
                   >
-                    <Shield className="w-5 h-5 text-pink-600" />
+                    <Shield className="w-5 h-5 text-violet-600" />
                   </div>
                   <div>
                     <h2 className="text-base sm:text-lg font-semibold text-slate-900">Informations de Sécurité</h2>
@@ -592,9 +592,9 @@ export default function AccountPage() {
                 </div>
 
                 <div className="space-y-3">
-                  <div className="flex items-center gap-2 p-3 bg-violet-50 rounded-lg border border-violet-200">
-                    <ShieldCheck className="w-5 h-5 text-violet-600 flex-shrink-0" />
-                    <span className="text-sm font-medium text-violet-700">Compte sécurisé</span>
+                  <div className="flex items-center gap-2 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+                    <ShieldCheck className="w-5 h-5 text-indigo-600 flex-shrink-0" />
+                    <span className="text-sm font-medium text-indigo-700">Compte sécurisé</span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

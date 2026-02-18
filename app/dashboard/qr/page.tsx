@@ -44,7 +44,7 @@ export default function QRCodePage() {
           width: 400,
           margin: 2,
           color: {
-            dark: '#DB2777',
+            dark: '#7209B7',
             light: '#FFFFFF',
           },
         });
@@ -96,7 +96,7 @@ export default function QRCodePage() {
             .qr-container {
               text-align: center;
               padding: 40px;
-              border: 4px solid #DB2777;
+              border: 4px solid #7209B7;
               border-radius: 16px;
             }
             .qr-image {
@@ -107,7 +107,7 @@ export default function QRCodePage() {
               margin-top: 20px;
               font-size: 24px;
               font-weight: bold;
-              color: #DB2777;
+              color: #7209B7;
             }
             .instruction {
               margin-top: 10px;
@@ -146,7 +146,7 @@ export default function QRCodePage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin text-pink-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-violet-600" />
         </div>
       </DashboardLayout>
     );
@@ -158,8 +158,8 @@ export default function QRCodePage() {
         {/* Header */}
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center">
-              <QrCode className="w-5 h-5 text-pink-600" />
+            <div className="w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center">
+              <QrCode className="w-5 h-5 text-violet-600" />
             </div>
             Générateur de QR Code
           </h1>
@@ -168,19 +168,19 @@ export default function QRCodePage() {
 
         {/* QR Code Display Card */}
         <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           <div className="p-5 sm:p-8">
             <div className="flex flex-col items-center">
               {merchant?.qr_code_url && (
                 <div className="mb-4 text-center">
-                  <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-violet-50 text-violet-700 rounded-full text-sm font-medium border border-violet-200">
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-full text-sm font-medium border border-indigo-200">
                     <Check className="w-4 h-4" />
                     QR Code généré par l&apos;admin
                   </span>
                 </div>
               )}
 
-              <div className="bg-white p-6 sm:p-8 rounded-xl border-2 border-pink-500 shadow-lg">
+              <div className="bg-white p-6 sm:p-8 rounded-xl border-2 border-violet-500 shadow-lg">
                 {qrCodeUrl && (
                   <img src={qrCodeUrl} alt="QR Code" className="w-56 h-56 sm:w-72 sm:h-72" />
                 )}
@@ -189,7 +189,7 @@ export default function QRCodePage() {
 
               <Button
                 onClick={printQR}
-                className="mt-6 gap-2 bg-pink-600 hover:bg-pink-700 text-white transition-all duration-200"
+                className="mt-6 gap-2 bg-violet-600 hover:bg-violet-700 text-white transition-all duration-200"
               >
                 <Printer className="w-4 h-4" />
                 Imprimer le QR Code
@@ -205,7 +205,7 @@ export default function QRCodePage() {
                     href={`${process.env.NEXT_PUBLIC_APP_URL}/rate/${user.id}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm break-all font-mono bg-white px-4 py-3 rounded-lg border border-gray-200 block transition-all duration-200 hover:border-pink-400 underline text-pink-600"
+                    className="text-sm break-all font-mono bg-white px-4 py-3 rounded-lg border border-gray-200 block transition-all duration-200 hover:border-violet-400 underline text-violet-600"
                   >
                     {`${process.env.NEXT_PUBLIC_APP_URL}/rate/${user.id}`}
                   </a>
@@ -218,7 +218,7 @@ export default function QRCodePage() {
                   onClick={copyLink}
                   variant="outline"
                   className={`w-full gap-2 transition-all duration-200 ${
-                    copied ? 'bg-violet-50 border-violet-200 text-violet-700' : ''
+                    copied ? 'bg-indigo-50 border-indigo-200 text-indigo-700' : ''
                   }`}
                 >
                   {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
@@ -226,7 +226,7 @@ export default function QRCodePage() {
                 </Button>
                 <Button
                   onClick={() => downloadQR('png')}
-                  className="w-full gap-2 bg-pink-600 hover:bg-pink-700 text-white transition-all duration-200"
+                  className="w-full gap-2 bg-violet-600 hover:bg-violet-700 text-white transition-all duration-200"
                 >
                   <Download className="w-4 h-4" />
                   Télécharger PNG
@@ -246,11 +246,11 @@ export default function QRCodePage() {
 
         {/* How to Use Card */}
         <div className="group relative border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:border-gray-300 hover:shadow-md bg-white">
-          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+          <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           <div className="p-5 sm:p-6">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center flex-shrink-0">
-                <Info className="w-5 h-5 text-pink-600" />
+              <div className="w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center flex-shrink-0">
+                <Info className="w-5 h-5 text-violet-600" />
               </div>
               <div>
                 <h2 className="text-base sm:text-lg font-semibold text-slate-900">Comment utiliser votre QR Code</h2>
@@ -269,7 +269,7 @@ export default function QRCodePage() {
                   key={step.num}
                   className="flex gap-3 p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-200 transition-all duration-200 hover:shadow-sm hover:-translate-y-0.5"
                 >
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-pink-600 flex items-center justify-center font-bold text-white text-sm">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-violet-600 flex items-center justify-center font-bold text-white text-sm">
                     {step.num}
                   </div>
                   <div>

@@ -637,7 +637,7 @@ export default function AdminDashboard() {
             <CreditCard className="w-5 h-5" />
             <span className="font-medium">Cartes Fidélité</span>
             {loyaltyStats.totalCards > 0 && (
-              <span className="ml-auto bg-violet-500/80 text-white text-xs px-2 py-0.5 rounded-full">
+              <span className="ml-auto bg-indigo-500/80 text-white text-xs px-2 py-0.5 rounded-full">
                 {loyaltyStats.totalCards}
               </span>
             )}
@@ -776,11 +776,11 @@ export default function AdminDashboard() {
           </div>
 
           <div className="relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700/50">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl"></div>
             <div className="relative">
               <div className="flex items-center justify-between mb-4">
-                <div className="p-2.5 bg-violet-500/20 rounded-xl">
-                  <DollarSign className="w-6 h-6 text-violet-400" />
+                <div className="p-2.5 bg-indigo-500/20 rounded-xl">
+                  <DollarSign className="w-6 h-6 text-indigo-400" />
                 </div>
                 <div className="flex items-center gap-1 text-green-400 text-sm">
                   <TrendingUp className="w-4 h-4" />
@@ -794,11 +794,11 @@ export default function AdminDashboard() {
           </div>
 
           <div className="relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700/50">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-full blur-3xl"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl"></div>
             <div className="relative">
               <div className="flex items-center justify-between mb-4">
-                <div className="p-2.5 bg-pink-500/20 rounded-xl">
-                  <RotateCw className="w-6 h-6 text-pink-400" />
+                <div className="p-2.5 bg-violet-500/20 rounded-xl">
+                  <RotateCw className="w-6 h-6 text-violet-400" />
                 </div>
                 <div className="flex items-center gap-1 text-green-400 text-sm">
                   <TrendingUp className="w-4 h-4" />
@@ -832,17 +832,17 @@ export default function AdminDashboard() {
                   <p className="text-xs text-amber-400">+{loyaltyStats.cardsThisMonth} ce mois</p>
                 </div>
 
-                <div className="bg-gradient-to-br from-violet-500/10 to-green-500/10 rounded-xl p-4 border border-violet-500/20">
+                <div className="bg-gradient-to-br from-indigo-500/10 to-green-500/10 rounded-xl p-4 border border-indigo-500/20">
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-violet-500/20 rounded-lg">
-                      <Coins className="w-5 h-5 text-violet-400" />
+                    <div className="p-2 bg-indigo-500/20 rounded-lg">
+                      <Coins className="w-5 h-5 text-indigo-400" />
                     </div>
                     <div>
                       <p className="text-xs text-white/60">Points en circulation</p>
                       <p className="text-2xl font-bold text-white">{loyaltyStats.totalPoints.toLocaleString()}</p>
                     </div>
                   </div>
-                  <p className="text-xs text-violet-400">{loyaltyStats.pointsDistributed.toLocaleString()} distribués</p>
+                  <p className="text-xs text-indigo-400">{loyaltyStats.pointsDistributed.toLocaleString()} distribués</p>
                 </div>
 
                 <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-xl p-4 border border-blue-500/20">
@@ -858,7 +858,7 @@ export default function AdminDashboard() {
                   <p className="text-xs text-blue-400">{loyaltyStats.totalSpent.toLocaleString()} THB dépensés</p>
                 </div>
 
-                <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-xl p-4 border border-purple-500/20">
+                <div className="bg-gradient-to-br from-purple-500/10 to-violet-500/10 rounded-xl p-4 border border-purple-500/20">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="p-2 bg-purple-500/20 rounded-lg">
                       <Award className="w-5 h-5 text-purple-400" />
@@ -918,8 +918,8 @@ export default function AdminDashboard() {
                     >
                       <defs>
                         <linearGradient id="colorReviews" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3}/>
-                          <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
+                          <stop offset="5%" stopColor="#1800ad" stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor="#1800ad" stopOpacity={0}/>
                         </linearGradient>
                         <linearGradient id="colorSpins" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3}/>
@@ -940,7 +940,7 @@ export default function AdminDashboard() {
                       <Area
                         type="monotone"
                         dataKey="reviews"
-                        stroke="#8b5cf6"
+                        stroke="#1800ad"
                         fillOpacity={1}
                         fill="url(#colorReviews)"
                         name="Avis"
@@ -970,7 +970,7 @@ export default function AdminDashboard() {
                           const premiumCount = merchants.filter(m => m.subscription_tier === 'premium').length;
                           const freeCount = merchants.filter(m => !m.subscription_tier || m.subscription_tier === 'free').length;
                           return [
-                            { name: 'Starter', value: starterCount, color: '#8b5cf6' },
+                            { name: 'Starter', value: starterCount, color: '#1800ad' },
                             { name: 'Premium', value: premiumCount, color: '#10b981' },
                             { name: 'Gratuit', value: freeCount, color: '#6b7280' },
                           ].filter(d => d.value > 0);
@@ -987,7 +987,7 @@ export default function AdminDashboard() {
                           const premiumCount = merchants.filter(m => m.subscription_tier === 'premium').length;
                           const freeCount = merchants.filter(m => !m.subscription_tier || m.subscription_tier === 'free').length;
                           const data = [
-                            { name: 'Starter', value: starterCount, color: '#8b5cf6' },
+                            { name: 'Starter', value: starterCount, color: '#1800ad' },
                             { name: 'Premium', value: premiumCount, color: '#10b981' },
                             { name: 'Gratuit', value: freeCount, color: '#6b7280' },
                           ].filter(d => d.value > 0);
@@ -1041,7 +1041,7 @@ export default function AdminDashboard() {
                         color: '#fff'
                       }}
                     />
-                    <Bar dataKey="reviews" fill="#8b5cf6" radius={[4, 4, 0, 0]} name="Avis" />
+                    <Bar dataKey="reviews" fill="#1800ad" radius={[4, 4, 0, 0]} name="Avis" />
                     <Bar dataKey="spins" fill="#06b6d4" radius={[4, 4, 0, 0]} name="Tours" />
                   </BarChart>
                 </ResponsiveContainer>
@@ -1122,7 +1122,7 @@ export default function AdminDashboard() {
                           <h3 className="text-lg font-semibold text-white">{merchant.business_name}</h3>
                           <Badge className="capitalize bg-slate-700 text-white border-slate-600">{merchant.subscription_tier}</Badge>
                           {merchant.is_active !== false ? (
-                            <Badge className="bg-violet-500/20 text-violet-400 border-violet-500/30">
+                            <Badge className="bg-indigo-500/20 text-indigo-400 border-indigo-500/30">
                               <CheckCircle2 className="w-3 h-3 mr-1" />
                               Actif
                             </Badge>
@@ -1143,7 +1143,7 @@ export default function AdminDashboard() {
                           </div>
                           <div className="bg-slate-900/50 rounded-xl p-3 border border-slate-700/50">
                             <p className="text-xs text-white/70">Positifs</p>
-                            <p className="text-lg font-bold text-violet-400">{stats.positiveReviews}</p>
+                            <p className="text-lg font-bold text-indigo-400">{stats.positiveReviews}</p>
                           </div>
                           <div className="bg-slate-900/50 rounded-xl p-3 border border-slate-700/50">
                             <p className="text-xs text-white/70">Note Moy.</p>
@@ -1176,7 +1176,7 @@ export default function AdminDashboard() {
                           <Button
                             size="sm"
                             onClick={() => generateAndSaveQRCode(merchant.id, merchant.business_name)}
-                            className="gap-2 bg-violet-500/20 hover:bg-violet-500/30 text-violet-400 border-violet-500/30"
+                            className="gap-2 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-400 border-indigo-500/30"
                           >
                             <QrCode className="w-4 h-4" />
                             Générer QR
@@ -1526,10 +1526,10 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-violet-500/10 to-green-500/10 rounded-xl p-4 border border-violet-500/20">
+              <div className="bg-gradient-to-br from-indigo-500/10 to-green-500/10 rounded-xl p-4 border border-indigo-500/20">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-violet-500/20 rounded-lg">
-                    <CheckCircle2 className="w-5 h-5 text-violet-400" />
+                  <div className="p-2 bg-indigo-500/20 rounded-lg">
+                    <CheckCircle2 className="w-5 h-5 text-indigo-400" />
                   </div>
                   <div>
                     <p className="text-xs text-white/60">Cartes Actives</p>
@@ -1550,7 +1550,7 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-xl p-4 border border-purple-500/20">
+              <div className="bg-gradient-to-br from-purple-500/10 to-violet-500/10 rounded-xl p-4 border border-purple-500/20">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-purple-500/20 rounded-lg">
                     <ShoppingBag className="w-5 h-5 text-purple-400" />
@@ -1669,7 +1669,7 @@ export default function AdminDashboard() {
                           </td>
                           <td className="px-6 py-4">
                             <Badge className={`${
-                              client.status === 'active' ? 'bg-violet-500/20 text-violet-400 border-violet-500/30' :
+                              client.status === 'active' ? 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30' :
                               client.status === 'suspended' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' :
                               'bg-red-500/20 text-red-400 border-red-500/30'
                             }`}>

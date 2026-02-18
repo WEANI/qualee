@@ -34,21 +34,21 @@ function CustomerDetailsModal({ customer, onClose }: CustomerDetailsModalProps) 
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden" style={{ animation: 'fadeInModal 0.3s ease-out' }}>
         {/* Header */}
-        <div className="text-white p-6" style={{ background: 'linear-gradient(135deg, #DB2777, #BE185D)' }}>
+        <div className="text-white p-6" style={{ background: 'linear-gradient(135deg, #7209B7, #5B0892)' }}>
           <div className="flex justify-between items-start">
             <div className="flex items-center gap-4">
               <div className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg ${
                 customer.email || customer.phone
                   ? 'bg-white'
-                  : 'bg-pink-400 text-white'
-              }`} style={customer.email || customer.phone ? { color: '#DB2777' } : {}}>
+                  : 'bg-violet-400 text-white'
+              }`} style={customer.email || customer.phone ? { color: '#7209B7' } : {}}>
                 {customer.email ? customer.email[0].toUpperCase() : customer.phone ? '...' : '?'}
               </div>
               <div>
                 <h2 className="text-xl font-bold">
                   {customer.email || customer.phone || 'Client Anonyme'}
                 </h2>
-                <p className="text-pink-200 text-sm font-mono">
+                <p className="text-violet-200 text-sm font-mono">
                   ID: {customer.user_token.substring(0, 12)}...
                 </p>
               </div>
@@ -289,7 +289,7 @@ export default function CustomersPage() {
     return (
       <DashboardLayout merchant={merchant}>
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="w-8 h-8 animate-spin text-pink-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-violet-600" />
         </div>
       </DashboardLayout>
     );
@@ -321,7 +321,7 @@ export default function CustomersPage() {
           left: 0;
           right: 0;
           height: 3px;
-          background: linear-gradient(90deg, #DB2777, #8B5CF6);
+          background: linear-gradient(90deg, #7209B7, #1800AD);
           border-radius: 2px 2px 0 0;
           transform: scaleX(0);
           transform-origin: left;
@@ -335,8 +335,8 @@ export default function CustomersPage() {
           box-shadow: 0 4px 12px rgba(219, 39, 119, 0.12);
         }
         .customer-input:focus {
-          border-color: #DB2777 !important;
-          background-color: #FDF2F8 !important;
+          border-color: #7209B7 !important;
+          background-color: #F5F3FF !important;
           box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.15) !important;
         }
       `}</style>
@@ -346,7 +346,7 @@ export default function CustomersPage() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-2">
-              <Users className="w-7 h-7 text-pink-600" />
+              <Users className="w-7 h-7 text-violet-600" />
               Clients
             </h1>
             <p className="text-slate-500 mt-1">Gérez votre base de données clients et leurs interactions</p>
@@ -354,7 +354,7 @@ export default function CustomersPage() {
           <Button
             variant="outline"
             className="gap-2 border-gray-200 hover:bg-gray-50 transition-all duration-200"
-            onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#DB2777'; e.currentTarget.style.color = '#DB2777'; }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#7209B7'; e.currentTarget.style.color = '#7209B7'; }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = ''; }}
           >
             <TrendingUp className="w-4 h-4" />
@@ -366,8 +366,8 @@ export default function CustomersPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           <Card className="customer-card p-4 sm:p-5 border border-gray-200 rounded-xl">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#FDF2F8' }}>
-                <Users className="w-5 h-5 text-pink-600" />
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#F5F3FF' }}>
+                <Users className="w-5 h-5 text-violet-600" />
               </div>
               <div>
                 <p className="text-xs sm:text-sm font-medium text-slate-500">Clients Totaux</p>
@@ -378,8 +378,8 @@ export default function CustomersPage() {
 
           <Card className="customer-card p-4 sm:p-5 border border-gray-200 rounded-xl">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#FDF2F8' }}>
-                <Mail className="w-5 h-5 text-pink-600" />
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#F5F3FF' }}>
+                <Mail className="w-5 h-5 text-violet-600" />
               </div>
               <div>
                 <p className="text-xs sm:text-sm font-medium text-slate-500">Emails Collectés</p>
@@ -422,7 +422,7 @@ export default function CustomersPage() {
         <nav
           role="tablist"
           className="flex gap-1 border-b-2 overflow-x-auto pb-0 scrollbar-hide"
-          style={{ borderColor: '#FCE7F3' }}
+          style={{ borderColor: '#EDE9FE' }}
         >
           <button
             role="tab"
@@ -430,12 +430,12 @@ export default function CustomersPage() {
             onClick={() => { setActiveTab('web'); setSearchQuery(''); }}
             className="relative flex items-center gap-2 px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap transition-all duration-300 rounded-t-lg"
             style={{
-              color: activeTab === 'web' ? '#DB2777' : '#6b7280',
+              color: activeTab === 'web' ? '#7209B7' : '#6b7280',
             }}
             onMouseEnter={(e) => {
               if (activeTab !== 'web') {
-                e.currentTarget.style.color = '#BE185D';
-                e.currentTarget.style.backgroundColor = '#FDF2F8';
+                e.currentTarget.style.color = '#5B0892';
+                e.currentTarget.style.backgroundColor = '#F5F3FF';
               }
             }}
             onMouseLeave={(e) => {
@@ -451,7 +451,7 @@ export default function CustomersPage() {
             <span
               className="absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-300 origin-left"
               style={{
-                backgroundColor: '#DB2777',
+                backgroundColor: '#7209B7',
                 transform: activeTab === 'web' ? 'scaleX(1)' : 'scaleX(0)',
               }}
             />
@@ -462,7 +462,7 @@ export default function CustomersPage() {
             onClick={() => { setActiveTab('whatsapp'); setSearchQuery(''); }}
             className="relative flex items-center gap-2 px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap transition-all duration-300 rounded-t-lg"
             style={{
-              color: activeTab === 'whatsapp' ? '#8B5CF6' : '#6b7280',
+              color: activeTab === 'whatsapp' ? '#1800AD' : '#6b7280',
             }}
             onMouseEnter={(e) => {
               if (activeTab !== 'whatsapp') {
@@ -483,7 +483,7 @@ export default function CustomersPage() {
             <span
               className="absolute bottom-0 left-0 right-0 h-0.5 transition-transform duration-300 origin-left"
               style={{
-                backgroundColor: '#8B5CF6',
+                backgroundColor: '#1800AD',
                 transform: activeTab === 'whatsapp' ? 'scaleX(1)' : 'scaleX(0)',
               }}
             />
@@ -531,7 +531,7 @@ export default function CustomersPage() {
               <tbody className="divide-y divide-slate-100 bg-white">
                 {filteredCustomers.length > 0 ? (
                   filteredCustomers.map((customer) => (
-                    <tr key={customer.user_token} className="hover:bg-pink-50/30 transition-colors duration-200">
+                    <tr key={customer.user_token} className="hover:bg-violet-50/30 transition-colors duration-200">
                       <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-3 sm:gap-4">
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-sm ${
@@ -544,8 +544,8 @@ export default function CustomersPage() {
                                 : 'bg-slate-100 text-slate-500'
                           }`} style={
                             activeTab === 'web'
-                              ? customer.email ? { background: 'linear-gradient(135deg, #DB2777, #BE185D)' } : {}
-                              : customer.phone ? { background: 'linear-gradient(135deg, #8B5CF6, #059669)' } : {}
+                              ? customer.email ? { background: 'linear-gradient(135deg, #7209B7, #5B0892)' } : {}
+                              : customer.phone ? { background: 'linear-gradient(135deg, #1800AD, #059669)' } : {}
                           }>
                             {activeTab === 'web'
                               ? (customer.email ? customer.email[0].toUpperCase() : '?')
@@ -589,7 +589,7 @@ export default function CustomersPage() {
                       </td>
                       <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                         {customer.total_reviews > 1 ? (
-                          <Badge className="text-white border-0" style={{ backgroundColor: '#DB2777' }}>
+                          <Badge className="text-white border-0" style={{ backgroundColor: '#7209B7' }}>
                             Habitué
                           </Badge>
                         ) : (
@@ -628,8 +628,8 @@ export default function CustomersPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="transition-colors duration-200 text-pink-600"
-                          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#FDF2F8'; }}
+                          className="transition-colors duration-200 text-violet-600"
+                          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#F5F3FF'; }}
                           onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
                           onClick={() => setSelectedCustomer(customer)}
                         >
