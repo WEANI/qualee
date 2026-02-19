@@ -63,7 +63,7 @@ export default function LandingPage() {
     },
     {
       question: "Comment filtrez-vous les avis négatifs ?",
-      answer: "Avant de rediriger vers Google, nous demandons au client de noter son expérience. Si la note est inférieure à 4 étoiles, il est redirigé vers un formulaire de feedback privé, vous permettant de résoudre le problème avant qu'il ne devienne public."
+      answer: "Nous demandons au client de noter son expérience. Si la note est inférieure à 4 étoiles, il est redirigé vers un formulaire de feedback privé, lui permettant d'exprimer les raisons de son mécontentement. S'il le souhaite, il peut ensuite laisser une note sur la page Google."
     },
     {
       question: "Puis-je personnaliser les récompenses de la roue ?",
@@ -1060,19 +1060,19 @@ export default function LandingPage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Solo Plan */}
+            {/* Free Plan */}
             <div className="relative bg-white border border-gray-200 rounded-3xl p-8 hover:border-gray-300 hover:shadow-lg transition-all">
               <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2 text-gray-900">Solo</h3>
-                <p className="text-gray-600">Parfait pour un établissement unique</p>
+                <h3 className="text-2xl font-bold mb-2 text-gray-900">Free</h3>
+                <p className="text-gray-600">14 jours d&apos;essai gratuit</p>
               </div>
 
               <div className="mb-8">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-bold text-gray-900">49€</span>
-                  <span className="text-gray-500">/mois</span>
+                  <span className="text-5xl font-bold text-gray-900">0€</span>
+                  <span className="text-gray-500">/14 jours</span>
                 </div>
-                <p className="text-gray-500 text-sm mt-2">Facturé mensuellement</p>
+                <p className="text-gray-500 text-sm mt-2">Formule Solo gratuite pendant 14 jours</p>
               </div>
 
               <ul className="space-y-4 mb-8">
@@ -1124,82 +1124,82 @@ export default function LandingPage() {
                 href="/auth/signup"
                 className="block w-full py-4 border-2 border-[#3A0CA3]/30 text-[#3A0CA3] font-semibold rounded-full text-center hover:bg-[#3A0CA3]/5 transition-all"
               >
-                Commencer l'essai gratuit
+                Commencer l&apos;essai gratuit
               </Link>
             </div>
 
-            {/* Multi Shop Plan */}
-            <div className="relative bg-gradient-to-b from-[#EB1E99]/10 to-white border-2 border-[#EB1E99]/50 rounded-3xl p-8 shadow-lg shadow-[#EB1E99]/10">
+            {/* Solo Plan */}
+            <div className="relative bg-gradient-to-b from-[#7209B7]/10 to-white border-2 border-[#7209B7]/50 rounded-3xl p-8 shadow-lg shadow-[#7209B7]/10">
               {/* Popular Badge */}
               <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                <div className="px-4 py-1.5 bg-gradient-to-r from-[#EB1E99] to-[#7209B7] text-white font-semibold rounded-full text-sm">
+                <div className="px-4 py-1.5 bg-gradient-to-r from-[#7209B7] to-[#1800AD] text-white font-semibold rounded-full text-sm">
                   Le plus populaire
                 </div>
               </div>
 
               <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2 text-gray-900">Multi Shop</h3>
-                <p className="text-gray-600">Pour les réseaux multi-établissements</p>
+                <h3 className="text-2xl font-bold mb-2 text-gray-900">Solo</h3>
+                <p className="text-gray-600">Parfait pour un établissement unique</p>
               </div>
 
               <div className="mb-8">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-bold text-gray-900">99€</span>
+                  <span className="text-5xl font-bold text-gray-900">49€</span>
                   <span className="text-gray-500">/mois</span>
                 </div>
-                <p className="text-gray-500 text-sm mt-2">+ 29€/établissement supplémentaire</p>
+                <p className="text-gray-500 text-sm mt-2">Facturé mensuellement</p>
               </div>
 
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center gap-3">
-                  <div className="w-5 h-5 bg-[#EB1E99]/20 rounded-full flex items-center justify-center">
-                    <Check className="w-3 h-3 text-[#EB1E99]" />
+                  <div className="w-5 h-5 bg-[#7209B7]/20 rounded-full flex items-center justify-center">
+                    <Check className="w-3 h-3 text-[#7209B7]" />
                   </div>
-                  <span className="text-gray-700">Jusqu'à 10 établissements</span>
+                  <span className="text-gray-700">1 établissement</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="w-5 h-5 bg-[#EB1E99]/20 rounded-full flex items-center justify-center">
-                    <Check className="w-3 h-3 text-[#EB1E99]" />
+                  <div className="w-5 h-5 bg-[#7209B7]/20 rounded-full flex items-center justify-center">
+                    <Check className="w-3 h-3 text-[#7209B7]" />
                   </div>
-                  <span className="text-gray-700">Tout du plan Solo</span>
+                  <span className="text-gray-700">Clients illimités</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="w-5 h-5 bg-[#EB1E99]/20 rounded-full flex items-center justify-center">
-                    <Check className="w-3 h-3 text-[#EB1E99]" />
+                  <div className="w-5 h-5 bg-[#7209B7]/20 rounded-full flex items-center justify-center">
+                    <Check className="w-3 h-3 text-[#7209B7]" />
                   </div>
-                  <span className="text-gray-700">Dashboard centralisé</span>
+                  <span className="text-gray-700">Roue des cadeaux personnalisable</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="w-5 h-5 bg-[#EB1E99]/20 rounded-full flex items-center justify-center">
-                    <Check className="w-3 h-3 text-[#EB1E99]" />
+                  <div className="w-5 h-5 bg-[#7209B7]/20 rounded-full flex items-center justify-center">
+                    <Check className="w-3 h-3 text-[#7209B7]" />
                   </div>
-                  <span className="text-gray-700">Gestion des équipes</span>
+                  <span className="text-gray-700">Boost Avis Google</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="w-5 h-5 bg-[#EB1E99]/20 rounded-full flex items-center justify-center">
-                    <Check className="w-3 h-3 text-[#EB1E99]" />
+                  <div className="w-5 h-5 bg-[#7209B7]/20 rounded-full flex items-center justify-center">
+                    <Check className="w-3 h-3 text-[#7209B7]" />
                   </div>
-                  <span className="text-gray-700">API & Intégrations</span>
+                  <span className="text-gray-700">Automatisation WhatsApp</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="w-5 h-5 bg-[#EB1E99]/20 rounded-full flex items-center justify-center">
-                    <Check className="w-3 h-3 text-[#EB1E99]" />
+                  <div className="w-5 h-5 bg-[#7209B7]/20 rounded-full flex items-center justify-center">
+                    <Check className="w-3 h-3 text-[#7209B7]" />
                   </div>
-                  <span className="text-gray-700">Rapports personnalisés</span>
+                  <span className="text-gray-700">Dashboard analytics</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="w-5 h-5 bg-[#EB1E99]/20 rounded-full flex items-center justify-center">
-                    <Check className="w-3 h-3 text-[#EB1E99]" />
+                  <div className="w-5 h-5 bg-[#7209B7]/20 rounded-full flex items-center justify-center">
+                    <Check className="w-3 h-3 text-[#7209B7]" />
                   </div>
-                  <span className="text-gray-700">Support prioritaire 24/7</span>
+                  <span className="text-gray-700">Support email</span>
                 </li>
               </ul>
 
               <Link
                 href="/auth/signup"
-                className="block w-full py-4 bg-gradient-to-r from-[#EB1E99] to-[#7209B7] text-white font-bold rounded-full text-center hover:from-[#f540ad] hover:to-[#8a1ed1] transition-all shadow-lg shadow-[#EB1E99]/25"
+                className="block w-full py-4 bg-gradient-to-r from-[#7209B7] to-[#1800AD] text-white font-bold rounded-full text-center hover:from-[#8a1ed1] hover:to-[#2010c7] transition-all shadow-lg shadow-[#7209B7]/25"
               >
-                Commencer l'essai gratuit
+                Commencer l&apos;essai gratuit
               </Link>
             </div>
           </div>

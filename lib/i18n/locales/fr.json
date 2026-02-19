@@ -47,16 +47,16 @@
     "iDoneLaunchWheel": "J'ai fait - Lancer la roue",
     "buttonActiveIn": "Le bouton sera actif dans {{seconds}} seconde(s)",
     "clickToSpinAndWin": "Cliquez pour tourner la roue et gagner !",
-    "whatsappHintTitle": "🎁 Une surprise vous attend !",
-    "whatsappHintMessage": "Laissez votre avis et tournez la roue pour tenter de gagner un cadeau !"
+    "whatsappHintTitle": "Une surprise vous attend !",
+    "whatsappHintMessage": "Laissez votre avis, tournez la roue et tentez de gagner un cadeau !"
   },
   "wheel": {
     "title": "Tournez pour gagner!",
     "spin": "Tourner la roue",
     "congratulations": "Félicitations!",
     "youWon": "Vous avez gagné",
-    "alreadySpun": "Vous avez déjà tourné la roue aujourd'hui",
-    "tryAgainTomorrow": "Revenez demain pour une autre chance!",
+    "alreadySpun": "Vous avez déjà tourné la roue",
+    "tryAgainTomorrow": "Tentez votre chance lors de votre prochaine visite!",
     "retry": "Réessayez !",
     "unlucky": "Dommage...",
     "spinsRemaining": "Tours restants",

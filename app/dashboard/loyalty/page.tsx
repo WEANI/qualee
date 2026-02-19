@@ -616,7 +616,7 @@ export default function LoyaltyPage() {
                         <p className="text-xs sm:text-sm text-slate-500">Devise et bonus de bienvenue</p>
                       </div>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 items-end">
                       <div>
                         <label className="block text-sm font-medium text-slate-700 mb-1.5">Devise</label>
                         <select

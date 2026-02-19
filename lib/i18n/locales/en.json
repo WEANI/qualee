@@ -47,16 +47,16 @@
     "iDoneLaunchWheel": "I'm done - Spin the wheel",
     "buttonActiveIn": "Button will be active in {{seconds}} second(s)",
     "clickToSpinAndWin": "Click to spin the wheel and win!",
-    "whatsappHintTitle": "🎁 A surprise awaits you!",
-    "whatsappHintMessage": "Leave your review and spin the wheel to try to win a gift!"
+    "whatsappHintTitle": "A surprise awaits you!",
+    "whatsappHintMessage": "Leave your review, spin the wheel and try to win a gift!"
   },
   "wheel": {
     "title": "Spin to Win!",
     "spin": "Spin the Wheel",
     "congratulations": "Congratulations!",
     "youWon": "You won",
-    "alreadySpun": "You've already spun the wheel today",
-    "tryAgainTomorrow": "Come back tomorrow for another chance!",
+    "alreadySpun": "You've already spun the wheel",
+    "tryAgainTomorrow": "Try your luck on your next visit!",
     "retry": "Try again!",
     "unlucky": "No luck...",
     "spinsRemaining": "Spins remaining",
