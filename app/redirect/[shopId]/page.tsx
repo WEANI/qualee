@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/atoms/Button';
@@ -83,6 +83,7 @@ export default function RedirectPage() {
   const [isClient, setIsClient] = useState(false);
   const [countdown, setCountdown] = useState(15);
   const [canProceed, setCanProceed] = useState(false);
+  const [countdownStartTime, setCountdownStartTime] = useState<number | null>(null);
   const [redirectUrl, setRedirectUrl] = useState('');
   const [strategy, setStrategy] = useState('google_maps');
   const [hasClickedSocial, setHasClickedSocial] = useState(false);
@@ -92,6 +93,8 @@ export default function RedirectPage() {
   const [whatsappSending, setWhatsappSending] = useState(false);
   const [whatsappSent, setWhatsappSent] = useState(false);
   const [whatsappError, setWhatsappError] = useState('');
+  const [whatsappStartTime, setWhatsappStartTime] = useState<number | null>(null);
+  const whatsappSentRef = useRef(false);
 
   // Determine workflow mode
   const workflowMode = merchant?.workflow_mode || 'web';
@@ -165,30 +168,96 @@ export default function RedirectPage() {
     fetchMerchant();
   }, [shopId]);
 
-  // Countdown timer - only starts after social link is clicked (Web mode)
+  // Countdown timer - timestamp-based for background tab resilience (Web mode)
   useEffect(() => {
-    if (!isWhatsAppMode && hasClickedSocial && countdown > 0) {
-      const timer = setTimeout(() => {
-        setCountdown(countdown - 1);
-      }, 1000);
-      return () => clearTimeout(timer);
-    } else if (!isWhatsAppMode && hasClickedSocial && countdown === 0) {
-      setCanProceed(true);
-    }
-  }, [countdown, hasClickedSocial, isWhatsAppMode]);
+    if (isWhatsAppMode || !hasClickedSocial) return;
 
-  // WhatsApp countdown timer - starts after social link is clicked
-  useEffect(() => {
-    if (isWhatsAppMode && hasClickedSocial && whatsappCountdown > 0 && !whatsappSending && !whatsappSent) {
-      const timer = setTimeout(() => {
-        setWhatsappCountdown(whatsappCountdown - 1);
-      }, 1000);
-      return () => clearTimeout(timer);
-    } else if (isWhatsAppMode && hasClickedSocial && whatsappCountdown === 0 && !whatsappSending && !whatsappSent) {
-      // Auto-send WhatsApp message
-      sendWhatsAppMessage();
+    if (!countdownStartTime) {
+      setCountdownStartTime(Date.now());
+      return;
     }
-  }, [whatsappCountdown, hasClickedSocial, isWhatsAppMode, whatsappSending, whatsappSent]);
+
+    const tick = () => {
+      const elapsed = Math.floor((Date.now() - countdownStartTime) / 1000);
+      const remaining = Math.max(0, 15 - elapsed);
+      setCountdown(remaining);
+      if (remaining === 0) setCanProceed(true);
+    };
+
+    tick();
+    const interval = setInterval(tick, 500);
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') tick();
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, [countdownStartTime, hasClickedSocial, isWhatsAppMode]);
+
+  // WhatsApp countdown timer - timestamp-based for background tab resilience
+  useEffect(() => {
+    if (!isWhatsAppMode || !hasClickedSocial || whatsappSentRef.current || whatsappSending) return;
+
+    // Record start time on first trigger
+    if (!whatsappStartTime) {
+      setWhatsappStartTime(Date.now());
+      return;
+    }
+
+    const tick = () => {
+      const elapsed = Math.floor((Date.now() - whatsappStartTime) / 1000);
+      const remaining = Math.max(0, 20 - elapsed);
+      setWhatsappCountdown(remaining);
+
+      if (remaining === 0 && !whatsappSentRef.current) {
+        whatsappSentRef.current = true;
+        sendWhatsAppMessage();
+      }
+    };
+
+    tick(); // Immediate check (catches up after background tab resume)
+    const interval = setInterval(tick, 500); // Check every 500ms for precision
+
+    // Listen for tab becoming visible again to catch up immediately
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') tick();
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, [whatsappStartTime, hasClickedSocial, isWhatsAppMode, whatsappSending]);
+
+  // Fallback: send WhatsApp message if user navigates away before countdown completes
+  useEffect(() => {
+    if (!isWhatsAppMode || !hasClickedSocial || !whatsappStartTime || !phoneNumber || !shopId) return;
+
+    const handleBeforeUnload = () => {
+      if (whatsappSentRef.current) return;
+      const elapsed = (Date.now() - whatsappStartTime) / 1000;
+      if (elapsed < 20) {
+        // Send immediately via beacon if user leaves before countdown ends
+        const cardUrl = cardQrCode ? `${window.location.origin}/card/${cardQrCode}` : undefined;
+        const payload = JSON.stringify({
+          merchantId: shopId,
+          phoneNumber,
+          language: currentLang,
+          cardUrl,
+          isNewClient,
+        });
+        navigator.sendBeacon('/api/whatsapp/send', new Blob([payload], { type: 'application/json' }));
+        whatsappSentRef.current = true;
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isWhatsAppMode, hasClickedSocial, whatsappStartTime, phoneNumber, shopId, currentLang, cardQrCode, isNewClient]);
 
   // Function to send WhatsApp message via API
   // If cardQrCode is provided, the message will have 2 buttons (Spin + Card)
@@ -234,6 +303,7 @@ export default function RedirectPage() {
         return;
       }
 
+      whatsappSentRef.current = true;
       setWhatsappSent(true);
       setWhatsappSending(false);
     } catch (error) {

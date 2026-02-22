@@ -71,7 +71,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
         { name: 'Programme fidelite', href: '/dashboard/loyalty', icon: Award },
         { name: 'Strategie', href: '/dashboard/strategy', icon: Target },
         { name: 'Avis clients', href: '/dashboard/feedback', icon: MessageSquare },
-        { name: 'Campagne WhatsApp', href: '/dashboard/marketing/whatsapp-campaign', icon: Send },
+        // { name: 'Campagne WhatsApp', href: '/dashboard/marketing/whatsapp-campaign', icon: Send },
       ],
     },
     {
