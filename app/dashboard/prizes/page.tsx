@@ -221,8 +221,11 @@ export default function PrizesPage() {
     fetchPrizes(user.id);
   };
 
-  // Calculate total segments used
-  const totalPrizeSegments = Object.values(prizeQuantities).reduce((sum, qty) => sum + qty, 0);
+  // Calculate total segments used (only count existing prizes)
+  const existingPrizeIds = new Set(prizes.map(p => p.id));
+  const totalPrizeSegments = Object.entries(prizeQuantities)
+    .filter(([id]) => existingPrizeIds.has(id))
+    .reduce((sum, [, qty]) => sum + qty, 0);
   const totalSegments = totalPrizeSegments + unluckyQuantity + retryQuantity;
   const remainingSegments = MAX_SEGMENTS - totalSegments;
 

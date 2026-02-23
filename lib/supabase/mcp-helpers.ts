@@ -372,9 +372,9 @@ export const utils = {
   /**
    * Calculer la date d'expiration d'un coupon
    */
-  getCouponExpiration(hours: number = 24): string {
+  getCouponExpiration(days: number = 60): string {
     const expiresAt = new Date();
-    expiresAt.setHours(expiresAt.getHours() + hours);
+    expiresAt.setDate(expiresAt.getDate() + days);
     return expiresAt.toISOString();
   },
 

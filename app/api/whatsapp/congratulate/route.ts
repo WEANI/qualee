@@ -10,57 +10,57 @@ const WHAPI_API_URL = 'https://gate.whapi.cloud/messages/interactive';
 const CONGRATULATION_MESSAGES: Record<string, (prizeName: string) => { body: string; footer: string; buttonText: string }> = {
   fr: (prizeName) => ({
     body: `🎉 FÉLICITATIONS ! 🎉\n\nVous avez gagné : *${prizeName}* !\n\n🎁 Cliquez sur le bouton ci-dessous pour afficher votre coupon avec le QR code.`,
-    footer: '⏰ Votre coupon expire dans 24h !',
+    footer: '⏰ Votre coupon expire dans 60 jours !',
     buttonText: 'Voir votre Prix',
   }),
   en: (prizeName) => ({
     body: `🎉 CONGRATULATIONS! 🎉\n\nYou won: *${prizeName}*!\n\n🎁 Click the button below to view your coupon with QR code.`,
-    footer: '⏰ Your coupon expires in 24h!',
+    footer: '⏰ Your coupon expires in 60 days!',
     buttonText: 'View your Prize',
   }),
   es: (prizeName) => ({
     body: `🎉 ¡FELICIDADES! 🎉\n\nHas ganado: *${prizeName}*!\n\n🎁 Haz clic en el botón para ver tu cupón con código QR.`,
-    footer: '⏰ ¡Tu cupón expira en 24h!',
+    footer: '⏰ ¡Tu cupón expira en 60 días!',
     buttonText: 'Ver tu Premio',
   }),
   pt: (prizeName) => ({
     body: `🎉 PARABÉNS! 🎉\n\nVocê ganhou: *${prizeName}*!\n\n🎁 Clique no botão para ver seu cupom com QR code.`,
-    footer: '⏰ Seu cupom expira em 24h!',
+    footer: '⏰ Seu cupom expira em 60 dias!',
     buttonText: 'Ver seu Prêmio',
   }),
   de: (prizeName) => ({
     body: `🎉 HERZLICHEN GLÜCKWUNSCH! 🎉\n\nSie haben gewonnen: *${prizeName}*!\n\n🎁 Klicken Sie auf den Button, um Ihren Coupon mit QR-Code anzuzeigen.`,
-    footer: '⏰ Ihr Coupon läuft in 24h ab!',
+    footer: '⏰ Ihr Coupon läuft in 60 Tagen ab!',
     buttonText: 'Preis ansehen',
   }),
   it: (prizeName) => ({
     body: `🎉 CONGRATULAZIONI! 🎉\n\nHai vinto: *${prizeName}*!\n\n🎁 Clicca sul pulsante per visualizzare il tuo coupon con QR code.`,
-    footer: '⏰ Il tuo coupon scade tra 24h!',
+    footer: '⏰ Il tuo coupon scade tra 60 giorni!',
     buttonText: 'Vedi il tuo Premio',
   }),
   ar: (prizeName) => ({
     body: `🎉 تهانينا! 🎉\n\nلقد فزت بـ: *${prizeName}*!\n\n🎁 انقر على الزر لعرض قسيمتك مع رمز QR.`,
-    footer: '⏰ قسيمتك تنتهي خلال 24 ساعة!',
+    footer: '⏰ قسيمتك تنتهي خلال 60 يوم!',
     buttonText: 'عرض جائزتك',
   }),
   zh: (prizeName) => ({
     body: `🎉 恭喜！🎉\n\n您赢得了：*${prizeName}*！\n\n🎁 点击下方按钮查看您的优惠券和二维码。`,
-    footer: '⏰ 您的优惠券将在24小时后过期！',
+    footer: '⏰ 您的优惠券将在60天后过期！',
     buttonText: '查看奖品',
   }),
   ja: (prizeName) => ({
     body: `🎉 おめでとうございます！🎉\n\n当選：*${prizeName}*！\n\n🎁 ボタンをクリックして、QRコード付きのクーポンを確認してください。`,
-    footer: '⏰ クーポンは24時間で期限切れになります！',
+    footer: '⏰ クーポンは60日後に期限切れになります！',
     buttonText: '賞品を見る',
   }),
   ko: (prizeName) => ({
     body: `🎉 축하합니다! 🎉\n\n당첨: *${prizeName}*!\n\n🎁 버튼을 클릭하여 QR 코드가 있는 쿠폰을 확인하세요.`,
-    footer: '⏰ 쿠폰은 24시간 후 만료됩니다!',
+    footer: '⏰ 쿠폰은 60일 후 만료됩니다!',
     buttonText: '상품 보기',
   }),
   th: (prizeName) => ({
     body: `🎉 ยินดีด้วย! 🎉\n\nคุณชนะ: *${prizeName}*!\n\n🎁 คลิกปุ่มด้านล่างเพื่อดูคูปองพร้อม QR code`,
-    footer: '⏰ คูปองของคุณหมดอายุใน 24 ชั่วโมง!',
+    footer: '⏰ คูปองของคุณหมดอายุใน 60 วัน!',
     buttonText: 'ดูรางวัล',
   }),
 };

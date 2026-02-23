@@ -24,7 +24,7 @@
   
   <!-- Timer -->
   <rect x="95" y="620" width="200" height="50" fill="white" opacity="0.2" rx="25"/>
-  <text x="195" y="652" text-anchor="middle" fill="white" font-size="18" opacity="0.9">⏱️ Valable 7 jours</text>
+  <text x="195" y="652" text-anchor="middle" fill="white" font-size="18" opacity="0.9">⏱️ Valable 60 jours</text>
   
   <!-- Text -->
   <text x="195" y="740" text-anchor="middle" fill="white" font-size="18" opacity="0.8">Revenez vite nous voir !</text>

@@ -37,6 +37,11 @@ export default function SpinPage() {
   const [rotation, setRotation] = useState(0);
   const [winner, setWinner] = useState<any>(null);
 
+  // Stored segment quantities from merchant config
+  const [storedUnluckyQty, setStoredUnluckyQty] = useState<number | null>(null);
+  const [storedRetryQty, setStoredRetryQty] = useState<number | null>(null);
+  const [storedPrizeQuantities, setStoredPrizeQuantities] = useState<Record<string, number> | null>(null);
+
   // Segment colors from merchant config or defaults
   const [segmentColors, setSegmentColors] = useState<{ color: string; textColor: string }[]>([
     { color: '#E85A5A', textColor: '#ffffff' },
@@ -105,6 +110,16 @@ export default function SpinPage() {
         if (merchantData.segment_colors) {
           setSegmentColors(merchantData.segment_colors);
         }
+        // Load stored segment quantities
+        if (merchantData.unlucky_quantity !== undefined && merchantData.unlucky_quantity !== null) {
+          setStoredUnluckyQty(merchantData.unlucky_quantity);
+        }
+        if (merchantData.retry_quantity !== undefined && merchantData.retry_quantity !== null) {
+          setStoredRetryQty(merchantData.retry_quantity);
+        }
+        if (merchantData.prize_quantities) {
+          setStoredPrizeQuantities(merchantData.prize_quantities);
+        }
       }
 
       const { data: prizesData } = await supabase
@@ -122,23 +137,81 @@ export default function SpinPage() {
     checkSpinEligibility();
   }, [shopId]);
 
-  // Generate wheel segments
+  // Generate wheel segments using stored quantities from merchant config
   const generateWheelSegments = (): WheelSegment[] => {
     const segments: WheelSegment[] = [];
+    const hasStoredConfig = storedPrizeQuantities !== null;
 
-    // Always add UNLUCKY and RETRY segments
-    segments.push({
-      type: 'unlucky',
-      label: '#PERDU#',
-      color: '#1a1a1a',
-      textColor: '#ff4444'
-    });
-    segments.push({
-      type: 'retry',
-      label: '#REESSAYER#',
-      color: '#D4A574',
-      textColor: '#ffffff'
-    });
+    if (hasStoredConfig) {
+      // Use stored quantities from merchant configuration
+      let colorIndex = 0;
+
+      // Add prize segments based on stored quantities
+      prizes.forEach((prize) => {
+        const qty = storedPrizeQuantities[prize.id] || 0;
+        for (let i = 0; i < qty; i++) {
+          segments.push({
+            type: 'prize',
+            prize,
+            label: prize.name,
+            color: segmentColors[colorIndex % segmentColors.length]?.color || '#E85A5A',
+            textColor: segmentColors[colorIndex % segmentColors.length]?.textColor || '#ffffff'
+          });
+          colorIndex++;
+        }
+      });
+
+      // Add UNLUCKY segments based on stored quantity
+      const unluckyQty = storedUnluckyQty ?? 1;
+      for (let i = 0; i < unluckyQty; i++) {
+        segments.push({
+          type: 'unlucky',
+          label: '#PERDU#',
+          color: '#1a1a1a',
+          textColor: '#ff4444'
+        });
+      }
+
+      // Add RETRY segments based on stored quantity
+      const retryQty = storedRetryQty ?? 1;
+      for (let i = 0; i < retryQty; i++) {
+        segments.push({
+          type: 'retry',
+          label: '#REESSAYER#',
+          color: '#D4A574',
+          textColor: '#ffffff'
+        });
+      }
+
+      // If no segments at all, add minimums
+      if (segments.length === 0) {
+        segments.push({ type: 'unlucky', label: '#PERDU#', color: '#1a1a1a', textColor: '#ff4444' });
+        segments.push({ type: 'retry', label: '#REESSAYER#', color: '#D4A574', textColor: '#ffffff' });
+        segments.push({ type: 'unlucky', label: '#PERDU#', color: '#1a1a1a', textColor: '#ff4444' });
+        segments.push({ type: 'retry', label: '#REESSAYER#', color: '#D4A574', textColor: '#ffffff' });
+      }
+
+      // Distribute segments to avoid adjacent same-type
+      const prizeSegs = segments.filter(s => s.type === 'prize');
+      const specialSegs = segments.filter(s => s.type !== 'prize');
+      const interleaved: WheelSegment[] = [];
+      const maxLen = Math.max(prizeSegs.length, specialSegs.length);
+      for (let i = 0; i < maxLen; i++) {
+        if (i < prizeSegs.length) interleaved.push(prizeSegs[i]);
+        if (i < specialSegs.length) interleaved.push(specialSegs[i]);
+      }
+      // Add any remaining segments
+      if (prizeSegs.length > specialSegs.length) {
+        interleaved.push(...prizeSegs.slice(specialSegs.length));
+      } else if (specialSegs.length > prizeSegs.length) {
+        interleaved.push(...specialSegs.slice(prizeSegs.length));
+      }
+      return interleaved;
+    }
+
+    // Fallback: no stored config, use legacy logic
+    segments.push({ type: 'unlucky', label: '#PERDU#', color: '#1a1a1a', textColor: '#ff4444' });
+    segments.push({ type: 'retry', label: '#REESSAYER#', color: '#D4A574', textColor: '#ffffff' });
 
     if (prizes.length === 0) {
       segments.push({ type: 'unlucky', label: '#PERDU#', color: '#1a1a1a', textColor: '#ff4444' });
@@ -156,21 +229,7 @@ export default function SpinPage() {
       textColor: segmentColors[index % segmentColors.length]?.textColor || '#ffffff'
     }));
 
-    if (prizes.length < 3) {
-      const duplicated = [...prizeSegments];
-      while (duplicated.length < 4) {
-        duplicated.push(...prizeSegments.slice(0, Math.min(prizeSegments.length, 4 - duplicated.length)));
-      }
-      prizeSegments = duplicated;
-    }
-
     segments.push(...prizeSegments);
-
-    if (segments.length > 8) {
-      const specialSegments = segments.filter(s => s.type !== 'prize');
-      const prizeSegs = segments.filter(s => s.type === 'prize').slice(0, 8 - specialSegments.length);
-      return [...specialSegments, ...prizeSegs];
-    }
 
     while (segments.length < 6) {
       segments.push({ type: 'unlucky', label: '#PERDU#', color: '#1a1a1a', textColor: '#ff4444' });
@@ -179,13 +238,11 @@ export default function SpinPage() {
     const prizeSegs = segments.filter(s => s.type === 'prize');
     const specialSegs = segments.filter(s => s.type !== 'prize');
     const interleaved: WheelSegment[] = [];
-
     const maxLen = Math.max(prizeSegs.length, specialSegs.length);
     for (let i = 0; i < maxLen; i++) {
       if (i < prizeSegs.length) interleaved.push(prizeSegs[i]);
       if (i < specialSegs.length) interleaved.push(specialSegs[i]);
     }
-
     return interleaved;
   };
 
@@ -199,20 +256,29 @@ export default function SpinPage() {
 
     const random = Math.random() * totalProbability;
 
+    // Count how many segments each prize/type has to distribute probability evenly
+    const prizeSegmentCounts: Record<string, number> = {};
+    allSegments.forEach(s => {
+      if (s.type === 'prize' && s.prize) {
+        prizeSegmentCounts[s.prize.id] = (prizeSegmentCounts[s.prize.id] || 0) + 1;
+      }
+    });
+    const unluckyCount = allSegments.filter(s => s.type === 'unlucky').length;
+    const retryCount = allSegments.filter(s => s.type === 'retry').length;
+
     let currentProb = 0;
     for (let i = 0; i < allSegments.length; i++) {
       const segment = allSegments[i];
 
       if (segment.type === 'prize' && segment.prize) {
-        currentProb += (segment.prize.probability || 0);
+        const count = prizeSegmentCounts[segment.prize.id] || 1;
+        currentProb += (segment.prize.probability || 0) / count;
         if (random <= currentProb) return i;
       } else if (segment.type === 'unlucky') {
-        const unluckyCount = allSegments.filter(s => s.type === 'unlucky').length;
-        currentProb += unluckyProbability / unluckyCount;
+        currentProb += unluckyProbability / Math.max(1, unluckyCount);
         if (random <= currentProb) return i;
       } else if (segment.type === 'retry') {
-        const retryCount = allSegments.filter(s => s.type === 'retry').length;
-        currentProb += retryProbability / retryCount;
+        currentProb += retryProbability / Math.max(1, retryCount);
         if (random <= currentProb) return i;
       }
     }
@@ -310,7 +376,7 @@ export default function SpinPage() {
         if (spinData) {
           const generatedCode = `${merchant.business_name?.substring(0, 3).toUpperCase()}-${crypto.randomUUID().substring(0, 8).toUpperCase()}`;
           const expiresAt = new Date();
-          expiresAt.setHours(expiresAt.getHours() + 24);
+          expiresAt.setDate(expiresAt.getDate() + 60);
 
           const { error: couponError } = await supabase.from('coupons').insert({
             spin_id: spinData.id,
