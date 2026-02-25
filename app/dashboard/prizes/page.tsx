@@ -223,11 +223,15 @@ export default function PrizesPage() {
     if (!confirm('Etes-vous sur de vouloir supprimer ce prix ?')) return;
 
     try {
-      // Nullify FK references in spins table to avoid 409 conflict
-      await supabase.from('spins').update({ prize_id: null }).eq('prize_id', prizeId);
+      // Use API route with service_role to bypass RLS and handle FK cleanup
+      const res = await fetch(`/api/prizes?id=${prizeId}&merchantId=${user.id}`, {
+        method: 'DELETE',
+      });
 
-      const { error } = await supabase.from('prizes').delete().eq('id', prizeId);
-      if (error) throw error;
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Erreur lors de la suppression');
+      }
 
       // Remove from prizeQuantities
       setPrizeQuantities(prev => {
