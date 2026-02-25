@@ -158,24 +158,29 @@ export default function PrizesPage() {
         imageUrl = existingPrize?.image_url;
       }
 
-      const prizeData = {
-        merchant_id: user.id,
-        name: formData.name,
-        description: formData.description,
-        probability: formData.probability,
-        image_url: imageUrl,
-      };
-
       if (editingId) {
+        // Update: only send mutable fields (no merchant_id)
         const { error } = await supabase
           .from('prizes')
-          .update(prizeData)
+          .update({
+            name: formData.name,
+            description: formData.description,
+            probability: formData.probability,
+            image_url: imageUrl,
+          })
           .eq('id', editingId);
         if (error) throw error;
       } else {
+        // Insert: include merchant_id
         const { error } = await supabase
           .from('prizes')
-          .insert(prizeData);
+          .insert({
+            merchant_id: user.id,
+            name: formData.name,
+            description: formData.description,
+            probability: formData.probability,
+            image_url: imageUrl,
+          });
         if (error) throw error;
       }
 
@@ -217,8 +222,24 @@ export default function PrizesPage() {
   const handleDelete = async (prizeId: string) => {
     if (!confirm('Etes-vous sur de vouloir supprimer ce prix ?')) return;
 
-    await supabase.from('prizes').delete().eq('id', prizeId);
-    fetchPrizes(user.id);
+    try {
+      // Nullify FK references in spins table to avoid 409 conflict
+      await supabase.from('spins').update({ prize_id: null }).eq('prize_id', prizeId);
+
+      const { error } = await supabase.from('prizes').delete().eq('id', prizeId);
+      if (error) throw error;
+
+      // Remove from prizeQuantities
+      setPrizeQuantities(prev => {
+        const updated = { ...prev };
+        delete updated[prizeId];
+        return updated;
+      });
+
+      fetchPrizes(user.id);
+    } catch (error: any) {
+      alert('Impossible de supprimer ce prix: ' + (error.message || 'Erreur inconnue'));
+    }
   };
 
   // Calculate total segments used (only count existing prizes)

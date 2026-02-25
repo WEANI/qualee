@@ -137,6 +137,59 @@ export default function SpinPage() {
     checkSpinEligibility();
   }, [shopId]);
 
+  // Shuffle segments randomly while avoiding same color adjacent (circular)
+  const shuffleNoAdjacentColors = (segs: WheelSegment[]): WheelSegment[] => {
+    if (segs.length <= 2) return segs;
+
+    // Fisher-Yates shuffle
+    const shuffled = [...segs];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    // Try to fix adjacent same-color pairs (including circular wrap)
+    const maxAttempts = shuffled.length * 3;
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      let conflict = -1;
+      for (let i = 0; i < shuffled.length; i++) {
+        const next = (i + 1) % shuffled.length;
+        if (shuffled[i].color === shuffled[next].color) {
+          conflict = next;
+          break;
+        }
+      }
+      if (conflict === -1) break; // No conflicts
+
+      // Find a swap candidate that resolves the conflict
+      let swapped = false;
+      for (let k = 0; k < shuffled.length; k++) {
+        if (k === conflict) continue;
+        const prevK = (k - 1 + shuffled.length) % shuffled.length;
+        const nextK = (k + 1) % shuffled.length;
+        const prevConflict = (conflict - 1 + shuffled.length) % shuffled.length;
+        const nextConflict = (conflict + 1) % shuffled.length;
+
+        // Check if swapping k and conflict would not create new conflicts
+        const kColorOkAtConflict =
+          shuffled[k].color !== shuffled[prevConflict].color &&
+          shuffled[k].color !== shuffled[nextConflict].color;
+        const conflictColorOkAtK =
+          shuffled[conflict].color !== shuffled[prevK].color &&
+          shuffled[conflict].color !== shuffled[nextK].color;
+
+        if (kColorOkAtConflict && conflictColorOkAtK) {
+          [shuffled[conflict], shuffled[k]] = [shuffled[k], shuffled[conflict]];
+          swapped = true;
+          break;
+        }
+      }
+      if (!swapped) break; // Can't resolve further
+    }
+
+    return shuffled;
+  };
+
   // Generate wheel segments using stored quantities from merchant config
   const generateWheelSegments = (): WheelSegment[] => {
     const segments: WheelSegment[] = [];
@@ -191,22 +244,7 @@ export default function SpinPage() {
         segments.push({ type: 'retry', label: '#REESSAYER#', color: '#D4A574', textColor: '#ffffff' });
       }
 
-      // Distribute segments to avoid adjacent same-type
-      const prizeSegs = segments.filter(s => s.type === 'prize');
-      const specialSegs = segments.filter(s => s.type !== 'prize');
-      const interleaved: WheelSegment[] = [];
-      const maxLen = Math.max(prizeSegs.length, specialSegs.length);
-      for (let i = 0; i < maxLen; i++) {
-        if (i < prizeSegs.length) interleaved.push(prizeSegs[i]);
-        if (i < specialSegs.length) interleaved.push(specialSegs[i]);
-      }
-      // Add any remaining segments
-      if (prizeSegs.length > specialSegs.length) {
-        interleaved.push(...prizeSegs.slice(specialSegs.length));
-      } else if (specialSegs.length > prizeSegs.length) {
-        interleaved.push(...specialSegs.slice(prizeSegs.length));
-      }
-      return interleaved;
+      return shuffleNoAdjacentColors(segments);
     }
 
     // Fallback: no stored config, use legacy logic
@@ -235,15 +273,7 @@ export default function SpinPage() {
       segments.push({ type: 'unlucky', label: '#PERDU#', color: '#1a1a1a', textColor: '#ff4444' });
     }
 
-    const prizeSegs = segments.filter(s => s.type === 'prize');
-    const specialSegs = segments.filter(s => s.type !== 'prize');
-    const interleaved: WheelSegment[] = [];
-    const maxLen = Math.max(prizeSegs.length, specialSegs.length);
-    for (let i = 0; i < maxLen; i++) {
-      if (i < prizeSegs.length) interleaved.push(prizeSegs[i]);
-      if (i < specialSegs.length) interleaved.push(specialSegs[i]);
-    }
-    return interleaved;
+    return shuffleNoAdjacentColors(segments);
   };
 
   const allSegments = generateWheelSegments();
