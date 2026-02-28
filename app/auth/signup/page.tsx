@@ -41,6 +41,8 @@ export default function SignUpPage() {
           setError('Le mot de passe doit contenir au moins 6 caractères.');
         } else if (signUpError.message.includes('valid email')) {
           setError('Veuillez entrer une adresse email valide.');
+        } else if (signUpError.status === 429 || signUpError.message.includes('rate limit')) {
+          setError('Trop de tentatives. Veuillez patienter quelques minutes avant de réessayer.');
         } else {
           setError(signUpError.message);
         }

@@ -33,27 +33,41 @@ export async function GET(request: NextRequest) {
         }
       );
 
-      // Vérifier si le profil marchand existe déjà
-      const { data: existingMerchant } = await supabaseAdmin
+      // Vérifier si le profil marchand existe déjà (par id ou par email)
+      const { data: existingById } = await supabaseAdmin
         .from('merchants')
         .select('id')
         .eq('id', session.user.id)
         .maybeSingle();
 
-      if (!existingMerchant) {
-        // Créer le profil marchand avec les métadonnées de l'utilisateur
-        const businessName = session.user.user_metadata?.business_name || 'Mon Commerce';
-        
-        const { error: merchantError } = await supabaseAdmin.from('merchants').insert({
-          id: session.user.id,
-          email: session.user.email,
-          business_name: businessName,
-          subscription_tier: 'starter',
-          is_active: true
-        });
+      if (!existingById) {
+        // Pas de merchant avec cet ID - vérifier par email (cas de réinscription)
+        const { data: existingByEmail } = await supabaseAdmin
+          .from('merchants')
+          .select('id')
+          .eq('email', session.user.email)
+          .maybeSingle();
 
-        if (merchantError) {
-          console.error('Merchant creation error:', merchantError);
+        if (existingByEmail) {
+          // Merchant existe avec ancien ID → mettre à jour l'ID pour correspondre au nouvel auth user
+          await supabaseAdmin
+            .from('merchants')
+            .update({ id: session.user.id })
+            .eq('email', session.user.email);
+        } else {
+          // Aucun merchant trouvé → créer
+          const businessName = session.user.user_metadata?.business_name || 'Mon Commerce';
+          const { error: merchantError } = await supabaseAdmin.from('merchants').insert({
+            id: session.user.id,
+            email: session.user.email,
+            business_name: businessName,
+            subscription_tier: 'starter',
+            is_active: true
+          });
+
+          if (merchantError) {
+            console.error('Merchant creation error:', merchantError);
+          }
         }
       }
 

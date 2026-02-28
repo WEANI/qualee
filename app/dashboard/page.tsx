@@ -92,23 +92,34 @@ export default function DashboardPage() {
         .maybeSingle();
 
       if (!merchantData) {
-        console.log('Merchant profile not found, creating...');
-        const { data: newMerchant, error: createError } = await supabase
+        // Try to find by email (user may have re-registered with new auth ID)
+        const { data: merchantByEmail } = await supabase
           .from('merchants')
-          .insert({
-            id: user.id,
-            email: user.email,
-            business_name: user.user_metadata?.business_name || 'Mon Commerce',
-            subscription_tier: 'starter',
-            is_active: true
-          })
-          .select()
+          .select('*')
+          .eq('email', user.email)
           .maybeSingle();
 
-        if (createError) {
-          console.error('Failed to create merchant:', createError);
+        if (merchantByEmail) {
+          merchantData = merchantByEmail;
         } else {
-          merchantData = newMerchant;
+          // No merchant at all - create one
+          const { data: newMerchant, error: createError } = await supabase
+            .from('merchants')
+            .insert({
+              id: user.id,
+              email: user.email,
+              business_name: user.user_metadata?.business_name || 'Mon Commerce',
+              subscription_tier: 'starter',
+              is_active: true
+            })
+            .select()
+            .maybeSingle();
+
+          if (createError) {
+            console.error('Failed to create merchant:', createError);
+          } else {
+            merchantData = newMerchant;
+          }
         }
       }
 
