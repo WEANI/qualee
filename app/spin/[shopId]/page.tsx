@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
@@ -276,7 +276,8 @@ export default function SpinPage() {
     return shuffleNoAdjacentColors(segments);
   };
 
-  const allSegments = generateWheelSegments();
+  // Memoize segments to prevent re-shuffle on re-render (rotation state change during spin)
+  const allSegments = useMemo(() => generateWheelSegments(), [prizes, storedPrizeQuantities, storedUnluckyQty, storedRetryQty, segmentColors]);
   const totalSegments = allSegments.length;
   const segmentAngle = totalSegments > 0 ? 360 / totalSegments : 0;
 
