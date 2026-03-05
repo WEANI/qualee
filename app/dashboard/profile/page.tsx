@@ -20,7 +20,8 @@ import {
   Save,
   Palette,
   Upload,
-  Image
+  Image,
+  Trash2
 } from 'lucide-react';
 
 export default function ProfilePage() {
@@ -99,20 +100,40 @@ export default function ProfilePage() {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const processLogoFile = (file: File) => {
+    if (!file.type.startsWith('image/')) return;
+    setLogoFile(file);
+    setLogoPreview(URL.createObjectURL(file));
+  };
+
+  const processBackgroundFile = (file: File) => {
+    if (!file.type.startsWith('image/')) return;
+    setBackgroundFile(file);
+    setBackgroundPreview(URL.createObjectURL(file));
+  };
+
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setLogoFile(file);
-      setLogoPreview(URL.createObjectURL(file));
-    }
+    if (file) processLogoFile(file);
   };
 
   const handleBackgroundChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setBackgroundFile(file);
-      setBackgroundPreview(URL.createObjectURL(file));
-    }
+    if (file) processBackgroundFile(file);
+  };
+
+  const handleLogoDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const file = e.dataTransfer.files?.[0];
+    if (file) processLogoFile(file);
+  };
+
+  const handleBackgroundDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const file = e.dataTransfer.files?.[0];
+    if (file) processBackgroundFile(file);
   };
 
   const handleSave = async () => {
@@ -516,14 +537,31 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-start gap-6">
-              <div className="w-24 h-24 rounded-xl border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden bg-gray-50 flex-shrink-0">
+            <div
+              className="flex flex-col sm:flex-row items-start gap-6"
+              onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+              onDrop={handleLogoDrop}
+            >
+              <div className="relative w-24 h-24 rounded-xl border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden bg-gray-50 flex-shrink-0">
                 {logoPreview || merchant?.logo_url ? (
-                  <img
-                    src={logoPreview || merchant.logo_url}
-                    alt="Logo"
-                    className="w-full h-full object-contain"
-                  />
+                  <>
+                    <img
+                      src={logoPreview || merchant.logo_url}
+                      alt="Logo"
+                      className="w-full h-full object-contain"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setLogoFile(null);
+                        setLogoPreview(null);
+                        if (merchant) merchant.logo_url = null;
+                      }}
+                      className="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 transition-colors"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </button>
+                  </>
                 ) : (
                   <Upload className="w-8 h-8 text-gray-300" />
                 )}
@@ -542,9 +580,10 @@ export default function ProfilePage() {
                   className="mb-2"
                 >
                   <Upload className="w-4 h-4 mr-2" />
-                  {merchant?.logo_url ? 'Changer le logo' : 'Ajouter un logo'}
+                  {(logoPreview || merchant?.logo_url) ? 'Changer le logo' : 'Ajouter un logo'}
                 </Button>
                 <p className="text-xs text-slate-500">PNG, JPG ou SVG. Taille recommandée : 512x512px</p>
+                <p className="text-xs text-slate-400 mt-1">Glissez-déposez une image sur la zone</p>
                 {logoFile && (
                   <p className="text-xs text-violet-600 mt-1">Nouveau fichier : {logoFile.name}</p>
                 )}
@@ -567,14 +606,31 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-start gap-6">
-              <div className="w-40 h-24 rounded-xl border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden bg-gray-50 flex-shrink-0">
+            <div
+              className="flex flex-col sm:flex-row items-start gap-6"
+              onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+              onDrop={handleBackgroundDrop}
+            >
+              <div className="relative w-40 h-24 rounded-xl border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden bg-gray-50 flex-shrink-0">
                 {backgroundPreview || merchant?.background_url ? (
-                  <img
-                    src={backgroundPreview || merchant.background_url}
-                    alt="Arrière-plan"
-                    className="w-full h-full object-cover"
-                  />
+                  <>
+                    <img
+                      src={backgroundPreview || merchant.background_url}
+                      alt="Arrière-plan"
+                      className="w-full h-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setBackgroundFile(null);
+                        setBackgroundPreview(null);
+                        if (merchant) merchant.background_url = null;
+                      }}
+                      className="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 transition-colors"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </button>
+                  </>
                 ) : (
                   <Image className="w-8 h-8 text-gray-300" />
                 )}
@@ -593,9 +649,10 @@ export default function ProfilePage() {
                   className="mb-2"
                 >
                   <Upload className="w-4 h-4 mr-2" />
-                  {merchant?.background_url ? "Changer l'image" : 'Ajouter une image'}
+                  {(backgroundPreview || merchant?.background_url) ? "Changer l'image" : 'Ajouter une image'}
                 </Button>
                 <p className="text-xs text-slate-500">PNG ou JPG. Taille recommandée : 1920x1080px</p>
+                <p className="text-xs text-slate-400 mt-1">Glissez-déposez une image sur la zone</p>
                 {backgroundFile && (
                   <p className="text-xs text-violet-600 mt-1">Nouveau fichier : {backgroundFile.name}</p>
                 )}

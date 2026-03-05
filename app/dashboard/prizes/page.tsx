@@ -131,16 +131,26 @@ export default function PrizesPage() {
     return publicUrl;
   };
 
+  const processImageFile = (file: File) => {
+    if (!file.type.startsWith('image/')) return;
+    setImageFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
+    if (file) processImageFile(file);
+  };
+
+  const handleImageDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const file = e.dataTransfer.files?.[0];
+    if (file) processImageFile(file);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -546,7 +556,11 @@ export default function PrizesPage() {
                       </button>
                     </div>
                   ) : (
-                    <div className="border-2 border-dashed border-violet-300 rounded-xl p-8 text-center hover:border-violet-400 transition-colors bg-violet-50/30">
+                    <div
+                      className="border-2 border-dashed border-violet-300 rounded-xl p-8 text-center hover:border-violet-400 transition-colors bg-violet-50/30"
+                      onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                      onDrop={handleImageDrop}
+                    >
                       <input
                         type="file"
                         id="prize-image"

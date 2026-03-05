@@ -24,7 +24,8 @@ import {
   ChevronRight,
   ArrowUpDown,
   Calculator,
-  BarChart3
+  BarChart3,
+  Trash2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -159,14 +160,24 @@ export default function LoyaltyPage() {
 
   // --- Configuration handlers ---
 
+  const processLoyaltyCardFile = (file: File) => {
+    if (!file.type.startsWith('image/')) return;
+    setLoyaltyCardFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => setLoyaltyCardPreview(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
   const handleLoyaltyCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setLoyaltyCardFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => setLoyaltyCardPreview(reader.result as string);
-      reader.readAsDataURL(file);
-    }
+    if (file) processLoyaltyCardFile(file);
+  };
+
+  const handleLoyaltyCardDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const file = e.dataTransfer.files?.[0];
+    if (file) processLoyaltyCardFile(file);
   };
 
   const handleSaveConfig = async () => {
@@ -685,9 +696,20 @@ export default function LoyaltyPage() {
                       <Badge variant="outline" className="flex-shrink-0" style={{ borderColor: '#EDE9FE', color: '#7209B7' }}>16:9</Badge>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                      {loyaltyCardPreview && (
+                      {(loyaltyCardPreview || merchant?.loyalty_card_image_url) && (
                         <div className="relative w-full aspect-video bg-slate-100 rounded-lg overflow-hidden border border-gray-200">
-                          <img src={loyaltyCardPreview} alt="Aperçu carte" className="w-full h-full object-cover" />
+                          <img src={loyaltyCardPreview || merchant?.loyalty_card_image_url || ''} alt="Aperçu carte" className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setLoyaltyCardFile(null);
+                              setLoyaltyCardPreview('');
+                              if (merchant) merchant.loyalty_card_image_url = null;
+                            }}
+                            className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1.5 transition-colors"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
                         </div>
                       )}
                       <div
@@ -695,6 +717,8 @@ export default function LoyaltyPage() {
                         style={{ borderColor: '#EDE9FE' }}
                         onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#7209B7'; }}
                         onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#EDE9FE'; }}
+                        onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                        onDrop={handleLoyaltyCardDrop}
                       >
                         <input
                           type="file"
@@ -706,7 +730,7 @@ export default function LoyaltyPage() {
                         <label htmlFor="loyalty-card-upload" className="cursor-pointer">
                           <Upload className="w-8 h-8 sm:w-10 sm:h-10 mx-auto mb-2 sm:mb-3 text-violet-600" />
                           <p className="text-sm text-slate-600 mb-1">
-                            <span className="font-semibold text-violet-600">Télécharger une image</span>
+                            <span className="font-semibold text-violet-600">Télécharger une image</span> ou glissez-déposez
                           </p>
                           <p className="text-xs text-slate-500">PNG, JPG (16:9) jusqu&apos;à 5 Mo</p>
                         </label>
