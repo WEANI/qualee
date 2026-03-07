@@ -217,20 +217,34 @@ export async function GET(request: NextRequest) {
       }
     };
 
-    // Décoder la clé privée (qui peut être encodée en base64 ou avec des \n échappés)
+    // Décoder la clé privée selon le format stocké dans les env vars
     let privateKey = googlePrivateKey;
 
-    // Si la clé est en base64
+    // Netlify peut stocker la clé de différentes façons
+    // 1. Base64 encodé
     if (!privateKey.includes('-----BEGIN')) {
       try {
-        privateKey = Buffer.from(privateKey, 'base64').toString('utf8');
+        const decoded = Buffer.from(privateKey, 'base64').toString('utf8');
+        if (decoded.includes('-----BEGIN')) {
+          privateKey = decoded;
+        } else {
+          privateKey = privateKey.replace(/\\n/g, '\n');
+        }
       } catch {
-        // Si ce n'est pas du base64, remplacer les \n échappés
         privateKey = privateKey.replace(/\\n/g, '\n');
       }
-    } else {
-      // Remplacer les \n échappés si présents
-      privateKey = privateKey.replace(/\\n/g, '\n');
+    }
+
+    // 2. Remplacer les \n échappés (littéral "\\n" → vrai retour à la ligne)
+    privateKey = privateKey.replace(/\\n/g, '\n');
+
+    // 3. Vérifier que la clé est valide
+    if (!privateKey.includes('-----BEGIN')) {
+      console.error('[GOOGLE WALLET] Invalid private key format. First 50 chars:', privateKey.substring(0, 50));
+      return NextResponse.json(
+        { error: 'Invalid private key configuration' },
+        { status: 500 }
+      );
     }
 
     // Signer le JWT
