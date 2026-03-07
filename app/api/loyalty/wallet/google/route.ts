@@ -236,29 +236,42 @@ export async function GET(request: NextRequest) {
     // Décoder la clé privée selon le format stocké dans les env vars
     let privateKey = googlePrivateKey;
 
-    // Netlify peut stocker la clé de différentes façons
-    // 1. Base64 encodé
+    // Remplacer les \n échappés littéraux
+    privateKey = privateKey.replace(/\\n/g, '\n');
+
+    // Si c'est du base64 (pas de BEGIN marker)
     if (!privateKey.includes('-----BEGIN')) {
       try {
-        const decoded = Buffer.from(privateKey, 'base64').toString('utf8');
-        if (decoded.includes('-----BEGIN')) {
-          privateKey = decoded;
-        } else {
-          privateKey = privateKey.replace(/\\n/g, '\n');
-        }
+        privateKey = Buffer.from(privateKey, 'base64').toString('utf8');
       } catch {
-        privateKey = privateKey.replace(/\\n/g, '\n');
+        // pas du base64, on continue
       }
     }
 
-    // 2. Remplacer les \n échappés (littéral "\\n" → vrai retour à la ligne)
-    privateKey = privateKey.replace(/\\n/g, '\n');
+    // Si la clé contient BEGIN mais est sur une seule ligne (pas de vrais \n entre les sections)
+    // Reconstruire le format PEM correct
+    if (privateKey.includes('-----BEGIN') && !privateKey.includes('\n-----')) {
+      // La clé est probablement condensée, essayer de la reformater
+      privateKey = privateKey
+        .replace(/-----BEGIN (.*?)-----/g, '-----BEGIN $1-----\n')
+        .replace(/-----END (.*?)-----/g, '\n-----END $1-----')
+        .replace(/(.{64})(?!-)/g, '$1\n');
+    }
 
-    // 3. Vérifier que la clé est valide
+    console.log('[GOOGLE WALLET] Key diagnostic:', {
+      length: privateKey.length,
+      hasBegin: privateKey.includes('-----BEGIN'),
+      hasEnd: privateKey.includes('-----END'),
+      lineCount: privateKey.split('\n').length,
+      firstLine: privateKey.split('\n')[0],
+      lastLine: privateKey.split('\n').slice(-1)[0],
+    });
+
+    // Vérifier que la clé est valide
     if (!privateKey.includes('-----BEGIN')) {
-      console.error('[GOOGLE WALLET] Invalid private key format. First 50 chars:', privateKey.substring(0, 50));
+      console.error('[GOOGLE WALLET] Invalid private key format');
       return NextResponse.json(
-        { error: 'Invalid private key configuration' },
+        { error: 'Invalid private key configuration', hint: 'Encode the key in base64: base64 -i key.pem' },
         { status: 500 }
       );
     }
