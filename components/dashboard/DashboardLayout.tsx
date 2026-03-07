@@ -27,7 +27,8 @@ import {
   Send,
   Building2,
   UserCircle,
-  CircleUserRound
+  CircleUserRound,
+  Wallet
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -71,6 +72,7 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
         { name: 'Programme fidelite', href: '/dashboard/loyalty', icon: Award },
         { name: 'Strategie', href: '/dashboard/strategy', icon: Target },
         { name: 'Avis clients', href: '/dashboard/feedback', icon: MessageSquare },
+        { name: 'Google Wallet', href: '/dashboard/wallet', icon: Wallet },
         // { name: 'Campagne WhatsApp', href: '/dashboard/marketing/whatsapp-campaign', icon: Send },
       ],
     },

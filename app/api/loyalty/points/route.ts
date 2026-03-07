@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
+import { getWalletIds, updatePassPoints, isGoogleWalletConfigured } from '@/lib/google-wallet';
 
 // Vérification des variables d'environnement
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -290,6 +291,19 @@ export async function POST(request: NextRequest) {
     if (updateError) {
       console.error('[LOYALTY POINTS] Update client error:', updateError);
       // Ne pas échouer la requête, la transaction est déjà créée
+    }
+
+    // Auto-update Google Wallet pass (fire and forget)
+    if (isGoogleWalletConfigured()) {
+      const { objectId } = getWalletIds(
+        merchantResult.data ? merchantId : '',
+        clientId
+      );
+      updatePassPoints(
+        objectId,
+        newBalance,
+        action === 'earn' ? (client.total_purchases + 1) : undefined
+      ).catch(err => console.error('[GOOGLE WALLET AUTO-UPDATE] Error:', err));
     }
 
     return NextResponse.json({
