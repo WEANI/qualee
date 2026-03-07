@@ -84,25 +84,9 @@ export async function GET(request: NextRequest) {
           'GOOGLE_WALLET_ISSUER_ID',
           'GOOGLE_WALLET_SERVICE_ACCOUNT_EMAIL',
           'GOOGLE_WALLET_PRIVATE_KEY'
-        ],
-        debug: {
-          hasIssuerId: !!googleIssuerId,
-          hasEmail: !!googleServiceAccountEmail,
-          hasKey: !!googlePrivateKey
-        }
+        ]
       });
     }
-
-    // Debug: log key format info (sans exposer la clé)
-    console.log('[GOOGLE WALLET] Key info:', {
-      issuerId: googleIssuerId,
-      email: googleServiceAccountEmail,
-      keyLength: googlePrivateKey.length,
-      keyStart: googlePrivateKey.substring(0, 30),
-      hasBeginMarker: googlePrivateKey.includes('-----BEGIN'),
-      hasNewlines: googlePrivateKey.includes('\n'),
-      hasEscapedNewlines: googlePrivateKey.includes('\\n'),
-    });
 
     // Créer les IDs uniques
     const classId = `${googleIssuerId}.qualee_loyalty_${merchant.id.replace(/-/g, '_')}`;
@@ -258,15 +242,6 @@ export async function GET(request: NextRequest) {
         .replace(/(.{64})(?!-)/g, '$1\n');
     }
 
-    console.log('[GOOGLE WALLET] Key diagnostic:', {
-      length: privateKey.length,
-      hasBegin: privateKey.includes('-----BEGIN'),
-      hasEnd: privateKey.includes('-----END'),
-      lineCount: privateKey.split('\n').length,
-      firstLine: privateKey.split('\n')[0],
-      lastLine: privateKey.split('\n').slice(-1)[0],
-    });
-
     // Vérifier que la clé est valide
     if (!privateKey.includes('-----BEGIN')) {
       console.error('[GOOGLE WALLET] Invalid private key format');
@@ -298,18 +273,10 @@ export async function GET(request: NextRequest) {
 
   } catch (error) {
     console.error('[GOOGLE WALLET] Error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    const errorStack = error instanceof Error ? error.stack?.split('\n').slice(0, 3).join('\n') : '';
     return NextResponse.json(
       {
         error: 'Internal server error',
-        details: errorMessage,
-        hint: errorMessage.includes('PEM') || errorMessage.includes('key')
-          ? 'Private key format issue. Check GOOGLE_WALLET_PRIVATE_KEY env var.'
-          : errorMessage.includes('jwt') || errorMessage.includes('sign')
-          ? 'JWT signing failed. Check private key and service account.'
-          : 'Check server logs for details.',
-        stack: process.env.NODE_ENV !== 'production' ? errorStack : undefined
+        details: error instanceof Error ? error.message : 'Unknown error'
       },
       { status: 500 }
     );
