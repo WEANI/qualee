@@ -69,6 +69,16 @@ export default function SendCampaignPage() {
   const [isTestSending, setIsTestSending] = useState(false);
   const [testResults, setTestResults] = useState<SendResult[]>([]);
 
+  // Cloud API mode
+  const [sendMode, setSendMode] = useState<'carousel' | 'template'>('carousel');
+  const [templates, setTemplates] = useState<any[]>([]);
+  const [selectedTemplate, setSelectedTemplate] = useState<string>('');
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('fr');
+  const [cloudConfigured, setCloudConfigured] = useState(false);
+  const [costEstimate, setCostEstimate] = useState<{ pricePerMessage: number; totalCost: number } | null>(null);
+  const [loyaltyClients, setLoyaltyClients] = useState<{ phone: string; name: string | null }[]>([]);
+  const [recipientSource, setRecipientSource] = useState<'feedback' | 'loyalty'>('feedback');
+
   useEffect(() => {
     const fetchData = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -126,6 +136,25 @@ export default function SendCampaignPage() {
       if (savedCampaign) {
         setCampaignData(JSON.parse(savedCampaign));
       }
+
+      // Load Cloud API templates
+      try {
+        const tplRes = await fetch(`/api/whatsapp/templates?merchantId=${user.id}`);
+        const tplData = await tplRes.json();
+        setTemplates((tplData.templates || []).filter((t: any) => t.status === 'APPROVED'));
+        setCloudConfigured(tplData.configured);
+      } catch { /* ignore */ }
+
+      // Load loyalty clients for opt-in recipients
+      try {
+        const loyRes = await fetch(`/api/loyalty/client?merchantId=${user.id}`);
+        const loyData = await loyRes.json();
+        setLoyaltyClients(
+          (loyData.clients || [])
+            .filter((c: any) => c.phone && c.whatsapp_opt_in !== false)
+            .map((c: any) => ({ phone: c.phone, name: c.name }))
+        );
+      } catch { /* ignore */ }
 
       setLoading(false);
     };
@@ -236,6 +265,79 @@ export default function SendCampaignPage() {
     setIsSending(false);
     setShowResults(true);
   };
+
+  // Cloud API send
+  const sendCloudCampaign = async () => {
+    if (!selectedTemplate || selectedCustomers.size === 0 || !merchant) return;
+
+    setIsSending(true);
+    setSendProgress(0);
+    setSendResults([]);
+    setShowResults(false);
+
+    try {
+      const res = await fetch('/api/whatsapp/cloud-send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          merchantId: merchant.id,
+          templateName: selectedTemplate,
+          language: selectedLanguage,
+          recipientPhones: Array.from(selectedCustomers),
+        }),
+      });
+
+      const data = await res.json();
+      setSendProgress(100);
+
+      if (data.success) {
+        const results: SendResult[] = [];
+        for (let i = 0; i < data.sent; i++) results.push({ phone: 'OK', success: true });
+        for (let i = 0; i < data.failed; i++) results.push({ phone: 'Erreur', success: false });
+        setSendResults(results);
+      } else {
+        setSendResults([{ phone: '-', success: false, error: data.error }]);
+      }
+    } catch (error: any) {
+      setSendResults([{ phone: '-', success: false, error: error.message }]);
+    }
+
+    setIsSending(false);
+    setShowResults(true);
+  };
+
+  // Cost estimate
+  useEffect(() => {
+    if (sendMode === 'template' && merchant && selectedCustomers.size > 0) {
+      fetch('/api/whatsapp/cloud-send/estimate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ merchantId: merchant.id, recipientCount: selectedCustomers.size }),
+      })
+        .then(r => r.json())
+        .then(data => setCostEstimate(data))
+        .catch(() => setCostEstimate(null));
+    } else {
+      setCostEstimate(null);
+    }
+  }, [sendMode, selectedCustomers.size, merchant]);
+
+  // Switch recipients source
+  useEffect(() => {
+    if (recipientSource === 'loyalty') {
+      const loyCustomers = loyaltyClients.map(c => ({
+        user_token: '',
+        phone: c.phone,
+        total_reviews: 0,
+        avg_rating: 0,
+        last_review: '',
+        is_positive: true,
+      }));
+      setCustomers(loyCustomers);
+      setFilteredCustomers(loyCustomers);
+      setSelectedCustomers(new Set());
+    }
+  }, [recipientSource, loyaltyClients]);
 
   const successCount = sendResults.filter(r => r.success).length;
   const failureCount = sendResults.filter(r => !r.success).length;
@@ -403,8 +505,86 @@ export default function SendCampaignPage() {
           </div>
         </div>
 
+        {/* Mode Toggle */}
+        {cloudConfigured && (
+          <Card className="p-4 border border-gray-200 rounded-xl">
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-medium text-gray-700">Mode d&apos;envoi :</span>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setSendMode('carousel')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${sendMode === 'carousel' ? 'bg-violet-100 text-violet-700 border border-violet-300' : 'bg-gray-100 text-gray-600'}`}
+                >
+                  Carousel (WHAPI)
+                </button>
+                <button
+                  onClick={() => setSendMode('template')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${sendMode === 'template' ? 'bg-green-100 text-green-700 border border-green-300' : 'bg-gray-100 text-gray-600'}`}
+                >
+                  Template (Cloud API)
+                </button>
+              </div>
+              {sendMode === 'template' && (
+                <div className="flex items-center gap-2 ml-auto">
+                  <span className="text-sm text-gray-500">Source :</span>
+                  <select
+                    value={recipientSource}
+                    onChange={(e) => setRecipientSource(e.target.value as any)}
+                    className="text-sm border border-gray-300 rounded-lg px-2 py-1"
+                  >
+                    <option value="feedback">Clients feedback</option>
+                    <option value="loyalty">Clients fidelite (opt-in)</option>
+                  </select>
+                </div>
+              )}
+            </div>
+
+            {sendMode === 'template' && (
+              <div className="mt-4 grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Template approuve</label>
+                  <select
+                    value={selectedTemplate}
+                    onChange={(e) => setSelectedTemplate(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                  >
+                    <option value="">Selectionner un template</option>
+                    {templates.map((t: any) => (
+                      <option key={t.id} value={t.template_name}>
+                        {t.template_name} ({t.language})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Langue</label>
+                  <select
+                    value={selectedLanguage}
+                    onChange={(e) => setSelectedLanguage(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                  >
+                    <option value="fr">Francais</option>
+                    <option value="en">English</option>
+                    <option value="en_US">English (US)</option>
+                    <option value="es">Espanol</option>
+                    <option value="th">Thai</option>
+                  </select>
+                </div>
+              </div>
+            )}
+
+            {costEstimate && sendMode === 'template' && (
+              <div className="mt-3 flex items-center gap-4 p-3 bg-amber-50 rounded-lg border border-amber-200">
+                <span className="text-sm text-amber-800">
+                  Cout estime : <strong>{selectedCustomers.size} x {costEstimate.pricePerMessage} EUR = {costEstimate.totalCost} EUR</strong>
+                </span>
+              </div>
+            )}
+          </Card>
+        )}
+
         {/* Campaign Summary */}
-        {campaignData && (
+        {campaignData && sendMode === 'carousel' && (
           <Card className="send-card p-5 sm:p-6 border border-gray-200 rounded-xl" style={{ background: 'linear-gradient(135deg, #F5F3FF, #EDE9FE)' }}>
             <div className="flex items-center gap-3">
               <div
@@ -610,8 +790,8 @@ export default function SendCampaignPage() {
 
           <Card className="send-stat-card p-4 sm:p-5 border border-gray-200 rounded-xl">
             <Button
-              onClick={sendCampaign}
-              disabled={selectedCustomers.size === 0 || isSending || !campaignData}
+              onClick={sendMode === 'template' ? sendCloudCampaign : sendCampaign}
+              disabled={selectedCustomers.size === 0 || isSending || (sendMode === 'carousel' && !campaignData) || (sendMode === 'template' && !selectedTemplate)}
               className="w-full h-full text-white gap-2 transition-all duration-200"
               style={{ backgroundColor: '#7209B7' }}
               onMouseEnter={(e) => { if (!e.currentTarget.disabled) { e.currentTarget.style.backgroundColor = '#5B0892'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(219, 39, 119, 0.3)'; } }}

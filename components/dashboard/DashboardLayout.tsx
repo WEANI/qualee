@@ -73,7 +73,9 @@ export function DashboardLayout({ children, merchant }: DashboardLayoutProps) {
         { name: 'Strategie', href: '/dashboard/strategy', icon: Target },
         { name: 'Avis clients', href: '/dashboard/feedback', icon: MessageSquare },
         { name: 'Google Wallet', href: '/dashboard/wallet', icon: Wallet },
-        // { name: 'Campagne WhatsApp', href: '/dashboard/marketing/whatsapp-campaign', icon: Send },
+        { name: 'Campagne WhatsApp', href: '/dashboard/marketing/whatsapp-campaign', icon: Send },
+        { name: 'Templates WhatsApp', href: '/dashboard/marketing/whatsapp-templates', icon: MessageSquare },
+        { name: 'Rapports campagnes', href: '/dashboard/marketing/whatsapp-reports', icon: BarChart3 },
       ],
     },
     {
